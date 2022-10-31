@@ -1,14 +1,10 @@
-package rest.db;
+package rest.db.interfaces;
 
 import java.util.ArrayList;
 
 import rest.model.dataObject.Product;
 
-public abstract interface IDatabase {
-	public boolean authUser(String login, String password);
-
-	public boolean addUser(String login, String password);
-
+public interface IRepositoryProducts {
 	public ArrayList<Product> getAllProducts();
 
 	public ArrayList<Product> getUserProducts(String seller_name);

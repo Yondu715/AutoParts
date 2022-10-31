@@ -1,7 +1,7 @@
 package rest.db.builder.factory;
 
-import rest.db.IDatabase;
+import rest.db.repos.typeOfRep;
 
 public abstract interface IDFactory {
-	public IDatabase createDatabase();
+	public Object createRepos(typeOfRep type);
 }

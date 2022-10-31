@@ -1,80 +1,18 @@
-package rest.db;
+package rest.db.repos;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import rest.db.DataBaseHelper;
+import rest.db.interfaces.IRepositoryProducts;
 import rest.model.dataObject.Product;
 
-public class DataBase implements IDatabase {
+public class ProductsRepository implements IRepositoryProducts {
 
-	private Connection dbConnection;
-	private static DataBase instance;
-
-	private DataBase() {
-		dbConnection = getConnection();
-	}
-
-	public static DataBase getInstance(){
-		if (instance == null){
-			instance = new DataBase();
-		}
-		return instance;
-	}
-
-	private Connection getConnection() {
-		try {
-			Class.forName(ConnectionData.DRIVER);
-			dbConnection = DriverManager.getConnection(ConnectionData.URL, ConnectionData.USER, ConnectionData.PASSWORD);
-		} catch (SQLException | ClassNotFoundException e) {}
-		return dbConnection;
-	}
-
-	private void closeConnection() {
-		try {
-			dbConnection.close();
-		} catch (SQLException e) {}
-	}
-
-	@Override
-	public boolean authUser(String login, String password) {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		String select = "select login, password from autoparts.user where login=? and password=?;";
-		try {
-			ps = dbConnection.prepareStatement(select);
-			ps.setString(1, login);
-			ps.setString(2, password);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				return true;
-			}
-		} catch (SQLException e) {
-			closeConnection();
-		}
-		return false;
-	}
-
-	@Override
-	public boolean addUser(String login, String password) {
-		PreparedStatement ps = null;
-		String insert = "insert into autoparts.user (login, password) values(?, ?);";
-		try {
-			ps = dbConnection.prepareStatement(insert);
-			ps.setString(1, login);
-			ps.setString(2, password);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			if (e.getErrorCode() == 1062){
-				return false;
-			}
-			closeConnection();
-		}
-		return true;
-	}
+	private Connection dbConnection = DataBaseHelper.getConnection();
 
 	@Override
 	public ArrayList<Product> getAllProducts() {
@@ -96,7 +34,7 @@ public class DataBase implements IDatabase {
 				products.add(product);
 			}
 		} catch (SQLException e) {
-			closeConnection();
+			DataBaseHelper.closeConnection();
 		}
 		return products;
 	}
@@ -121,7 +59,7 @@ public class DataBase implements IDatabase {
 				products.add(product);
 			}
 		} catch (SQLException e) {
-			closeConnection();
+			DataBaseHelper.closeConnection();
 		}
 		return products;
 	}
@@ -139,7 +77,7 @@ public class DataBase implements IDatabase {
 			ps.setInt(5, product.getCost());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			closeConnection();
+			DataBaseHelper.closeConnection();
 		}
 	}
 
@@ -152,7 +90,8 @@ public class DataBase implements IDatabase {
 			ps.setInt(1, productID);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			closeConnection();
+			DataBaseHelper.closeConnection();
 		}
 	}
+
 }
