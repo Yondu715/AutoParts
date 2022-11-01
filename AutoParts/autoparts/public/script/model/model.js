@@ -33,11 +33,11 @@ var model = (function(){
 	}
 
 	function _auth(data, callback){
-		_sendRequest("post", "api/user/auth", data, callback);
+		_sendRequest("post", "api/users/auth", data, callback);
 	}
 
 	function _reg(data, callback){
-		_sendRequest("post", "api/user/registration", data, callback);
+		_sendRequest("post", "api/users/registration", data, callback);
 	}
 
 	function _saleProduct(data, callback) {
