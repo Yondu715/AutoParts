@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import rest.model.dataObject.Product;
 
 public interface IRepositoryProducts {
-	public ArrayList<Product> getAllProducts();
+	public ArrayList<Product> getAll();
 
-	public ArrayList<Product> getUserProducts(String seller_name);
+	public ArrayList<Product> getByUser(String seller_name);
 
-	public void addProduct(Product product);
+	public void add(Product product);
 
-	public void deleteProduct(Integer productID);
+	public void delete(Integer productID);
 }

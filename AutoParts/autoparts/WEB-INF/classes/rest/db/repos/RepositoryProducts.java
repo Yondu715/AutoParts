@@ -10,12 +10,12 @@ import rest.db.DataBaseHelper;
 import rest.db.interfaces.IRepositoryProducts;
 import rest.model.dataObject.Product;
 
-public class ProductsRepository implements IRepositoryProducts {
+public class RepositoryProducts implements IRepositoryProducts {
 
 	private Connection dbConnection = DataBaseHelper.getConnection();
 
 	@Override
-	public ArrayList<Product> getAllProducts() {
+	public ArrayList<Product> getAll() {
 		ArrayList<Product> products = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -40,7 +40,7 @@ public class ProductsRepository implements IRepositoryProducts {
 	}
 
 	@Override
-	public ArrayList<Product> getUserProducts(String seller_name) {
+	public ArrayList<Product> getByUser(String seller_name) {
 		ArrayList<Product> products = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -65,7 +65,7 @@ public class ProductsRepository implements IRepositoryProducts {
 	}
 
 	@Override
-	public void addProduct(Product product) {
+	public void add(Product product) {
 		PreparedStatement ps = null;
 		String insert = "insert into autoparts.product (name, seller_name, model, brand, cost) values (?, ?, ?, ?, ?);";
 		try {
@@ -82,7 +82,7 @@ public class ProductsRepository implements IRepositoryProducts {
 	}
 
 	@Override
-	public void deleteProduct(Integer productID) {
+	public void delete(Integer productID) {
 		PreparedStatement ps = null;
 		String insert = "delete from autoparts.product where id=?;";
 		try {

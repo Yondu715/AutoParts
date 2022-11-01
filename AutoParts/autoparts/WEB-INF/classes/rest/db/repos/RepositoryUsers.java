@@ -6,14 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import rest.db.DataBaseHelper;
-import rest.db.interfaces.IRepositoryUser;
+import rest.db.interfaces.IRepositoryUsers;
 
-public class UserRepository implements IRepositoryUser {
+public class RepositoryUsers implements IRepositoryUsers {
 
 	private Connection dbConnection = DataBaseHelper.getConnection();
 
 	@Override
-	public boolean checkUser(String login, String password) {
+	public boolean check(String login, String password) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String select = "select login, password from autoparts.user where login=? and password=?;";
@@ -32,7 +32,7 @@ public class UserRepository implements IRepositoryUser {
 	}
 
 	@Override
-	public boolean addUser(String login, String password) {
+	public boolean add(String login, String password) {
 		PreparedStatement ps = null;
 		String insert = "insert into autoparts.user (login, password) values(?, ?);";
 		try {

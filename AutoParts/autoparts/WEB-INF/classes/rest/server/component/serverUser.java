@@ -42,7 +42,7 @@ public class serverUser {
 
 	@POST
 	@Path("/registration")
-	public Response registr(String userJson) {
+	public Response registration(String userJson) {
 		User user = jsonb.fromJson(userJson, User.class);
 		if (model.addUser(user)) {
 			return Response.status(Response.Status.OK).build();

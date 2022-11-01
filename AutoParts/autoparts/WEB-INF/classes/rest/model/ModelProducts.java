@@ -5,24 +5,24 @@ import java.util.List;
 
 import rest.db.builder.DBBuilder;
 import rest.db.interfaces.IRepositoryProducts;
-import rest.db.repos.ProductsRepository;
+import rest.db.repos.RepositoryProducts;
 import rest.db.repos.typeOfRep;
 import rest.model.dataObject.Product;
 import rest.model.interfaces.IModelProducts;
 
 public class ModelProducts implements IModelProducts {
 
-	private IRepositoryProducts db = (ProductsRepository) DBBuilder.createRepository(typeOfRep.PRODUCTS);
+	private IRepositoryProducts repProducts = (RepositoryProducts) DBBuilder.createRepository(typeOfRep.PRODUCTS);
 
 	@Override
 	public void addProduct(Product product) {
-		db.addProduct(product);
+		repProducts.add(product);
 	}
 
 	@Override
 	public void deleteProduct(List<Product> productsID) {
 		for (int i = 0; i < productsID.size(); i++) {
-			db.deleteProduct(productsID.get(i).getId());
+			repProducts.delete(productsID.get(i).getId());
 		}
 
 	}
@@ -30,9 +30,9 @@ public class ModelProducts implements IModelProducts {
 	@Override
 	public ArrayList<Product> getProducts(String seller_name) {
 		if (seller_name == null) {
-			return db.getAllProducts();
+			return repProducts.getAll();
 		} else {
-			return db.getUserProducts(seller_name);
+			return repProducts.getByUser(seller_name);
 		}
 	}
 

@@ -38,7 +38,7 @@ public class serverProduct {
 
 	@GET
 	@Path("/userProducts")
-	public Response getUserProduct(@Context HttpHeaders httpHeaders) {
+	public Response getProductsByUser(@Context HttpHeaders httpHeaders) {
 		String token = httpHeaders.getHeaderString("Authorization");
 		String login = httpHeaders.getHeaderString("login");
 		if (!Token.checkToken(token)) {

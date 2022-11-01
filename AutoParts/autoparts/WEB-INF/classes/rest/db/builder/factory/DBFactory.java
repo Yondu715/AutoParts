@@ -1,7 +1,7 @@
 package rest.db.builder.factory;
 
-import rest.db.repos.ProductsRepository;
-import rest.db.repos.UserRepository;
+import rest.db.repos.RepositoryProducts;
+import rest.db.repos.RepositoryUsers;
 import rest.db.repos.typeOfRep;
 
 public class DBFactory implements IDFactory {
@@ -10,9 +10,9 @@ public class DBFactory implements IDFactory {
 	public Object createRepos(typeOfRep type) {
 		Object rep = null;
 		if (type == typeOfRep.USER) {
-			rep = new UserRepository();
+			rep = new RepositoryUsers();
 		} else if (type == typeOfRep.PRODUCTS) {
-			rep = new ProductsRepository();
+			rep = new RepositoryProducts();
 		}
 		return rep;
 	}
