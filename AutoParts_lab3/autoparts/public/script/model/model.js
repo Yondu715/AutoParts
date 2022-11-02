@@ -34,14 +34,14 @@ var model = (function(){
 
 	function _auth(user, callback){
 		if (user == null){
-			_sendRequest("post", "api/user/auth", user, callback);
+			_sendRequest("post", "api/users/auth", user, callback);
 		} else {
-			_sendRequest("post", "api/user/auth", user.get(), callback);
+			_sendRequest("post", "api/users/auth", user.get(), callback);
 		}
 	}
 
 	function _reg(user, callback){
-		_sendRequest("post", "api/user/registration", user.get(), callback);
+		_sendRequest("post", "api/users/registration", user.get(), callback);
 	}
 
 	function _saleProduct(product, callback) {
@@ -94,7 +94,7 @@ var model = (function(){
 		this.product = product;
 	}
 
-	Product.prototype.get = function (product){
+	Product.prototype.get = function (){
 		return this.product;
 	}
 

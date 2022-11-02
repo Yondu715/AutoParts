@@ -12,7 +12,7 @@ import rest.model.dataObject.User;
 import rest.model.interfaces.IModelUser;
 import rest.server.token.Token;
 
-@Path("/user")
+@Path("/users")
 public class serverUser {
 	@Inject
 	private IModelUser model;
