@@ -1,31 +1,37 @@
-var dataObject = (function () {
-	function User() {
-		this.user = {};
+const dataObject = (function () {
+
+	class User {
+		
+		constructor(user) {
+			this.user = user;
+		}
+
+		set(user) {
+			this.user = user;
+		}
+
+		get() {
+			return this.user;
+		}
 	}
 
-	User.prototype.set = function (user) {
-		this.user = user;
-	}
+	class Product {
 
-	User.prototype.get = function () {
-		return this.user;
-	}
+		constructor(product) {
+			this.product = product;
+		}
 
-	function Product() {
-		this.product = {};
-	}
+		set(product) {
+			this.product = product;
+		}
 
-	Product.prototype.set = function (product) {
-		this.product = product;
-	}
-
-	Product.prototype.get = function () {
-		return this.product;
+		get() {
+			return this.product;
+		}
 	}
 
 	return {
 		user: User,
 		product: Product,
-		
 	}
 })();

@@ -1,6 +1,6 @@
-window.onload = function(){
-	request.auth(null, function(status){
-		var root = document.body;
+window.onload = () => {
+	request.auth(null, (status) => {
+		let root = document.body;
 		if (status == "Unauthorized") {
 			router.pageStart(root);
 		} else if (status == "OK") {

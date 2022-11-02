@@ -1,17 +1,17 @@
-var request = (function () {
+const request = (function () {
 	function _sendRequest(type, uri, data, callback) {
-		var xhr = new XMLHttpRequest();
+		let xhr = new XMLHttpRequest();
 		xhr.open(type, uri, true);
 		xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 		xhr.setRequestHeader("Authorization", localStorage.getItem("token"));
 		xhr.setRequestHeader("Login", localStorage.getItem("login"));
 
 		xhr.onreadystatechange = function () {
-			if (this.readyState != 4) {
+			if (xhr.readyState != 4) {
 				return;
 			}
-			var statusRequest = this.statusText;
-			var response = this.responseText;
+			let statusRequest = xhr.statusText;
+			let response = xhr.responseText;
 			callback(statusRequest, response);
 		};
 
@@ -48,8 +48,8 @@ var request = (function () {
 		_sendRequest("post", "api/products/sale", product.get(), callback);
 	}
 
-	function _deleteProduct(data, callback) {
-		_sendRequest("delete", "api/products/userProducts", data, callback);
+	function _deleteProduct(products_id, callback) {
+		_sendRequest("delete", "api/products/userProducts", products_id, callback);
 	}
 
 	return {

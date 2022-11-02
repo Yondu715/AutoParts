@@ -1,6 +1,6 @@
-var pageReg = (function () {
-	var root = undefined;
-	var error_span = undefined;
+const pageReg = (function () {
+	let root = undefined;
+	let error_span = undefined;
 
 	function _render() {
 		root.innerHTML = `<div class='log-page'>
@@ -28,11 +28,11 @@ var pageReg = (function () {
 							<span>Уже есть аккаунт? <button class='btn-path' id='auth'>Авторизоваться</button></span>
 						</div>
 					</div>`;
-		var fadeBlock = document.getElementsByClassName("log-content")[0];
-		var btnAuth = document.getElementById("auth");
-		var btnReg = document.getElementById("btnRegInfo");
+		let fadeBlock = document.getElementsByClassName("log-content")[0];
+		let btnAuth = document.getElementById("auth");
+		let btnReg = document.getElementById("btnRegInfo");
 		error_span = document.getElementById("log-status");
-		btnAuth.addEventListener("click", function () {
+		btnAuth.addEventListener("click", () => {
 			router.pageAuth(root);
 		});
 		btnReg.addEventListener("click", _sendRegInfo);
@@ -40,21 +40,20 @@ var pageReg = (function () {
 	}
 
 	function _getRegInfo() {
-		var login = document.getElementById("login").value
-		var password = document.getElementById("password").value
-		var repeat_password = document.getElementById("password-repeat").value
-		var jsonRegInfo = {
+		let login = document.getElementById("login").value
+		let password = document.getElementById("password").value
+		let repeat_password = document.getElementById("password-repeat").value
+		let jsonRegInfo = {
 			"login": login,
 			"password": password,
 			"repeat-password": repeat_password
 		}
-		var user = new dataObject.user();
-		user.set(jsonRegInfo);
+		let user = new dataObject.user(jsonRegInfo);
 		return user;
 	}
 
 	function _sendRegInfo() {
-		var user = _getRegInfo();
+		let user = _getRegInfo();
 		if (model.check_valid(user)) {
 			if ((user.get()["password"] == user.get()["repeat-password"])) {
 				request.reg(user, _sendRI_callback);

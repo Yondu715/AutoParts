@@ -1,4 +1,4 @@
-var router = (function(){
+const router = (function () {
 	return {
 		pageStart: pageAuth.render,
 		pageAuth: pageAuth.render,

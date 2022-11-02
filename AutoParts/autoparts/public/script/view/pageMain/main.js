@@ -1,7 +1,7 @@
-var pageMain = (function(){
-	var root = undefined;
-	var error_span = undefined;
-	var products = undefined;
+const pageMain = (function () {
+	let root = undefined;
+	let error_span = undefined;
+	let products = undefined;
 
 	function _render() {
 		root.innerHTML = `<span class='overPage'></span>
@@ -25,18 +25,18 @@ var pageMain = (function(){
 					</div>`
 		_renderMenu();
 		_getAllProducts();
-		var userLogin = document.getElementsByClassName("user-login")[0];
-		var btnLogout = document.getElementById("btn-logout");
+		let userLogin = document.getElementsByClassName("user-login")[0];
+		let btnLogout = document.getElementById("btn-logout");
 		userLogin.textContent = localStorage.getItem("login");
 		btnLogout.addEventListener("click", _logout);
 	}
 
 	function _logout() {
-		var animationBlock = document.getElementsByClassName("overPage")[0];
+		let animationBlock = document.getElementsByClassName("overPage")[0];
 		localStorage.removeItem("token");
 		localStorage.removeItem("login");
 		animationCover(animationBlock, 0.5, 0);
-		setTimeout(function(){
+		setTimeout(() => {
 			router.pageStart(root);
 		}, 800);
 	}
@@ -44,13 +44,13 @@ var pageMain = (function(){
 	/* RENDER MENU */
 
 	function _renderMenu() {
-		var menu = document.getElementById("menu");
-		var menu_items = ["Запчасти", "Продать", "Мои товары"];
-		var list = document.createElement("ul");
-		var buttons = [];
-		for (var i = 0; i < menu_items.length; i++) {
-			var row = document.createElement("li");
-			var btn = document.createElement("button");
+		let menu = document.getElementById("menu");
+		let menu_items = ["Запчасти", "Продать", "Мои товары"];
+		let list = document.createElement("ul");
+		let buttons = [];
+		for (let i = 0; i < menu_items.length; i++) {
+			let row = document.createElement("li");
+			let btn = document.createElement("button");
 			btn.textContent = menu_items[i];
 			row.appendChild(btn);
 			buttons.push(btn);
@@ -69,23 +69,23 @@ var pageMain = (function(){
 		request.get_allProducts(_getAllProducts_callback);
 	}
 
-	function _getAllProducts_callback(status, data){
+	function _getAllProducts_callback(status, data) {
 		if (status == "Unauthorized") {
 			router.pageStart(root);
 		} else if (status == "OK") {
-			var productsJSON = JSON.parse(data);
+			let productsJSON = JSON.parse(data);
 			products = model.convert(productsJSON);
 			_renderAllProducts();
 		}
 	}
 
-	function _renderAllProducts(){
-		var mainContent = document.getElementById("main-content");
-		var btnPlace = document.getElementById("btn-place");
+	function _renderAllProducts() {
+		let mainContent = document.getElementById("main-content");
+		let btnPlace = document.getElementById("btn-place");
 		btnPlace.innerHTML = "";
 		mainContent.innerHTML = "";
-		var columns = ["id", "name", "sellerName", "brand", "model", "cost"];
-		var table = model.create_table(products, columns);
+		let columns = ["id", "name", "sellerName", "brand", "model", "cost"];
+		let table = model.create_table(products, columns);
 		mainContent.appendChild(table);
 	}
 
@@ -93,22 +93,22 @@ var pageMain = (function(){
 		request.get_userProducts(_getUserProducts_callback);
 	}
 
-	function _getUserProducts_callback(status, data){
+	function _getUserProducts_callback(status, data) {
 		if (status == "Unauthorized") {
 			router.pageStart(root);
 		} else if (status == "OK") {
-			var productsJSON = JSON.parse(data);
+			let productsJSON = JSON.parse(data);
 			products = model.convert(productsJSON);
 			_renderUserProducts(products);
 		}
 	}
 
-	function _renderUserProducts(){
-		var mainContent = document.getElementById("main-content");
-		var btnPlace = document.getElementById("btn-place");
-		var columns = ["id", "name", "brand", "model", "cost"];
-		var table = model.create_table(products, columns);
-		var button = document.createElement("button");
+	function _renderUserProducts() {
+		let mainContent = document.getElementById("main-content");
+		let btnPlace = document.getElementById("btn-place");
+		let columns = ["id", "name", "brand", "model", "cost"];
+		let table = model.create_table(products, columns);
+		let button = document.createElement("button");
 		button.textContent = "Удалить";
 		button.className = "btn-submit";
 		button.addEventListener("click", _sendDeleteInfo);
@@ -116,19 +116,19 @@ var pageMain = (function(){
 		btnPlace.innerHTML = "";
 		mainContent.appendChild(table);
 		btnPlace.appendChild(button);
-		var rows = document.getElementsByTagName("tr");
+		let rows = document.getElementsByTagName("tr");
 		highlightRow(rows);
 	}
 
 	/* DELETE PRODUCT */
 
 	function _getDeleteInfo() {
-		var rows = document.getElementsByTagName("tr");
-		var products_id = [];
-		for (var i = 0; i < rows.length; i++) {
+		let rows = document.getElementsByTagName("tr");
+		let products_id = [];
+		for (let i = 0; i < rows.length; i++) {
 			if (rows[i].style.background != "") {
-				var cells = rows[i].getElementsByTagName("td");
-				var product = {
+				let cells = rows[i].getElementsByTagName("td");
+				let product = {
 					id: Number(cells[0].innerText)
 				}
 				products_id.push(product);
@@ -138,11 +138,11 @@ var pageMain = (function(){
 	}
 
 	function _sendDeleteInfo() {
-		var jsonProductsID = _getDeleteInfo();
+		let jsonProductsID = _getDeleteInfo();
 		request.deleteProduct(jsonProductsID, _sendDeleteInfo_callback);
 	}
 
-	function _sendDeleteInfo_callback(status){
+	function _sendDeleteInfo_callback(status) {
 		if (status == "Unauthorized") {
 			router.pageStart(root);
 		} else if (status == "No Content") {
@@ -153,21 +153,21 @@ var pageMain = (function(){
 	/* SALE PRODUCT */
 
 	function _renderSale() {
-		var mainContent = document.getElementById("main-content");
-		var btnPlace = document.getElementById("btn-place");
+		let mainContent = document.getElementById("main-content");
+		let btnPlace = document.getElementById("btn-place");
 		mainContent.innerHTML = "";
 		btnPlace.innerHTML = "";
-		var fields = ["name", "brand", "model", "cost"];
-		var fields_ru = ["Название", "Марка", "Модель", "Стоимость"];
-		for (var i = 0; i < fields.length; i++) {
-			var container = document.createElement("div");
-			var input = document.createElement("input");
+		let fields = ["name", "brand", "model", "cost"];
+		let fields_ru = ["Название", "Марка", "Модель", "Стоимость"];
+		for (let i = 0; i < fields.length; i++) {
+			let container = document.createElement("div");
+			let input = document.createElement("input");
 			input.className = "text";
 			input.id = fields[i];
 			input.autocomplete = "off";
-			var label = document.createElement("label");
+			let label = document.createElement("label");
 			label.textContent = fields_ru[i] + ":";
-			var span = document.createElement("span");
+			let span = document.createElement("span");
 			span.className = "bar";
 			container.className = fields[i];
 			container.appendChild(label);
@@ -175,8 +175,8 @@ var pageMain = (function(){
 			container.appendChild(span);
 			mainContent.appendChild(container);
 		}
-		var button = document.createElement("button");
-		var span = document.createElement("span");
+		let button = document.createElement("button");
+		let span = document.createElement("span");
 		span.id = "sale-status";
 		button.textContent = "Выставить на продажу";
 		button.className = "btn-submit";
@@ -187,21 +187,20 @@ var pageMain = (function(){
 	}
 
 	function _getSaleInfo() {
-		var jsonSale = {};
-		var fields = ["name", "brand", "model", "cost"];
-		for (var i = 0; i < fields.length; i++) {
-			var value = document.getElementById(fields[i]).value;
+		let jsonSale = {};
+		let fields = ["name", "brand", "model", "cost"];
+		for (let i = 0; i < fields.length; i++) {
+			let value = document.getElementById(fields[i]).value;
 			jsonSale[fields[i]] = value;
 		}
 		jsonSale["sellerName"] = localStorage.getItem("login");
 		jsonSale["cost"] = Number(jsonSale["cost"]);
-		var product = new dataObject.product();
-		product.set(jsonSale);
+		let product = new dataObject.product(jsonSale);
 		return product;
 	}
 
 	function _sendSaleInfo() {
-		var product = _getSaleInfo();
+		let product = _getSaleInfo();
 		if (model.check_valid(product)) {
 			request.saleProduct(product, _sendSaleInfo_callback);
 		} else {
@@ -209,14 +208,14 @@ var pageMain = (function(){
 		}
 	}
 
-	function _sendSaleInfo_callback(status){
+	function _sendSaleInfo_callback(status) {
 		if (status == "Unauthorized") {
 			router.pageStart(root);
 			return;
 		}
 		error_span.textContent = "";
-		var fields = document.getElementsByTagName("input");
-		for (var i = 0; i < fields.length; i++) {
+		let fields = document.getElementsByTagName("input");
+		for (let i = 0; i < fields.length; i++) {
 			fields[i].value = "";
 		}
 	}

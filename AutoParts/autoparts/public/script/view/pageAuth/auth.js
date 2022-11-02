@@ -1,6 +1,6 @@
-var pageAuth = (function () {
-	var root = undefined;
-	var error_span = undefined;
+const pageAuth = (function () {
+	let root = undefined;
+	let error_span = undefined;
 
 	function _render() {
 		root.innerHTML = `<div class='log-page'>
@@ -23,11 +23,11 @@ var pageAuth = (function () {
 							<span>Еще нет аккаунта? <button class='btn-path' id='reg'>Зарегистрироваться</button></span>
 						</div>
 					</div>`;
-		var fadeBlock = document.getElementsByClassName("log-content")[0];
-		var btnReg = document.getElementById("reg");
-		var btnSendAuthInfo = document.getElementById("btnAuthInfo");
+		let fadeBlock = document.getElementsByClassName("log-content")[0];
+		let btnReg = document.getElementById("reg");
+		let btnSendAuthInfo = document.getElementById("btnAuthInfo");
 		error_span = document.getElementById("log-status");
-		btnReg.addEventListener("click", function () {
+		btnReg.addEventListener("click", () => {
 			router.pageReg(root);
 		});
 		btnSendAuthInfo.addEventListener("click", _sendAuthInfo);
@@ -35,19 +35,18 @@ var pageAuth = (function () {
 	}
 
 	function _getAuthInfo() {
-		var login = document.getElementById("login").value
-		var password = document.getElementById("password").value
-		var jsonAuthInfo = {
+		let login = document.getElementById("login").value
+		let password = document.getElementById("password").value
+		let jsonAuthInfo = {
 			"login": login,
 			"password": password
 		}
-		var user = new dataObject.user();
-		user.set(jsonAuthInfo);
+		let user = new dataObject.user(jsonAuthInfo);
 		return user;
 	}
 
 	function _sendAuthInfo() {
-		var user = _getAuthInfo();
+		let user = _getAuthInfo();
 		if (model.check_valid(user)) {
 			request.auth(user, _sendAI_callback);
 		} else {
