@@ -66,7 +66,7 @@ var pageMain = (function(){
 	/* RENDER PRODUCT */
 
 	function _getAllProducts() {
-		model.get_allProducts(_getAllProducts_callback);
+		request.get_allProducts(_getAllProducts_callback);
 	}
 
 	function _getAllProducts_callback(status, data){
@@ -74,13 +74,7 @@ var pageMain = (function(){
 			router.pageStart(root);
 		} else if (status == "OK") {
 			var productsJSON = JSON.parse(data);
-			var rez = [];
-			for (var i = 0; i < productsJSON.length; i++) {
-				var product = new model.product();
-				product.set(productsJSON[i]);
-				rez.push(product);
-			}
-			products = rez;
+			products = model.convert(productsJSON);
 			_renderAllProducts();
 		}
 	}
@@ -96,7 +90,7 @@ var pageMain = (function(){
 	}
 
 	function _getUserProducts() {
-		model.get_userProducts(_getUserProducts_callback);
+		request.get_userProducts(_getUserProducts_callback);
 	}
 
 	function _getUserProducts_callback(status, data){
@@ -104,13 +98,7 @@ var pageMain = (function(){
 			router.pageStart(root);
 		} else if (status == "OK") {
 			var productsJSON = JSON.parse(data);
-			var rez = [];
-			for (var i = 0; i < productsJSON.length; i++) {
-				var product = new model.product();
-				product.set(productsJSON[i]);
-				rez.push(product);
-			}
-			products = rez;
+			products = model.convert(productsJSON);
 			_renderUserProducts(products);
 		}
 	}
@@ -151,7 +139,7 @@ var pageMain = (function(){
 
 	function _sendDeleteInfo() {
 		var jsonProductsID = _getDeleteInfo();
-		model.deleteProduct(jsonProductsID, _sendDeleteInfo_callback);
+		request.deleteProduct(jsonProductsID, _sendDeleteInfo_callback);
 	}
 
 	function _sendDeleteInfo_callback(status){
@@ -207,7 +195,7 @@ var pageMain = (function(){
 		}
 		jsonSale["sellerName"] = localStorage.getItem("login");
 		jsonSale["cost"] = Number(jsonSale["cost"]);
-		var product = new model.product();
+		var product = new dataObject.product();
 		product.set(jsonSale);
 		return product;
 	}
@@ -215,7 +203,7 @@ var pageMain = (function(){
 	function _sendSaleInfo() {
 		var product = _getSaleInfo();
 		if (model.check_valid(product)) {
-			model.saleProduct(product, _sendSaleInfo_callback);
+			request.saleProduct(product, _sendSaleInfo_callback);
 		} else {
 			error_span.textContent = "Не все поля были заполнены";
 		}

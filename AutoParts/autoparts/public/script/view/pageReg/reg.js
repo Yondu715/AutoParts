@@ -48,7 +48,7 @@ var pageReg = (function () {
 			"password": password,
 			"repeat-password": repeat_password
 		}
-		var user = new model.user();
+		var user = new dataObject.user();
 		user.set(jsonRegInfo);
 		return user;
 	}
@@ -56,8 +56,8 @@ var pageReg = (function () {
 	function _sendRegInfo() {
 		var user = _getRegInfo();
 		if (model.check_valid(user)) {
-			if ((user.get()["password"] == user.get()["repeat_password"])) {
-				model.reg(user, _sendRI_callback);
+			if ((user.get()["password"] == user.get()["repeat-password"])) {
+				request.reg(user, _sendRI_callback);
 			} else {
 				error_span.textContent = "Пароли не совпадают";
 			}

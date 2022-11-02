@@ -41,7 +41,7 @@ var pageAuth = (function () {
 			"login": login,
 			"password": password
 		}
-		var user = new model.user();
+		var user = new dataObject.user();
 		user.set(jsonAuthInfo);
 		return user;
 	}
@@ -49,7 +49,7 @@ var pageAuth = (function () {
 	function _sendAuthInfo() {
 		var user = _getAuthInfo();
 		if (model.check_valid(user)) {
-			model.auth(user, _sendAI_callback);
+			request.auth(user, _sendAI_callback);
 		} else {
 			error_span.textContent = "Не все поля были заполнены";
 		}

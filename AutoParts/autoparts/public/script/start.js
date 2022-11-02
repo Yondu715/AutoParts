@@ -1,5 +1,5 @@
 window.onload = function(){
-	model.auth(null, function(status){
+	request.auth(null, function(status){
 		var root = document.body;
 		if (status == "Unauthorized") {
 			router.pageStart(root);
