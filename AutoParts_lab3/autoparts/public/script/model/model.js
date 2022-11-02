@@ -32,16 +32,20 @@ var model = (function(){
 		_sendRequest("get", "api/products/userProducts", null, callback);
 	}
 
-	function _auth(data, callback){
-		_sendRequest("post", "api/user/auth", data, callback);
+	function _auth(user, callback){
+		if (user == null){
+			_sendRequest("post", "api/user/auth", user, callback);
+		} else {
+			_sendRequest("post", "api/user/auth", user.get(), callback);
+		}
 	}
 
-	function _reg(data, callback){
-		_sendRequest("post", "api/user/registration", data, callback);
+	function _reg(user, callback){
+		_sendRequest("post", "api/user/registration", user.get(), callback);
 	}
 
-	function _saleProduct(data, callback) {
-		_sendRequest("post", "api/products/sale", data, callback);
+	function _saleProduct(product, callback) {
+		_sendRequest("post", "api/products/sale", product.get(), callback);
 	}
 
 	function _deleteProduct(data, callback){
@@ -49,25 +53,49 @@ var model = (function(){
 	}
 
 	function _check_valid(data) {
-		var keys = Object.keys(data);
+		var keys = Object.keys(data.get());
 		for (var i = 0; i < keys.length; i++) {
-			if (data[keys[i]] == "") return false;
+			if (data.get()[keys[i]] == "") return false;
 		}
 		return true;
 	}
 
-	function _create_table(data, columns) {
+	function _create_table(products, columns) {
 		var table = document.createElement("table");
-		for (var i = 0; i < data.length; i++) {
+		for (var i = 0; i < products.length; i++) {
 			var row = document.createElement("tr");
 			for (var j = 0; j < columns.length; j++) {
 				var cell = document.createElement("td");
-				cell.textContent = data[i][columns[j]];
+				cell.textContent = products[i].get()[columns[j]];
 				row.appendChild(cell);
 			}
 			table.appendChild(row);
 		}
 		return table;
+	}
+
+	function User(){
+		this.user = {};
+	}
+
+	User.prototype.set = function (user) {
+		this.user = user;
+	}
+
+	User.prototype.get = function (){
+		return this.user;
+	}
+
+	function Product(){
+		this.product = {};
+	}
+
+	Product.prototype.set = function (product){
+		this.product = product;
+	}
+
+	Product.prototype.get = function (product){
+		return this.product;
 	}
 
 	return {
@@ -79,5 +107,7 @@ var model = (function(){
 		deleteProduct: _deleteProduct,
 		auth: _auth,
 		reg: _reg,
+		user: User,
+		product: Product,
 	}
 })();

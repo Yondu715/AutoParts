@@ -73,7 +73,14 @@ var pageMain = (function(){
 		if (status == "Unauthorized") {
 			router.pageStart(root);
 		} else if (status == "OK") {
-			products = JSON.parse(data);
+			var productsJSON = JSON.parse(data);
+			var rez = [];
+			for (var i = 0; i < productsJSON.length; i++) {
+				var product = new model.product();
+				product.set(productsJSON[i]);
+				rez.push(product);
+			}
+			products = rez;
 			_renderAllProducts();
 		}
 	}
@@ -96,7 +103,14 @@ var pageMain = (function(){
 		if (status == "Unauthorized") {
 			router.pageStart(root);
 		} else if (status == "OK") {
-			products = JSON.parse(data);
+			var productsJSON = JSON.parse(data);
+			var rez = [];
+			for (var i = 0; i < productsJSON.length; i++) {
+				var product = new model.product();
+				product.set(productsJSON[i]);
+				rez.push(product);
+			}
+			products = rez;
 			_renderUserProducts(products);
 		}
 	}
@@ -193,13 +207,15 @@ var pageMain = (function(){
 		}
 		jsonSale["sellerName"] = localStorage.getItem("login");
 		jsonSale["cost"] = Number(jsonSale["cost"]);
-		return jsonSale;
+		var product = new model.product();
+		product.set(jsonSale);
+		return product;
 	}
 
 	function _sendSaleInfo() {
-		var jsonSale = _getSaleInfo();
-		if (model.check_valid(jsonSale)) {
-			model.saleProduct(jsonSale, _sendSaleInfo_callback);
+		var product = _getSaleInfo();
+		if (model.check_valid(product)) {
+			model.saleProduct(product, _sendSaleInfo_callback);
 		} else {
 			error_span.textContent = "Не все поля были заполнены";
 		}

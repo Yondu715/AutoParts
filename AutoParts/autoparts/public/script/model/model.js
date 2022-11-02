@@ -1,11 +1,11 @@
-var model = (function(){
+var model = (function () {
 	function _sendRequest(type, uri, data, callback) {
 		var xhr = new XMLHttpRequest();
 		xhr.open(type, uri, true);
 		xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
 		xhr.setRequestHeader("Authorization", localStorage.getItem("token"));
 		xhr.setRequestHeader("Login", localStorage.getItem("login"));
-		
+
 		xhr.onreadystatechange = function () {
 			if (this.readyState != 4) {
 				return;
@@ -18,25 +18,25 @@ var model = (function(){
 		if ((type == "delete" || type == "get")) {
 			xhr.setRequestHeader("Data", JSON.stringify(data));
 			xhr.send();
-		} 
+		}
 		else {
 			xhr.send(JSON.stringify(data));
 		}
 	}
-	
-	function _getAllProducts(callback){
+
+	function _getAllProducts(callback) {
 		_sendRequest("get", "api/products/", null, callback);
 	}
 
-	function _getUserProducts(callback){
+	function _getUserProducts(callback) {
 		_sendRequest("get", "api/products/userProducts", null, callback);
 	}
 
-	function _auth(data, callback){
+	function _auth(data, callback) {
 		_sendRequest("post", "api/users/auth", data, callback);
 	}
 
-	function _reg(data, callback){
+	function _reg(data, callback) {
 		_sendRequest("post", "api/users/registration", data, callback);
 	}
 
@@ -44,7 +44,7 @@ var model = (function(){
 		_sendRequest("post", "api/products/sale", data, callback);
 	}
 
-	function _deleteProduct(data, callback){
+	function _deleteProduct(data, callback) {
 		_sendRequest("delete", "api/products/userProducts", data, callback);
 	}
 

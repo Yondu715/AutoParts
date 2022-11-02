@@ -48,14 +48,16 @@ var pageReg = (function () {
 			"password": password,
 			"repeat-password": repeat_password
 		}
-		return jsonRegInfo;
+		var user = new model.user();
+		user.set(jsonRegInfo);
+		return user;
 	}
 
 	function _sendRegInfo() {
-		var jsonRegInfo = _getRegInfo();
-		if (model.check_valid(jsonRegInfo)) {
-			if ((jsonRegInfo["password"] == jsonRegInfo["repeat-password"])) {
-				model.reg(jsonRegInfo, _sendRI_callback);
+		var user = _getRegInfo();
+		if (model.check_valid(user)) {
+			if ((user.get()["password"] == user.get()["repeat_password"])) {
+				model.reg(user, _sendRI_callback);
 			} else {
 				error_span.textContent = "Пароли не совпадают";
 			}
