@@ -41,13 +41,15 @@ var pageAuth = (function () {
 			"login": login,
 			"password": password
 		}
-		return jsonAuthInfo;
+		var user = new model.user();
+		user.set(jsonAuthInfo);
+		return user;
 	}
 
 	function _sendAuthInfo() {
-		var jsonAuthInfo = _getAuthInfo();
-		if (model.check_valid(jsonAuthInfo)) {
-			model.auth(jsonAuthInfo, _sendAI_callback);
+		var user = _getAuthInfo();
+		if (model.check_valid(user)) {
+			model.auth(user, _sendAI_callback);
 		} else {
 			error_span.textContent = "Не все поля были заполнены";
 		}
@@ -58,7 +60,7 @@ var pageAuth = (function () {
 			error_span.textContent = "Неправильный логин или пароль";
 		} else if (status == "OK") {
 			localStorage.setItem("token", token);
-			localStorage.setItem("login", _getAuthInfo().login);
+			localStorage.setItem("login", _getAuthInfo().get()["login"]);
 			router.pageMain(root);
 		}
 	}
