@@ -59,9 +59,9 @@ export default (function () {
 	}
 
 	function _sendAI_callback(status, token) {
-		if (status == "Unauthorized") {
+		if (status == 401) {
 			error_span.textContent = "Неправильный логин или пароль";
-		} else if (status == "OK") {
+		} else if (status == 200) {
 			localStorage.setItem("token", token);
 			localStorage.setItem("login", _getAuthInfo().get()["login"]);
 			router.pageMain(root);

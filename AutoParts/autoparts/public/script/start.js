@@ -4,9 +4,9 @@ import { request } from "./model/request/request.js";
 
 request.auth(null, (status) => {
 	let root = document.body;
-	if (status == "Unauthorized") {
+	if (status == 401) {
 		router.pageStart(root);
-	} else if (status == "OK") {
+	} else if (status == 200) {
 		router.pageMain(root);
 	}
 });

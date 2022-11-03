@@ -74,9 +74,9 @@ export default (function () {
 	}
 
 	function _getAllProducts_callback(status, data) {
-		if (status == "Unauthorized") {
+		if (status == 401) {
 			router.pageStart(root);
-		} else if (status == "OK") {
+		} else if (status == 200) {
 			let productsJSON = JSON.parse(data);
 			products = dataAction.convert(productsJSON);
 			_renderAllProducts();
@@ -98,9 +98,9 @@ export default (function () {
 	}
 
 	function _getUserProducts_callback(status, data) {
-		if (status == "Unauthorized") {
+		if (status == 401) {
 			router.pageStart(root);
-		} else if (status == "OK") {
+		} else if (status == 200) {
 			let productsJSON = JSON.parse(data);
 			products = dataAction.convert(productsJSON);
 			_renderUserProducts(products);
@@ -147,9 +147,9 @@ export default (function () {
 	}
 
 	function _sendDeleteInfo_callback(status) {
-		if (status == "Unauthorized") {
+		if (status == 401) {
 			router.pageStart(root);
-		} else if (status == "No Content") {
+		} else if (status == 204) {
 			_getUserProducts();
 		}
 	}
@@ -213,14 +213,14 @@ export default (function () {
 	}
 
 	function _sendSaleInfo_callback(status) {
-		if (status == "Unauthorized") {
+		if (status == 401) {
 			router.pageStart(root);
-			return;
-		}
-		error_span.textContent = "";
-		let fields = document.getElementsByTagName("input");
-		for (let i = 0; i < fields.length; i++) {
-			fields[i].value = "";
+		} else {
+			error_span.textContent = "";
+			let fields = document.getElementsByTagName("input");
+			for (let i = 0; i < fields.length; i++) {
+				fields[i].value = "";
+			}
 		}
 	}
 

@@ -70,9 +70,9 @@ export default (function () {
 	}
 
 	function _sendRI_callback(status) {
-		if (status == "OK") {
+		if (status == 200) {
 			router.pageAuth(root);
-		} else if (status == "Bad Request") {
+		} else if (status == 400) {
 			error_span.textContent = "Нельзя использовать данный логин";
 		}
 	}

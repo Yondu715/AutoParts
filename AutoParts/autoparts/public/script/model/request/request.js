@@ -10,9 +10,9 @@ const request = (function () {
 			if (xhr.readyState != 4) {
 				return;
 			}
-			let statusRequest = xhr.statusText;
+			let status = xhr.status;
 			let response = xhr.responseText;
-			callback(statusRequest, response);
+			callback(status, response);
 		};
 
 		if (data == null) {
