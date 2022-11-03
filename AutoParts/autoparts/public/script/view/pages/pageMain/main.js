@@ -1,4 +1,4 @@
-import { dataObject, dataAction, request } from "../../../model/modelBundel.js";
+import { dataObject, dataAction, request } from "../../../model/modelBundle.js";
 import { animationHandler } from "../../animationHandler.js";
 import router from "../../router.js";
 
