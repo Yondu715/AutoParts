@@ -27,7 +27,7 @@ public class serverUser {
 				return Response.status(Response.Status.OK).build();
 			}
 		}
-		if (!userJson.equals("null")) {
+		if (!userJson.equals("null") && !userJson.equals("")) {
 			User user = jsonb.fromJson(userJson, User.class);
 			String login = user.getLogin();
 			if (model.authUser(user)) {

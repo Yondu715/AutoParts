@@ -1,4 +1,8 @@
-const pageReg = (function () {
+import { dataObject, dataAction, request } from "../../../model/modelBundel.js";
+import router from "../../router.js";
+import { animationHandler } from "../../animationHandler.js";
+
+export default (function () {
 	let root = undefined;
 	let error_span = undefined;
 
@@ -36,7 +40,7 @@ const pageReg = (function () {
 			router.pageAuth(root);
 		});
 		btnReg.addEventListener("click", _sendRegInfo);
-		animationFade(fadeBlock, 1, 0);
+		animationHandler.fade(fadeBlock, 1, 0);
 	}
 
 	function _getRegInfo() {
@@ -54,7 +58,7 @@ const pageReg = (function () {
 
 	function _sendRegInfo() {
 		let user = _getRegInfo();
-		if (model.check_valid(user)) {
+		if (dataAction.check_valid(user)) {
 			if ((user.get()["password"] == user.get()["repeat-password"])) {
 				request.reg(user, _sendRI_callback);
 			} else {

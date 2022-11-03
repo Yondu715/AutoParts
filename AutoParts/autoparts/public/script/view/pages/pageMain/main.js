@@ -1,4 +1,8 @@
-const pageMain = (function () {
+import { dataObject, dataAction, request } from "../../../model/modelBundel.js";
+import { animationHandler } from "../../animationHandler.js";
+import router from "../../router.js";
+
+export default (function () {
 	let root = undefined;
 	let error_span = undefined;
 	let products = undefined;
@@ -35,7 +39,7 @@ const pageMain = (function () {
 		let animationBlock = document.getElementsByClassName("overPage")[0];
 		localStorage.removeItem("token");
 		localStorage.removeItem("login");
-		animationCover(animationBlock, 0.5, 0);
+		animationHandler.cover(animationBlock, 0.5, 0);
 		setTimeout(() => {
 			router.pageStart(root);
 		}, 800);
@@ -60,7 +64,7 @@ const pageMain = (function () {
 		buttons[0].addEventListener("click", _getAllProducts);
 		buttons[1].addEventListener("click", _renderSale);
 		buttons[2].addEventListener("click", _getUserProducts);
-		highlightMenu(buttons);
+		animationHandler.highlightMenu(buttons);
 	}
 
 	/* RENDER PRODUCT */
@@ -74,7 +78,7 @@ const pageMain = (function () {
 			router.pageStart(root);
 		} else if (status == "OK") {
 			let productsJSON = JSON.parse(data);
-			products = model.convert(productsJSON);
+			products = dataAction.convert(productsJSON);
 			_renderAllProducts();
 		}
 	}
@@ -85,7 +89,7 @@ const pageMain = (function () {
 		btnPlace.innerHTML = "";
 		mainContent.innerHTML = "";
 		let columns = ["id", "name", "sellerName", "brand", "model", "cost"];
-		let table = model.create_table(products, columns);
+		let table = dataAction.create_table(products, columns);
 		mainContent.appendChild(table);
 	}
 
@@ -98,7 +102,7 @@ const pageMain = (function () {
 			router.pageStart(root);
 		} else if (status == "OK") {
 			let productsJSON = JSON.parse(data);
-			products = model.convert(productsJSON);
+			products = dataAction.convert(productsJSON);
 			_renderUserProducts(products);
 		}
 	}
@@ -107,7 +111,7 @@ const pageMain = (function () {
 		let mainContent = document.getElementById("main-content");
 		let btnPlace = document.getElementById("btn-place");
 		let columns = ["id", "name", "brand", "model", "cost"];
-		let table = model.create_table(products, columns);
+		let table = dataAction.create_table(products, columns);
 		let button = document.createElement("button");
 		button.textContent = "Удалить";
 		button.className = "btn-submit";
@@ -117,7 +121,7 @@ const pageMain = (function () {
 		mainContent.appendChild(table);
 		btnPlace.appendChild(button);
 		let rows = document.getElementsByTagName("tr");
-		highlightRow(rows);
+		animationHandler.highlightRow(rows);
 	}
 
 	/* DELETE PRODUCT */
@@ -201,7 +205,7 @@ const pageMain = (function () {
 
 	function _sendSaleInfo() {
 		let product = _getSaleInfo();
-		if (model.check_valid(product)) {
+		if (dataAction.check_valid(product)) {
 			request.saleProduct(product, _sendSaleInfo_callback);
 		} else {
 			error_span.textContent = "Не все поля были заполнены";

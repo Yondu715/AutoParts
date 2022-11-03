@@ -1,4 +1,6 @@
-const model = (function () {
+import { dataObject } from "../transport/dataObject.js";
+
+const dataAction = (function () {
 	function _check_valid(object) {
 		let keys = Object.keys(object.get());
 		for (let i = 0; i < keys.length; i++) {
@@ -36,3 +38,5 @@ const model = (function () {
 		convert: _convert_products,
 	}
 })();
+
+export { dataAction };

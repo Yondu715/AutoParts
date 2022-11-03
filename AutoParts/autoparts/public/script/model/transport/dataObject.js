@@ -35,3 +35,5 @@ const dataObject = (function () {
 		product: Product,
 	}
 })();
+
+export {dataObject};

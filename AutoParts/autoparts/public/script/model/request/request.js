@@ -15,11 +15,12 @@ const request = (function () {
 			callback(statusRequest, response);
 		};
 
-		if ((type == "delete" || type == "get")) {
+		if (data == null) {
+			xhr.send();
+		} else if ((type == "delete" || type == "get")) {
 			xhr.setRequestHeader("Data", JSON.stringify(data));
 			xhr.send();
-		}
-		else {
+		} else {
 			xhr.send(JSON.stringify(data));
 		}
 	}
@@ -61,3 +62,5 @@ const request = (function () {
 		reg: _reg,
 	}
 })();
+
+export {request};

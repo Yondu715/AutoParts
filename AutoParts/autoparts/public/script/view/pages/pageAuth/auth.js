@@ -1,4 +1,8 @@
-const pageAuth = (function () {
+import { dataObject, dataAction, request } from "../../../model/modelBundel.js";
+import router from "../../router.js";
+import { animationHandler } from "../../animationHandler.js";
+
+export default (function () {
 	let root = undefined;
 	let error_span = undefined;
 
@@ -31,7 +35,7 @@ const pageAuth = (function () {
 			router.pageReg(root);
 		});
 		btnSendAuthInfo.addEventListener("click", _sendAuthInfo);
-		animationFade(fadeBlock, 1, 0);
+		animationHandler.fade(fadeBlock, 1, 0);
 	}
 
 	function _getAuthInfo() {
@@ -47,7 +51,7 @@ const pageAuth = (function () {
 
 	function _sendAuthInfo() {
 		let user = _getAuthInfo();
-		if (model.check_valid(user)) {
+		if (dataAction.check_valid(user)) {
 			request.auth(user, _sendAI_callback);
 		} else {
 			error_span.textContent = "Не все поля были заполнены";
