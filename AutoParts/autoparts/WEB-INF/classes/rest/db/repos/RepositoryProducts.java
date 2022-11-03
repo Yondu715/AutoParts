@@ -1,13 +1,15 @@
 package rest.db.repos;
 
+import java.util.ArrayList;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import rest.db.DataBaseHelper;
 import rest.db.interfaces.IRepositoryProducts;
+
 import rest.model.dataObject.Product;
 
 public class RepositoryProducts implements IRepositoryProducts {

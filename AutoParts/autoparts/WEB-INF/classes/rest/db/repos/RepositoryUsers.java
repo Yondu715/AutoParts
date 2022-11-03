@@ -7,20 +7,21 @@ import java.sql.SQLException;
 
 import rest.db.DataBaseHelper;
 import rest.db.interfaces.IRepositoryUsers;
+import rest.model.dataObject.User;
 
 public class RepositoryUsers implements IRepositoryUsers {
 
 	private Connection dbConnection = DataBaseHelper.getConnection();
 
 	@Override
-	public boolean check(String login, String password) {
+	public boolean check(User user) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String select = "select login, password from autoparts.user where login=? and password=?;";
 		try {
 			ps = dbConnection.prepareStatement(select);
-			ps.setString(1, login);
-			ps.setString(2, password);
+			ps.setString(1, user.getLogin());
+			ps.setString(2, user.getPassword());
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				return true;
@@ -32,13 +33,13 @@ public class RepositoryUsers implements IRepositoryUsers {
 	}
 
 	@Override
-	public boolean add(String login, String password) {
+	public boolean add(User user) {
 		PreparedStatement ps = null;
 		String insert = "insert into autoparts.user (login, password) values(?, ?);";
 		try {
 			ps = dbConnection.prepareStatement(insert);
-			ps.setString(1, login);
-			ps.setString(2, password);
+			ps.setString(1, user.getLogin());
+			ps.setString(2, user.getPassword());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			if (e.getErrorCode() == 1062) {

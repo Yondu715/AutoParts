@@ -1,7 +1,9 @@
 package rest.db.interfaces;
 
-public interface IRepositoryUsers {
-	public boolean check(String login, String password);
+import rest.model.dataObject.User;
 
-	public boolean add(String login, String password);
+public interface IRepositoryUsers {
+	public boolean check(User user);
+
+	public boolean add(User user);
 }

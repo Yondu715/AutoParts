@@ -1,13 +1,17 @@
 package rest.server.component;
 
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.POST;
+
 import jakarta.inject.Inject;
+
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
-import jakarta.ws.rs.POST;
+
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
+
 import rest.model.dataObject.User;
 import rest.model.interfaces.IModelUser;
 import rest.server.token.Token;
