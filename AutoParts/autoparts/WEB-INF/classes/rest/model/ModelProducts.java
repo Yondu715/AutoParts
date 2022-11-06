@@ -25,16 +25,17 @@ public class ModelProducts implements IModelProducts {
 		for (int i = 0; i < productsID.size(); i++) {
 			repProducts.delete(productsID.get(i).getId());
 		}
-
 	}
 
 	@Override
 	public ArrayList<Product> getProducts(String seller_name) {
+		ArrayList<Product> products = null;
 		if (seller_name == null) {
-			return repProducts.getAll();
+			products = repProducts.getAll();
 		} else {
-			return repProducts.getByUser(seller_name);
+			products = repProducts.getByUser(seller_name);
 		}
+		return products;
 	}
 
 }

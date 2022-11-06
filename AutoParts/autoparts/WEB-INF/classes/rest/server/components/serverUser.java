@@ -1,4 +1,4 @@
-package rest.server.component;
+package rest.server.components;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.POST;

@@ -1,5 +1,5 @@
 import router from "./view/router.js";
-import { request } from "./model/request/request.js";
+import { request } from "./model/request.js";
 
 
 request.auth(null, (status) => {

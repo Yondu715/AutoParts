@@ -28,6 +28,23 @@ button{
 	font-family: 'Roboto Condensed', sans-serif;
 }
 
+#wrap-content {
+	background: rgb(240, 239, 237);
+	height: 100%;
+	position: relative;
+	padding-top: 70px;
+	display: flex;
+}
+
+#content {
+	height: 100%;
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+}
+
+/* HEADER BEGIN */
+
 header {
 	display: flex;
 	height: 70px;
@@ -37,19 +54,19 @@ header {
 	z-index: 3;
 }
 
-.start {
+header .start {
 	width: 25%;
 	display: flex;
 }
 
-.end {
+header .end {
 	display: flex;
 	justify-content: right;
 	width: 80%;
 	margin-right: 25px;
 }
 
-.start span {
+header .start span {
 	color: rgb(255, 255, 255);
 	font-size: 40px;
 	margin: auto;
@@ -57,14 +74,14 @@ header {
 	text-align: center;
 }
 
-.user-login {
+header .user-login {
 	font-size: 19px;
 	color: rgb(255, 255, 255);
 	text-transform: uppercase;
 	margin: auto 5%;
 }
 
-.btn-logout {
+header .btn-logout {
 	background-image: url(../resources/img/logout.png);
 	background-size: cover;
 	background-color: rgb(33, 74, 49);
@@ -76,61 +93,179 @@ header {
 	cursor: pointer;
 }
 
-.wrap-content {
-	background: rgb(240, 239, 237);
-	height: 100%;
-	position: relative;
-	padding-top: 70px;
-	display: flex;
-}
+/* HEADER END */
 
-#menu{
+/* MENU BEGIN */
+
+.menu{
 	height: 100%;
 	width: 25%;
 	display: flex;
 }
 
-#menu ul{
+.menu ul{
 	width: 100%;
 	text-align: center;
 	list-style-type: none;
 	margin: auto;
 }
 
-#menu ul li{
+.menu ul li{
 	padding-top: 10%;
 }
 
-#menu ul li:first-child{
+.menu ul li:first-child{
 	padding-top: 0%;
 }
 
-#menu ul li:first-child button {
+.menu ul li:first-child button {
 	color: rgb(1, 175, 108);
 }
 
-#menu ul li button{
+.menu ul li button{
 	color: rgb(17, 54, 40);
 	font-size: 30px;
 	background: none;
 }
 
-.content{
-	height: 100%;
-	width: 80%;
-	display: flex;
-	flex-direction: column;
-}
+/* MENU END */ 
 
-#main-content{
-	display: flex;
-	flex-direction: column;
+/* PRODUCTS BEGIN */
+
+#products {
 	height: 100%;
 	width: 100%;
 	overflow: scroll;
 }
 
-#btn-place{
+#products table{
+	width: 80%;
+	border-collapse: collapse;
+	margin: 40px auto;
+}
+
+#products table tr{
+	height: 80px;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+}
+
+#products table tr:hover {
+	background: rgb(255, 255, 255);
+}
+
+#products table td {
+	height: 100%;
+	width: 100%;
+}
+
+#products table .item {
+	display: flex;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	font-size: 35px;
+}
+
+#products table img {
+	max-width: 130px;
+	max-height: 180px;
+}
+
+#products table .item .id {
+	display: none;
+}
+
+#products table .item_image {
+	width: 130px;
+	margin: auto 5%;
+}
+
+#products table .item_price {
+	width: 30%;
+	margin: auto;
+}
+
+#products table .item_info {
+	width: 60%;
+	text-align: left;
+}
+
+#products table .item_info .sellerName {
+	display: block;
+}
+
+#products table .item_info .date {
+	display: block;
+	font-size: 24px;
+	margin-bottom: 1%;
+}
+
+#products table .item_info .brand {
+	margin-right: 10px;
+}
+
+/* PRODUCTS END */
+
+/* SALE BEGIN */
+
+#sale {
+	height: 100%;
+	width: 100%;
+	display: flex;
+}
+
+#sale .product_info {
+	display: flex;
+	flex-direction: column;
+	width: 70%;
+}
+
+#sale .product_image{
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	height: 100%;
+}
+
+#sale .product_info div:first-child {
+	margin-top: auto;
+}
+
+#sale .product_info div{
+	margin: 10px auto;
+	width: 50%;
+	font-size: 25px;
+}
+
+#sale .product_info div input{
+	color: rgb(0, 0, 0);
+}
+
+#sale #image {
+	max-width: 90%;
+	max-height: 70%;
+	margin: 0px auto;
+	margin-top: auto;
+}
+
+#sale #input_image{
+	text-align: center;
+	margin-bottom: auto;
+}
+
+#sale-status {
+	width: 250px;
+	color: rgb(255, 116, 116);
+	margin: auto;
+	margin-top: 10px;
+	text-align: center;
+	font-size: 17px;
+}
+
+/* SALE END */
+
+#btn-place {
 	width: 100%;
 	display: flex;
 }
@@ -140,48 +275,3 @@ header {
 	margin: 10px auto;
 }
 
-#main-content table{
-	width: 80%;
-	font-size: 35px;
-	text-align: center;
-	border-collapse: collapse;
-	margin: 40px auto;
-	table-layout: fixed;
-}
-
-#main-content table tr{
-	height: 80px;
-	border-top: 1px solid;
-	border-bottom: 1px solid;
-}
-
-#main-content table tr td:first-child{
-	display: none;
-}
-
-#main-content table tr:hover {
-	background: rgb(255, 255, 255);
-}
-
-#main-content div{
-	margin: 10px auto;
-	width: 50%;
-	font-size: 25px;
-}
-
-#main-content div:first-child {
-	margin-top: auto;
-}
-
-#main-content div input{
-	color: rgb(0, 0, 0);
-}
-
-#sale-status{
-	width: 250px;
-	color: rgb(255, 116, 116);
-	margin: auto;
-	margin-top: 10px;
-	text-align: center;
-	font-size: 17px;
-}

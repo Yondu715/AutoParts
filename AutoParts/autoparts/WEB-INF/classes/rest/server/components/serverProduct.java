@@ -1,4 +1,4 @@
-package rest.server.component;
+package rest.server.components;
 
 import java.util.ArrayList;
 import java.util.List;

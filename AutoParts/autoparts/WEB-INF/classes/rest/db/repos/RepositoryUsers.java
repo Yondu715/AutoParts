@@ -17,7 +17,7 @@ public class RepositoryUsers implements IRepositoryUsers {
 	public boolean check(User user) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String select = "select login, password from autoparts.user where login=? and password=?;";
+		String select = "select login, password from autoparts.users where login=? and password=?;";
 		try {
 			ps = dbConnection.prepareStatement(select);
 			ps.setString(1, user.getLogin());
@@ -35,7 +35,7 @@ public class RepositoryUsers implements IRepositoryUsers {
 	@Override
 	public boolean add(User user) {
 		PreparedStatement ps = null;
-		String insert = "insert into autoparts.user (login, password) values(?, ?);";
+		String insert = "insert into autoparts.users (login, password) values(?, ?);";
 		try {
 			ps = dbConnection.prepareStatement(insert);
 			ps.setString(1, user.getLogin());
