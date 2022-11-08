@@ -1,9 +1,10 @@
-import router from "./view/router.js";
-import { request } from "./model/request.js";
+import { Router } from "./view/router.js";
+import { auth } from "./model/Request.js";
 
 
-request.auth(null, (status) => {
+auth(null, (status) => {
 	let root = document.body;
+	let router = new Router();
 	if (status == 401) {
 		router.pageStart(root);
 	} else if (status == 200) {

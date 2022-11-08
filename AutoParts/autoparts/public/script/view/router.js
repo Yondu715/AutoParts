@@ -1,10 +1,11 @@
-import { pageAuth, pageReg, pageMain } from "./pages/pages.js";
+import { pageAuth, pageStart, pageReg, pageMain } from "./pages/pages.js";
 
-export default (function () {
-	return {
-		pageStart: pageAuth.render,
-		pageAuth: pageAuth.render,
-		pageReg: pageReg.render,
-		pageMain: pageMain.render,
+export class Router {
+
+	constructor(){
+		this.pageStart = pageAuth;
+		this.pageAuth = pageAuth;
+		this.pageMain = pageMain;
+		this.pageReg = pageReg;	
 	}
-})();
+}
