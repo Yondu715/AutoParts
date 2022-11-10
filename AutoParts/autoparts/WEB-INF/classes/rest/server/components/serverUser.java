@@ -37,7 +37,8 @@ public class serverUser {
 			if (model.authUser(user)) {
 				String header = "{\"typ\": \"JWT\"}";
 				String body = "{\"login\": \"" + login + "\"}";
-				token = Token.createToken(header, body);
+				Token new_token = new Token(header, body);
+				token = jsonb.toJson(new_token);
 				return Response.ok(token).build();
 			}
 		}

@@ -59,11 +59,13 @@ function _getRegInfo() {
 	return user;
 }
 
-function _sendRegInfo() {
+async function _sendRegInfo() {
 	let user = _getRegInfo();
 	if (check_valid(user)) {
 		if ((user.get()["password"] == user.get()["repeat-password"])) {
-			reg(user, _sendRI_callback);
+			let response = await reg(user);
+			let status = response.getStatus();
+			status_react(status);
 		} else {
 			error_span.textContent = "Пароли не совпадают";
 		}
@@ -72,7 +74,7 @@ function _sendRegInfo() {
 	}
 }
 
-function _sendRI_callback(status) {
+function status_react(status){
 	if (status == 200) {
 		router.pageAuth(root);
 	} else if (status == 400) {

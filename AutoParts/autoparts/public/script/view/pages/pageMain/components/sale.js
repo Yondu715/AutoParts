@@ -96,26 +96,24 @@ function _getSaleInfo() {
 	return product;
 }
 
-function _sendSaleInfo() {
+async function _sendSaleInfo() {
 	let product = _getSaleInfo();
 	if (check_valid(product)) {
-		saleProduct(product.get(), _sendSaleInfo_callback);
+		let response = await saleProduct(product);
+		let status = response.getStatus();
+		if (status == 401) {
+			router.pageStart.render();
+		} else {
+			error_span.textContent = "";
+			let fields = document.getElementsByTagName("input");
+			for (let i = 0; i < fields.length; i++) {
+				fields[i].value = "";
+			}
+			let image = document.getElementById("image");
+			image.src = "";
+		}
 	} else {
 		error_span.textContent = "Не все поля были заполнены";
-	}
-}
-
-function _sendSaleInfo_callback(status) {
-	if (status == 401) {
-		router.pageStart.render();
-	} else {
-		error_span.textContent = "";
-		let fields = document.getElementsByTagName("input");
-		for (let i = 0; i < fields.length; i++) {
-			fields[i].value = "";
-		}
-		let image = document.getElementById("image");
-		image.src = "";
 	}
 }
 

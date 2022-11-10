@@ -7,16 +7,14 @@ let root = undefined;
 let products = undefined;
 let router = undefined;
 
-function _getAllProducts() {
-	getAllProducts(_getAllProducts_callback);
-}
-
-function _getAllProducts_callback(status, data) {
+async function _getAllProducts() {
+	let response = await getAllProducts();
+	let data = response.getBody();
+	let status = response.getStatus();
 	if (status == 401) {
 		router.pageStart.render();
 	} else if (status == 200) {
-		let productsJSON = JSON.parse(data);
-		products = convert_products(productsJSON);
+		products = convert_products(data);
 		_render();
 	}
 }
@@ -29,6 +27,12 @@ function _render() {
 	let table = create_table(products, columns);
 	div_products.appendChild(table);
 	root.appendChild(div_products);
+	
+	table.addEventListener("click", (event) => {
+		let row = event.target.closest("tr");
+		let span = row.querySelector(".id");
+		let id = span.textContent;
+	});
 }
 
 export default function _init(_root) {

@@ -8,23 +8,22 @@ let root = undefined;
 let products = undefined;
 let router = undefined;
 
-function _getUserProducts() {
-	getUserProducts(_getUserProducts_callback);
-}
-
-function _getUserProducts_callback(status, data) {
+async function _getUserProducts() {
+	let response = await getUserProducts();
+	let data = response.getBody();
+	let status = response.getStatus();
 	if (status == 401) {
 		router.pageStart.render();
 	} else if (status == 200) {
-		let productsJSON = JSON.parse(data);
-		products = convert_products(productsJSON);
-		_render(products);
+		products = convert_products(data);
+		_render();
 	}
 }
 
 function _render() {
 	let div_products = document.createElement("div");
 	div_products.id = "products";
+	root.innerHTML = "";
 	let btnPlace = document.createElement("div");
 	btnPlace.id = "btn-place";
 
@@ -37,7 +36,6 @@ function _render() {
 	div_products.appendChild(table);
 	btnPlace.appendChild(button);
 
-	root.innerHTML = "";
 	root.appendChild(div_products);
 	root.appendChild(btnPlace);
 	let rows = div_products.getElementsByTagName("tr");
@@ -61,12 +59,10 @@ function _getDeleteInfo() {
 	return products_id;
 }
 
-function _sendDeleteInfo() {
+async function _sendDeleteInfo() {
 	let jsonProductsID = _getDeleteInfo();
-	deleteProduct(jsonProductsID, _sendDeleteInfo_callback);
-}
-
-function _sendDeleteInfo_callback(status) {
+	let response = await deleteProduct(jsonProductsID);
+	let status = response.getStatus();
 	if (status == 401) {
 		router.pageStart(root);
 	} else if (status == 204) {

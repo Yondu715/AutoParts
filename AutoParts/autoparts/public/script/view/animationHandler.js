@@ -18,11 +18,11 @@ export function highlightMenu(buttons) {
 			for (let i = 0; i < buttons.length; i++) {
 				let style = window.getComputedStyle(buttons[i]);
 				if (style["color"] != "rgb(17, 54, 40)") {
-					buttons[i].style.animation = "rhighlightMenu 0.2s ease-in";
+					buttons[i].style.animation = "rhighlightMenu 0.1s ease-in";
 					buttons[i].style.color = "rgb(17, 54, 40)";
 				}
 			}
-			elem.style.animation = "highlightMenu 0.2s ease-in";
+			elem.style.animation = "highlightMenu 0.1s ease-in";
 			elem.style.color = "rgb(1, 175, 108)";
 		});
 	});

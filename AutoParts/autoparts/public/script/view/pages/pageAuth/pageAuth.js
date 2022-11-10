@@ -9,7 +9,6 @@ let error_span = undefined;
 let router = undefined;
 
 function _render() {
-	root.innerHTML = "";
 	root.innerHTML = `<div class='log-page'>
 						<div class='log-content'>
 							<div class='log'>
@@ -30,7 +29,7 @@ function _render() {
 							<span>Еще нет аккаунта? <button class='btn-path' id='reg'>Зарегистрироваться</button></span>
 						</div>
 					</div>`;
-	let fadeBlock = document.getElementsByClassName("log-content")[0];
+	let fadeBlock = document.querySelector(".log-content");
 	let btnReg = document.getElementById("reg");
 	let btnSendAuthInfo = document.getElementById("btnAuthInfo");
 	error_span = document.getElementById("log-status");
@@ -41,7 +40,7 @@ function _render() {
 	fade(fadeBlock, 1, 0);
 }
 
-function _renderAuth(){
+/*function _renderAuth(){
 	let log_page = document.createElement("div");
 	log_page.className = "log-page";
 	let log_content = document.createElement("div");
@@ -106,7 +105,7 @@ function _renderAuth(){
 	log_content.appendChild(span_reg);
 	log_page.appendChild(log_content);
 	root.appendChild(log_page);
-}
+}*/
 
 function _getAuthInfo() {
 	let login = document.getElementById("login").value
@@ -119,20 +118,23 @@ function _getAuthInfo() {
 	return user;
 }
 
-function _sendAuthInfo() {
+async function _sendAuthInfo() {
 	let user = _getAuthInfo();
 	if (check_valid(user)) {
-		auth(user.get(), _sendAI_callback);
+		let response = await auth(user);
+		let data = response.getBody();
+		let status = response.getStatus();
+		status_react(status, data);
 	} else {
 		error_span.textContent = "Не все поля были заполнены";
 	}
 }
 
-function _sendAI_callback(status, token) {
+function status_react(status, data){
 	if (status == 401) {
 		error_span.textContent = "Неправильный логин или пароль";
 	} else if (status == 200) {
-		localStorage.setItem("token", token);
+		localStorage.setItem("token", data["token"]);
 		localStorage.setItem("login", _getAuthInfo().get()["login"]);
 		router.pageMain(root);
 	}
