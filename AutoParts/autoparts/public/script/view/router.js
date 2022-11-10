@@ -1,4 +1,4 @@
-import { pageAuth, pageStart, pageReg, pageMain } from "./pages/pages.js";
+import { pageAuth, pageReg, pageMain } from "./pages/pages.js";
 
 export class Router {
 

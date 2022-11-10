@@ -108,8 +108,8 @@ function _render() {
 }*/
 
 function _getAuthInfo() {
-	let login = document.getElementById("login").value
-	let password = document.getElementById("password").value
+	let login = document.getElementById("login").value;
+	let password = document.getElementById("password").value;
 	let jsonAuthInfo = {
 		"login": login,
 		"password": password
@@ -120,17 +120,17 @@ function _getAuthInfo() {
 
 async function _sendAuthInfo() {
 	let user = _getAuthInfo();
-	if (check_valid(user)) {
-		let response = await auth(user);
-		let data = response.getBody();
-		let status = response.getStatus();
-		status_react(status, data);
-	} else {
+	if (!check_valid(user)) {
 		error_span.textContent = "Не все поля были заполнены";
+		return;
 	}
+	let response = await auth(user);
+	let data = response.getBody();
+	let status = response.getStatus();
+	_react_authInfo(status, data);
 }
 
-function status_react(status, data){
+function _react_authInfo(status, data) {
 	if (status == 401) {
 		error_span.textContent = "Неправильный логин или пароль";
 	} else if (status == 200) {
@@ -140,7 +140,7 @@ function status_react(status, data){
 	}
 }
 
-export default function _init(_root) {
+export default function init(_root) {
 	root = _root;
 	router = new Router();
 	_render();

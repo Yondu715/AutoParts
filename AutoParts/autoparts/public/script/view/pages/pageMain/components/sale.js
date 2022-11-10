@@ -98,26 +98,30 @@ function _getSaleInfo() {
 
 async function _sendSaleInfo() {
 	let product = _getSaleInfo();
-	if (check_valid(product)) {
-		let response = await saleProduct(product);
-		let status = response.getStatus();
-		if (status == 401) {
-			router.pageStart.render();
-		} else {
-			error_span.textContent = "";
-			let fields = document.getElementsByTagName("input");
-			for (let i = 0; i < fields.length; i++) {
-				fields[i].value = "";
-			}
-			let image = document.getElementById("image");
-			image.src = "";
-		}
-	} else {
+	if (!check_valid(product)) {
 		error_span.textContent = "Не все поля были заполнены";
+		return;
+	}
+	let response = await saleProduct(product);
+	let status = response.getStatus();
+	_react_saleInfo(status);
+}
+
+function _react_saleInfo(status) {
+	if (status == 401) {
+		router.pageStart(root);
+	} else {
+		error_span.textContent = "";
+		let fields = document.getElementsByTagName("input");
+		for (let i = 0; i < fields.length; i++) {
+			fields[i].value = "";
+		}
+		let image = document.getElementById("image");
+		image.src = "";
 	}
 }
 
-export default function _init(_root) {
+export default function init(_root) {
 	root = _root;
 	router = new Router();
 	_render();

@@ -12,6 +12,10 @@ async function _getUserProducts() {
 	let response = await getUserProducts();
 	let data = response.getBody();
 	let status = response.getStatus();
+	_react_getUserProducts(status, data);
+}
+
+function _react_getUserProducts(status, data){
 	if (status == 401) {
 		router.pageStart.render();
 	} else if (status == 200) {
@@ -63,6 +67,10 @@ async function _sendDeleteInfo() {
 	let jsonProductsID = _getDeleteInfo();
 	let response = await deleteProduct(jsonProductsID);
 	let status = response.getStatus();
+	react_deleteInfo(status);
+}
+
+function react_deleteInfo(status){
 	if (status == 401) {
 		router.pageStart(root);
 	} else if (status == 204) {
@@ -70,7 +78,7 @@ async function _sendDeleteInfo() {
 	}
 }
 
-export default function _init(_root) {
+export default function init(_root) {
 	root = _root;
 	router = new Router();
 	_getUserProducts();

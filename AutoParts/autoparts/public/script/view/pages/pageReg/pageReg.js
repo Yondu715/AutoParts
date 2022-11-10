@@ -1,7 +1,7 @@
 import { check_valid } from "../../../model/DataAction.js";
 import { Router } from "../../router.js";
 import { fade } from "../../AnimationHandler.js";
-import {User} from "../../../model/transport/User.js";
+import { User } from "../../../model/transport/User.js";
 import { reg } from "../../../model/Request.js";
 
 
@@ -53,7 +53,7 @@ function _getRegInfo() {
 	let jsonRegInfo = {
 		"login": login,
 		"password": password,
-		"repeat-password": repeat_password
+		"repeat-password": repeat_password,
 	}
 	let user = new User(jsonRegInfo);
 	return user;
@@ -61,20 +61,23 @@ function _getRegInfo() {
 
 async function _sendRegInfo() {
 	let user = _getRegInfo();
-	if (check_valid(user)) {
-		if ((user.get()["password"] == user.get()["repeat-password"])) {
-			let response = await reg(user);
-			let status = response.getStatus();
-			status_react(status);
-		} else {
-			error_span.textContent = "Пароли не совпадают";
-		}
-	} else {
+	if (!check_valid(user)) {
 		error_span.textContent = "Не все поля были заполнены";
+		return;
 	}
+
+	let password = user.get()["password"];
+	let repeat_password = user.get()["repeat-password"];
+	if (password != repeat_password) {
+		error_span.textContent = "Пароли не совпадают";
+		return;
+	}
+	let response = await reg(user);
+	let status = response.getStatus();
+	_react_regInfo(status);
 }
 
-function status_react(status){
+function _react_regInfo(status) {
 	if (status == 200) {
 		router.pageAuth(root);
 	} else if (status == 400) {
@@ -82,7 +85,7 @@ function status_react(status){
 	}
 }
 
-export default function _init(_root) {
+export default function init(_root) {
 	root = _root;
 	router = new Router();
 	_render();

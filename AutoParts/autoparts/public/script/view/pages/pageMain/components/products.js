@@ -11,8 +11,12 @@ async function _getAllProducts() {
 	let response = await getAllProducts();
 	let data = response.getBody();
 	let status = response.getStatus();
+	_react_getAllProducts(status, data);
+}
+
+function _react_getAllProducts(status, data){
 	if (status == 401) {
-		router.pageStart.render();
+		router.pageStart(root);
 	} else if (status == 200) {
 		products = convert_products(data);
 		_render();
@@ -35,7 +39,7 @@ function _render() {
 	});
 }
 
-export default function _init(_root) {
+export default function init(_root) {
 	root = _root;
 	router = new Router();
 	_getAllProducts();

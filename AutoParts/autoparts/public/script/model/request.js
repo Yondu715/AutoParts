@@ -30,7 +30,7 @@ async function _sendRequest(type, uri, options, data) {
 	try {
 		json = await response.json();
 	} catch (error) {
-		
+		json = null;
 	}
 	return new Response(response.status, json);
 }

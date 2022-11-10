@@ -34,8 +34,7 @@ function _render() {
 
 function _logout() {
 	let animationBlock = document.querySelector(".overPage");
-	localStorage.removeItem("token");
-	localStorage.removeItem("login");
+	localStorage.clear();
 	cover(animationBlock, 0.5, 0);
 	setTimeout(() => {
 		router.pageStart(root);
@@ -61,8 +60,12 @@ function _renderMenu() {
 	menu_root.appendChild(menu);
 
 	let buttons = list.getElementsByTagName("button");
-	let menu_funcs = [() => renderProducts(componentRoot), () => renderSale(componentRoot), () => renderUserProducts(componentRoot)];
-	for (let i = 0; i < buttons.length; i++) {
+	let menu_funcs = [	
+					() => renderProducts(componentRoot), 
+					() => renderSale(componentRoot), 
+					() => renderUserProducts(componentRoot)
+				];
+	for (let i = 0; i < menu_funcs.length; i++) {
 		buttons[i].addEventListener("click", menu_funcs[i]);
 	}
 	highlightMenu(buttons);
@@ -76,7 +79,7 @@ function _renderContent() {
 	renderProducts(content);
 }
 
-export default function _init(_root) {
+export default function init(_root) {
 	root = _root;
 	router = new Router();
 	_render();
