@@ -38,4 +38,9 @@ public class ModelProducts implements IModelProducts {
 		return products;
 	}
 
+	@Override
+	public Product getProductInfo(Integer product_id){
+		return repProducts.getById(product_id);
+	}
+
 }

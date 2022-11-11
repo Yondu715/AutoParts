@@ -44,6 +44,33 @@ public class RepositoryProducts implements IRepositoryProducts {
 	}
 
 	@Override
+	public Product getById(Integer product_id){
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Product product = null;
+		String select = "select * from autoparts.products where id=?;";
+		try {
+			ps = dbConnection.prepareStatement(select);
+			ps.setInt(1, product_id);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				Integer id = rs.getInt(1);
+				String name = rs.getString(2);
+				String seller_name = rs.getString(3);
+				String model = rs.getString(4);
+				String brand = rs.getString(5);
+				Integer price = rs.getInt(6);
+				String date = rs.getDate(7).toString();
+				String image_name = rs.getString(8);
+				product = new Product(id, name, seller_name, brand, model, price, date, image_name);
+			}
+		} catch (SQLException e) {
+			DataBaseHelper.closeConnection();
+		}
+		return product;
+	}
+
+	@Override
 	public ArrayList<Product> getByUser(String seller_name) {
 		ArrayList<Product> products = new ArrayList<>();
 		PreparedStatement ps = null;
@@ -58,10 +85,10 @@ public class RepositoryProducts implements IRepositoryProducts {
 				String name = rs.getString(2);
 				String model = rs.getString(4);
 				String brand = rs.getString(5);
-				Integer cost = rs.getInt(6);
+				Integer price = rs.getInt(6);
 				String date = rs.getDate(7).toString();
 				String imageBase64 = rs.getString(8);
-				Product product = new Product(id, name, seller_name, brand, model, cost, date, imageBase64);
+				Product product = new Product(id, name, seller_name, brand, model, price, date, imageBase64);
 				products.add(product);
 			}
 		} catch (SQLException e) {
@@ -80,7 +107,7 @@ public class RepositoryProducts implements IRepositoryProducts {
 			ps.setString(2, product.getSellerName());
 			ps.setString(3, product.getModel());
 			ps.setString(4, product.getBrand());
-			ps.setInt(5, product.getCost());
+			ps.setInt(5, product.getPrice());
 			ps.setString(6, product.getImageBase64());
 			ps.executeUpdate();
 		} catch (SQLException e) {

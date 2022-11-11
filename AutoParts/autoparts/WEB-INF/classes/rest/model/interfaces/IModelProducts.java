@@ -11,4 +11,6 @@ public interface IModelProducts {
 	public void deleteProduct(List<Product> productsID);
 
 	public ArrayList<Product> getProducts(String seller_name);
+
+	public Product getProductInfo(Integer product_id);
 }

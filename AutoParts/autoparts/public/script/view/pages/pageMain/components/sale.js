@@ -22,7 +22,7 @@ function _render() {
 	let product_image = document.createElement("div");
 	product_image.className = "product_image";
 
-	let fields = ["name", "brand", "model", "cost"];
+	let fields = ["name", "brand", "model", "price"];
 	let fields_ru = ["Название", "Марка", "Модель", "Стоимость"];
 	for (let i = 0; i < fields.length; i++) {
 		let container = document.createElement("div");
@@ -79,13 +79,13 @@ function _getSaleInfo() {
 	let input_image = document.getElementById("input_image");
 	let image = document.getElementById("image");
 	let jsonSale = {};
-	let fields = ["name", "brand", "model", "cost"];
+	let fields = ["name", "brand", "model", "price"];
 	for (let i = 0; i < fields.length; i++) {
 		let value = document.getElementById(fields[i]).value;
 		jsonSale[fields[i]] = value;
 	}
 	jsonSale["sellerName"] = localStorage.getItem("login");
-	jsonSale["cost"] = Number(jsonSale["cost"]);
+	jsonSale["price"] = Number(jsonSale["price"]);
 	jsonSale["imageBase64"] = "";
 
 	let file = input_image.files[0];

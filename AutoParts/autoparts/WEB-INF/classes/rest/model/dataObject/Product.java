@@ -6,20 +6,20 @@ public class Product {
 	private String sellerName;
 	private String brand;
 	private String model;
-	private Integer cost;
+	private Integer price;
 	private String date;
 	private String imageBase64;
 
 	public Product() {
 	}
 
-	public Product(Integer id, String name, String sellerName, String brand, String model, Integer cost, String date, String imageBase64) {
+	public Product(Integer id, String name, String sellerName, String brand, String model, Integer price, String date, String imageBase64) {
 		this.id = id;
 		this.name = name;
 		this.sellerName = sellerName;
 		this.brand = brand;
 		this.model = model;
-		this.cost = cost;
+		this.price = price;
 		this.date = date;
 		this.imageBase64 = imageBase64;
 	}
@@ -64,12 +64,12 @@ public class Product {
 		this.model = model;
 	}
 
-	public Integer getCost() {
-		return cost;
+	public Integer getPrice() {
+		return price;
 	}
 
-	public void setCost(Integer cost) {
-		this.cost = cost;
+	public void setPrice(Integer price) {
+		this.price = price;
 	}
 
 	public String getDate() {

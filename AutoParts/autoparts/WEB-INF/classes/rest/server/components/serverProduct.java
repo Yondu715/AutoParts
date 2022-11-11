@@ -16,7 +16,7 @@ import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
-
+import jakarta.ws.rs.core.UriInfo;
 import rest.model.dataObject.Product;
 import rest.model.interfaces.IModelProducts;
 import rest.server.token.Token;
@@ -49,6 +49,19 @@ public class serverProduct {
 		}
 		ArrayList<Product> products = model.getProducts(login);
 		String resultJson = jsonb.toJson(products);
+		return Response.ok(resultJson).build();
+	}
+
+	@GET
+	@Path("/{product_id}")
+	public Response getProductInfo(@Context HttpHeaders httpHeaders, @Context UriInfo info) {
+		String token = httpHeaders.getHeaderString("Authorization");
+		if (!Token.checkToken(token)) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+		String product_id = info.getPathParameters().getFirst("product_id");
+		Product product = model.getProductInfo(Integer.parseInt(product_id));
+		String resultJson = jsonb.toJson(product);
 		return Response.ok(resultJson).build();
 	}
 

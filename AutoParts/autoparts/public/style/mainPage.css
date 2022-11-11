@@ -32,7 +32,7 @@ button{
 	background: rgb(240, 239, 237);
 	height: 100%;
 	position: relative;
-	padding-top: 70px;
+	padding-top: 75px;
 	display: flex;
 }
 
@@ -47,7 +47,7 @@ button{
 
 header {
 	display: flex;
-	height: 70px;
+	height: 75px;
 	position: fixed;
 	background: rgb(33, 74, 49);
 	width: 100%;
@@ -68,14 +68,14 @@ header .end {
 
 header .start span {
 	color: rgb(255, 255, 255);
-	font-size: 40px;
+	font-size: 45px;
 	margin: auto;
 	font-weight: bold;
 	text-align: center;
 }
 
 header .user-login {
-	font-size: 19px;
+	font-size: 21px;
 	color: rgb(255, 255, 255);
 	text-transform: uppercase;
 	margin: auto 5%;
@@ -85,8 +85,8 @@ header .btn-logout {
 	background-image: url(../resources/img/logout.png);
 	background-size: cover;
 	background-color: rgb(33, 74, 49);
-	height: 25px;
-	width: 25px;
+	height: 30px;
+	width: 30px;
 	border: none;
 	padding: 0px;
 	margin: auto 0px;
@@ -124,7 +124,7 @@ header .btn-logout {
 
 .menu ul li button{
 	color: rgb(17, 54, 40);
-	font-size: 30px;
+	font-size: 35px;
 	background: none;
 }
 
@@ -139,13 +139,12 @@ header .btn-logout {
 }
 
 #products table{
-	width: 80%;
+	width: 85%;
 	border-collapse: collapse;
 	margin: 40px auto;
 }
 
 #products table tr{
-	height: 80px;
 	border-top: 1px solid;
 	border-bottom: 1px solid;
 }
@@ -164,12 +163,11 @@ header .btn-logout {
 	height: 100%;
 	width: 100%;
 	text-align: center;
-	font-size: 35px;
+	font-size: 40px;
 }
 
 #products table img {
-	max-width: 130px;
-	max-height: 180px;
+	max-width: 150px;
 }
 
 #products table .item .id {
@@ -177,12 +175,12 @@ header .btn-logout {
 }
 
 #products table .item_image {
-	width: 130px;
+	width: 150px;
 	margin: auto 5%;
 }
 
 #products table .item_price {
-	width: 30%;
+	width: 20%;
 	margin: auto;
 }
 
@@ -197,7 +195,7 @@ header .btn-logout {
 
 #products table .item_info .date {
 	display: block;
-	font-size: 24px;
+	font-size: 28px;
 	margin-bottom: 1%;
 }
 
@@ -207,12 +205,60 @@ header .btn-logout {
 
 /* PRODUCTS END */
 
+/* PRODUCT-INFO BEGIN*/
+
+#product-info {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	padding: 20px;
+	overflow: scroll;
+}
+
+#product-info .left-part {
+	height: 100%;
+	width: 70%;
+	display: flex;
+}
+
+#product-info .right-part {
+	height: 100%;
+	width: 30%;
+	display: flex;
+}
+
+#product-info .info {
+	display: flex;
+	flex-direction: column;
+}
+
+#product-info .info span {
+	margin: auto 0px;
+	font-size: 30px;
+}
+
+#product-info .product-image {
+	padding-left: 10px;
+	margin: auto;
+}
+
+#product-info img {
+	max-width: 100%;
+}
+
+/* PRODUCT-INFO END */
+
+
 /* SALE BEGIN */
 
 #sale {
 	height: 100%;
 	width: 100%;
 	display: flex;
+}
+
+#sale .text {
+	font-size: 22px;
 }
 
 #sale .product_info {
@@ -235,7 +281,7 @@ header .btn-logout {
 #sale .product_info div{
 	margin: 10px auto;
 	width: 50%;
-	font-size: 25px;
+	font-size: 27px;
 }
 
 #sale .product_info div input{
@@ -260,7 +306,8 @@ header .btn-logout {
 	margin: auto;
 	margin-top: 10px;
 	text-align: center;
-	font-size: 17px;
+	font-size: 18px;
+	height: 20px;
 }
 
 /* SALE END */

@@ -31,7 +31,7 @@ function _render() {
 	let btnPlace = document.createElement("div");
 	btnPlace.id = "btn-place";
 
-	let columns = ["id", "name", "date", "brand", "model", "cost", "imageBase64"];
+	let columns = ["id", "name", "date", "brand", "model", "price", "imageBase64"];
 	let table = create_table(products, columns);
 	let button = document.createElement("button");
 	button.textContent = "Удалить";

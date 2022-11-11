@@ -44,6 +44,10 @@ export async function getUserProducts() {
 	return await _sendRequest("GET", "api/products/userProducts", { "Login": localStorage.getItem("login") });
 }
 
+export async function getProductInfo(product_id){
+	return await _sendRequest("GET", "api/products/" + product_id);
+}
+
 export async function auth(user) {
 	let data;
 	try {
