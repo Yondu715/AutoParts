@@ -1,0 +1,331 @@
+html,
+body {
+	height: 100%;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+button{
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+
+.overPage{
+	height: 100%;
+	width: 0%;
+	position: absolute;
+	background: rgb(33, 74, 49);
+	z-index: 999;
+}
+
+.main-page{
+	height: 100%;
+	font-family: 'Roboto Condensed', sans-serif;
+}
+
+#wrap-content {
+	background: rgb(240, 239, 237);
+	height: 100%;
+	position: relative;
+	padding-top: 75px;
+	display: flex;
+}
+
+#content {
+	height: 100%;
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+}
+
+/* HEADER BEGIN */
+
+header {
+	display: flex;
+	height: 75px;
+	position: fixed;
+	background: rgb(33, 74, 49);
+	width: 100%;
+	z-index: 3;
+}
+
+header .start {
+	width: 25%;
+	display: flex;
+}
+
+header .end {
+	display: flex;
+	justify-content: right;
+	width: 75%;
+	margin-right: 25px;
+}
+
+header .start span {
+	color: rgb(255, 255, 255);
+	font-size: 45px;
+	margin: auto;
+	font-weight: bold;
+	text-align: center;
+}
+
+header .user-login {
+	font-size: 21px;
+	color: rgb(255, 255, 255);
+	text-transform: uppercase;
+	margin: auto 5%;
+}
+
+header .btn-logout {
+	background-size: cover;
+	background-color: rgb(33, 74, 49);
+	height: 30px;
+	width: 30px;
+	border: none;
+	padding: 0px;
+	margin: auto 0px;
+	cursor: pointer;
+}
+
+/* HEADER END */
+
+/* MENU BEGIN */
+
+.menu{
+	height: 100%;
+	width: 25%;
+	display: flex;
+}
+
+.menu ul{
+	width: 100%;
+	text-align: center;
+	list-style-type: none;
+	margin: auto;
+}
+
+.menu ul li{
+	padding-top: 10%;
+}
+
+.menu ul li:first-child{
+	padding-top: 0%;
+}
+
+.menu ul li:first-child button {
+	color: rgb(1, 175, 108);
+}
+
+.menu ul li button{
+	color: rgb(17, 54, 40);
+	font-size: 35px;
+	background: none;
+}
+
+/* MENU END */ 
+
+/* PRODUCTS BEGIN */
+
+#products {
+	height: 100%;
+	width: 100%;
+	overflow: scroll;
+}
+
+#products table{
+	width: 85%;
+	border-collapse: collapse;
+	margin: 40px auto;
+}
+
+#products table tr{
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+}
+
+#products table tr:hover {
+	background: rgb(255, 255, 255);
+}
+
+#products table td {
+	height: 100%;
+	width: 100%;
+}
+
+#products table .item {
+	display: flex;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	font-size: 40px;
+}
+
+#products table img {
+	max-width: 150px;
+}
+
+#products table .item .id {
+	display: none;
+}
+
+#products table .item_image {
+	width: 150px;
+	margin: auto 5%;
+}
+
+#products table .item_price {
+	width: 20%;
+	margin: auto;
+}
+
+#products table .item_info {
+	width: 60%;
+	text-align: left;
+}
+
+#products table .item_info .sellerName {
+	display: block;
+}
+
+#products table .item_info .date {
+	display: block;
+	font-size: 28px;
+	margin-bottom: 1%;
+}
+
+#products table .item_info .brand {
+	margin-right: 10px;
+}
+
+/* PRODUCTS END */
+
+/* PRODUCT-INFO BEGIN*/
+
+#product-info {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	padding: 20px;
+	overflow: scroll;
+}
+
+#product-info .left-part {
+	height: 100%;
+	width: 70%;
+	display: flex;
+}
+
+#product-info .right-part {
+	height: 100%;
+	width: 30%;
+	display: flex;
+}
+
+#product-info .info {
+	display: flex;
+	flex-direction: column;
+}
+
+#product-info .info span {
+	margin: 10px 0px;
+	font-size: 30px;
+}
+
+#product-info .info span:first-child {
+	margin-top: auto;
+}
+
+#product-info .info span:last-child {
+	margin-bottom: auto;
+}
+
+#product-info .product-image {
+	padding-left: 10px;
+	margin: auto;
+}
+
+#product-info img {
+	max-width: 100%;
+}
+
+/* PRODUCT-INFO END */
+
+
+/* SALE BEGIN */
+
+#sale {
+	height: 100%;
+	width: 100%;
+	display: flex;
+}
+
+#sale .text {
+	font-size: 22px;
+}
+
+#sale .product_info {
+	display: flex;
+	flex-direction: column;
+	width: 70%;
+}
+
+#sale .product_image{
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	height: 100%;
+}
+
+#sale .product_info div:first-child {
+	margin-top: auto;
+}
+
+#sale .product_info div{
+	margin: 10px auto;
+	width: 50%;
+	font-size: 27px;
+}
+
+#sale .product_info div input{
+	color: rgb(0, 0, 0);
+}
+
+#sale #image {
+	max-width: 90%;
+	max-height: 70%;
+	margin: 0px auto;
+	margin-top: auto;
+}
+
+#sale #input_image{
+	text-align: center;
+	margin-bottom: auto;
+}
+
+#sale-status {
+	width: 250px;
+	color: rgb(255, 116, 116);
+	margin: auto;
+	margin-top: 10px;
+	text-align: center;
+	font-size: 18px;
+	height: 20px;
+}
+
+/* SALE END */
+
+#btn-place {
+	width: 100%;
+	display: flex;
+}
+
+#btn-place button {
+	width: 40%;
+	margin: 10px auto;
+}
+
