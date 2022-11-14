@@ -62,7 +62,7 @@ header .start {
 header .end {
 	display: flex;
 	justify-content: right;
-	width: 80%;
+	width: 75%;
 	margin-right: 25px;
 }
 
@@ -82,7 +82,6 @@ header .user-login {
 }
 
 header .btn-logout {
-	background-image: url(../resources/img/logout.png);
 	background-size: cover;
 	background-color: rgb(33, 74, 49);
 	height: 30px;
@@ -233,8 +232,16 @@ header .btn-logout {
 }
 
 #product-info .info span {
-	margin: auto 0px;
+	margin: 10px 0px;
 	font-size: 30px;
+}
+
+#product-info .info span:first-child {
+	margin-top: auto;
+}
+
+#product-info .info span:last-child {
+	margin-bottom: auto;
 }
 
 #product-info .product-image {

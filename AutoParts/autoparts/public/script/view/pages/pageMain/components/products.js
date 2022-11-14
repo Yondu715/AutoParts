@@ -1,5 +1,5 @@
 import { Router } from "../../../router.js";
-import { getAllProducts } from "../../../../model/Request.js";
+import { async_getAllProducts } from "../../../../model/Request.js";
 import { convert_products, create_table } from "../../../../model/DataAction.js";
 import renderProductInfo from "./productInfo.js";
 
@@ -9,7 +9,7 @@ let products = undefined;
 let router = undefined;
 
 async function _getAllProducts() {
-	let response = await getAllProducts();
+	let response = await async_getAllProducts();
 	let data = response.getBody();
 	let status = response.getStatus();
 	_react_getAllProducts(status, data);

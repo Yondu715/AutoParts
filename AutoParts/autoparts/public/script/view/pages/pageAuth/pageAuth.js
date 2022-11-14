@@ -2,7 +2,7 @@ import { check_valid } from "../../../model/DataAction.js";
 import { Router } from "../../router.js";
 import { fade } from "../../AnimationHandler.js";
 import { User } from "../../../model/transport/User.js";
-import { auth } from "../../../model/Request.js";
+import { async_auth } from "../../../model/Request.js";
 
 let root = undefined;
 let error_span = undefined;
@@ -124,7 +124,7 @@ async function _sendAuthInfo() {
 		error_span.textContent = "Не все поля были заполнены";
 		return;
 	}
-	let response = await auth(user);
+	let response = await async_auth(user);
 	let data = response.getBody();
 	let status = response.getStatus();
 	_react_authInfo(status, data);

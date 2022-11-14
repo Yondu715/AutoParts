@@ -1,5 +1,5 @@
 import { Router } from "../../../router.js";
-import { getProductInfo } from "../../../../model/Request.js";
+import { async_getProductInfo } from "../../../../model/Request.js";
 import { convert_products, create_productInfo } from "../../../../model/DataAction.js";
 
 
@@ -9,7 +9,7 @@ let product = undefined;
 let router = undefined;
 
 async function _getProductInfo() {
-	let response = await getProductInfo(product_id);
+	let response = await async_getProductInfo(product_id);
 	let data = response.getBody();
 	let status = response.getStatus();
 	_react_getProductInfo(status, data);

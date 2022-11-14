@@ -1,8 +1,8 @@
 import { Router } from "./view/router.js";
-import { auth } from "./model/Request.js";
+import { async_auth } from "./model/Request.js";
 
 
-let response = await auth();
+let response = await async_auth();
 let status = response.getStatus();
 
 let root = document.body;

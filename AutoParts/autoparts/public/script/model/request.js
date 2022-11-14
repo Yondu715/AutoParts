@@ -15,7 +15,7 @@ async function _sendRequest(type, uri, options, data) {
 			headers[keys[i]] = options[keys[i]];
 		}
 	}
-
+	
 	if (data == null || data == undefined) {
 		request = fetch(uri, { method: type, headers: headers });
 	} else if ((type == "delete" || type == "get")) {
@@ -36,19 +36,19 @@ async function _sendRequest(type, uri, options, data) {
 }
 
 
-export async function getAllProducts() {
+export async function async_getAllProducts() {
 	return await _sendRequest("GET", "api/products");
 }
 
-export async function getUserProducts() {
+export async function async_getUserProducts() {
 	return await _sendRequest("GET", "api/products/userProducts", { "Login": localStorage.getItem("login") });
 }
 
-export async function getProductInfo(product_id){
+export async function async_getProductInfo(product_id){
 	return await _sendRequest("GET", "api/products/" + product_id);
 }
 
-export async function auth(user) {
+export async function async_auth(user) {
 	let data;
 	try {
 		data = user.get();
@@ -58,14 +58,14 @@ export async function auth(user) {
 	return await _sendRequest("POST", "api/users/auth", null, data);
 }
 
-export async function reg(user) {
+export async function async_reg(user) {
 	return await _sendRequest("POST", "api/users/registration", null, user.get());
 }
 
-export async function saleProduct(product) {
+export async function async_saleProduct(product) {
 	return await _sendRequest("POST", "api/products/sale", { "Login": localStorage.getItem("login") }, product.get());
 }
 
-export async function deleteProduct(products_id) {
+export async function async_deleteProduct(products_id) {
 	return await _sendRequest("DELETE", "api/products/userProducts", null, products_id);
 }

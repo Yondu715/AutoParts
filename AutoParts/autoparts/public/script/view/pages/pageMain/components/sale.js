@@ -1,8 +1,8 @@
 import { Router } from "../../../router.js";
 import { Product } from "../../../../model/transport/Product.js";
-import { saleProduct } from "../../../../model/Request.js";
+import { async_saleProduct } from "../../../../model/Request.js";
 import { check_valid, show_image } from "../../../../model/DataAction.js";
-
+import { images } from "../../../images.js";
 
 let root = undefined;
 let error_span = undefined;
@@ -59,6 +59,7 @@ function _render() {
 	input_image.accept = "image\\*";
 	let image = document.createElement("img");
 	image.id = "image";
+	image.src = images["no_image"];
 
 	product_image.appendChild(image);
 	product_image.appendChild(input_image);
@@ -102,7 +103,7 @@ async function _sendSaleInfo() {
 		error_span.textContent = "Не все поля были заполнены";
 		return;
 	}
-	let response = await saleProduct(product);
+	let response = await async_saleProduct(product);
 	let status = response.getStatus();
 	_react_saleInfo(status);
 }
@@ -117,7 +118,7 @@ function _react_saleInfo(status) {
 			fields[i].value = "";
 		}
 		let image = document.getElementById("image");
-		image.src = "";
+		image.src = images["no_image"];
 	}
 }
 

@@ -1,7 +1,7 @@
 import { highlightRow } from "../../../AnimationHandler.js";
 import { Router } from "../../../router.js";
 import { convert_products, create_table } from "../../../../model/DataAction.js";
-import { deleteProduct, getUserProducts } from "../../../../model/Request.js";
+import { async_deleteProduct, async_getUserProducts } from "../../../../model/Request.js";
 
 
 let root = undefined;
@@ -9,7 +9,7 @@ let products = undefined;
 let router = undefined;
 
 async function _getUserProducts() {
-	let response = await getUserProducts();
+	let response = await async_getUserProducts();
 	let data = response.getBody();
 	let status = response.getStatus();
 	_react_getUserProducts(status, data);
@@ -65,7 +65,7 @@ function _getDeleteInfo() {
 
 async function _sendDeleteInfo() {
 	let jsonProductsID = _getDeleteInfo();
-	let response = await deleteProduct(jsonProductsID);
+	let response = await async_deleteProduct(jsonProductsID);
 	let status = response.getStatus();
 	react_deleteInfo(status);
 }

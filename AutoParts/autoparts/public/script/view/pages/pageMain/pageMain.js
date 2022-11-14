@@ -1,5 +1,6 @@
 import { cover, highlightMenu } from "../../AnimationHandler.js";
 import { Router } from "../../router.js";
+import { images } from "../../images.js";
 import renderSale from "./components/sale.js";
 import renderUserProducts from "./components/userProducts.js";
 import renderProducts from "./components/products.js";
@@ -28,6 +29,7 @@ function _render() {
 	componentRoot = document.getElementById("content");
 	let userLogin = document.querySelector(".user-login");
 	let btnLogout = document.getElementById("btn-logout");
+	btnLogout.style.backgroundImage = "url(" + images["logout"] + ")";
 	userLogin.textContent = localStorage.getItem("login");
 	btnLogout.addEventListener("click", _logout);
 }

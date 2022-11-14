@@ -2,7 +2,7 @@ import { check_valid } from "../../../model/DataAction.js";
 import { Router } from "../../router.js";
 import { fade } from "../../AnimationHandler.js";
 import { User } from "../../../model/transport/User.js";
-import { reg } from "../../../model/Request.js";
+import { async_reg } from "../../../model/Request.js";
 
 
 let root = undefined;
@@ -72,7 +72,7 @@ async function _sendRegInfo() {
 		error_span.textContent = "Пароли не совпадают";
 		return;
 	}
-	let response = await reg(user);
+	let response = await async_reg(user);
 	let status = response.getStatus();
 	_react_regInfo(status);
 }
