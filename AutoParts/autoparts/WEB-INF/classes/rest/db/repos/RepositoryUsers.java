@@ -17,7 +17,7 @@ public class RepositoryUsers implements IRepositoryUsers {
 	public boolean check(User user) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String select = "select login, password from autoparts.users where login=? and password=?;";
+		String select = "select login, password from users where login=? and password=?;";
 		try {
 			ps = dbConnection.prepareStatement(select);
 			ps.setString(1, user.getLogin());
@@ -35,7 +35,7 @@ public class RepositoryUsers implements IRepositoryUsers {
 	@Override
 	public boolean add(User user) {
 		PreparedStatement ps = null;
-		String insert = "insert into autoparts.users (login, password) values(?, ?);";
+		String insert = "insert into users (login, password) values(?, ?);";
 		try {
 			ps = dbConnection.prepareStatement(insert);
 			ps.setString(1, user.getLogin());
@@ -48,6 +48,44 @@ public class RepositoryUsers implements IRepositoryUsers {
 			DataBaseHelper.closeConnection();
 		}
 		return true;
+	}
+
+	@Override
+	public int getId(String login) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Integer id = null;
+		String select = "select id from users where login=?;";
+		try {
+			ps = dbConnection.prepareStatement(select);
+			ps.setString(1, login);
+			rs = ps.executeQuery();
+			if (rs.next()){
+				id = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			DataBaseHelper.closeConnection();
+		}
+		return id;
+	}
+
+	@Override
+	public String getName(Integer id) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String login = "7";
+		String select = "select login from users where id=?;";
+		try {
+			ps = dbConnection.prepareStatement(select);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				login = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			DataBaseHelper.closeConnection();
+		}
+		return login;
 	}
 
 }

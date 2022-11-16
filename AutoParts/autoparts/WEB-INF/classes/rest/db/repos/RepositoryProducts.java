@@ -8,12 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import rest.db.DataBaseHelper;
+import rest.db.builder.DBBuilder;
 import rest.db.interfaces.IRepositoryProducts;
-
+import rest.db.interfaces.IRepositoryUsers;
 import rest.model.dataObject.Product;
 
 public class RepositoryProducts implements IRepositoryProducts {
-
+	
+	private IRepositoryUsers repUser = (RepositoryUsers) DBBuilder.createRepository(typeOfRep.USER);
 	private Connection dbConnection = DataBaseHelper.getConnection();
 
 	@Override
@@ -21,20 +23,20 @@ public class RepositoryProducts implements IRepositoryProducts {
 		ArrayList<Product> products = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String select = "select * from autoparts.products;";
+		String select = "select * from products;";
 		try {
 			ps = dbConnection.prepareStatement(select);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Integer id = rs.getInt(1);
 				String name = rs.getString(2);
-				String seller_name = rs.getString(3);
+				String seller_name = repUser.getName(rs.getInt(3));
 				String model = rs.getString(4);
 				String brand = rs.getString(5);
-				Integer cost = rs.getInt(6);
+				Integer price = rs.getInt(6);
 				String date = rs.getDate(7).toString();
-				String image_name = rs.getString(8);
-				Product product = new Product(id, name, seller_name, brand, model, cost, date, image_name);
+				String image = rs.getString(8);
+				Product product = new Product(id, name, seller_name, brand, model, price, date, image);
 				products.add(product);
 			}
 		} catch (SQLException e) {
@@ -48,7 +50,7 @@ public class RepositoryProducts implements IRepositoryProducts {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		Product product = null;
-		String select = "select * from autoparts.products where id=?;";
+		String select = "select * from products where id=?;";
 		try {
 			ps = dbConnection.prepareStatement(select);
 			ps.setInt(1, product_id);
@@ -56,13 +58,13 @@ public class RepositoryProducts implements IRepositoryProducts {
 			if (rs.next()) {
 				Integer id = rs.getInt(1);
 				String name = rs.getString(2);
-				String seller_name = rs.getString(3);
+				String seller_name = repUser.getName(rs.getInt(3));
 				String model = rs.getString(4);
 				String brand = rs.getString(5);
 				Integer price = rs.getInt(6);
 				String date = rs.getDate(7).toString();
-				String image_name = rs.getString(8);
-				product = new Product(id, name, seller_name, brand, model, price, date, image_name);
+				String image = rs.getString(8);
+				product = new Product(id, name, seller_name, brand, model, price, date, image);
 			}
 		} catch (SQLException e) {
 			DataBaseHelper.closeConnection();
@@ -75,10 +77,11 @@ public class RepositoryProducts implements IRepositoryProducts {
 		ArrayList<Product> products = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String select = "select * from autoparts.products where seller_name=?;";
+		Integer seller_id = repUser.getId(seller_name);
+		String select = "select * from products where seller_id=?;";
 		try {
 			ps = dbConnection.prepareStatement(select);
-			ps.setString(1, seller_name);
+			ps.setInt(1, seller_id);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Integer id = rs.getInt(1);
@@ -87,8 +90,8 @@ public class RepositoryProducts implements IRepositoryProducts {
 				String brand = rs.getString(5);
 				Integer price = rs.getInt(6);
 				String date = rs.getDate(7).toString();
-				String imageBase64 = rs.getString(8);
-				Product product = new Product(id, name, seller_name, brand, model, price, date, imageBase64);
+				String image = rs.getString(8);
+				Product product = new Product(id, name, seller_name, brand, model, price, date, image);
 				products.add(product);
 			}
 		} catch (SQLException e) {
@@ -100,11 +103,11 @@ public class RepositoryProducts implements IRepositoryProducts {
 	@Override
 	public void add(Product product) {
 		PreparedStatement ps = null;
-		String insert = "insert into autoparts.products (name, seller_name, model, brand, cost, image_base64) values (?, ?, ?, ?, ?, ?);";
+		String insert = "insert into products (name, seller_id, model, brand, price, image) values (?, ?, ?, ?, ?, ?);";
 		try {
 			ps = dbConnection.prepareStatement(insert);
 			ps.setString(1, product.getName());
-			ps.setString(2, product.getSellerName());
+			ps.setInt(2, repUser.getId(product.getSellerName()));
 			ps.setString(3, product.getModel());
 			ps.setString(4, product.getBrand());
 			ps.setInt(5, product.getPrice());
@@ -118,7 +121,7 @@ public class RepositoryProducts implements IRepositoryProducts {
 	@Override
 	public void delete(Integer productID) {
 		PreparedStatement ps = null;
-		String insert = "delete from autoparts.products where id=?;";
+		String insert = "delete from products where id=?;";
 		try {
 			ps = dbConnection.prepareStatement(insert);
 			ps.setInt(1, productID);

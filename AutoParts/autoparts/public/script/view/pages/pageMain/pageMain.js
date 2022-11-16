@@ -49,7 +49,7 @@ function _renderMenu() {
 	let menu_root = document.getElementById("wrap-content");
 	let menu = document.createElement("div");
 	menu.className = "menu";
-	let menu_items = ["Запчасти", "Продать", "Мои товары", "Корзина"];
+	let menu_items = ["Запчасти", "Продать", "Мои товары"];
 	let list = document.createElement("ul");
 	for (let i = 0; i < menu_items.length; i++) {
 		let row = document.createElement("li");
