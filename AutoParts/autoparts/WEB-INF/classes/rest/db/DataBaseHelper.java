@@ -1,26 +1,26 @@
 package rest.db;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
 public class DataBaseHelper {
 
-	private static Connection connection = null; 
-
 	public static Connection getConnection() {
-		if (connection == null){
-			try {
-				Class.forName(ConnectionData.DRIVER);
-				connection = DriverManager.getConnection(ConnectionData.URL, ConnectionData.USER,
-						ConnectionData.PASSWORD);
-			} catch (SQLException | ClassNotFoundException e) {
-			}
+		Connection connection = null;
+		try {
+			InitialContext initialContext = new InitialContext();
+			DataSource ds = (DataSource) initialContext.lookup("jdbc/autoparts");
+			connection = ds.getConnection();
+		} catch (Exception e) {
+			
 		}
 		return connection;
 	}
 
-	public static void closeConnection(){
+	public static void closeConnection(Connection connection){
 		try {
 			connection.close();
 		} catch (SQLException e) {

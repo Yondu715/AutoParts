@@ -17,6 +17,7 @@ public class RepositoryUsers implements IRepositoryUsers {
 	public boolean check(User user) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		boolean found = false;
 		String select = "select login, password from users where login=? and password=?;";
 		try {
 			ps = dbConnection.prepareStatement(select);
@@ -24,30 +25,34 @@ public class RepositoryUsers implements IRepositoryUsers {
 			ps.setString(2, user.getPassword());
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				return true;
+				found = true;
 			}
+			ps.close();
+			rs.close();
 		} catch (SQLException e) {
-			DataBaseHelper.closeConnection();
+			DataBaseHelper.closeConnection(dbConnection);
 		}
-		return false;
+		return found;
 	}
 
 	@Override
 	public boolean add(User user) {
 		PreparedStatement ps = null;
+		boolean status = true;
 		String insert = "insert into users (login, password) values(?, ?);";
 		try {
 			ps = dbConnection.prepareStatement(insert);
 			ps.setString(1, user.getLogin());
 			ps.setString(2, user.getPassword());
 			ps.executeUpdate();
+			ps.close();
 		} catch (SQLException e) {
 			if (e.getErrorCode() == 1062) {
-				return false;
+				status = false;
 			}
-			DataBaseHelper.closeConnection();
+			DataBaseHelper.closeConnection(dbConnection);
 		}
-		return true;
+		return status;
 	}
 
 	@Override
@@ -63,8 +68,10 @@ public class RepositoryUsers implements IRepositoryUsers {
 			if (rs.next()){
 				id = rs.getInt(1);
 			}
+			ps.close();
+			rs.close();
 		} catch (SQLException e) {
-			DataBaseHelper.closeConnection();
+			DataBaseHelper.closeConnection(dbConnection);
 		}
 		return id;
 	}
@@ -82,8 +89,10 @@ public class RepositoryUsers implements IRepositoryUsers {
 			if (rs.next()) {
 				login = rs.getString(1);
 			}
+			ps.close();
+			rs.close();
 		} catch (SQLException e) {
-			DataBaseHelper.closeConnection();
+			DataBaseHelper.closeConnection(dbConnection);
 		}
 		return login;
 	}

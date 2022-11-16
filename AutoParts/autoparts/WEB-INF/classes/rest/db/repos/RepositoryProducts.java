@@ -39,8 +39,10 @@ public class RepositoryProducts implements IRepositoryProducts {
 				Product product = new Product(id, name, seller_name, brand, model, price, date, image);
 				products.add(product);
 			}
+			ps.close();
+			rs.close();
 		} catch (SQLException e) {
-			DataBaseHelper.closeConnection();
+			DataBaseHelper.closeConnection(dbConnection);
 		}
 		return products;
 	}
@@ -66,8 +68,10 @@ public class RepositoryProducts implements IRepositoryProducts {
 				String image = rs.getString(8);
 				product = new Product(id, name, seller_name, brand, model, price, date, image);
 			}
+			ps.close();
+			rs.close();
 		} catch (SQLException e) {
-			DataBaseHelper.closeConnection();
+			DataBaseHelper.closeConnection(dbConnection);
 		}
 		return product;
 	}
@@ -94,8 +98,10 @@ public class RepositoryProducts implements IRepositoryProducts {
 				Product product = new Product(id, name, seller_name, brand, model, price, date, image);
 				products.add(product);
 			}
+			ps.close();
+			rs.close();
 		} catch (SQLException e) {
-			DataBaseHelper.closeConnection();
+			DataBaseHelper.closeConnection(dbConnection);
 		}
 		return products;
 	}
@@ -113,8 +119,9 @@ public class RepositoryProducts implements IRepositoryProducts {
 			ps.setInt(5, product.getPrice());
 			ps.setString(6, product.getImageBase64());
 			ps.executeUpdate();
+			ps.close();
 		} catch (SQLException e) {
-			DataBaseHelper.closeConnection();
+			DataBaseHelper.closeConnection(dbConnection);
 		}
 	}
 
@@ -126,9 +133,9 @@ public class RepositoryProducts implements IRepositoryProducts {
 			ps = dbConnection.prepareStatement(insert);
 			ps.setInt(1, productID);
 			ps.executeUpdate();
+			ps.close();
 		} catch (SQLException e) {
-			DataBaseHelper.closeConnection();
+			DataBaseHelper.closeConnection(dbConnection);
 		}
 	}
-
 }
