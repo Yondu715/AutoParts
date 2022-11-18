@@ -1,77 +1,89 @@
 package rest.db.repos;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import jakarta.annotation.Resource;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.PersistenceUnit;
+import jakarta.transaction.UserTransaction;
 
-import rest.db.DataBaseHelper;
-import rest.db.builder.DBBuilder;
+import rest.db.entities.EProduct;
+import rest.db.entities.EUser;
 import rest.db.interfaces.IRepositoryProducts;
-import rest.db.interfaces.IRepositoryUsers;
 import rest.model.dataObject.Product;
 
 public class RepositoryProducts implements IRepositoryProducts {
-	
-	private IRepositoryUsers repUser = (RepositoryUsers) DBBuilder.createRepository(typeOfRep.USER);
-	private Connection dbConnection = DataBaseHelper.getConnection();
+
+	@PersistenceUnit(unitName = "autoparts_PersistenceUnit")
+	private EntityManagerFactory entityManagerFactory;
+
+	@Resource
+	UserTransaction userTransaction;
 
 	@Override
 	public ArrayList<Product> getAll() {
 		ArrayList<Product> products = new ArrayList<>();
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		String select = "select * from products;";
+		Integer size = -1;
+		EntityManager entityManager;
+		String query = "select p from EProduct p";
 		try {
-			ps = dbConnection.prepareStatement(select);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				Integer id = rs.getInt(1);
-				String name = rs.getString(2);
-				String seller_name = repUser.getName(rs.getInt(3));
-				String model = rs.getString(4);
-				String brand = rs.getString(5);
-				Integer price = rs.getInt(6);
-				String date = rs.getDate(7).toString();
-				String image = rs.getString(8);
-				Product product = new Product(id, name, seller_name, brand, model, price, date, image);
+			entityManager = entityManagerFactory.createEntityManager();
+			userTransaction.begin();
+			entityManager.joinTransaction();
+			List<EProduct> products_list = entityManager.createQuery(query, EProduct.class).getResultList();
+			userTransaction.commit();
+			size = products_list.size();
+			if (size <= 0) {
+				return products;
+			}
+			for (int i = 0; i < size; i++) {
+				Product product = new Product();
+				EProduct eProduct = products_list.get(i);
+				product.setId(eProduct.getId());
+				product.setName(eProduct.getName());
+				product.setSellerName(eProduct.getUser().getLogin());
+				product.setModel(eProduct.getModel());
+				product.setBrand(eProduct.getBrand());
+				product.setPrice(eProduct.getPrice());
+				product.setDate(eProduct.getDate().toString());
+				product.setImage(eProduct.getImage());
 				products.add(product);
 			}
-			ps.close();
-			rs.close();
-		} catch (SQLException e) {
-			DataBaseHelper.closeConnection(dbConnection);
+		} catch (Exception e) {
+			Logger.getLogger(RepositoryProducts.class.getName()).log(Level.INFO, null, e);
 		}
 		return products;
 	}
 
 	@Override
-	public Product getById(Integer product_id){
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Product product = null;
-		String select = "select * from products where id=?;";
+	public Product getById(Integer product_id) {
+		EntityManager entityManager;
+		String query = "select p from EProduct p where p.id=" + product_id;
+		Product product = new Product();
 		try {
-			ps = dbConnection.prepareStatement(select);
-			ps.setInt(1, product_id);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				Integer id = rs.getInt(1);
-				String name = rs.getString(2);
-				String seller_name = repUser.getName(rs.getInt(3));
-				String model = rs.getString(4);
-				String brand = rs.getString(5);
-				Integer price = rs.getInt(6);
-				String date = rs.getDate(7).toString();
-				String image = rs.getString(8);
-				product = new Product(id, name, seller_name, brand, model, price, date, image);
+			entityManager = entityManagerFactory.createEntityManager();
+			userTransaction.begin();
+			entityManager.joinTransaction();
+			List<EProduct> products_list = entityManager.createQuery(query, EProduct.class).getResultList();
+			userTransaction.commit();
+			if (products_list.size() != 1) {
+				return product;
 			}
-			ps.close();
-			rs.close();
-		} catch (SQLException e) {
-			DataBaseHelper.closeConnection(dbConnection);
+			EProduct eProduct = products_list.get(0);
+			product.setId(eProduct.getId());
+			product.setName(eProduct.getName());
+			product.setSellerName("test");
+			product.setBrand(eProduct.getBrand());
+			product.setDate(eProduct.getDate().toString());
+			product.setImage(eProduct.getImage());
+			product.setModel(eProduct.getModel());
+			product.setPrice(eProduct.getPrice());
+		} catch (Exception e) {
+			Logger.getLogger(RepositoryProducts.class.getName()).log(Level.INFO, null, e);
 		}
 		return product;
 	}
@@ -79,63 +91,76 @@ public class RepositoryProducts implements IRepositoryProducts {
 	@Override
 	public ArrayList<Product> getByUser(String seller_name) {
 		ArrayList<Product> products = new ArrayList<>();
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Integer seller_id = repUser.getId(seller_name);
-		String select = "select * from products where seller_id=?;";
+		Integer size = -1;
+		EntityManager entityManager;
+		String query = "select p from EProduct p";
 		try {
-			ps = dbConnection.prepareStatement(select);
-			ps.setInt(1, seller_id);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				Integer id = rs.getInt(1);
-				String name = rs.getString(2);
-				String model = rs.getString(4);
-				String brand = rs.getString(5);
-				Integer price = rs.getInt(6);
-				String date = rs.getDate(7).toString();
-				String image = rs.getString(8);
-				Product product = new Product(id, name, seller_name, brand, model, price, date, image);
+			entityManager = entityManagerFactory.createEntityManager();
+			userTransaction.begin();
+			entityManager.joinTransaction();
+			List<EProduct> products_list = entityManager.createQuery(query, EProduct.class).getResultList();
+			userTransaction.commit();
+			size = products_list.size();
+			if (size <= 0){
+				return products;
+			}
+			for (int i = 0; i < size; i++) {
+				Product product = new Product();
+				EProduct eProduct = products_list.get(i);
+				if (!eProduct.getUser().getLogin().equals(seller_name)) {
+					continue;
+				}
+				product.setId(eProduct.getId());
+				product.setName(eProduct.getName());
+				product.setSellerName(eProduct.getUser().getLogin());
+				product.setModel(eProduct.getModel());
+				product.setBrand(eProduct.getBrand());
+				product.setPrice(eProduct.getPrice());
+				product.setDate(eProduct.getDate().toString());
+				product.setImage(eProduct.getImage());
 				products.add(product);
 			}
-			ps.close();
-			rs.close();
-		} catch (SQLException e) {
-			DataBaseHelper.closeConnection(dbConnection);
+		} catch (Exception e) {
+			Logger.getLogger(RepositoryProducts.class.getName()).log(Level.INFO, null, e);
 		}
 		return products;
 	}
 
 	@Override
 	public void add(Product product) {
-		PreparedStatement ps = null;
-		String insert = "insert into products (name, seller_id, model, brand, price, image) values (?, ?, ?, ?, ?, ?);";
+		EntityManager entityManager;
+		String query = "select u from EUser u where u.login='" + product.getSellerName() + "'";
 		try {
-			ps = dbConnection.prepareStatement(insert);
-			ps.setString(1, product.getName());
-			ps.setInt(2, repUser.getId(product.getSellerName()));
-			ps.setString(3, product.getModel());
-			ps.setString(4, product.getBrand());
-			ps.setInt(5, product.getPrice());
-			ps.setString(6, product.getImageBase64());
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException e) {
-			DataBaseHelper.closeConnection(dbConnection);
+			entityManager = entityManagerFactory.createEntityManager();
+			userTransaction.begin();
+			entityManager.joinTransaction();
+			List<EUser> users_list = entityManager.createQuery(query, EUser.class).getResultList();
+			EProduct eProduct = new EProduct();
+			eProduct.setName(product.getName());
+			eProduct.setUser(users_list.get(0));
+			eProduct.setModel(product.getModel());
+			eProduct.setBrand(product.getBrand());
+			eProduct.setPrice(product.getPrice());
+			eProduct.setImage(product.getImage());
+			entityManager.persist(eProduct);
+			userTransaction.commit();
+		} catch (Exception e) {
+			Logger.getLogger(RepositoryProducts.class.getName()).log(Level.INFO, null, e);
 		}
 	}
 
 	@Override
-	public void delete(Integer productID) {
-		PreparedStatement ps = null;
-		String insert = "delete from products where id=?;";
+	public void delete(Integer product_id) {
+		EntityManager entityManager;
+		String query = "delete from EProduct p where p.id=" + product_id;
 		try {
-			ps = dbConnection.prepareStatement(insert);
-			ps.setInt(1, productID);
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException e) {
-			DataBaseHelper.closeConnection(dbConnection);
+			entityManager = entityManagerFactory.createEntityManager();
+			userTransaction.begin();
+			entityManager.joinTransaction();
+			entityManager.createQuery(query).executeUpdate();
+			userTransaction.commit();
+		} catch (Exception e) {
+			Logger.getLogger(RepositoryProducts.class.getName()).log(Level.INFO, null, e);
 		}
 	}
 }

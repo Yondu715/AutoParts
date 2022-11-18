@@ -1,18 +1,23 @@
 package rest.db.builder.factory;
 
-import rest.db.repos.RepositoryProducts;
-import rest.db.repos.RepositoryUsers;
+import jakarta.inject.Inject;
+import rest.db.interfaces.IRepositoryProducts;
+import rest.db.interfaces.IRepositoryUsers;
 import rest.db.repos.typeOfRep;
 
 public class DBFactory implements IDFactory {
+	@Inject
+	IRepositoryProducts repProducts;
+	@Inject
+	IRepositoryUsers repUsers;
 
 	@Override
 	public Object createRepos(typeOfRep type) {
 		Object rep = null;
 		if (type == typeOfRep.USER) {
-			rep = new RepositoryUsers();
+			rep = repUsers;
 		} else if (type == typeOfRep.PRODUCTS) {
-			rep = new RepositoryProducts();
+			rep = repProducts;
 		}
 		return rep;
 	}

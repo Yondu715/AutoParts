@@ -8,12 +8,12 @@ public class Product {
 	private String model;
 	private Integer price;
 	private String date;
-	private String imageBase64;
+	private String image;
 
 	public Product() {
 	}
 
-	public Product(Integer id, String name, String sellerName, String brand, String model, Integer price, String date, String imageBase64) {
+	public Product(Integer id, String name, String sellerName, String brand, String model, Integer price, String date, String image) {
 		this.id = id;
 		this.name = name;
 		this.sellerName = sellerName;
@@ -21,7 +21,7 @@ public class Product {
 		this.model = model;
 		this.price = price;
 		this.date = date;
-		this.imageBase64 = imageBase64;
+		this.image = image;
 	}
 
 	public Integer getId() {
@@ -80,11 +80,11 @@ public class Product {
 		this.date = date;
 	}
 
-	public String getImageBase64() {
-		return imageBase64;
+	public String getImage() {
+		return image;
 	}
 
-	public void setImageBase64(String imageBase64) {
-		this.imageBase64 = imageBase64;
+	public void setImage(String image) {
+		this.image = image;
 	}
 }

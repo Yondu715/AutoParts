@@ -29,7 +29,7 @@ export function create_table(products, columns) {
 			let span = document.createElement("span");
 			span.className = columns[j];
 			span.textContent = products[i].get()[columns[j]];
-			if (span.className == "imageBase64") {
+			if (span.className == "image") {
 				let image = document.createElement("img");
 				image.src = span.textContent;
 				image_div.appendChild(image);
@@ -78,8 +78,8 @@ export function create_productInfo(product){
 	let div_image = document.createElement("div");
 	div_image.className = "product-image";
 	let image = document.createElement("img");
-	image.className = "imageBase64";
-	image.src = product.get()["imageBase64"];
+	image.className = "image";
+	image.src = product.get()["image"];
 	div_image.appendChild(image);
 
 	left_part.appendChild(div_info);

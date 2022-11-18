@@ -28,7 +28,7 @@ function _render() {
 	root.innerHTML = "";
 	let div_products = document.createElement("div");
 	div_products.id = "products";
-	let columns = ["id", "name", "sellerName", "date", "brand", "model", "price", "imageBase64"];
+	let columns = ["id", "name", "sellerName", "date", "brand", "model", "price", "image"];
 	let table = create_table(products, columns);
 	div_products.appendChild(table);
 	root.appendChild(div_products);

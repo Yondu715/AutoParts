@@ -1,100 +1,60 @@
 package rest.db.repos;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import rest.db.DataBaseHelper;
+import jakarta.annotation.Resource;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.PersistenceUnit;
+import jakarta.transaction.UserTransaction;
+import rest.db.entities.EUser;
 import rest.db.interfaces.IRepositoryUsers;
 import rest.model.dataObject.User;
 
 public class RepositoryUsers implements IRepositoryUsers {
 
-	private Connection dbConnection = DataBaseHelper.getConnection();
+	@PersistenceUnit(unitName = "autoparts_PersistenceUnit")
+	private EntityManagerFactory entityManagerFactory;
+
+	@Resource
+	UserTransaction userTransaction;
 
 	@Override
 	public boolean check(User user) {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		boolean found = false;
-		String select = "select login, password from users where login=? and password=?;";
+		EntityManager entityManager;
+		String query = "select u from EUser u where u.login='" + user.getLogin() + "'";
+		Integer size = 0;
 		try {
-			ps = dbConnection.prepareStatement(select);
-			ps.setString(1, user.getLogin());
-			ps.setString(2, user.getPassword());
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				found = true;
-			}
-			ps.close();
-			rs.close();
-		} catch (SQLException e) {
-			DataBaseHelper.closeConnection(dbConnection);
+			entityManager = entityManagerFactory.createEntityManager();
+			userTransaction.begin();
+			entityManager.joinTransaction();
+			List<EUser> users_list = entityManager.createQuery(query, EUser.class).getResultList();
+			size = users_list.size();
+			userTransaction.commit();
+		} catch (Exception e) {
+			Logger.getLogger(RepositoryUsers.class.getName()).log(Level.INFO, null, e);
 		}
-		return found;
+		return (size == 1);
 	}
 
 	@Override
 	public boolean add(User user) {
-		PreparedStatement ps = null;
-		boolean status = true;
-		String insert = "insert into users (login, password) values(?, ?);";
+		EntityManager entityManager;
+		boolean reg_status = true;
 		try {
-			ps = dbConnection.prepareStatement(insert);
-			ps.setString(1, user.getLogin());
-			ps.setString(2, user.getPassword());
-			ps.executeUpdate();
-			ps.close();
-		} catch (SQLException e) {
-			if (e.getErrorCode() == 1062) {
-				status = false;
-			}
-			DataBaseHelper.closeConnection(dbConnection);
+			entityManager = entityManagerFactory.createEntityManager();
+			userTransaction.begin();
+			entityManager.joinTransaction();
+			EUser eUser = new EUser();
+			eUser.setLogin(user.getLogin());
+			eUser.setPassword(user.getPassword());
+			entityManager.persist(eUser);
+			userTransaction.commit();
+		} catch (Exception e) {
+			reg_status = false;
 		}
-		return status;
+		return reg_status;
 	}
-
-	@Override
-	public int getId(String login) {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		Integer id = null;
-		String select = "select id from users where login=?;";
-		try {
-			ps = dbConnection.prepareStatement(select);
-			ps.setString(1, login);
-			rs = ps.executeQuery();
-			if (rs.next()){
-				id = rs.getInt(1);
-			}
-			ps.close();
-			rs.close();
-		} catch (SQLException e) {
-			DataBaseHelper.closeConnection(dbConnection);
-		}
-		return id;
-	}
-
-	@Override
-	public String getName(Integer id) {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		String login = "7";
-		String select = "select login from users where id=?;";
-		try {
-			ps = dbConnection.prepareStatement(select);
-			ps.setInt(1, id);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				login = rs.getString(1);
-			}
-			ps.close();
-			rs.close();
-		} catch (SQLException e) {
-			DataBaseHelper.closeConnection(dbConnection);
-		}
-		return login;
-	}
-
 }

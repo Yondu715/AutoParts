@@ -87,11 +87,11 @@ function _getSaleInfo() {
 	}
 	jsonSale["sellerName"] = localStorage.getItem("login");
 	jsonSale["price"] = Number(jsonSale["price"]);
-	jsonSale["imageBase64"] = "";
+	jsonSale["image"] = "";
 
 	let file = input_image.files[0];
 	if (file != undefined) {
-		jsonSale["imageBase64"] = image.src;
+		jsonSale["image"] = image.src;
 	}
 	let product = new Product(jsonSale);
 	return product;
