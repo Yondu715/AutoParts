@@ -1,20 +1,19 @@
 package rest.model;
 
-import rest.db.builder.DBBuilder;
-import rest.db.interfaces.IRepositoryUsers;
-import rest.db.repos.RepositoryUsers;
-import rest.db.repos.typeOfRep;
-
-import rest.model.dataObject.User;
-import rest.model.interfaces.IModelUser;
+import jakarta.inject.Inject;
+import rest.model.dto.User;
+import rest.model.interfaces.model.IModelUser;
+import rest.model.interfaces.repos.IRepositoryUsers;
 
 public class ModelUser implements IModelUser {
 
-	private IRepositoryUsers repUser = (RepositoryUsers) DBBuilder.createRepository(typeOfRep.USER);
+	@Inject
+	private IRepositoryUsers repUser;
+	//private IRepositoryUsers repUser = (RepositoryUsers) DBBuilder.createRepository(typeOfRep.USER);
 
 	@Override
 	public boolean authUser(User user) {
-		return repUser.check(user);
+		return repUser.find(user);
 	}
 
 	@Override

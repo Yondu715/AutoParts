@@ -1,9 +1,9 @@
 package rest.db.builder.factory;
 
 import jakarta.inject.Inject;
-import rest.db.interfaces.IRepositoryProducts;
-import rest.db.interfaces.IRepositoryUsers;
 import rest.db.repos.typeOfRep;
+import rest.model.interfaces.repos.IRepositoryProducts;
+import rest.model.interfaces.repos.IRepositoryUsers;
 
 public class DBFactory implements IDFactory {
 	@Inject

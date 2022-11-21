@@ -4,6 +4,7 @@ import { images } from "../../images.js";
 import renderSale from "./components/sale.js";
 import renderUserProducts from "./components/userProducts.js";
 import renderProducts from "./components/products.js";
+import renderCart from "./components/cart.js";
 
 
 let root = undefined;
@@ -49,7 +50,7 @@ function _renderMenu() {
 	let menu_root = document.getElementById("wrap-content");
 	let menu = document.createElement("div");
 	menu.className = "menu";
-	let menu_items = ["Запчасти", "Продать", "Мои товары"];
+	let menu_items = ["Запчасти", "Продать", "Мои товары", "Корзина"];
 	let list = document.createElement("ul");
 	for (let i = 0; i < menu_items.length; i++) {
 		let row = document.createElement("li");
@@ -65,7 +66,8 @@ function _renderMenu() {
 	let menu_funcs = [	
 					() => renderProducts(componentRoot), 
 					() => renderSale(componentRoot), 
-					() => renderUserProducts(componentRoot)
+					() => renderUserProducts(componentRoot),
+					() => renderCart(componentRoot),
 				];
 	for (let i = 0; i < menu_funcs.length; i++) {
 		buttons[i].addEventListener("click", menu_funcs[i]);

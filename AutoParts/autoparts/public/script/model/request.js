@@ -69,3 +69,11 @@ export async function async_saleProduct(product) {
 export async function async_deleteProduct(products_id) {
 	return await _sendRequest("DELETE", "api/products/userProducts", null, products_id);
 }
+
+export async function async_addToCart(product){
+	return await _sendRequest("POST", "api/users/cart", { "Login": localStorage.getItem("login") }, product.get());
+}
+
+export async function async_getCart() {
+	return await _sendRequest("GET", "api/users/cart", { "Login": localStorage.getItem("login") });
+}

@@ -87,7 +87,6 @@ function _getSaleInfo() {
 	}
 	jsonSale["sellerName"] = localStorage.getItem("login");
 	jsonSale["price"] = Number(jsonSale["price"]);
-	jsonSale["image"] = "";
 
 	let file = input_image.files[0];
 	if (file != undefined) {
@@ -114,9 +113,9 @@ function _react_saleInfo(status) {
 	} else {
 		error_span.textContent = "";
 		let fields = document.getElementsByTagName("input");
-		for (let i = 0; i < fields.length; i++) {
-			fields[i].value = "";
-		}
+		fields.forEach(element => {
+			element.value = "";
+		});
 		let image = document.getElementById("image");
 		image.src = images["no_image"];
 	}

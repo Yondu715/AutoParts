@@ -17,8 +17,8 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
-import rest.model.dataObject.Product;
-import rest.model.interfaces.IModelProducts;
+import rest.model.dto.Product;
+import rest.model.interfaces.model.IModelProducts;
 import rest.server.token.Token;
 
 @Path("/products")

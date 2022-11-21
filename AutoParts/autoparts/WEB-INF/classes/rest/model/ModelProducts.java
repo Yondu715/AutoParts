@@ -3,17 +3,16 @@ package rest.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import rest.db.builder.DBBuilder;
-import rest.db.interfaces.IRepositoryProducts;
-import rest.db.repos.RepositoryProducts;
-import rest.db.repos.typeOfRep;
-
-import rest.model.dataObject.Product;
-import rest.model.interfaces.IModelProducts;
+import jakarta.inject.Inject;
+import rest.model.dto.Product;
+import rest.model.interfaces.model.IModelProducts;
+import rest.model.interfaces.repos.IRepositoryProducts;
 
 public class ModelProducts implements IModelProducts {
 
-	private IRepositoryProducts repProducts = (RepositoryProducts) DBBuilder.createRepository(typeOfRep.PRODUCTS);
+	@Inject
+	private IRepositoryProducts repProducts;
+	//private IRepositoryProducts repProducts = (RepositoryProducts) DBBuilder.createRepository(typeOfRep.PRODUCTS);
 
 	@Override
 	public void addProduct(Product product) {
@@ -22,8 +21,8 @@ public class ModelProducts implements IModelProducts {
 
 	@Override
 	public void deleteProduct(List<Product> productsID) {
-		for (int i = 0; i < productsID.size(); i++) {
-			repProducts.delete(productsID.get(i).getId());
+		for (Product product : productsID) {
+			repProducts.delete(product.getId());
 		}
 	}
 
@@ -31,16 +30,16 @@ public class ModelProducts implements IModelProducts {
 	public ArrayList<Product> getProducts(String seller_name) {
 		ArrayList<Product> products = null;
 		if (seller_name == null) {
-			products = repProducts.getAll();
+			products = repProducts.findAll();
 		} else {
-			products = repProducts.getByUser(seller_name);
+			products = repProducts.findByUser(seller_name);
 		}
 		return products;
 	}
 
 	@Override
 	public Product getProductInfo(Integer product_id){
-		return repProducts.getById(product_id);
+		return repProducts.findById(product_id);
 	}
 
 }

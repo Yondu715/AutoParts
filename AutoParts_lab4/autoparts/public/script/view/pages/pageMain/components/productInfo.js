@@ -1,5 +1,5 @@
 import { Router } from "../../../router.js";
-import { async_getProductInfo } from "../../../../model/Request.js";
+import { async_addToCart, async_getProductInfo } from "../../../../model/Request.js";
 import { convert_products, create_productInfo } from "../../../../model/DataAction.js";
 
 
@@ -27,14 +27,30 @@ function _react_getProductInfo(status, data){
 function _render() {
 	root.innerHTML = "";
 	let div_productInfo = create_productInfo(product);
-	let btnPlace = document.createElement("div");
-	btnPlace.id = "btn-place";
-	let button = document.createElement("button");
-	button.textContent = "Добавить в корзину";
-	button.className = "btn-submit";
-	btnPlace.appendChild(button);
+	console.log(product);
 	root.appendChild(div_productInfo);
-	root.appendChild(btnPlace);
+	if (product.get()["sellerName"] != localStorage.getItem("login")){
+		let btnPlace = document.createElement("div");
+		btnPlace.id = "btn-place";
+		let button = document.createElement("button");
+		button.textContent = "Добавить в корзину";
+		button.className = "btn-submit";
+		button.addEventListener("click", _addToCart);
+		btnPlace.appendChild(button);
+		root.appendChild(btnPlace);
+	}
+}
+
+async function _addToCart(){
+	let response = await async_addToCart(product);
+	let status = response.getStatus();
+	_react_addCart(status);
+}
+
+function _react_addCart(status){
+	if (status == 401) {
+		router.pageStart(root);
+	}
 }
 
 export default function init(_root, _id) {

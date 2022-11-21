@@ -1,9 +1,9 @@
-package rest.model.interfaces;
+package rest.model.interfaces.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rest.model.dataObject.Product;
+import rest.model.dto.Product;
 
 public interface IModelProducts {
 	public void addProduct(Product product);

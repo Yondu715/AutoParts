@@ -1,4 +1,4 @@
-package rest.model.dataObject;
+package rest.model.dto;
 
 public class Product {
 	private Integer id;

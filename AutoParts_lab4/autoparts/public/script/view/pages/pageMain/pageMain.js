@@ -4,6 +4,7 @@ import { images } from "../../images.js";
 import renderSale from "./components/sale.js";
 import renderUserProducts from "./components/userProducts.js";
 import renderProducts from "./components/products.js";
+import renderCart from "./components/cart.js";
 
 
 let root = undefined;
@@ -65,7 +66,8 @@ function _renderMenu() {
 	let menu_funcs = [	
 					() => renderProducts(componentRoot), 
 					() => renderSale(componentRoot), 
-					() => renderUserProducts(componentRoot)
+					() => renderUserProducts(componentRoot),
+					() => renderCart(componentRoot),
 				];
 	for (let i = 0; i < menu_funcs.length; i++) {
 		buttons[i].addEventListener("click", menu_funcs[i]);

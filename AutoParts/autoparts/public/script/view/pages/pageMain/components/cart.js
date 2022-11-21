@@ -1,7 +1,6 @@
 import { Router } from "../../../router.js";
-import { async_getAllProducts } from "../../../../model/Request.js";
+import { async_getCart } from "../../../../model/Request.js";
 import { convert_products, create_table } from "../../../../model/DataAction.js";
-import renderProductInfo from "./productInfo.js";
 
 
 let root = undefined;
@@ -9,13 +8,13 @@ let products = undefined;
 let router = undefined;
 
 async function _getAllProducts() {
-	let response = await async_getAllProducts();
+	let response = await async_getCart();
 	let data = response.getBody();
 	let status = response.getStatus();
 	_react_getAllProducts(status, data);
 }
 
-function _react_getAllProducts(status, data){
+function _react_getAllProducts(status, data) {
 	if (status == 401) {
 		router.pageStart(root);
 	} else if (status == 200) {
@@ -32,13 +31,6 @@ function _render() {
 	let table = create_table(products, columns);
 	div_products.appendChild(table);
 	root.appendChild(div_products);
-	
-	table.addEventListener("click", (event) => {
-		let row = event.target.closest("tr");
-		let span = row.querySelector(".id");
-		let id = span.textContent;
-		renderProductInfo(root, id);
-	});
 }
 
 export default function init(_root) {
