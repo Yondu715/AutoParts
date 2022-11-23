@@ -3,16 +3,13 @@ package rest.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.inject.Inject;
 import rest.model.dto.Product;
-import rest.model.interfaces.model.IModelProducts;
-import rest.model.interfaces.repos.IRepositoryProducts;
+import rest.model.interfaces.in.IModelProducts;
+import rest.model.interfaces.out.IRepositoryProducts;
 
 public class ModelProducts implements IModelProducts {
 
-	@Inject
 	private IRepositoryProducts repProducts;
-	//private IRepositoryProducts repProducts = (RepositoryProducts) DBBuilder.createRepository(typeOfRep.PRODUCTS);
 
 	@Override
 	public void addProduct(Product product) {
@@ -42,4 +39,9 @@ public class ModelProducts implements IModelProducts {
 		return repProducts.findById(product_id);
 	}
 
+	@Override
+	public void setRepository(IRepositoryProducts repProducts) {
+		this.repProducts = repProducts;
+		
+	}
 }

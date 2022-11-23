@@ -1,4 +1,4 @@
-package rest.server.components;
+package rest.controller.components;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.GET;
@@ -10,21 +10,21 @@ import jakarta.inject.Inject;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
-
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
+import rest.builder.Built;
+import rest.controller.token.Token;
 import rest.model.dto.Product;
 import rest.model.dto.User;
-import rest.model.interfaces.model.IModelCart;
-import rest.model.interfaces.model.IModelUser;
-import rest.server.token.Token;
+import rest.model.interfaces.in.IModelCart;
+import rest.model.interfaces.in.IModelUser;
 
 @Path("/users")
 public class serverUser {
-	@Inject
+	@Inject @Built
 	private IModelUser modelUser;
-	@Inject
+	@Inject @Built
 	IModelCart modelCart;
 	private Jsonb jsonb = JsonbBuilder.create();
 

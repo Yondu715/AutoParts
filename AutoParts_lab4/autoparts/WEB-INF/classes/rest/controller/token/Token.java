@@ -1,4 +1,4 @@
-package rest.server.token;
+package rest.controller.token;
 
 import java.util.Base64;
 

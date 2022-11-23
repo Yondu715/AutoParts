@@ -2,14 +2,12 @@ package rest.model;
 
 import java.util.ArrayList;
 
-import jakarta.inject.Inject;
 import rest.model.dto.Product;
-import rest.model.interfaces.model.IModelCart;
-import rest.model.interfaces.repos.IRepositoryCart;
+import rest.model.interfaces.in.IModelCart;
+import rest.model.interfaces.out.IRepositoryCart;
 
 public class ModelCart implements IModelCart {
 
-	@Inject
 	private IRepositoryCart repCart;
 
 	@Override
@@ -20,6 +18,11 @@ public class ModelCart implements IModelCart {
 	@Override
 	public ArrayList<Product> getCart(String login) {
 		return repCart.findByUser(login);
+	}
+
+	@Override
+	public void setRepository(IRepositoryCart repCart) {
+		this.repCart = repCart;
 	}
 	
 }

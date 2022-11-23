@@ -15,7 +15,7 @@ import jakarta.transaction.UserTransaction;
 import rest.db.entities.EProduct;
 import rest.db.entities.EUser;
 import rest.model.dto.Product;
-import rest.model.interfaces.repos.IRepositoryProducts;
+import rest.model.interfaces.out.IRepositoryProducts;
 
 public class RepositoryProducts implements IRepositoryProducts {
 

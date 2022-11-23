@@ -15,7 +15,7 @@ import rest.db.entities.ECart;
 import rest.db.entities.EProduct;
 import rest.db.entities.EUser;
 import rest.model.dto.Product;
-import rest.model.interfaces.repos.IRepositoryCart;
+import rest.model.interfaces.out.IRepositoryCart;
 
 public class RepositoryCart implements IRepositoryCart {
 

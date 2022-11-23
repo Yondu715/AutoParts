@@ -1,4 +1,4 @@
-package rest.model.interfaces.repos;
+package rest.model.interfaces.out;
 
 import java.util.ArrayList;
 

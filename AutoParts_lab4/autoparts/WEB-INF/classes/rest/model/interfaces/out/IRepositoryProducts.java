@@ -1,10 +1,11 @@
-package rest.model.interfaces.repos;
+package rest.model.interfaces.out;
 
 import java.util.ArrayList;
 
 import rest.model.dto.Product;
 
 public interface IRepositoryProducts {
+	
 	public ArrayList<Product> findAll();
 
 	public Product findById(Integer id);
