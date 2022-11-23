@@ -1,4 +1,4 @@
-package rest.server.components;
+package rest.controller.components;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +17,14 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
+import rest.builder.Built;
+import rest.controller.token.Token;
 import rest.model.dto.Product;
-import rest.model.interfaces.model.IModelProducts;
-import rest.server.token.Token;
+import rest.model.interfaces.in.IModelProducts;
 
 @Path("/products")
 public class serverProduct {
-	@Inject
+	@Inject @Built
 	private IModelProducts model;
 	private Jsonb jsonb = JsonbBuilder.create();
 

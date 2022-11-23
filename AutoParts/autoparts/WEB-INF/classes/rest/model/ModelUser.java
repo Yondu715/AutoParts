@@ -1,15 +1,12 @@
 package rest.model;
 
-import jakarta.inject.Inject;
 import rest.model.dto.User;
-import rest.model.interfaces.model.IModelUser;
-import rest.model.interfaces.repos.IRepositoryUsers;
+import rest.model.interfaces.in.IModelUser;
+import rest.model.interfaces.out.IRepositoryUsers;
 
 public class ModelUser implements IModelUser {
 
-	@Inject
 	private IRepositoryUsers repUser;
-	//private IRepositoryUsers repUser = (RepositoryUsers) DBBuilder.createRepository(typeOfRep.USER);
 
 	@Override
 	public boolean authUser(User user) {
@@ -19,6 +16,11 @@ public class ModelUser implements IModelUser {
 	@Override
 	public boolean addUser(User user) {
 		return repUser.add(user);
+	}
+
+	@Override
+	public void setRepository(IRepositoryUsers repUsers) {
+		this.repUser = repUsers;		
 	}
 
 }

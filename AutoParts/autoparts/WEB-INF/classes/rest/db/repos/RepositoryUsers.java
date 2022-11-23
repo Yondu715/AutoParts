@@ -11,7 +11,7 @@ import jakarta.persistence.PersistenceUnit;
 import jakarta.transaction.UserTransaction;
 import rest.db.entities.EUser;
 import rest.model.dto.User;
-import rest.model.interfaces.repos.IRepositoryUsers;
+import rest.model.interfaces.out.IRepositoryUsers;
 
 public class RepositoryUsers implements IRepositoryUsers {
 
