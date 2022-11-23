@@ -41,7 +41,7 @@ export async function async_getAllProducts() {
 }
 
 export async function async_getUserProducts() {
-	return await _sendRequest("GET", "api/products/userProducts", { "Login": localStorage.getItem("login") });
+	return await _sendRequest("GET", "api/products/userProducts");
 }
 
 export async function async_getProductInfo(product_id){
@@ -63,7 +63,7 @@ export async function async_reg(user) {
 }
 
 export async function async_saleProduct(product) {
-	return await _sendRequest("POST", "api/products/sale", { "Login": localStorage.getItem("login") }, product.get());
+	return await _sendRequest("POST", "api/products/sale", null, product.get());
 }
 
 export async function async_deleteProduct(products_id) {
@@ -71,9 +71,9 @@ export async function async_deleteProduct(products_id) {
 }
 
 export async function async_addToCart(product){
-	return await _sendRequest("POST", "api/users/cart", { "Login": localStorage.getItem("login") }, product.get());
+	return await _sendRequest("POST", "api/users/cart", null, product.get());
 }
 
 export async function async_getCart() {
-	return await _sendRequest("GET", "api/users/cart", { "Login": localStorage.getItem("login") });
+	return await _sendRequest("GET", "api/users/cart");
 }

@@ -7,6 +7,7 @@ import { images } from "../../../images.js";
 let root = undefined;
 let error_span = undefined;
 let router = undefined;
+let main_root = undefined;
 
 function _render() {
 	let btnPlace = document.createElement("div");
@@ -109,7 +110,7 @@ async function _sendSaleInfo() {
 
 function _react_saleInfo(status) {
 	if (status == 401) {
-		router.pageStart(root);
+		router.pageStart(main_root);
 	} else {
 		error_span.textContent = "";
 		let fields = document.getElementsByTagName("input");
@@ -121,7 +122,8 @@ function _react_saleInfo(status) {
 	}
 }
 
-export default function init(_root) {
+export default function init(_main_root, _root) {
+	main_root = _main_root;
 	root = _root;
 	router = new Router();
 	_render();
