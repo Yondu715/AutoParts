@@ -1,6 +1,7 @@
 package rest.controller.components;
 
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 
@@ -14,6 +15,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import rest.builder.Built;
+import rest.controller.interceptor.AuthRequired;
 import rest.controller.token.Token;
 import rest.model.dto.Product;
 import rest.model.dto.User;
@@ -22,20 +24,21 @@ import rest.model.interfaces.in.IModelUser;
 
 @Path("/users")
 public class serverUser {
+
 	@Inject @Built
 	private IModelUser modelUser;
-	@Inject @Built
+
+	@Inject@Built
 	IModelCart modelCart;
+
 	private Jsonb jsonb = JsonbBuilder.create();
 
 	@POST
 	@Path("/auth")
 	public Response auth(@Context HttpHeaders httpHeaders, String userJson) {
 		String token = httpHeaders.getHeaderString("Authorization");
-		if (!token.equals("null")) {
-			if (Token.checkToken(token)) {
-				return Response.status(Response.Status.OK).build();
-			}
+		if (Token.checkToken(token)) {
+			return Response.status(Response.Status.OK).build();
 		}
 		if (!userJson.equals("null") && !userJson.equals("")) {
 			User user = jsonb.fromJson(userJson, User.class);
@@ -62,26 +65,20 @@ public class serverUser {
 	}
 
 	@GET
+	@AuthRequired
 	@Path("/cart")
-	public Response getCart(@Context HttpHeaders httpHeaders) {
-		String token = httpHeaders.getHeaderString("Authorization");
-		String login = httpHeaders.getHeaderString("login");
-		if (!Token.checkToken(token) || login.equals("null")) {
-			return Response.status(Response.Status.UNAUTHORIZED).build();
-		}
+	public Response getCart(@Context ContainerRequestContext requestContext) {
+		String login = requestContext.getProperty("login").toString();
 		ArrayList<Product> products = modelCart.getCart(login);
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
 	}
 
 	@POST
+	@AuthRequired
 	@Path("/cart")
-	public Response addCart(@Context HttpHeaders httpHeaders, String productJson) {
-		String token = httpHeaders.getHeaderString("Authorization");
-		String login = httpHeaders.getHeaderString("login");
-		if (!Token.checkToken(token) || login.equals("null")) {
-			return Response.status(Response.Status.UNAUTHORIZED).build();
-		}
+	public Response addCart(@Context ContainerRequestContext requestContext, String productJson) {
+		String login = requestContext.getProperty("login").toString();
 		Product product = jsonb.fromJson(productJson, Product.class);
 		if (modelCart.addToCart(login, product)) {
 			return Response.status(Response.Status.OK).build();

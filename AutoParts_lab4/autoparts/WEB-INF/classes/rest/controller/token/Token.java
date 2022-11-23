@@ -23,11 +23,18 @@ public class Token {
 	}
 
 	public static Boolean checkToken(String token) {
-		String[] tokenParts = token.split("\\.", 3);
-		String header = tokenParts[0];
-		String body = tokenParts[1];
+		String header;
+		String body;
+		String signatyre;
+		try {
+			String[] tokenParts = token.split("\\.", 3);
+			header = tokenParts[0];
+			body = tokenParts[1];
+			signatyre = tokenParts[2];
+		} catch (Exception e) {
+			return false;
+		}
 		String line = header + "." + body;
-		String signatyre = tokenParts[2];
 		return BCrypt.checkpw(line, signatyre);
 	}
 }
