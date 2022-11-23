@@ -64,10 +64,10 @@ function _renderMenu() {
 
 	let buttons = list.getElementsByTagName("button");
 	let menu_funcs = [	
-					() => renderProducts(componentRoot), 
-					() => renderSale(componentRoot), 
-					() => renderUserProducts(componentRoot),
-					() => renderCart(componentRoot),
+					() => renderProducts(root, componentRoot), 
+					() => renderSale(root, componentRoot), 
+					() => renderUserProducts(root, componentRoot),
+					() => renderCart(root, componentRoot),
 				];
 	for (let i = 0; i < menu_funcs.length; i++) {
 		buttons[i].addEventListener("click", menu_funcs[i]);
@@ -80,7 +80,7 @@ function _renderContent() {
 	let content = document.createElement("div");
 	content.id = "content";
 	content_root.appendChild(content);
-	renderProducts(content);
+	renderProducts(root, content);
 }
 
 export default function init(_root) {

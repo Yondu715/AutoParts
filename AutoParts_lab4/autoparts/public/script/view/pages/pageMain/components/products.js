@@ -7,6 +7,7 @@ import renderProductInfo from "./productInfo.js";
 let root = undefined;
 let products = undefined;
 let router = undefined;
+let main_root = undefined;
 
 async function _getAllProducts() {
 	let response = await async_getAllProducts();
@@ -17,7 +18,7 @@ async function _getAllProducts() {
 
 function _react_getAllProducts(status, data){
 	if (status == 401) {
-		router.pageStart(root);
+		router.pageStart(main_root);
 	} else if (status == 200) {
 		products = convert_products(data);
 		_render();
@@ -41,7 +42,8 @@ function _render() {
 	});
 }
 
-export default function init(_root) {
+export default function init(_main_root, _root) {
+	main_root = _main_root;
 	root = _root;
 	router = new Router();
 	_getAllProducts();

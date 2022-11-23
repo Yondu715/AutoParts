@@ -7,6 +7,7 @@ import { async_deleteProduct, async_getUserProducts } from "../../../../model/Re
 let root = undefined;
 let products = undefined;
 let router = undefined;
+let main_root = undefined;
 
 async function _getUserProducts() {
 	let response = await async_getUserProducts();
@@ -17,7 +18,7 @@ async function _getUserProducts() {
 
 function _react_getUserProducts(status, data){
 	if (status == 401) {
-		router.pageStart.render();
+		router.pageStart(main_root);
 	} else if (status == 200) {
 		products = convert_products(data);
 		_render();
@@ -72,13 +73,14 @@ async function _sendDeleteInfo() {
 
 function react_deleteInfo(status){
 	if (status == 401) {
-		router.pageStart(root);
+		router.pageStart(main_root);
 	} else if (status == 204) {
 		_getUserProducts();
 	}
 }
 
-export default function init(_root) {
+export default function init(_main_root, _root) {
+	main_root = _main_root;
 	root = _root;
 	router = new Router();
 	_getUserProducts();

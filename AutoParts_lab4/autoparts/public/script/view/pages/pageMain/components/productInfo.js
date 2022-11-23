@@ -7,6 +7,7 @@ let root = undefined;
 let product_id = undefined;
 let product = undefined;
 let router = undefined;
+let main_root = undefined;
 
 async function _getProductInfo() {
 	let response = await async_getProductInfo(product_id);
@@ -17,7 +18,7 @@ async function _getProductInfo() {
 
 function _react_getProductInfo(status, data){
 	if (status == 401) {
-		router.pageStart(root);
+		router.pageStart(main_root);
 	} else if (status == 200) {
 		product = convert_products(data);
 		_render();
@@ -53,7 +54,8 @@ function _react_addCart(status){
 	}
 }
 
-export default function init(_root, _id) {
+export default function init(_main_root, _root, _id) {
+	main_root = _main_root;
 	root = _root;
 	product_id = _id;
 	router = new Router();
