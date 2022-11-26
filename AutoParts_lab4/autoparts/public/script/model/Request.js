@@ -2,13 +2,11 @@ import { Response } from "./transport/Response.js";
 
 
 async function _sendRequest(type, uri, options, data) {
-	type = type.toLowerCase();
-	let request;
 	let headers = {
 		"Content-type": "application/json; charset=utf-8",
 		"Authorization": localStorage.getItem("token"),
 	}
-
+	
 	if (options != undefined || options != null) {
 		let keys = Object.keys(options);
 		for (let i = 0; i < keys.length; i++) {
@@ -16,16 +14,17 @@ async function _sendRequest(type, uri, options, data) {
 		}
 	}
 	
+	type = type.toLowerCase();
+	let response;
 	if (data == null || data == undefined) {
-		request = fetch(uri, { method: type, headers: headers });
+		response = await fetch(uri, { method: type, headers: headers });
 	} else if ((type == "delete" || type == "get")) {
 		headers["Data"] = JSON.stringify(data);
-		request = fetch(uri, { method: type, headers: headers });
+		response = await fetch(uri, { method: type, headers: headers });
 	} else {
-		request = fetch(uri, { method: type, headers: headers, body: JSON.stringify(data) });
+		response = await fetch(uri, { method: type, headers: headers, body: JSON.stringify(data) });
 	}
 	
-	let response = await request;
 	let json;
 	try {
 		json = await response.json();
@@ -76,4 +75,20 @@ export async function async_addToCart(product){
 
 export async function async_getCart() {
 	return await _sendRequest("GET", "api/users/cart");
+}
+
+export async function async_getAllApplications(){
+	return await _sendRequest("GET", "api/admin/applications");
+}
+
+export async function async_deleteApplication(applications_id){
+	return await _sendRequest("DELETE", "api/admin/applications", null, applications_id);
+}
+
+export async function async_acceptApplication(applications){
+	return await _sendRequest("PUT", "api/admin/applications", null, applications);
+}
+
+export async function async_getAllUsers() {
+	return await _sendRequest("GET", "api/admin/users");
 }

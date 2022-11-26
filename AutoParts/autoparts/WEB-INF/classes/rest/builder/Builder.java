@@ -3,14 +3,23 @@ package rest.builder;
 import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
+import rest.model.interfaces.in.IModelApplications;
 import rest.model.interfaces.in.IModelCart;
 import rest.model.interfaces.in.IModelProducts;
 import rest.model.interfaces.in.IModelUser;
+import rest.model.interfaces.out.IRepositoryApplications;
 import rest.model.interfaces.out.IRepositoryCart;
 import rest.model.interfaces.out.IRepositoryProducts;
 import rest.model.interfaces.out.IRepositoryUsers;
 
 public class Builder {
+
+	@Inject @Default
+	private IModelApplications modelApplications;
+
+	@Inject @Default
+	private IRepositoryApplications repApp;
+
 	@Inject @Default
 	private IModelCart modelCart;
 
@@ -29,21 +38,27 @@ public class Builder {
 	@Inject @Default
 	private IRepositoryUsers repUsers;
 
-	@Produces @Built
-	public IModelCart builtModelCart(){
+	@Produces @Build
+	public IModelCart buildModelCart(){
 		modelCart.setRepository(repCart);
 		return modelCart;
 	}
 
-	@Produces @Built
-	public IModelProducts builtModelProducts() {
+	@Produces @Build
+	public IModelProducts buildModelProducts() {
 		modelProducts.setRepository(repProducts);
 		return modelProducts;
 	}
 
-	@Produces @Built
-	public IModelUser builtModelUser() {
+	@Produces @Build
+	public IModelUser buildModelUser() {
 		modelUser.setRepository(repUsers);
 		return modelUser;
+	}
+
+	@Produces @Build
+	public IModelApplications buildModelAdmin(){
+		modelApplications.setRepository(repApp, repUsers);
+		return modelApplications;
 	}
 }

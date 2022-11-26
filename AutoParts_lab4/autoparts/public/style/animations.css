@@ -9,19 +9,21 @@
 }
 
 @keyframes cover {
-	0%{
+	0% {
 		width: 0%;
 	}
-	100%{
+
+	100% {
 		width: 100%;
 	}
 }
 
 @keyframes highlightMenu {
-	0%{
+	0% {
 		color: rgb(17, 54, 40);
 	}
-	100%{
+
+	100% {
 		color: rgb(1, 175, 108);
 	}
 }

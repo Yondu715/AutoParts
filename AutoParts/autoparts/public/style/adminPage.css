@@ -1,0 +1,95 @@
+/* APPLICATIONS BEGIN */
+#applications {
+	height: 100%;
+	width: 100%;
+	overflow: scroll;
+	opacity: 0;
+}
+
+#applications table tr {
+	height: 80px;
+}
+
+#applications table .item {
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	font-size: 40px;
+}
+
+#applications table div {
+	display: flex;
+}
+
+#applications table .item_id {
+	width: 10%;
+}
+
+#applications table .item_info {
+	width: 70%;
+}
+
+#applications table span {
+	margin: auto;
+}
+
+#applications table .item_role {
+	margin: auto;
+	width: 20%;
+}
+
+#applications table .item_role select {
+	margin: auto;
+	font-size: 18px;
+	z-index: 10;
+}
+
+/* APPLICATIONS END */
+
+/* USERS BEGIN */
+#users {
+	height: 100%;
+	width: 100%;
+	overflow: scroll;
+	opacity: 0;
+}
+
+#users table tr {
+	height: 80px;
+}
+
+#users table .item {
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	font-size: 40px;
+}
+
+#users table div {
+	display: flex;
+}
+
+#users table .item_id {
+	width: 10%;
+}
+
+#users table .item_info {
+	width: 70%;
+}
+
+#users table span {
+	margin: auto;
+}
+
+#users table .item_role {
+	margin: auto;
+	width: 20%;
+}
+
+#users table .item_role select {
+	margin: auto;
+	font-size: 18px;
+	z-index: 10;
+}
+
+/* USERS END */

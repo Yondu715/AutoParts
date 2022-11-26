@@ -1,5 +1,7 @@
 package rest.model;
 
+import java.util.ArrayList;
+
 import rest.model.dto.User;
 import rest.model.interfaces.in.IModelUser;
 import rest.model.interfaces.out.IRepositoryUsers;
@@ -10,7 +12,7 @@ public class ModelUser implements IModelUser {
 
 	@Override
 	public boolean authUser(User user) {
-		return repUser.find(user);
+		return repUser.check(user);
 	}
 
 	@Override
@@ -22,5 +24,17 @@ public class ModelUser implements IModelUser {
 	public void setRepository(IRepositoryUsers repUsers) {
 		this.repUser = repUsers;		
 	}
+
+	@Override
+	public User getUser(User user) {
+		return repUser.find(user.getLogin());
+	}
+
+	@Override
+	public ArrayList<User> getUsers() {
+		return repUser.findAll();
+	}
+
+
 
 }

@@ -1,6 +1,8 @@
 import { Router } from "../../../router.js";
 import { async_addToCart, async_getProductInfo } from "../../../../model/Request.js";
-import { convert_products, create_productInfo } from "../../../../model/DataAction.js";
+import { jsonToObjects, create_productInfo } from "../../../../model/DataAction.js";
+import { fade } from "../../../AnimationHandler.js";
+import { Product } from "../../../../model/transport/Product.js";
 
 
 let root = undefined;
@@ -20,22 +22,39 @@ function _react_getProductInfo(status, data){
 	if (status == 401) {
 		router.pageStart(main_root);
 	} else if (status == 200) {
-		product = convert_products(data);
+		product = jsonToObjects(data, Product);
 		_render();
 	}
 }
 
 function _render() {
 	root.innerHTML = "";
-	let div_productInfo = create_productInfo(product);
-	console.log(product);
+	let fields = ["name", "sellerName", "date", "brand", "model", "price"];
+	let fields_ru = ["Название", "Продавец", "Дата публикации", "Марка", "Модель", "Цена"]
+
+	let div_productInfo = create_productInfo();
+
+	let div_info = div_productInfo.querySelector(".info");
+	let image = div_productInfo.querySelector(".image");
+	for (let i = 0; i < fields.length; i++) {
+		let span = document.createElement("span");
+		span.textContent = fields_ru[i] + ": " + product.get()[fields[i]];
+		if (fields[i] == "price") {
+			span.textContent += " ₽";
+		}
+		div_info.appendChild(span);
+	}
+	image.src = product.get()["image"];
 	root.appendChild(div_productInfo);
+	fade(div_productInfo, 0.8, 0);
+
+
 	if (product.get()["sellerName"] != localStorage.getItem("login")){
 		let btnPlace = document.createElement("div");
 		btnPlace.id = "btn-place";
 		let button = document.createElement("button");
 		button.textContent = "Добавить в корзину";
-		button.className = "btn-submit";
+		button.classList.add("btn-submit");
 		button.addEventListener("click", _addToCart);
 		btnPlace.appendChild(button);
 		root.appendChild(btnPlace);

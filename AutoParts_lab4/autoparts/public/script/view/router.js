@@ -1,4 +1,4 @@
-import { pageAuth, pageReg, pageMain } from "./pages/pages.js";
+import { pageAuth, pageReg, pageMain, pageAdmin } from "./pages/pages.js";
 
 export class Router {
 
@@ -7,5 +7,6 @@ export class Router {
 		this.pageAuth = pageAuth;
 		this.pageMain = pageMain;
 		this.pageReg = pageReg;	
+		this.pageAdmin = pageAdmin;
 	}
 }

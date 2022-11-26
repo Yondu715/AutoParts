@@ -1,7 +1,8 @@
-import { highlightRow } from "../../../AnimationHandler.js";
+import { fade, highlightRow } from "../../../AnimationHandler.js";
 import { Router } from "../../../router.js";
-import { convert_products, create_table } from "../../../../model/DataAction.js";
+import { create_table_products, jsonToObjects } from "../../../../model/DataAction.js";
 import { async_deleteProduct, async_getUserProducts } from "../../../../model/Request.js";
+import { Product } from "../../../../model/transport/Product.js";
 
 
 let root = undefined;
@@ -20,7 +21,7 @@ function _react_getUserProducts(status, data){
 	if (status == 401) {
 		router.pageStart(main_root);
 	} else if (status == 200) {
-		products = convert_products(data);
+		products =jsonToObjects(data, Product);
 		_render();
 	}
 }
@@ -33,17 +34,42 @@ function _render() {
 	btnPlace.id = "btn-place";
 
 	let columns = ["id", "name", "date", "brand", "model", "price", "image"];
-	let table = create_table(products, columns);
+	let table = create_table_products(products.length);
+	table.classList.add("table");
+
+	let rows = table.querySelectorAll("tr");
+	let image_divs = table.querySelectorAll(".item_image");
+	let main_divs = table.querySelectorAll(".item_info");
+	let price_divs = table.querySelectorAll(".item_price");
+	for (let i = 0; i < rows.length; i++) {
+		for (let j = 0; j < columns.length; j++) {
+			let span = document.createElement("span");
+			span.classList.add(columns[j]);
+			span.textContent = products[i].get()[columns[j]];
+			if (span.classList.contains("image")) {
+				let image = document.createElement("img");
+				image.src = span.textContent;
+				image_divs[i].appendChild(image);
+			} else if (span.classList.contains("price")) {
+				span.textContent += " ₽";
+				price_divs[i].appendChild(span);
+			} else {
+				main_divs[i].appendChild(span);
+			}
+		}
+	}
+
 	let button = document.createElement("button");
 	button.textContent = "Удалить";
-	button.className = "btn-submit";
+	button.classList.add("btn-submit");
+	button.classList.add("btn_red")
 	button.addEventListener("click", _sendDeleteInfo);
 	div_products.appendChild(table);
 	btnPlace.appendChild(button);
 
 	root.appendChild(div_products);
 	root.appendChild(btnPlace);
-	let rows = div_products.getElementsByTagName("tr");
+	fade(div_products, 1.2, 0);
 	highlightRow(rows);
 }
 

@@ -29,7 +29,7 @@ function _render() {
 									<input id='password-repeat' class='text' type='password' autocomplete='off'>
 									<span class='bar'></span>
 								</div>
-								<button class='btn-submit' id='btnRegInfo'>Зарегистрироваться</button>
+								<button class='btn-submit' id='btnRegInfo'>Подать заявку</button>
 								<span id='log-status'></span>
 							</div>
 							<span>Уже есть аккаунт? <button class='btn-path' id='auth'>Авторизоваться</button></span>

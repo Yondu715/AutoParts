@@ -14,22 +14,27 @@ import jakarta.json.bind.JsonbBuilder;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
-import rest.builder.Built;
+import rest.builder.Build;
 import rest.controller.interceptor.AuthRequired;
 import rest.controller.token.Token;
+import rest.model.dto.Application;
 import rest.model.dto.Product;
 import rest.model.dto.User;
+import rest.model.interfaces.in.IModelApplications;
 import rest.model.interfaces.in.IModelCart;
 import rest.model.interfaces.in.IModelUser;
 
 @Path("/users")
 public class serverUser {
 
-	@Inject @Built
+	@Inject @Build
 	private IModelUser modelUser;
 
-	@Inject@Built
-	IModelCart modelCart;
+	@Inject @Build
+	private IModelCart modelCart;
+
+	@Inject @Build
+	private IModelApplications modelApplications;
 
 	private Jsonb jsonb = JsonbBuilder.create();
 
@@ -37,15 +42,16 @@ public class serverUser {
 	@Path("/auth")
 	public Response auth(@Context HttpHeaders httpHeaders, String userJson) {
 		String token = httpHeaders.getHeaderString("Authorization");
-		if (Token.checkToken(token)) {
+		if (Token.checkToken(token)){
 			return Response.status(Response.Status.OK).build();
 		}
-		if (!userJson.equals("null") && !userJson.equals("")) {
+		if (!userJson.equals("")) {
 			User user = jsonb.fromJson(userJson, User.class);
-			String login = user.getLogin();
 			if (modelUser.authUser(user)) {
+				User user_found = modelUser.getUser(user);
 				String header = "{\"typ\": \"JWT\"}";
-				String body = "{\"login\": \"" + login + "\"}";
+				String body = "{\"login\": \"" + user_found.getLogin() + "\"," + 
+								"\"role\": \"" + user_found.getRole() + "\"}";
 				Token new_token = new Token(header, body);
 				token = jsonb.toJson(new_token);
 				return Response.ok(token).build();
@@ -57,8 +63,8 @@ public class serverUser {
 	@POST
 	@Path("/registration")
 	public Response registration(String userJson) {
-		User user = jsonb.fromJson(userJson, User.class);
-		if (modelUser.addUser(user)) {
+		Application application = jsonb.fromJson(userJson, Application.class);
+		if (modelApplications.addAplication(application)) {
 			return Response.status(Response.Status.OK).build();
 		}
 		return Response.status(Response.Status.BAD_REQUEST).build();

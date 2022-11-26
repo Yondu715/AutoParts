@@ -11,5 +11,5 @@ import jakarta.inject.Qualifier;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.METHOD})
-public @interface Built {
+public @interface Build {
 }
