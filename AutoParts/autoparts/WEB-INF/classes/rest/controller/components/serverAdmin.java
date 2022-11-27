@@ -47,7 +47,12 @@ public class serverAdmin {
 	@Path("/applications")
 	public Response removal_application(@Context HttpHeaders httpHeaders){
 		String jsonDeleteID = httpHeaders.getHeaderString("Data");
-		List<User> userApplicationsID = jsonb.fromJson(jsonDeleteID, new ArrayList<User>(){}.getClass().getGenericSuperclass());
+		List<User> userApplicationsID;
+		try {
+			userApplicationsID = jsonb.fromJson(jsonDeleteID, new ArrayList<User>(){}.getClass().getGenericSuperclass());
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+		}
 		modelApplications.deleteApplication(userApplicationsID);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
@@ -56,8 +61,13 @@ public class serverAdmin {
 	@AuthRequired
 	@Path("/applications")
 	public Response accept(String userApplicationsJson){
-		List<User> userApplications = jsonb.fromJson(userApplicationsJson, new ArrayList<User>() {
-		}.getClass().getGenericSuperclass());
+		List<User> userApplications;
+		try {
+			userApplications = jsonb.fromJson(userApplicationsJson, new ArrayList<User>() {
+			}.getClass().getGenericSuperclass());
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+		}
 		modelApplications.acceptApplication(userApplications);
 		return Response.status(Response.Status.ACCEPTED).build();
 	}
@@ -76,8 +86,13 @@ public class serverAdmin {
 	@Path("/users")
 	public Response removal_user(@Context HttpHeaders httpHeaders) {
 		String jsonDeleteID = httpHeaders.getHeaderString("Data");
-		List<User> usersID = jsonb.fromJson(jsonDeleteID, new ArrayList<User>() {
-		}.getClass().getGenericSuperclass());
+		List<User> usersID;
+		try {
+			usersID = jsonb.fromJson(jsonDeleteID, new ArrayList<User>() {
+			}.getClass().getGenericSuperclass());
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+		}
 		modelUser.deleteUser(usersID);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}

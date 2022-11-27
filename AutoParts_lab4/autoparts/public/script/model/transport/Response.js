@@ -7,6 +7,7 @@ export class Response {
 		202: 202,
 		204: 204,
 		400: 400,
+		409: 409,
 	}
 
 	constructor(status, body){

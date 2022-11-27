@@ -80,7 +80,7 @@ async function _sendRegInfo() {
 function _react_regInfo(status) {
 	if (status == 200) {
 		router.pageAuth(root);
-	} else if (status == 400) {
+	} else if (status == 409) {
 		error_span.textContent = "Нельзя использовать данный логин";
 	}
 }

@@ -45,7 +45,12 @@ public class serverUser {
 			return Response.status(Response.Status.OK).build();
 		}
 		if (!userJson.equals("")) {
-			User user = jsonb.fromJson(userJson, User.class);
+			User user;
+			try {
+				user = jsonb.fromJson(userJson, User.class);
+			} catch (Exception e) {
+				return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+			}
 			if (modelUser.authUser(user)) {
 				User user_found = modelUser.getUser(user);
 				String header = "{\"typ\": \"JWT\"}";
@@ -62,11 +67,16 @@ public class serverUser {
 	@POST
 	@Path("/registration")
 	public Response registration(String userJson) {
-		User application = jsonb.fromJson(userJson, User.class);
+		User application;
+		try {
+			application = jsonb.fromJson(userJson, User.class);
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+		}
 		if (modelApplications.addAplication(application)) {
 			return Response.status(Response.Status.OK).build();
 		}
-		return Response.status(Response.Status.BAD_REQUEST).build();
+		return Response.status(Response.Status.CONFLICT).build();
 	}
 
 	@GET
@@ -84,10 +94,15 @@ public class serverUser {
 	@Path("/cart")
 	public Response addCart(@Context ContainerRequestContext requestContext, String productJson) {
 		String login = requestContext.getProperty("login").toString();
-		Product product = jsonb.fromJson(productJson, Product.class);
+		Product product;
+		try {
+			product = jsonb.fromJson(productJson, Product.class);
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+		}
 		if (modelCart.addToCart(login, product)) {
 			return Response.status(Response.Status.OK).build();
 		}
-		return Response.status(Response.Status.BAD_REQUEST).build();
+		return Response.status(Response.Status.CONFLICT).build();
 	}
 }
