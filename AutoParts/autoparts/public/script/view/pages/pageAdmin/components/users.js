@@ -2,7 +2,7 @@ import { Router } from "../../../router.js";
 import { create_table_users, jsonToObjects} from "../../../../model/DataAction.js";
 import { fade, highlightRow } from "../../../AnimationHandler.js";
 import { User } from "../../../../model/transport/User.js";
-import { async_getAllUsers } from "../../../../model/Request.js";
+import { async_deleteUsers, async_getAllUsers } from "../../../../model/Request.js";
 
 
 let root = undefined;
@@ -62,7 +62,8 @@ function _render() {
 	let button_delete = document.createElement("button");
 	button_delete.textContent = "Удалить";
 	button_delete.classList.add("btn-submit");
-	button_delete.classList.add("btn_red")
+	button_delete.classList.add("btn_red");
+	button_delete.addEventListener("click", _sendDeleteInfo);
 
 	btnPlace.appendChild(button_delete);
 
@@ -70,6 +71,36 @@ function _render() {
 	root.appendChild(btnPlace);
 	fade(div_users, 1.2, 0);
 	highlightRow(rows);
+}
+
+function _getDeleteInfo() {
+	let rows = document.getElementsByTagName("tr");
+	let users_id = [];
+	for (let i = 0; i < rows.length; i++) {
+		if (rows[i].style.background != "") {
+			let cell = rows[i].querySelector(".id");
+			let user = {
+				id: Number(cell.innerText)
+			}
+			users_id.push(user);
+		}
+	}
+	return users_id;
+}
+
+async function _sendDeleteInfo() {
+	let jsonUsersID = _getDeleteInfo();
+	let response = await async_deleteUsers(jsonUsersID);
+	let status = response.getStatus();
+	react_deleteInfo(status);
+}
+
+function react_deleteInfo(status) {
+	if (status == 401) {
+		router.pageStart(main_root);
+	} else if (status == 204) {
+		_getUsers();
+	}
 }
 
 export default function init(_main_root, _root) {

@@ -62,7 +62,7 @@ function _renderMenu() {
 	menu.appendChild(list);
 	menu_root.appendChild(menu);
 
-	let buttons = list.getElementsByTagName("button");
+	let menu_buttons = list.getElementsByTagName("button");
 	let menu_funcs = [	
 					() => renderProducts(root, componentRoot), 
 					() => renderSale(root, componentRoot), 
@@ -70,9 +70,9 @@ function _renderMenu() {
 					() => renderCart(root, componentRoot),
 				];
 	for (let i = 0; i < menu_funcs.length; i++) {
-		buttons[i].addEventListener("click", menu_funcs[i]);
+		menu_buttons[i].addEventListener("click", menu_funcs[i]);
 	}
-	highlightMenu(buttons);
+	highlightMenu(menu_buttons);
 }
 
 function _renderContent() {

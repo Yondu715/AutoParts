@@ -1,7 +1,7 @@
 import { fade, highlightRow } from "../../../AnimationHandler.js";
 import { Router } from "../../../router.js";
 import { create_table_products, jsonToObjects } from "../../../../model/DataAction.js";
-import { async_deleteProduct, async_getUserProducts } from "../../../../model/Request.js";
+import { async_deleteProducts, async_getUserProducts } from "../../../../model/Request.js";
 import { Product } from "../../../../model/transport/Product.js";
 
 
@@ -92,7 +92,7 @@ function _getDeleteInfo() {
 
 async function _sendDeleteInfo() {
 	let jsonProductsID = _getDeleteInfo();
-	let response = await async_deleteProduct(jsonProductsID);
+	let response = await async_deleteProducts(jsonProductsID);
 	let status = response.getStatus();
 	react_deleteInfo(status);
 }

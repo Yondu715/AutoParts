@@ -75,7 +75,7 @@ export function create_table_applications(length) {
 			menu_role.appendChild(option_role);
 		});*/
 		choose_role.appendChild(menu_role);
-		
+
 		/*
 		for (let j = 0; j < columns.length; j++) {
 			let span = document.createElement("span");
@@ -97,7 +97,7 @@ export function create_table_applications(length) {
 	return table;
 }
 
-export function create_table_users(length){
+export function create_table_users(length) {
 	let table = document.createElement("table");
 	for (let i = 0; i < length; i++) {
 		let row = document.createElement("tr");
@@ -215,15 +215,15 @@ export function dragAndDrop(dropArea, input, image_place) {
 
 }
 
-export function jsonToObjects(json, classConvent) {
+export function jsonToObjects(json, classConvert) {
 	if (!Array.isArray(json)) {
-		let object = new classConvent(json);
+		let object = new classConvert(json);
 		return object;
 	}
 
 	let res = [];
 	for (let i = 0; i < json.length; i++) {
-		let object = new classConvent(json[i]);
+		let object = new classConvert(json[i]);
 		res.push(object);
 	}
 	return res;

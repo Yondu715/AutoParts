@@ -7,7 +7,6 @@ import rest.model.interfaces.in.IModelApplications;
 import rest.model.interfaces.in.IModelCart;
 import rest.model.interfaces.in.IModelProducts;
 import rest.model.interfaces.in.IModelUser;
-import rest.model.interfaces.out.IRepositoryApplications;
 import rest.model.interfaces.out.IRepositoryCart;
 import rest.model.interfaces.out.IRepositoryProducts;
 import rest.model.interfaces.out.IRepositoryUsers;
@@ -16,9 +15,6 @@ public class Builder {
 
 	@Inject @Default
 	private IModelApplications modelApplications;
-
-	@Inject @Default
-	private IRepositoryApplications repApp;
 
 	@Inject @Default
 	private IModelCart modelCart;
@@ -58,7 +54,7 @@ public class Builder {
 
 	@Produces @Build
 	public IModelApplications buildModelAdmin(){
-		modelApplications.setRepository(repApp, repUsers);
+		modelApplications.setRepository(repUsers);
 		return modelApplications;
 	}
 }

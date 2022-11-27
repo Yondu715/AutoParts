@@ -1,6 +1,5 @@
 import { Response } from "./transport/Response.js";
 
-
 async function _sendRequest(type, uri, options, data) {
 	let headers = {
 		"Content-type": "application/json; charset=utf-8",
@@ -26,10 +25,10 @@ async function _sendRequest(type, uri, options, data) {
 	}
 	
 	let json;
+	json = await response.text();
 	try {
-		json = await response.json();
+		json = JSON.parse(json);
 	} catch (error) {
-		json = null;
 	}
 	return new Response(response.status, json);
 }
@@ -48,11 +47,10 @@ export async function async_getProductInfo(product_id){
 }
 
 export async function async_auth(user) {
-	let data;
+	let data = null;
 	try {
 		data = user.get();
 	} catch (error) { 
-		data = null;
 	}
 	return await _sendRequest("POST", "api/users/auth", null, data);
 }
@@ -65,7 +63,7 @@ export async function async_saleProduct(product) {
 	return await _sendRequest("POST", "api/products/sale", null, product.get());
 }
 
-export async function async_deleteProduct(products_id) {
+export async function async_deleteProducts(products_id) {
 	return await _sendRequest("DELETE", "api/products/userProducts", null, products_id);
 }
 
@@ -81,14 +79,18 @@ export async function async_getAllApplications(){
 	return await _sendRequest("GET", "api/admin/applications");
 }
 
-export async function async_deleteApplication(applications_id){
+export async function async_deleteApplications(applications_id){
 	return await _sendRequest("DELETE", "api/admin/applications", null, applications_id);
 }
 
-export async function async_acceptApplication(applications){
+export async function async_acceptApplications(applications){
 	return await _sendRequest("PUT", "api/admin/applications", null, applications);
 }
 
 export async function async_getAllUsers() {
 	return await _sendRequest("GET", "api/admin/users");
+}
+
+export async function async_deleteUsers(users_id) {
+	return await _sendRequest("DELETE", "api/admin/users", null, users_id);
 }

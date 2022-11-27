@@ -1,6 +1,7 @@
 package rest.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import rest.model.dto.User;
 import rest.model.interfaces.in.IModelUser;
@@ -33,6 +34,13 @@ public class ModelUser implements IModelUser {
 	@Override
 	public ArrayList<User> getUsers() {
 		return repUser.findAll();
+	}
+
+	@Override
+	public void deleteUser(List<User> users_id) {
+		for (User user : users_id) {
+			repUser.delete(user.getId());
+		}
 	}
 
 

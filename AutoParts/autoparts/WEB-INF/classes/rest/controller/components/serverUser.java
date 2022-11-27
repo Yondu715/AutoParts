@@ -17,7 +17,6 @@ import jakarta.ws.rs.core.Response;
 import rest.builder.Build;
 import rest.controller.interceptor.AuthRequired;
 import rest.controller.token.Token;
-import rest.model.dto.Application;
 import rest.model.dto.Product;
 import rest.model.dto.User;
 import rest.model.interfaces.in.IModelApplications;
@@ -63,7 +62,7 @@ public class serverUser {
 	@POST
 	@Path("/registration")
 	public Response registration(String userJson) {
-		Application application = jsonb.fromJson(userJson, Application.class);
+		User application = jsonb.fromJson(userJson, User.class);
 		if (modelApplications.addAplication(application)) {
 			return Response.status(Response.Status.OK).build();
 		}

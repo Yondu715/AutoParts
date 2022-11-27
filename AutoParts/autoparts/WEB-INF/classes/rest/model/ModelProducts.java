@@ -42,6 +42,5 @@ public class ModelProducts implements IModelProducts {
 	@Override
 	public void setRepository(IRepositoryProducts repProducts) {
 		this.repProducts = repProducts;
-		
 	}
 }

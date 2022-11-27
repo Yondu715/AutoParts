@@ -10,7 +10,13 @@ public interface IRepositoryUsers {
 
 	public boolean add(User user);
 
+	public void delete(Integer id);
+
 	public User find(String login);
 
 	public ArrayList<User> findAll();
+
+	public ArrayList<User> findWithoutRole();
+
+	public void update(User user);
 }

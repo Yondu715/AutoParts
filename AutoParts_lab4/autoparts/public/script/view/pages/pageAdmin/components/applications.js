@@ -1,5 +1,5 @@
 import { Router } from "../../../router.js";
-import { async_acceptApplication, async_deleteApplication, async_getAllApplications } from "../../../../model/Request.js";
+import { async_acceptApplications, async_deleteApplications, async_getAllApplications } from "../../../../model/Request.js";
 import { create_table_applications, jsonToObjects } from "../../../../model/DataAction.js";
 import { fade, highlightRow } from "../../../AnimationHandler.js";
 import { Application } from "../../../../model/transport/Application.js";
@@ -96,7 +96,7 @@ function _getHighlightRows() {
 	return applications_rows;
 }
 
-async function _acceptApplications(){
+function _getAcceptInfo(){
 	let rows = _getHighlightRows();
 	let jsonApplications = [];
 	for (let i = 0; i < rows.length; i++) {
@@ -112,12 +112,17 @@ async function _acceptApplications(){
 		}
 		jsonApplications.push(application);
 	}
-	let response = await async_acceptApplication(jsonApplications);
+	return jsonApplications;
+}
+
+async function _acceptApplications(){
+	let jsonApplications = _getAcceptInfo();
+	let response = await async_acceptApplications(jsonApplications);
 	let status = response.getStatus();
 	react_requestInfo(status);
 }
 
-async function _deleteApplications(){
+function _getDeleteInfo(){
 	let rows = _getHighlightRows();
 	let jsonApplications_id = [];
 	for (let i = 0; i < rows.length; i++) {
@@ -127,7 +132,12 @@ async function _deleteApplications(){
 		}
 		jsonApplications_id.push(application);
 	}
-	let response = await async_deleteApplication(jsonApplications_id);
+	return jsonApplications_id;
+}
+
+async function _deleteApplications(){
+	let jsonApplications_id = _getDeleteInfo();
+	let response = await async_deleteApplications(jsonApplications_id);
 	let status = response.getStatus();
 	react_requestInfo(status);
 }
