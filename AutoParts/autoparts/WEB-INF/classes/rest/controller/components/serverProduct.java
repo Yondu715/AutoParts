@@ -13,7 +13,7 @@ import jakarta.inject.Inject;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
-
+import jakarta.json.bind.JsonbException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
@@ -25,7 +25,8 @@ import rest.model.interfaces.in.IModelProducts;
 
 @Path("/products")
 public class serverProduct {
-	@Inject @Build
+	@Inject
+	@Build
 	private IModelProducts modelProducts;
 	private Jsonb jsonb = JsonbBuilder.create();
 
@@ -44,7 +45,7 @@ public class serverProduct {
 	public Response getProductsByUser(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		ArrayList<Product> products = modelProducts.getProducts(login);
-		String resultJson = jsonb.toJson(products);			
+		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
 	}
 
@@ -64,11 +65,19 @@ public class serverProduct {
 	public Response sale(String jsonSale) {
 		Product product;
 		try {
-			product = jsonb.fromJson(jsonSale, Product.class);
+
+			try {
+				product = jsonb.fromJson(jsonSale, Product.class);
+			} catch (Exception e) {
+				throw new Exception("Error JSON transforming");
+			}
+			modelProducts.addProduct(product);
+			
+		} catch (JsonbException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		}
-		modelProducts.addProduct(product);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 
@@ -79,12 +88,20 @@ public class serverProduct {
 		String jsonDeleteID = httpHeaders.getHeaderString("Data");
 		List<Product> productsID;
 		try {
-			productsID = jsonb.fromJson(jsonDeleteID, new ArrayList<Product>() {
-			}.getClass().getGenericSuperclass());
+
+			try {
+				productsID = jsonb.fromJson(jsonDeleteID, new ArrayList<Product>() {
+				}.getClass().getGenericSuperclass());
+			} catch (Exception e) {
+				throw new Exception("Error JSON transforming");
+			}
+			modelProducts.deleteProduct(productsID);
+
+		} catch (JsonbException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		}
-		modelProducts.deleteProduct(productsID);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 }

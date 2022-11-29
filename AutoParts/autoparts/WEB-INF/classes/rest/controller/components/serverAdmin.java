@@ -12,6 +12,7 @@ import jakarta.inject.Inject;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import jakarta.json.bind.JsonbException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
@@ -28,7 +29,8 @@ public class serverAdmin {
 	@Build
 	private IModelApplications modelApplications;
 
-	@Inject @Build
+	@Inject
+	@Build
 	private IModelUser modelUser;
 
 	private Jsonb jsonb = JsonbBuilder.create();
@@ -45,30 +47,47 @@ public class serverAdmin {
 	@DELETE
 	@AuthRequired
 	@Path("/applications")
-	public Response removal_application(@Context HttpHeaders httpHeaders){
+	public Response removal_application(@Context HttpHeaders httpHeaders) {
 		String jsonDeleteID = httpHeaders.getHeaderString("Data");
 		List<User> userApplicationsID;
 		try {
-			userApplicationsID = jsonb.fromJson(jsonDeleteID, new ArrayList<User>(){}.getClass().getGenericSuperclass());
+
+			try {
+				userApplicationsID = jsonb.fromJson(jsonDeleteID, new ArrayList<User>() {
+				}.getClass().getGenericSuperclass());
+			} catch (Exception e) {
+				throw new Exception("Error JSON transforming");
+			}
+			modelApplications.deleteApplication(userApplicationsID);
+
+		} catch (JsonbException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		}
-		modelApplications.deleteApplication(userApplicationsID);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 
 	@PUT
 	@AuthRequired
 	@Path("/applications")
-	public Response accept(String userApplicationsJson){
+	public Response accept(String userApplicationsJson) {
 		List<User> userApplications;
 		try {
-			userApplications = jsonb.fromJson(userApplicationsJson, new ArrayList<User>() {
-			}.getClass().getGenericSuperclass());
+
+			try {
+				userApplications = jsonb.fromJson(userApplicationsJson, new ArrayList<User>() {
+				}.getClass().getGenericSuperclass());
+			} catch (Exception e) {
+				throw new Exception("Error JSON transforming");
+			}
+			modelApplications.acceptApplication(userApplications);
+
+		} catch (JsonbException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		}
-		modelApplications.acceptApplication(userApplications);
 		return Response.status(Response.Status.ACCEPTED).build();
 	}
 
@@ -88,13 +107,20 @@ public class serverAdmin {
 		String jsonDeleteID = httpHeaders.getHeaderString("Data");
 		List<User> usersID;
 		try {
-			usersID = jsonb.fromJson(jsonDeleteID, new ArrayList<User>() {
-			}.getClass().getGenericSuperclass());
+
+			try {
+				usersID = jsonb.fromJson(jsonDeleteID, new ArrayList<User>() {
+				}.getClass().getGenericSuperclass());
+			} catch (Exception e) {
+				throw new Exception("Error JSON transforming");
+			}
+			modelUser.deleteUser(usersID);
+
+		} catch (JsonbException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		}
-		modelUser.deleteUser(usersID);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
-
 }

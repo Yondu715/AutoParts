@@ -11,6 +11,7 @@ import jakarta.inject.Inject;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import jakarta.json.bind.JsonbException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
@@ -26,13 +27,16 @@ import rest.model.interfaces.in.IModelUser;
 @Path("/users")
 public class serverUser {
 
-	@Inject @Build
+	@Inject
+	@Build
 	private IModelUser modelUser;
 
-	@Inject @Build
+	@Inject
+	@Build
 	private IModelCart modelCart;
 
-	@Inject @Build
+	@Inject
+	@Build
 	private IModelApplications modelApplications;
 
 	private Jsonb jsonb = JsonbBuilder.create();
@@ -41,21 +45,22 @@ public class serverUser {
 	@Path("/auth")
 	public Response auth(@Context HttpHeaders httpHeaders, String userJson) {
 		String token = httpHeaders.getHeaderString("Authorization");
-		if (Token.checkToken(token)){
+		if (Token.checkToken(token)) {
 			return Response.status(Response.Status.OK).build();
 		}
 		if (!userJson.equals("")) {
-			User user;
+			User user;								
 			try {
 				user = jsonb.fromJson(userJson, User.class);
 			} catch (Exception e) {
 				return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 			}
+
 			if (modelUser.authUser(user)) {
 				User user_found = modelUser.getUser(user);
 				String header = "{\"typ\": \"JWT\"}";
-				String body = "{\"login\": \"" + user_found.getLogin() + "\"," + 
-								"\"role\": \"" + user_found.getRole() + "\"}";
+				String body = "{\"login\": \"" + user_found.getLogin() + "\"," +
+						"\"role\": \"" + user_found.getRole() + "\"}";
 				Token new_token = new Token(header, body);
 				token = jsonb.toJson(new_token);
 				return Response.ok(token).build();
@@ -69,12 +74,20 @@ public class serverUser {
 	public Response registration(String userJson) {
 		User application;
 		try {
-			application = jsonb.fromJson(userJson, User.class);
+
+			try {
+				application = jsonb.fromJson(userJson, User.class);
+			} catch (Exception e) {
+				throw new Exception("Error JSON transforming");
+			}
+			if (modelApplications.addAplication(application)) {
+				return Response.status(Response.Status.OK).build();
+			}
+
+		} catch (JsonbException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
-		}
-		if (modelApplications.addAplication(application)) {
-			return Response.status(Response.Status.OK).build();
 		}
 		return Response.status(Response.Status.CONFLICT).build();
 	}
@@ -96,12 +109,20 @@ public class serverUser {
 		String login = requestContext.getProperty("login").toString();
 		Product product;
 		try {
-			product = jsonb.fromJson(productJson, Product.class);
+
+			try {
+				product = jsonb.fromJson(productJson, Product.class);
+			} catch (Exception e) {
+				throw new Exception("Error JSON transforming");
+			}
+			if (modelCart.addToCart(login, product)) {
+				return Response.status(Response.Status.OK).build();
+			}
+			
+		} catch (JsonbException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
-		}
-		if (modelCart.addToCart(login, product)) {
-			return Response.status(Response.Status.OK).build();
 		}
 		return Response.status(Response.Status.CONFLICT).build();
 	}
