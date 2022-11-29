@@ -1,6 +1,6 @@
 import { Router } from "../../../router.js";
-import { create_table_users, jsonToObjects} from "../../../../model/DataAction.js";
-import { fade, highlightRow } from "../../../AnimationHandler.js";
+import { createTableUsers, jsonToObjects } from "../../../../model/DataAction.js";
+import { fade, highlightRow } from "../../../viewTools/AnimationHandler.js";
 import { User } from "../../../../model/transport/User.js";
 import { async_deleteUsers, async_getAllUsers } from "../../../../model/Request.js";
 
@@ -10,7 +10,7 @@ let users = undefined;
 let router = undefined;
 let main_root = undefined;
 
-async function _getUsers() {
+async function _async_getUsers() {
 	let response = await async_getAllUsers();
 	let data = response.getBody();
 	let status = response.getStatus();
@@ -18,11 +18,14 @@ async function _getUsers() {
 }
 
 function _react_getUsers(status, data) {
-	if (status == 401) {
-		router.pageStart(main_root);
-	} else if (status == 200) {
-		users = jsonToObjects(data, User);
-		_render();
+	switch (status) {
+		case 401: {
+			router.pageStart(main_root);
+		}
+		case 200: {
+			users = jsonToObjects(data, User);
+			_render();
+		}
 	}
 }
 
@@ -33,15 +36,15 @@ function _render() {
 	let btnPlace = document.createElement("div");
 	btnPlace.id = "btn-place";
 
-	let table = create_table_users(users.length);
+	let table = createTableUsers(users.length);
 	table.classList.add("table");
-	
+
 	let rows = table.querySelectorAll("tr");
 	let id_divs = table.querySelectorAll(".item_id");
 	let role_divs = table.querySelectorAll(".item_role");
 	let main_infos = table.querySelectorAll(".item_info");
 	let columns = ["id", "login", "password", "role"];
-	
+
 	for (let i = 0; i < rows.length; i++) {
 		for (let j = 0; j < columns.length; j++) {
 			let span = document.createElement("span");
@@ -63,7 +66,7 @@ function _render() {
 	button_delete.textContent = "Удалить";
 	button_delete.classList.add("btn-submit");
 	button_delete.classList.add("btn_red");
-	button_delete.addEventListener("click", _sendDeleteInfo);
+	button_delete.addEventListener("click", _async_sendDeleteInfo);
 
 	btnPlace.appendChild(button_delete);
 
@@ -88,7 +91,7 @@ function _getDeleteInfo() {
 	return users_id;
 }
 
-async function _sendDeleteInfo() {
+async function _async_sendDeleteInfo() {
 	let jsonUsersID = _getDeleteInfo();
 	let response = await async_deleteUsers(jsonUsersID);
 	let status = response.getStatus();
@@ -96,16 +99,19 @@ async function _sendDeleteInfo() {
 }
 
 function react_deleteInfo(status) {
-	if (status == 401) {
-		router.pageStart(main_root);
-	} else if (status == 204) {
-		_getUsers();
+	switch (status) {
+		case 401: {
+			router.pageStart(main_root);
+		}
+		case 204: {
+			_async_getUsers();
+		}
 	}
 }
 
-export default function init(_main_root, _root) {
+export function renderUsers(_main_root, _root) {
 	main_root = _main_root;
 	root = _root;
 	router = new Router();
-	_getUsers();
+	_async_getUsers();
 }

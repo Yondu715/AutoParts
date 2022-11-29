@@ -1,6 +1,6 @@
-import { fade, highlightRow } from "../../../AnimationHandler.js";
+import { fade, highlightRow } from "../../../viewTools/AnimationHandler.js";
 import { Router } from "../../../router.js";
-import { create_table_products, jsonToObjects } from "../../../../model/DataAction.js";
+import { createTableProducts, jsonToObjects } from "../../../../model/DataAction.js";
 import { async_deleteProducts, async_getUserProducts } from "../../../../model/Request.js";
 import { Product } from "../../../../model/transport/Product.js";
 
@@ -10,19 +10,26 @@ let products = undefined;
 let router = undefined;
 let main_root = undefined;
 
-async function _getUserProducts() {
+async function _async_getUserProducts() {
 	let response = await async_getUserProducts();
 	let data = response.getBody();
 	let status = response.getStatus();
 	_react_getUserProducts(status, data);
 }
 
-function _react_getUserProducts(status, data){
-	if (status == 401) {
-		router.pageStart(main_root);
-	} else if (status == 200) {
-		products =jsonToObjects(data, Product);
-		_render();
+function _react_getUserProducts(status, data) {
+	switch (status) {
+		case 401: {
+			router.pageStart(main_root);
+			break;
+		}
+		case 200: {
+			products = jsonToObjects(data, Product);
+			_render();
+			break;
+		}
+		default:
+			break;
 	}
 }
 
@@ -34,7 +41,7 @@ function _render() {
 	btnPlace.id = "btn-place";
 
 	let columns = ["id", "name", "date", "brand", "model", "price", "image"];
-	let table = create_table_products(products.length);
+	let table = createTableProducts(products.length);
 	table.classList.add("table");
 
 	let rows = table.querySelectorAll("tr");
@@ -63,7 +70,7 @@ function _render() {
 	button.textContent = "Удалить";
 	button.classList.add("btn-submit");
 	button.classList.add("btn_red")
-	button.addEventListener("click", _sendDeleteInfo);
+	button.addEventListener("click", _async_sendDeleteInfo);
 	div_products.appendChild(table);
 	btnPlace.appendChild(button);
 
@@ -90,24 +97,27 @@ function _getDeleteInfo() {
 	return products_id;
 }
 
-async function _sendDeleteInfo() {
+async function _async_sendDeleteInfo() {
 	let jsonProductsID = _getDeleteInfo();
 	let response = await async_deleteProducts(jsonProductsID);
 	let status = response.getStatus();
 	react_deleteInfo(status);
 }
 
-function react_deleteInfo(status){
-	if (status == 401) {
-		router.pageStart(main_root);
-	} else if (status == 204) {
-		_getUserProducts();
+function react_deleteInfo(status) {
+	switch (status) {
+		case 401: {
+			router.pageStart(main_root);
+		}
+		case 204: {
+			async_getUserProducts();
+		}
 	}
 }
 
-export default function init(_main_root, _root) {
+export function renderUserProducts(_main_root, _root) {
 	main_root = _main_root;
 	root = _root;
 	router = new Router();
-	_getUserProducts();
+	_async_getUserProducts();
 }

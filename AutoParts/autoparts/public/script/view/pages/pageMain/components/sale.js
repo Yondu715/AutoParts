@@ -1,9 +1,10 @@
 import { Router } from "../../../router.js";
 import { Product } from "../../../../model/transport/Product.js";
 import { async_saleProduct } from "../../../../model/Request.js";
-import { check_valid, dragAndDrop, show_image } from "../../../../model/DataAction.js";
-import { images } from "../../../images.js";
-import { fade } from "../../../AnimationHandler.js";
+import { checkValid } from "../../../../model/DataAction.js";
+import { dragAndDrop, showImage } from "../../../viewTools/viewFuncs.js";
+import { images } from "../../../viewTools/images.js";
+import { fade } from "../../../viewTools/AnimationHandler.js";
 
 let root = undefined;
 let error_span = undefined;
@@ -11,9 +12,10 @@ let router = undefined;
 let main_root = undefined;
 
 function _render() {
+	root.innerHTML = "";
+
 	let btnPlace = document.createElement("div");
 	btnPlace.id = "btn-place";
-	root.innerHTML = "";
 
 	let div_sale = document.createElement("div");
 	div_sale.id = "sale";
@@ -50,7 +52,7 @@ function _render() {
 	let button = document.createElement("button");
 	button.textContent = "Выставить на продажу";
 	button.classList.add("btn-submit");
-	button.addEventListener("click", _sendSaleInfo);
+	button.addEventListener("click", _async_sendSaleInfo);
 
 	let span = document.createElement("span");
 	span.id = "sale-status";
@@ -86,7 +88,7 @@ function _render() {
 
 	dragAndDrop(dropArea, input_image, image);
 	input_image.addEventListener("change", () => {
-		show_image(input_image, image);
+		showImage(input_image, image);
 	})
 }
 
@@ -110,9 +112,9 @@ function _getSaleInfo() {
 	return product;
 }
 
-async function _sendSaleInfo() {
+async function _async_sendSaleInfo() {
 	let product = _getSaleInfo();
-	if (!check_valid(product)) {
+	if (!checkValid(product)) {
 		error_span.textContent = "Не все поля были заполнены";
 		return;
 	}
@@ -122,20 +124,23 @@ async function _sendSaleInfo() {
 }
 
 function _react_saleInfo(status) {
-	if (status == 401) {
-		router.pageStart(main_root);
-	} else {
-		error_span.textContent = "";
-		let fields = document.getElementsByTagName("input");
-		for (let i = 0; i < fields.length; i++) {
-			fields[i].value = "";
+	switch (status) {
+		case 401: {
+			router.pageStart(main_root);
 		}
-		let image = document.getElementById("image");
-		image.src = images["dragAndDrop"];
+		default: {
+			error_span.textContent = "";
+			let fields = document.getElementsByTagName("input");
+			for (let i = 0; i < fields.length; i++) {
+				fields[i].value = "";
+			}
+			let image = document.getElementById("image");
+			image.src = images["dragAndDrop"];
+		}
 	}
 }
 
-export default function init(_main_root, _root) {
+export function renderSale(_main_root, _root) {
 	main_root = _main_root;
 	root = _root;
 	router = new Router();

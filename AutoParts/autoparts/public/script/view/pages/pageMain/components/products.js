@@ -1,8 +1,8 @@
 import { Router } from "../../../router.js";
 import { async_getAllProducts } from "../../../../model/Request.js";
-import { create_table_products, jsonToObjects } from "../../../../model/DataAction.js";
-import renderProductInfo from "./productInfo.js";
-import { fade } from "../../../AnimationHandler.js";
+import { createTableProducts, jsonToObjects } from "../../../../model/DataAction.js";
+import { renderProductInfo } from "./productInfo.js";
+import { fade } from "../../../viewTools/AnimationHandler.js";
 import { Product } from "../../../../model/transport/Product.js";
 
 
@@ -11,19 +11,22 @@ let products = undefined;
 let router = undefined;
 let main_root = undefined;
 
-async function _getAllProducts() {
+async function _async_getAllProducts() {
 	let response = await async_getAllProducts();
 	let data = response.getBody();
 	let status = response.getStatus();
 	_react_getAllProducts(status, data);
 }
 
-function _react_getAllProducts(status, data){
-	if (status == 401) {
-		router.pageStart(main_root);
-	} else if (status == 200) {
-		products = jsonToObjects(data, Product);
-		_render();
+function _react_getAllProducts(status, data) {
+	switch (status) {
+		case 401:{
+			router.pageStart(main_root);
+		}
+		case 200: {
+			products = jsonToObjects(data, Product);
+			_render();
+		}
 	}
 }
 
@@ -32,7 +35,7 @@ function _render() {
 	let div_products = document.createElement("div");
 	div_products.id = "products";
 	let columns = ["id", "name", "sellerName", "date", "brand", "model", "price", "image"];
-	let table = create_table_products(products.length);
+	let table = createTableProducts(products.length);
 	table.classList.add("table");
 
 	let rows = table.querySelectorAll("tr");
@@ -56,11 +59,11 @@ function _render() {
 			}
 		}
 	}
-	
+
 	div_products.appendChild(table);
 	root.appendChild(div_products);
 	fade(div_products, 1.2, 0);
-	
+
 	table.addEventListener("click", (event) => {
 		let row = event.target.closest("tr");
 		let span = row.querySelector(".id");
@@ -69,9 +72,9 @@ function _render() {
 	});
 }
 
-export default function init(_main_root, _root) {
+export function renderProducts(_main_root, _root) {
 	main_root = _main_root;
 	root = _root;
 	router = new Router();
-	_getAllProducts();
+	_async_getAllProducts();
 }

@@ -1,7 +1,7 @@
 import { Router } from "../../../router.js";
 import { async_getCart } from "../../../../model/Request.js";
-import { jsonToObjects, create_table_products } from "../../../../model/DataAction.js";
-import { fade } from "../../../AnimationHandler.js";
+import { jsonToObjects, createTableProducts } from "../../../../model/DataAction.js";
+import { fade } from "../../../viewTools/AnimationHandler.js";
 import { Product } from "../../../../model/transport/Product.js";
 
 
@@ -10,7 +10,7 @@ let products = undefined;
 let router = undefined;
 let main_root = undefined;
 
-async function _getCart() {
+async function _async_getCart() {
 	let response = await async_getCart();
 	let data = response.getBody();
 	let status = response.getStatus();
@@ -18,11 +18,14 @@ async function _getCart() {
 }
 
 function _react_getCart(status, data) {
-	if (status == 401) {
-		router.pageStart(main_root);
-	} else if (status == 200) {
-		products = jsonToObjects(data, Product);
-		_render();
+	switch (status) {
+		case 401:{
+			router.pageStart(main_root);
+		}
+		case 200:{
+			products = jsonToObjects(data, Product);
+			_render();
+		}
 	}
 }
 
@@ -31,7 +34,7 @@ function _render() {
 	let div_products = document.createElement("div");
 	div_products.id = "products";
 	let columns = ["id", "name", "sellerName", "date", "brand", "model", "price", "image"];
-	let table = create_table_products(products.length);
+	let table = createTableProducts(products.length);
 	table.classList.add("table");
 	let rows = table.querySelectorAll("tr");
 	let image_divs = table.querySelectorAll(".item_image");
@@ -59,9 +62,9 @@ function _render() {
 	fade(div_products, 1.2, 0);
 }
 
-export default function init(_main_root, _root) {
+export function renderCart(_main_root, _root) {
 	main_root = _main_root;
 	root = _root;
 	router = new Router();
-	_getCart();
+	_async_getCart();
 }

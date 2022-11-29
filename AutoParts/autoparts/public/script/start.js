@@ -14,10 +14,17 @@ if (status == 401) {
 	let decoded_body = atob(body_token);
 	let user_info = JSON.parse(decoded_body);
 	let user_role = user_info["role"];
-	
-	if (user_role == "client") {
-		router.pageMain(root);
-	} else if (user_role == "admin") {
-		router.pageAdmin(root);
+
+	switch (user_role) {
+		case "client": {
+				router.pageMain(root);
+				break;
+			}
+		case "admin": {
+				router.pageAdmin(root);
+				break;
+			}
+		default:
+			break;
 	}
 }

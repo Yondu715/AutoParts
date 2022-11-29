@@ -1,6 +1,6 @@
-import { check_valid } from "../../../model/DataAction.js";
+import { checkValid } from "../../../model/DataAction.js";
 import { Router } from "../../router.js";
-import { fade } from "../../AnimationHandler.js";
+import { fade } from "../../viewTools/AnimationHandler.js";
 import { User } from "../../../model/transport/User.js";
 import { async_reg } from "../../../model/Request.js";
 
@@ -42,7 +42,7 @@ function _render() {
 	btnAuth.addEventListener("click", () => {
 		router.pageAuth(root);
 	});
-	btnReg.addEventListener("click", _sendRegInfo);
+	btnReg.addEventListener("click", _async_sendRegInfo);
 	fade(fadeBlock, 1, 0);
 }
 
@@ -59,9 +59,9 @@ function _getRegInfo() {
 	return user;
 }
 
-async function _sendRegInfo() {
+async function _async_sendRegInfo() {
 	let user = _getRegInfo();
-	if (!check_valid(user)) {
+	if (!checkValid(user)) {
 		error_span.textContent = "Не все поля были заполнены";
 		return;
 	}
@@ -78,14 +78,17 @@ async function _sendRegInfo() {
 }
 
 function _react_regInfo(status) {
-	if (status == 200) {
-		router.pageAuth(root);
-	} else if (status == 409) {
-		error_span.textContent = "Нельзя использовать данный логин";
+	switch (status) {
+		case 200: {
+			router.pageAuth(root);
+		}
+		case 409: {
+			error_span.textContent = "Нельзя использовать данный логин";
+		}
 	}
 }
 
-export default function init(_root) {
+export function renderPageReg(_root) {
 	root = _root;
 	router = new Router();
 	_render();

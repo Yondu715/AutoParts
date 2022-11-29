@@ -1,4 +1,4 @@
-export function check_valid(object) {
+export function checkValid(object) {
 	let keys = Object.keys(object.get());
 	for (let i = 0; i < keys.length; i++) {
 		if (object.get()[keys[i]] == "") return false;
@@ -6,7 +6,7 @@ export function check_valid(object) {
 	return true;
 }
 
-export function create_table_products(length) {
+export function createTableProducts(length) {
 	let table = document.createElement("table");
 	for (let i = 0; i < length; i++) {
 		let row = document.createElement("tr");
@@ -23,22 +23,6 @@ export function create_table_products(length) {
 		let price_info = document.createElement("div");
 		price_info.classList.add("item_price");
 
-		/*
-		for (let j = 0; j < columns.length; j++) {
-			let span = document.createElement("span");
-			span.classList.add(columns[j]);
-			span.textContent = products[i].get()[columns[j]];
-			if (span.classList.contains("image")) {
-				let image = document.createElement("img");
-				image.src = span.textContent;
-				image_div.appendChild(image);
-			} else if (span.classList.contains("price")) {
-				span.textContent += " ₽";
-				price_info.appendChild(span);
-			} else {
-				main_info.appendChild(span);
-			}
-		}*/
 		content_div.appendChild(image_div);
 		content_div.appendChild(main_info);
 		content_div.appendChild(price_info);
@@ -49,7 +33,7 @@ export function create_table_products(length) {
 	return table;
 }
 
-export function create_table_applications(length) {
+export function createTableApplications(length) {
 	let table = document.createElement("table");
 	for (let i = 0; i < length; i++) {
 		let row = document.createElement("tr");
@@ -68,25 +52,9 @@ export function create_table_applications(length) {
 
 		let menu_role = document.createElement("select");
 		menu_role.classList.add("roles");
-		/*let roles = ["client", "admin"];
-		roles.forEach(role => {
-			let option_role = document.createElement("option");
-			option_role.textContent = role;
-			menu_role.appendChild(option_role);
-		});*/
+
 		choose_role.appendChild(menu_role);
 
-		/*
-		for (let j = 0; j < columns.length; j++) {
-			let span = document.createElement("span");
-			span.className = columns[j];
-			span.textContent = applications[i].get()[columns[j]];
-			if (!span.classList.contains("id")){
-				main_info.appendChild(span);
-			} else{
-				id_div.appendChild(span);
-			}
-		} */
 		content_div.appendChild(id_div);
 		content_div.appendChild(main_info);
 		content_div.appendChild(choose_role);
@@ -97,7 +65,7 @@ export function create_table_applications(length) {
 	return table;
 }
 
-export function create_table_users(length) {
+export function createTableUsers(length) {
 	let table = document.createElement("table");
 	for (let i = 0; i < length; i++) {
 		let row = document.createElement("tr");
@@ -113,20 +81,7 @@ export function create_table_users(length) {
 
 		let role_div = document.createElement("div");
 		role_div.classList.add("item_role");
-		/*
-		for (let j = 0; j < columns.length; j++) {
-			let span = document.createElement("span");
-			span.classList.add(columns[j]);
-			span.textContent = users[i].get()[columns[j]];
-			if (span.classList.contains("id")) {
-				id_div.appendChild(span);
-			} else if (span.classList.contains("role")){
-				role_div.appendChild(span);
-			}
-			 else {
-				main_info.appendChild(span);
-			}
-		}*/
+
 		content_div.appendChild(id_div);
 		content_div.appendChild(main_info);
 		content_div.appendChild(role_div);
@@ -138,7 +93,7 @@ export function create_table_users(length) {
 }
 
 
-export function create_productInfo() {
+export function createProductInfo() {
 
 	let div_productInfo = document.createElement("div");
 	div_productInfo.id = "product-info";
@@ -151,21 +106,10 @@ export function create_productInfo() {
 	let div_info = document.createElement("div");
 	div_info.classList.add("info");
 
-	/*
-	for (let i = 0; i < fields.length; i++) {
-		let span = document.createElement("span");
-		span.textContent = fields_ru[i] + ": " + product.get()[fields[i]];
-		if (fields[i] == "price") {
-			span.textContent += " ₽";
-		}
-		div_info.appendChild(span);
-	}*/
-
 	let div_image = document.createElement("div");
 	div_image.classList.add("product-image");
 	let image = document.createElement("img");
 	image.classList.add("image");
-	/*image.src = product.get()["image"];*/
 	div_image.appendChild(image);
 
 	left_part.appendChild(div_info);
@@ -174,45 +118,6 @@ export function create_productInfo() {
 	div_productInfo.appendChild(left_part);
 	div_productInfo.appendChild(right_part);
 	return div_productInfo;
-}
-
-
-export function show_image(input, image_place) {
-	let file = input.files[0];
-	let reader = new FileReader();
-	reader.onload = () => {
-		image_place.src = reader.result;
-	}
-	reader.readAsDataURL(file);
-}
-
-export function dragAndDrop(dropArea, input, image_place) {
-	["dragenter", "dragover", "dragleave", "drop"].forEach(eventName => {
-		dropArea.addEventListener(eventName, (event) => {
-			event.preventDefault();
-			event.stopPropagation();
-		});
-	});
-
-	["dragenter", "dragover"].forEach(eventName => {
-		dropArea.addEventListener(eventName, (event) => {
-			dropArea.classList.add("highlight");
-		});
-	});
-
-	["dragleave", "drop"].forEach(eventName => {
-		dropArea.addEventListener(eventName, (event) => {
-			dropArea.classList.remove("highlight");
-		});
-	});
-
-	dropArea.addEventListener("drop", (event) => {
-		let dt = event.dataTransfer;
-		let files = dt.files;
-		input.files = files;
-		show_image(input, image_place);
-	});
-
 }
 
 export function jsonToObjects(json, classConvert) {

@@ -151,7 +151,7 @@
 }
 
 #sale .dropArea {
-	margin: auto 5px 10px 5px;
+	margin: auto 15px 10px 0px;
 	padding: 5px;
 	border: 3px dashed rgb(0, 0, 0);
 }

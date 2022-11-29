@@ -1,10 +1,11 @@
-import { cover, highlightMenu } from "../../AnimationHandler.js";
+import { cover, highlightMenu } from "../../viewTools/AnimationHandler.js";
 import { Router } from "../../router.js";
-import { images } from "../../images.js";
-import renderSale from "./components/sale.js";
-import renderUserProducts from "./components/userProducts.js";
-import renderProducts from "./components/products.js";
-import renderCart from "./components/cart.js";
+import { images } from "../../viewTools/images.js";
+import { renderSale } from "./components/sale.js";
+import { renderUserProducts } from "./components/userProducts.js";
+import { renderProducts } from "./components/products.js";
+import { renderCart } from "./components/cart.js";
+import { createMenu } from "../../components/menu.js";
 
 
 let root = undefined;
@@ -25,7 +26,7 @@ function _render() {
 						</header>
 						<div id='wrap-content'></div>
 					</div>`
-	_renderMenu();
+	_renderUserMenu();
 	_renderContent();
 	componentRoot = document.getElementById("content");
 	let userLogin = document.querySelector(".user-login");
@@ -46,33 +47,21 @@ function _logout() {
 
 /* RENDER MENU */
 
-function _renderMenu() {
+function _renderUserMenu() {
 	let menu_root = document.getElementById("wrap-content");
-	let menu = document.createElement("div");
-	menu.classList.add("menu");
+	let menu_funcs = [
+		() => renderProducts(root, componentRoot),
+		() => renderSale(root, componentRoot),
+		() => renderUserProducts(root, componentRoot),
+		() => renderCart(root, componentRoot),
+	];
 	let menu_items = ["Запчасти", "Продать", "Мои товары", "Корзина"];
-	let list = document.createElement("ul");
-	for (let i = 0; i < menu_items.length; i++) {
-		let row = document.createElement("li");
-		let btn = document.createElement("button");
-		btn.textContent = menu_items[i];
-		row.appendChild(btn);
-		list.appendChild(row);
-	}
-	menu.appendChild(list);
-	menu_root.appendChild(menu);
-
-	let menu_buttons = list.getElementsByTagName("button");
-	let menu_funcs = [	
-					() => renderProducts(root, componentRoot), 
-					() => renderSale(root, componentRoot), 
-					() => renderUserProducts(root, componentRoot),
-					() => renderCart(root, componentRoot),
-				];
-	for (let i = 0; i < menu_funcs.length; i++) {
-		menu_buttons[i].addEventListener("click", menu_funcs[i]);
-	}
+	let menu_object = createMenu(menu_items, menu_funcs);
+	let menu = menu_object.menu;
+	let menu_buttons = menu_object.buttons;
+	menu.classList.add("menu");
 	highlightMenu(menu_buttons);
+	menu_root.appendChild(menu);
 }
 
 function _renderContent() {
@@ -83,7 +72,7 @@ function _renderContent() {
 	renderProducts(root, content);
 }
 
-export default function init(_root) {
+export function renderPageMain(_root) {
 	root = _root;
 	router = new Router();
 	_render();

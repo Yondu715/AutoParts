@@ -1,9 +1,9 @@
-import { cover, highlightMenu } from "../../AnimationHandler.js";
+import { cover, highlightMenu } from "../../viewTools/AnimationHandler.js";
 import { Router } from "../../router.js";
-import { images } from "../../images.js";
-import renderApplications from "./components/applications.js"
-import renderUsers from "./components/users.js";
-
+import { images } from "../../viewTools/images.js";
+import { renderApplications } from "./components/applications.js"
+import { renderUsers } from "./components/users.js";
+import { createMenu } from "../../components/menu.js";
 
 
 let root = undefined;
@@ -24,7 +24,7 @@ function _render() {
 						</header>
 						<div id='wrap-content'></div>
 					</div>`
-	_renderMenu();
+	_renderAdminMenu();
 	_renderContent();
 	componentRoot = document.getElementById("content");
 	let userLogin = document.querySelector(".user-login");
@@ -45,31 +45,19 @@ function _logout() {
 
 /* RENDER MENU */
 
-function _renderMenu() {
-	let menu_root = document.getElementById("wrap-content");
-	let menu = document.createElement("div");
-	menu.classList.add("menu");
+function _renderAdminMenu() {
 	let menu_items = ["Заявки", "Пользователи"];
-	let list = document.createElement("ul");
-	for (let i = 0; i < menu_items.length; i++) {
-		let row = document.createElement("li");
-		let btn = document.createElement("button");
-		btn.textContent = menu_items[i];
-		row.appendChild(btn);
-		list.appendChild(row);
-	}
-	menu.appendChild(list);
-	menu_root.appendChild(menu);
-
-	let buttons = list.getElementsByTagName("button");
 	let menu_funcs = [
 		() => renderApplications(root, componentRoot),
 		() => renderUsers(root, componentRoot),
 	];
-	for (let i = 0; i < menu_funcs.length; i++) {
-		buttons[i].addEventListener("click", menu_funcs[i]);
-	}
+	let menu_object = createMenu(menu_items, menu_funcs);
+	let menu = menu_object.menu;
+	let buttons = menu_object.buttons;
+	menu.classList.add("menu");
 	highlightMenu(buttons);
+	let menu_root = document.getElementById("wrap-content");
+	menu_root.appendChild(menu);
 }
 
 function _renderContent() {
@@ -80,7 +68,7 @@ function _renderContent() {
 	renderApplications(root, content);
 }
 
-export default function init(_root) {
+export function renderPageAdmin(_root) {
 	root = _root;
 	router = new Router();
 	_render();

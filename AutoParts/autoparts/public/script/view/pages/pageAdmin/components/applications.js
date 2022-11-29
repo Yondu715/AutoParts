@@ -1,30 +1,14 @@
 import { Router } from "../../../router.js";
 import { async_acceptApplications, async_deleteApplications, async_getAllApplications } from "../../../../model/Request.js";
-import { create_table_applications, jsonToObjects } from "../../../../model/DataAction.js";
-import { fade, highlightRow } from "../../../AnimationHandler.js";
-import { Application } from "../../../../model/transport/Application.js";
+import { createTableApplications, jsonToObjects } from "../../../../model/DataAction.js";
+import { fade, highlightRow } from "../../../viewTools/AnimationHandler.js";
+import { User } from "../../../../model/transport/User.js";
 
 
 let root = undefined;
 let applications = undefined;
 let router = undefined;
 let main_root = undefined;
-
-async function _getAllApplications() {
-	let response = await async_getAllApplications();
-	let data = response.getBody();
-	let status = response.getStatus();
-	_react_getAllApplications(status, data);
-}
-
-function _react_getAllApplications(status, data) {
-	if (status == 401) {
-		router.pageStart(main_root);
-	} else if (status == 200) {
-		applications = jsonToObjects(data, Application);
-		_render();
-	}
-}
 
 function _render() {
 	root.innerHTML = "";
@@ -33,7 +17,7 @@ function _render() {
 	let btnPlace = document.createElement("div");
 	btnPlace.id = "btn-place";
 
-	let table = create_table_applications(applications.length);
+	let table = createTableApplications(applications.length);
 	table.classList.add("table");
 
 	let rows = table.querySelectorAll("tr");
@@ -68,13 +52,13 @@ function _render() {
 	let button_accept = document.createElement("button");
 	button_accept.textContent = "Принять";
 	button_accept.classList.add("btn-submit");
-	button_accept.addEventListener("click", _acceptApplications);
+	button_accept.addEventListener("click", _async_acceptApplications);
 
 	let button_delete = document.createElement("button");
 	button_delete.textContent = "Удалить";
 	button_delete.classList.add("btn-submit");
 	button_delete.classList.add("btn_red")
-	button_delete.addEventListener("click", _deleteApplications);
+	button_delete.addEventListener("click", _async_deleteApplications);
 
 	btnPlace.appendChild(button_accept);
 	btnPlace.appendChild(button_delete);
@@ -83,6 +67,25 @@ function _render() {
 	root.appendChild(btnPlace);
 	fade(div_applications, 1.2, 0);
 	highlightRow(rows);
+}
+
+async function _async_getAllApplications() {
+	let response = await async_getAllApplications();
+	let data = response.getBody();
+	let status = response.getStatus();
+	_react_getAllApplications(status, data);
+}
+
+function _react_getAllApplications(status, data) {
+	switch (status) {
+		case 401: {
+			router.pageStart(main_root);
+		}
+		case 200: {
+			applications = jsonToObjects(data, User);
+			_render();
+		}
+	}
 }
 
 function _getHighlightRows() {
@@ -96,7 +99,7 @@ function _getHighlightRows() {
 	return applications_rows;
 }
 
-function _getAcceptInfo(){
+function _getAcceptInfo() {
 	let rows = _getHighlightRows();
 	let jsonApplications = [];
 	for (let i = 0; i < rows.length; i++) {
@@ -115,14 +118,14 @@ function _getAcceptInfo(){
 	return jsonApplications;
 }
 
-async function _acceptApplications(){
+async function _async_acceptApplications() {
 	let jsonApplications = _getAcceptInfo();
 	let response = await async_acceptApplications(jsonApplications);
 	let status = response.getStatus();
 	react_requestInfo(status);
 }
 
-function _getDeleteInfo(){
+function _getDeleteInfo() {
 	let rows = _getHighlightRows();
 	let jsonApplications_id = [];
 	for (let i = 0; i < rows.length; i++) {
@@ -135,24 +138,30 @@ function _getDeleteInfo(){
 	return jsonApplications_id;
 }
 
-async function _deleteApplications(){
+async function _async_deleteApplications() {
 	let jsonApplications_id = _getDeleteInfo();
 	let response = await async_deleteApplications(jsonApplications_id);
 	let status = response.getStatus();
 	react_requestInfo(status);
 }
 
-function react_requestInfo(status){
-	if (status == 401) {
-		router.pageStart(main_root);
-	} else if (status == 204 || status == 202) {
-		_getAllApplications();
+function react_requestInfo(status) {
+	switch (status) {
+		case 401:{
+			router.pageStart(main_root);
+		}
+		case 204: {
+			_async_getAllApplications();
+		}
+		case 202: {
+			_async_getAllApplications();
+		}
 	}
 }
 
-export default function init(_main_root, _root) {
+export function renderApplications(_main_root, _root) {
 	main_root = _main_root;
 	root = _root;
 	router = new Router();
-	_getAllApplications();
+	_async_getAllApplications();
 }
