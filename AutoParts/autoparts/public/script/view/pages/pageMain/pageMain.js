@@ -26,8 +26,10 @@ function _render() {
 						</header>
 						<div id='wrap-content'></div>
 					</div>`;
-	_renderUserMenu();
-	_renderContent();
+	let menuRoot = document.getElementById("wrap-content");
+	let contentRoot = menuRoot;
+	_renderUserMenu(menuRoot);
+	_renderContent(contentRoot);
 	componentRoot = document.getElementById("content");
 	let userLogin = document.querySelector(".user-login");
 	let btnLogout = document.getElementById("btn-logout");
@@ -43,8 +45,7 @@ function _logout() {
 	setTimeout(router.pageStart, 800);
 }
 
-function _renderUserMenu() {
-	let menu_root = document.getElementById("wrap-content");
+function _renderUserMenu(menuRoot) {
 	let menu_funcs = [
 		() => renderProducts(componentRoot),
 		() => renderSale( componentRoot),
@@ -57,14 +58,13 @@ function _renderUserMenu() {
 	let menu_buttons = menu_object.buttons;
 	menu.classList.add("menu");
 	highlightMenu(menu_buttons);
-	menu_root.appendChild(menu);
+	menuRoot.appendChild(menu);
 }
 
-function _renderContent() {
-	let content_root = document.getElementById("wrap-content");
+function _renderContent(contentRoot) {
 	let content = document.createElement("div");
 	content.id = "content";
-	content_root.appendChild(content);
+	contentRoot.appendChild(content);
 	componentRoot = content;
 	renderProducts(componentRoot);
 }
