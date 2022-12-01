@@ -9,7 +9,6 @@ let root = undefined;
 let product_id = undefined;
 let product = undefined;
 let router = undefined;
-let main_root = undefined;
 
 async function _async_getProductInfo() {
 	let response = await async_getProductInfo(product_id);
@@ -20,13 +19,13 @@ async function _async_getProductInfo() {
 
 function _react_getProductInfo(status, data) {
 	switch (status) {
-		case 401:{
-			router.pageStart(main_root);
-		}
-		case 200: {
+		case 401:
+			router.pageStart();
+			break;
+		case 200:
 			product = jsonToObjects(data, Product);
 			_render();
-		}
+			break;
 	}
 }
 
@@ -72,16 +71,15 @@ async function _async_addToCart() {
 
 function _react_addCart(status) {
 	switch (status) {
-		case 401: {
-			router.pageStart(root);
-		}
+		case 401:
+			router.pageStart();
+			break;
 	}
 }
 
-export function renderProductInfo(_main_root, _root, _id) {
-	main_root = _main_root;
+export function renderProductInfo(_root, _id) {
 	root = _root;
 	product_id = _id;
-	router = new Router();
+	router = Router.getInstance();
 	_async_getProductInfo();
 }

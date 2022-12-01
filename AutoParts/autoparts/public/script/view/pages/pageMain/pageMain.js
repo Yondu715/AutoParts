@@ -25,7 +25,7 @@ function _render() {
 							</div>
 						</header>
 						<div id='wrap-content'></div>
-					</div>`
+					</div>`;
 	_renderUserMenu();
 	_renderContent();
 	componentRoot = document.getElementById("content");
@@ -40,20 +40,16 @@ function _logout() {
 	let animationBlock = document.querySelector(".overPage");
 	localStorage.clear();
 	cover(animationBlock, 0.5, 0);
-	setTimeout(() => {
-		router.pageStart(root);
-	}, 800);
+	setTimeout(router.pageStart, 800);
 }
-
-/* RENDER MENU */
 
 function _renderUserMenu() {
 	let menu_root = document.getElementById("wrap-content");
 	let menu_funcs = [
-		() => renderProducts(root, componentRoot),
-		() => renderSale(root, componentRoot),
-		() => renderUserProducts(root, componentRoot),
-		() => renderCart(root, componentRoot),
+		() => renderProducts(componentRoot),
+		() => renderSale( componentRoot),
+		() => renderUserProducts(componentRoot),
+		() => renderCart(componentRoot),
 	];
 	let menu_items = ["Запчасти", "Продать", "Мои товары", "Корзина"];
 	let menu_object = createMenu(menu_items, menu_funcs);
@@ -69,11 +65,12 @@ function _renderContent() {
 	let content = document.createElement("div");
 	content.id = "content";
 	content_root.appendChild(content);
-	renderProducts(root, content);
+	componentRoot = content;
+	renderProducts(componentRoot);
 }
 
 export function renderPageMain(_root) {
 	root = _root;
-	router = new Router();
+	router = Router.getInstance();
 	_render();
 }

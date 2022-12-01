@@ -23,10 +23,11 @@ function _render() {
 							</div>
 						</header>
 						<div id='wrap-content'></div>
-					</div>`
-	_renderAdminMenu();
-	_renderContent();
-	componentRoot = document.getElementById("content");
+					</div>`;
+	let menuRoot = document.getElementById("wrap-content");
+	let contentRoot = menuRoot;
+	_renderAdminMenu(menuRoot);
+	_renderContent(contentRoot);
 	let userLogin = document.querySelector(".user-login");
 	let btnLogout = document.getElementById("btn-logout");
 	btnLogout.style.backgroundImage = "url(" + images["logout"] + ")";
@@ -38,26 +39,31 @@ function _logout() {
 	let animationBlock = document.querySelector(".overPage");
 	localStorage.clear();
 	cover(animationBlock, 0.5, 0);
-	setTimeout(() => {
-		router.pageStart(root);
-	}, 800);
+	setTimeout(router.pageStart, 800);
 }
 
-/* RENDER MENU */
+/*function _renderHeader(headerRoot) {
+	let header = createHeader();
+	headerRoot.prepend(header);
+	let userLogin = document.querySelector(".user-login");
+	let btnLogout = document.getElementById("btn-logout");
+	btnLogout.style.backgroundImage = "url(" + images["logout"] + ")";
+	userLogin.textContent = localStorage.getItem("login");
+	btnLogout.addEventListener("click", _logout);
+} */
 
-function _renderAdminMenu() {
+function _renderAdminMenu(menuRoot) {
 	let menu_items = ["Заявки", "Пользователи"];
 	let menu_funcs = [
-		() => renderApplications(root, componentRoot),
-		() => renderUsers(root, componentRoot),
+		() => renderApplications(componentRoot),
+		() => renderUsers(componentRoot),
 	];
 	let menu_object = createMenu(menu_items, menu_funcs);
 	let menu = menu_object.menu;
 	let buttons = menu_object.buttons;
 	menu.classList.add("menu");
 	highlightMenu(buttons);
-	let menu_root = document.getElementById("wrap-content");
-	menu_root.appendChild(menu);
+	menuRoot.appendChild(menu);
 }
 
 function _renderContent() {
@@ -65,11 +71,12 @@ function _renderContent() {
 	let content = document.createElement("div");
 	content.id = "content";
 	content_root.appendChild(content);
-	renderApplications(root, content);
+	componentRoot = content;
+	renderApplications(componentRoot);
 }
 
 export function renderPageAdmin(_root) {
 	root = _root;
-	router = new Router();
+	router = Router.getInstance();
 	_render();
 }

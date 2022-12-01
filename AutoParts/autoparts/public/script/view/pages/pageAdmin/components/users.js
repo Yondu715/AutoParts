@@ -8,7 +8,6 @@ import { async_deleteUsers, async_getAllUsers } from "../../../../model/Request.
 let root = undefined;
 let users = undefined;
 let router = undefined;
-let main_root = undefined;
 
 async function _async_getUsers() {
 	let response = await async_getAllUsers();
@@ -19,13 +18,13 @@ async function _async_getUsers() {
 
 function _react_getUsers(status, data) {
 	switch (status) {
-		case 401: {
-			router.pageStart(main_root);
-		}
-		case 200: {
+		case 401:
+			router.pageStart();
+			break;
+		case 200:
 			users = jsonToObjects(data, User);
 			_render();
-		}
+			break;
 	}
 }
 
@@ -100,18 +99,17 @@ async function _async_sendDeleteInfo() {
 
 function react_deleteInfo(status) {
 	switch (status) {
-		case 401: {
-			router.pageStart(main_root);
-		}
-		case 204: {
+		case 401:
+			router.pageStart();
+			break;
+		case 204:
 			_async_getUsers();
-		}
+			break;
 	}
 }
 
-export function renderUsers(_main_root, _root) {
-	main_root = _main_root;
+export function renderUsers(_root) {
 	root = _root;
-	router = new Router();
+	router = Router.getInstance();
 	_async_getUsers();
 }

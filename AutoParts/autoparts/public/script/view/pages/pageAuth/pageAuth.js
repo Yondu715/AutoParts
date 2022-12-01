@@ -33,9 +33,7 @@ function _render() {
 	let btnReg = document.getElementById("reg");
 	let btnSendAuthInfo = document.getElementById("btnAuthInfo");
 	error_span = document.getElementById("log-status");
-	btnReg.addEventListener("click", () => {
-		router.pageReg(root);
-	});
+	btnReg.addEventListener("click", router.pageReg);
 	btnSendAuthInfo.addEventListener("click", _async_sendAuthInfo);
 	fade(fadeBlock, 1, 0);
 }
@@ -132,10 +130,10 @@ async function _async_sendAuthInfo() {
 
 function _react_authInfo(status, data) {
 	switch (status) {
-		case 401: {
+		case 401:
 			error_span.textContent = "Неправильный логин или пароль";
-		}
-		case 200: {
+			break;
+		case 200:
 			let token = data["token"];
 			let body_token = token.split("\.")[1];
 			let decoded_body = atob(body_token);
@@ -145,19 +143,19 @@ function _react_authInfo(status, data) {
 			localStorage.setItem("login", user_info["login"]);
 
 			switch (user_role) {
-				case "client": {
-					router.pageMain(root);
-				}
-				case "admin": {
-					router.pageAdmin(root);
-				}
+				case "client":
+					router.pageMain();
+					break;
+				case "admin":
+					router.pageAdmin();
+					break;
 			}
-		}
+			break;
 	}
 }
 
 export function renderPageAuth(_root) {
 	root = _root;
-	router = new Router();
+	router = Router.getInstance();
 	_render();
 }

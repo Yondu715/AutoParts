@@ -33,5 +33,4 @@ export function dragAndDrop(dropArea, input, image_place) {
 		input.files = files;
 		showImage(input, image_place);
 	});
-
 }

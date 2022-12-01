@@ -8,7 +8,6 @@ import { User } from "../../../../model/transport/User.js";
 let root = undefined;
 let applications = undefined;
 let router = undefined;
-let main_root = undefined;
 
 function _render() {
 	root.innerHTML = "";
@@ -78,13 +77,13 @@ async function _async_getAllApplications() {
 
 function _react_getAllApplications(status, data) {
 	switch (status) {
-		case 401: {
-			router.pageStart(main_root);
-		}
-		case 200: {
+		case 401:
+			router.pageStart();
+			break;
+		case 200:
 			applications = jsonToObjects(data, User);
 			_render();
-		}
+			break;
 	}
 }
 
@@ -122,7 +121,7 @@ async function _async_acceptApplications() {
 	let jsonApplications = _getAcceptInfo();
 	let response = await async_acceptApplications(jsonApplications);
 	let status = response.getStatus();
-	react_requestInfo(status);
+	_react_requestInfo(status);
 }
 
 function _getDeleteInfo() {
@@ -142,26 +141,23 @@ async function _async_deleteApplications() {
 	let jsonApplications_id = _getDeleteInfo();
 	let response = await async_deleteApplications(jsonApplications_id);
 	let status = response.getStatus();
-	react_requestInfo(status);
+	_react_requestInfo(status);
 }
 
-function react_requestInfo(status) {
+function _react_requestInfo(status) {
 	switch (status) {
-		case 401:{
-			router.pageStart(main_root);
-		}
-		case 204: {
+		case 401:
+			router.pageStart();
+			break;
+		case 204:
+		case 202:
 			_async_getAllApplications();
-		}
-		case 202: {
-			_async_getAllApplications();
-		}
+			break;
 	}
 }
 
-export function renderApplications(_main_root, _root) {
-	main_root = _main_root;
+export function renderApplications(_root) {
 	root = _root;
-	router = new Router();
+	router = Router.getInstance();
 	_async_getAllApplications();
 }

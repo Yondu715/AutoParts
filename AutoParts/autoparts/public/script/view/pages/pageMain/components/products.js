@@ -9,7 +9,6 @@ import { Product } from "../../../../model/transport/Product.js";
 let root = undefined;
 let products = undefined;
 let router = undefined;
-let main_root = undefined;
 
 async function _async_getAllProducts() {
 	let response = await async_getAllProducts();
@@ -20,13 +19,13 @@ async function _async_getAllProducts() {
 
 function _react_getAllProducts(status, data) {
 	switch (status) {
-		case 401:{
-			router.pageStart(main_root);
-		}
-		case 200: {
+		case 401:
+			router.pageStart();
+			break;
+		case 200:
 			products = jsonToObjects(data, Product);
 			_render();
-		}
+			break;
 	}
 }
 
@@ -68,13 +67,12 @@ function _render() {
 		let row = event.target.closest("tr");
 		let span = row.querySelector(".id");
 		let id = span.textContent;
-		renderProductInfo(main_root, root, id);
+		renderProductInfo(root, id);
 	});
 }
 
-export function renderProducts(_main_root, _root) {
-	main_root = _main_root;
+export function renderProducts(_root) {
 	root = _root;
-	router = new Router();
+	router = Router.getInstance();
 	_async_getAllProducts();
 }

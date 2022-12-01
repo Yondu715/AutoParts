@@ -39,9 +39,7 @@ function _render() {
 	let btnAuth = document.getElementById("auth");
 	let btnReg = document.getElementById("btnRegInfo");
 	error_span = document.getElementById("log-status");
-	btnAuth.addEventListener("click", () => {
-		router.pageAuth(root);
-	});
+	btnAuth.addEventListener("click", router.pageAuth);
 	btnReg.addEventListener("click", _async_sendRegInfo);
 	fade(fadeBlock, 1, 0);
 }
@@ -79,17 +77,17 @@ async function _async_sendRegInfo() {
 
 function _react_regInfo(status) {
 	switch (status) {
-		case 200: {
-			router.pageAuth(root);
-		}
-		case 409: {
+		case 200:
+			router.pageAuth();
+			break;
+		case 409:
 			error_span.textContent = "Нельзя использовать данный логин";
-		}
+			break;
 	}
 }
 
 export function renderPageReg(_root) {
 	root = _root;
-	router = new Router();
+	router = Router.getInstance();
 	_render();
 }

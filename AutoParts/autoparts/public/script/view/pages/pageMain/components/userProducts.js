@@ -8,7 +8,6 @@ import { Product } from "../../../../model/transport/Product.js";
 let root = undefined;
 let products = undefined;
 let router = undefined;
-let main_root = undefined;
 
 async function _async_getUserProducts() {
 	let response = await async_getUserProducts();
@@ -19,16 +18,12 @@ async function _async_getUserProducts() {
 
 function _react_getUserProducts(status, data) {
 	switch (status) {
-		case 401: {
-			router.pageStart(main_root);
+		case 401:
+			router.pageStart();
 			break;
-		}
-		case 200: {
+		case 200:
 			products = jsonToObjects(data, Product);
 			_render();
-			break;
-		}
-		default:
 			break;
 	}
 }
@@ -106,18 +101,17 @@ async function _async_sendDeleteInfo() {
 
 function react_deleteInfo(status) {
 	switch (status) {
-		case 401: {
-			router.pageStart(main_root);
-		}
-		case 204: {
+		case 401:
+			router.pageStart();
+			break;
+		case 204:
 			async_getUserProducts();
-		}
+			break;
 	}
 }
 
-export function renderUserProducts(_main_root, _root) {
-	main_root = _main_root;
+export function renderUserProducts(_root) {
 	root = _root;
-	router = new Router();
+	router = Router.getInstance();
 	_async_getUserProducts();
 }

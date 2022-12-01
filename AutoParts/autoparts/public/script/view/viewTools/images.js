@@ -1,6 +1,6 @@
-let path = "public/resources/img/"
+let path = "public/resources/img/";
 
-export let images = {
+export const images = {
 	"no_image": path + "no_image.png",
 	"logo": path + "logo.png", 
 	"logout": path + "logout.png",

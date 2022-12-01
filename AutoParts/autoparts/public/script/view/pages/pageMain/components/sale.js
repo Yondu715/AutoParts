@@ -9,7 +9,6 @@ import { fade } from "../../../viewTools/AnimationHandler.js";
 let root = undefined;
 let error_span = undefined;
 let router = undefined;
-let main_root = undefined;
 
 function _render() {
 	root.innerHTML = "";
@@ -125,10 +124,10 @@ async function _async_sendSaleInfo() {
 
 function _react_saleInfo(status) {
 	switch (status) {
-		case 401: {
-			router.pageStart(main_root);
-		}
-		default: {
+		case 401:
+			router.pageStart();
+			break;
+		default:
 			error_span.textContent = "";
 			let fields = document.getElementsByTagName("input");
 			for (let i = 0; i < fields.length; i++) {
@@ -136,13 +135,12 @@ function _react_saleInfo(status) {
 			}
 			let image = document.getElementById("image");
 			image.src = images["dragAndDrop"];
-		}
+			break;
 	}
 }
 
-export function renderSale(_main_root, _root) {
-	main_root = _main_root;
+export function renderSale(_root) {
 	root = _root;
-	router = new Router();
+	router = Router.getInstance();
 	_render();
 }

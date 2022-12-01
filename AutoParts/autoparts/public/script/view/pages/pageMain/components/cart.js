@@ -8,7 +8,6 @@ import { Product } from "../../../../model/transport/Product.js";
 let root = undefined;
 let products = undefined;
 let router = undefined;
-let main_root = undefined;
 
 async function _async_getCart() {
 	let response = await async_getCart();
@@ -19,13 +18,13 @@ async function _async_getCart() {
 
 function _react_getCart(status, data) {
 	switch (status) {
-		case 401:{
-			router.pageStart(main_root);
-		}
-		case 200:{
+		case 401:
+			router.pageStart();
+			break;
+		case 200:
 			products = jsonToObjects(data, Product);
 			_render();
-		}
+			break;
 	}
 }
 
@@ -62,9 +61,8 @@ function _render() {
 	fade(div_products, 1.2, 0);
 }
 
-export function renderCart(_main_root, _root) {
-	main_root = _main_root;
+export function renderCart(_root) {
 	root = _root;
-	router = new Router();
+	router = Router.getInstance();
 	_async_getCart();
 }
