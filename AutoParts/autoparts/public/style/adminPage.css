@@ -21,11 +21,11 @@
 	display: flex;
 }
 
-#applications table .item_id {
+#applications table .item-id {
 	width: 10%;
 }
 
-#applications table .item_info {
+#applications table .item-info {
 	width: 70%;
 }
 
@@ -33,12 +33,12 @@
 	margin: auto;
 }
 
-#applications table .item_role {
+#applications table .item-role {
 	margin: auto;
 	width: 20%;
 }
 
-#applications table .item_role select {
+#applications table .item-role select {
 	margin: auto;
 	font-size: 18px;
 	z-index: 10;
@@ -69,11 +69,11 @@
 	display: flex;
 }
 
-#users table .item_id {
+#users table .item-id {
 	width: 10%;
 }
 
-#users table .item_info {
+#users table .item-info {
 	width: 70%;
 }
 
@@ -81,12 +81,12 @@
 	margin: auto;
 }
 
-#users table .item_role {
+#users table .item-role {
 	margin: auto;
 	width: 20%;
 }
 
-#users table .item_role select {
+#users table .item-role select {
 	margin: auto;
 	font-size: 18px;
 	z-index: 10;

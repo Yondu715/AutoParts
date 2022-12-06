@@ -1,8 +1,8 @@
-import { checkValid } from "../../../model/DataAction.js";
-import { Router } from "../../router.js";
-import { fade } from "../../viewTools/AnimationHandler.js";
-import { User } from "../../../model/transport/User.js";
-import { async_reg } from "../../../model/Request.js";
+import { checkValid } from "../../model/DataAction.js";
+import { RouterFactory } from "../../view/router/router.js";
+import { fade } from "../viewTools/AnimationHandler.js";
+import { User } from "../../model/transport/User.js";
+import { async_reg } from "../../model/Request.js";
 
 
 let root = undefined;
@@ -26,7 +26,7 @@ function _render() {
 								</div>
 									<div class='password'>
 									<label for='password-repeat'>Подтвердите пароль</label>
-									<input id='password-repeat' class='text' type='password' autocomplete='off'>
+									<input id='password_repeat' class='text' type='password' autocomplete='off'>
 									<span class='bar'></span>
 								</div>
 								<button class='btn-submit' id='btnRegInfo'>Подать заявку</button>
@@ -35,19 +35,19 @@ function _render() {
 							<span>Уже есть аккаунт? <button class='btn-path' id='auth'>Авторизоваться</button></span>
 						</div>
 					</div>`;
-	let fadeBlock = document.getElementsByClassName("log-content")[0];
-	let btnAuth = document.getElementById("auth");
-	let btnReg = document.getElementById("btnRegInfo");
-	error_span = document.getElementById("log-status");
+	let fadeBlock = root.querySelector(".log-content");
+	let btnAuth = root.querySelector("#auth");
+	let btnReg = root.querySelector("#btnRegInfo");
+	error_span = root.querySelector("#log-status");
 	btnAuth.addEventListener("click", router.pageAuth);
 	btnReg.addEventListener("click", _async_sendRegInfo);
 	fade(fadeBlock, 1, 0);
 }
 
 function _getRegInfo() {
-	let login = document.getElementById("login").value
-	let password = document.getElementById("password").value
-	let repeat_password = document.getElementById("password-repeat").value
+	let login = root.querySelector("#login").value
+	let password = root.querySelector("#password").value
+	let repeat_password = root.querySelector("#password_repeat").value
 	let jsonRegInfo = {
 		"login": login,
 		"password": password,
@@ -88,6 +88,6 @@ function _react_regInfo(status) {
 
 export function renderPageReg(_root) {
 	root = _root;
-	router = Router.getInstance();
+	router = RouterFactory.createInstance();
 	_render();
 }

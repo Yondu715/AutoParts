@@ -1,4 +1,4 @@
-import { Router } from "./view/router.js";
+import { RouterFactory } from "./view/router/router.js";
 import { async_auth } from "./model/Request.js";
 
 
@@ -6,7 +6,8 @@ let response = await async_auth();
 let status = response.getStatus();
 
 let root = document.body;
-let router = Router.getInstance(root);
+let router = RouterFactory.createInstance();
+router.setRoot(root);
 
 switch (status) {
 	case 401:

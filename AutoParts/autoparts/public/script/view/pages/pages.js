@@ -1,6 +1,6 @@
-import { renderPageAuth } from "./pageAuth/pageAuth.js"
-import { renderPageReg } from "./pageReg/pageReg.js"
-import { renderPageMain } from "./pageMain/pageMain.js"
-import { renderPageAdmin } from "./pageAdmin/pageAdmin.js"
+import { renderPageAuth } from "./pageAuth.js"
+import { renderPageReg } from "./pageReg.js"
+import { renderPageMain } from "./pageMain.js"
+import { renderPageAdmin } from "./pageAdmin.js"
 
 export { renderPageAuth, renderPageReg, renderPageMain, renderPageAdmin }

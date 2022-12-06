@@ -22,32 +22,32 @@
 	display: none;
 }
 
-#products table .item_image {
+#products table .item-image {
 	width: 150px;
 	margin: auto 5%;
 }
 
-#products table .item_price {
+#products table .item-price {
 	width: 20%;
 	margin: auto;
 }
 
-#products table .item_info {
+#products table .item-info {
 	width: 60%;
 	text-align: left;
 }
 
-#products table .item_info .sellerName {
+#products table .item-info .sellerName {
 	display: block;
 }
 
-#products table .item_info .date {
+#products table .item-info .date {
 	display: block;
 	font-size: 28px;
 	margin-bottom: 1%;
 }
 
-#products table .item_info .brand {
+#products table .item-info .brand {
 	margin-right: 10px;
 }
 
@@ -55,7 +55,7 @@
 
 /* PRODUCT-INFO BEGIN*/
 
-#product-info {
+#product_info {
 	height: 100%;
 	width: 100%;
 	display: flex;
@@ -64,42 +64,42 @@
 	opacity: 0;
 }
 
-#product-info .left-part {
+#product_info .left-part {
 	height: 100%;
 	width: 70%;
 	display: flex;
 }
 
-#product-info .right-part {
+#product_info .right-part {
 	height: 100%;
 	width: 30%;
 	display: flex;
 }
 
-#product-info .info {
+#product_info .info {
 	display: flex;
 	flex-direction: column;
 }
 
-#product-info .info span {
+#product_info .info span {
 	margin: 10px 0px;
 	font-size: 30px;
 }
 
-#product-info .info span:first-child {
+#product_info .info span:first-child {
 	margin-top: auto;
 }
 
-#product-info .info span:last-child {
+#product_info .info span:last-child {
 	margin-bottom: auto;
 }
 
-#product-info .product-image {
+#product_info .product-image {
 	padding-left: 10px;
 	margin: auto;
 }
 
-#product-info img {
+#product_info img {
 	max-width: 100%;
 }
 
@@ -123,30 +123,30 @@
 	font-size: 22px;
 }
 
-#sale .product_info {
+#sale .product-info {
 	display: flex;
 	flex-direction: column;
 	width: 70%;
 }
 
-#sale .product_image {
+#sale .product-image {
 	display: flex;
 	flex-direction: column;
 	width: 30%;
 	height: 100%;
 }
 
-#sale .product_info div:first-child {
+#sale .product-info div:first-child {
 	margin-top: auto;
 }
 
-#sale .product_info div {
+#sale .product-info div {
 	margin: 10px auto;
 	width: 50%;
 	font-size: 27px;
 }
 
-#sale .product_info div input {
+#sale .product-info div input {
 	color: rgb(0, 0, 0);
 }
 
@@ -161,7 +161,7 @@
 	max-height: 100%;
 }
 
-#sale .input_file {
+#sale .input-file {
 	width: 50%;
 	margin: 0px auto;
 	margin-bottom: auto;
@@ -169,7 +169,7 @@
 	display: inline-block;
 }
 
-#sale .input_file span {
+#sale .input-file span {
 	width: 100%;
 	text-align: center;
 	color: rgb(255, 255, 255);
@@ -189,7 +189,7 @@
 	display: block;
 }
 
-#sale .input_file:hover span {
+#sale .input-file:hover span {
 	background-color: rgb(121, 218, 248);
 }
 

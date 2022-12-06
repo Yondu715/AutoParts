@@ -1,8 +1,8 @@
-import { checkValid } from "../../../model/DataAction.js";
-import { Router } from "../../router.js";
-import { fade } from "../../viewTools/AnimationHandler.js";
-import { User } from "../../../model/transport/User.js";
-import { async_auth } from "../../../model/Request.js";
+import { checkValid } from "../../model/DataAction.js";
+import { RouterFactory } from "../../view/router/router.js";
+import { fade } from "../viewTools/AnimationHandler.js";
+import { User } from "../../model/transport/User.js";
+import { async_auth } from "../../model/Request.js";
 
 let root = undefined;
 let error_span = undefined;
@@ -24,15 +24,15 @@ function _render() {
 									<span class='bar'></span>
 								</div>
 								<button class='btn-submit' id='btnAuthInfo'>Войти</button>
-								<span id='log-status'></span>
+								<span id='log_status'></span>
 							</div>
 							<span>Еще нет аккаунта? <button class='btn-path' id='reg'>Зарегистрироваться</button></span>
 						</div>
 					</div>`;
-	let fadeBlock = document.querySelector(".log-content");
-	let btnReg = document.getElementById("reg");
-	let btnSendAuthInfo = document.getElementById("btnAuthInfo");
-	error_span = document.getElementById("log-status");
+	let fadeBlock = root.querySelector(".log-content");
+	let btnReg = root.querySelector("#reg");
+	let btnSendAuthInfo = root.querySelector("#btnAuthInfo");
+	error_span = root.querySelector("#log_status");
 	btnReg.addEventListener("click", router.pageReg);
 	btnSendAuthInfo.addEventListener("click", _async_sendAuthInfo);
 	fade(fadeBlock, 1, 0);
@@ -106,8 +106,8 @@ function _render() {
 }*/
 
 function _getAuthInfo() {
-	let login = document.getElementById("login").value;
-	let password = document.getElementById("password").value;
+	let login = root.querySelector("#login").value;
+	let password = root.querySelector("#password").value;
 	let jsonAuthInfo = {
 		"login": login,
 		"password": password
@@ -156,6 +156,6 @@ function _react_authInfo(status, data) {
 
 export function renderPageAuth(_root) {
 	root = _root;
-	router = Router.getInstance();
+	router = RouterFactory.createInstance();
 	_render();
 }
