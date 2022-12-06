@@ -42,7 +42,7 @@ class ProductsComp extends HTMLElement {
 	}
 
 	_render() {
-		this._root.innerHTML = "";
+		this._root.replaceChildren();
 		this._root.appendChild(template(this));
 		let table = this._root.querySelector("table");
 
@@ -58,7 +58,7 @@ class ProductsComp extends HTMLElement {
 		await import("../Iproduct/component.js");
 		let comp = document.createElement("ap-iproduct");
 		comp.setProductId(id);
-		this._root.innerHTML = "";
+		this._root.replaceChildren();
 		this._root.appendChild(comp);
 	}
 }

@@ -19,7 +19,7 @@ class ApplicationsComp extends HTMLElement {
 	}
 
 	_render() {
-		this._root.innerHTML = "";
+		this._root.replaceChildren();
 		this._root.appendChild(template(this));
 
 		let button_accept = this._root.getElementById("accept");
@@ -52,22 +52,22 @@ class ApplicationsComp extends HTMLElement {
 	_getHighlightRows() {
 		let rows = this._root.querySelectorAll("tr");
 		let applications_rows = [];
-		for (let i = 0; i < rows.length; i++) {
-			if (rows[i].style.background != "") {
-				applications_rows.push(rows[i]);
+		rows.forEach(row => {
+			if (row.style.background != "") {
+				applications_rows.push(row);
 			}
-		}
+		});
 		return applications_rows;
 	}
 
 	_getAcceptInfo() {
 		let rows = this._getHighlightRows();
 		let jsonApplications = [];
-		for (let i = 0; i < rows.length; i++) {
-			let cell_id = rows[i].querySelector(".id");
-			let cell_login = rows[i].querySelector(".login");
-			let cell_password = rows[i].querySelector(".password");
-			let cell_role = rows[i].querySelector(".roles");
+		rows.forEach(row => {
+			let cell_id = row.querySelector(".id");
+			let cell_login = row.querySelector(".login");
+			let cell_password = row.querySelector(".password");
+			let cell_role = row.querySelector(".roles");
 			let application = {
 				id: Number(cell_id.innerText),
 				login: cell_login.innerText,
@@ -75,7 +75,7 @@ class ApplicationsComp extends HTMLElement {
 				role: cell_role.value,
 			}
 			jsonApplications.push(application);
-		}
+		});
 		return jsonApplications;
 	}
 
@@ -89,13 +89,13 @@ class ApplicationsComp extends HTMLElement {
 	_getDeleteInfo() {
 		let rows = this._getHighlightRows();
 		let jsonApplications_id = [];
-		for (let i = 0; i < rows.length; i++) {
-			let cell = rows[i].querySelector(".id");
+		rows.forEach(row => {
+			let cell = row.querySelector(".id");
 			let application = {
 				id: Number(cell.innerText),
 			}
 			jsonApplications_id.push(application);
-		}
+		});
 		return jsonApplications_id;
 	}
 

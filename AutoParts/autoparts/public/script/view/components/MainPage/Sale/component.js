@@ -24,7 +24,7 @@ class SaleComp extends HTMLElement {
 	}
 
 	_render() {
-		this._root.innerHTML = "";
+		this._root.replaceChildren();
 		this._root.appendChild(template(this));
 		this._error_span = this._root.querySelector("#sale_status");
 		let button = this._root.querySelector("#accept");
@@ -36,10 +36,10 @@ class SaleComp extends HTMLElement {
 		let image = this._root.querySelector("#image");
 		let jsonSale = {};
 		let fields = ["name", "brand", "model", "price"];
-		for (let i = 0; i < fields.length; i++) {
-			let value = this._root.querySelector(`#${fields[i]}`).value;
-			jsonSale[fields[i]] = value;
-		}
+		fields.forEach(field => {
+			let value = this._root.querySelector(`#${field}`).value;
+			jsonSale[field] = value;
+		});
 		jsonSale["sellerName"] = localStorage.getItem("login");
 		jsonSale["price"] = Number(jsonSale["price"]);
 

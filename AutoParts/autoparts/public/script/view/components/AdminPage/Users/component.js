@@ -37,7 +37,7 @@ class UsersComp extends HTMLElement {
 	}
 
 	_render() {
-		this._root.innerHTML = "";
+		this._root.replaceChildren();
 		this._root.appendChild(template(this));
 
 		let button_delete = this._root.getElementById("remove");
@@ -47,15 +47,15 @@ class UsersComp extends HTMLElement {
 	_getDeleteInfo() {
 		let rows = this._root.querySelectorAll("tr");
 		let users_id = [];
-		for (let i = 0; i < rows.length; i++) {
-			if (rows[i].style.background != "") {
-				let cell = rows[i].querySelector(".id");
+		rows.forEach(row => {
+			if (row.style.background != "") {
+				let cell = row.querySelector(".id");
 				let user = {
 					id: Number(cell.innerText)
 				}
 				users_id.push(user);
 			}
-		}
+		});
 		return users_id;
 	}
 

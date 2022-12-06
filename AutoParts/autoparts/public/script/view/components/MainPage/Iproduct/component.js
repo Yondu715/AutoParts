@@ -47,7 +47,7 @@ class InfoProductComp extends HTMLElement {
 	}
 
 	_render() {
-		this._root.innerHTML = "";
+		this._root.replaceChildren();
 		this._root.appendChild(template(this));
 		
 		let button = this._root.querySelector("button");

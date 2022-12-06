@@ -19,6 +19,7 @@ class AppMenu extends HTMLElement {
 	}
 
 	_render() {
+		this._root.replaceChildren();
 		this._root.appendChild(template(this));
 		let buttons = this._root.querySelectorAll("button");
 		for (let i = 0; i < this.menu_actions.length; i++) {

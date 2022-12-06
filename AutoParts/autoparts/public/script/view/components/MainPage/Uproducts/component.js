@@ -41,7 +41,7 @@ class UserProductsComp extends HTMLElement {
 	}
 
 	_render() {
-		this._root.innerHTML = "";
+		this._root.replaceChildren();
 		this._root.appendChild(template(this));
 		let button = this._root.querySelector("#remove");
 		button.addEventListener("click", this._async_sendDeleteInfo.bind(this));
@@ -52,15 +52,15 @@ class UserProductsComp extends HTMLElement {
 	_getDeleteInfo() {
 		let rows = this._root.querySelectorAll("tr");
 		let products_id = [];
-		for (let i = 0; i < rows.length; i++) {
-			if (rows[i].style.background != "") {
-				let cell = rows[i].querySelector(".id");
+		rows.forEach(row => {
+			if (row.style.background != "") {
+				let cell = row.querySelector(".id");
 				let product = {
 					id: Number(cell.innerText)
 				}
 				products_id.push(product);
 			}
-		}
+		});
 		return products_id;
 	}
 
