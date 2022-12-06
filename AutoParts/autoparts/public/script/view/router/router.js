@@ -1,35 +1,41 @@
-import { renderPageAuth, renderPageReg, renderPageMain, renderPageAdmin } from "../pages/pages.js";
 
 class Router {
 	_root;
-
-	constructor() {
-		this._pageAuth = () => renderPageAuth(this._root);
-		this._pageMain = () => renderPageMain(this._root);
-		this._pageReg = () => renderPageReg(this._root);
-		this._pageAdmin = () => renderPageAdmin(this._root);
-		this._paths = {
-			"auth": this._pageAuth,
-			"reg": this._pageReg,
-			"main": this._pageMain,
-			"admin": this._pageAdmin,
-		}
+	_default;
+	_paths = {
+		"auth": "ap-page-auth",
+		"reg": "ap-page-reg",
+		"main": "ap-page-main",
+		"admin": "ap-page-admin",
 	}
 
 	setRoot(root) {
 		this._root = root;
 	}
 
-	setDefaultPath(start){
+	setDefaultPath(start) {
 		this._default = start;
 	}
 
-	go(url=""){
-		if (url === ""){
+	go(url = "") {
+		if (url === "") {
 			url = this._default;
 		}
-		this._paths[url]();
+		let view = this._paths[url];
+		this._renderPage(view);
 		history.pushState(null, null, url);
+	}
+
+	async _renderPage(component) {
+		let componentParts = component.split("-");
+		let first_part = componentParts[1];
+		let second_part = componentParts[2].charAt(0).toUpperCase() + componentParts[2].slice(1);
+		let component_name = first_part + second_part;
+		await import(`../pages/${component_name}/component.js`);
+		this._root.replaceChildren();
+		let comp = document.createElement(component);
+		comp.classList.add("component");
+		this._root.appendChild(comp);
 	}
 }
 
