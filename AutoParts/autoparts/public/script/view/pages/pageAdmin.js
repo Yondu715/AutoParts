@@ -1,9 +1,10 @@
 import { RouterFactory } from "../../view/router/router.js";
-import { cover } from "../viewTools/AnimationHandler.js";
+import { AnimationHandlerFactory } from "../viewTools/AnimationHandler.js";
 
 let root = undefined;
 let componentRoot = undefined;
 let router = undefined;
+let animationHandler = undefined;
 
 function _render() {
 	root.innerHTML = `
@@ -62,12 +63,13 @@ async function _renderComponent(component) {
 function _logout() {
 	let animationBlock = root.querySelector(".overPage");
 	localStorage.clear();
-	cover(animationBlock, 0.5, 0);
-	setTimeout(router.pageStart, 800);
+	animationHandler.cover(animationBlock, 0.5, 0);
+	setTimeout( () => router.go(), 800);
 }
 
 export function renderPageAdmin(_root) {
 	root = _root;
 	router = RouterFactory.createInstance();
+	animationHandler = AnimationHandlerFactory.createInstance();
 	_render();
 }

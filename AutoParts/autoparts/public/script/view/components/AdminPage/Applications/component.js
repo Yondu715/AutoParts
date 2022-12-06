@@ -1,7 +1,6 @@
 import { RouterFactory } from "../../../router/router.js";
-import { async_acceptApplications, async_deleteApplications, async_getAllApplications } from "../../../../model/Request.js";
+import { RequestManagerFactory } from "../../../../model/Request.js";
 import { jsonToObjects } from "../../../../model/DataAction.js";
-import { fade, highlightRow } from "../../../viewTools/AnimationHandler.js";
 import { User } from "../../../../model/transport/User.js";
 import { template } from "./template.js";
 
@@ -9,19 +8,19 @@ import { template } from "./template.js";
 class ApplicationsComp extends HTMLElement {
 	_applications;
 	_router;
+	_requestManager;
 	_root;
 
 	constructor() {
 		super();
 		this._router = RouterFactory.createInstance();
+		this._requestManager = RequestManagerFactory.createInstance();
 		this._root = this.attachShadow({ mode: "closed" });
 	}
 
 	_render() {
 		this._root.innerHTML = "";
 		this._root.appendChild(template(this));
-		let div_applications = this._root.getElementById("applications");
-		let rows = this._root.querySelectorAll("tr");
 
 		let button_accept = this._root.getElementById("accept");
 		button_accept.addEventListener("click", this._async_acceptApplications.bind(this));
@@ -29,12 +28,10 @@ class ApplicationsComp extends HTMLElement {
 		let button_delete = this._root.getElementById("remove");
 		button_delete.addEventListener("click", this._async_deleteApplications.bind(this));
 
-		highlightRow(rows);
-		fade(div_applications, 1.2, 0);
 	}
 
 	async _async_getAllApplications() {
-		let response = await async_getAllApplications();
+		let response = await this._requestManager.async_getAllApplications();
 		let data = response.getBody();
 		let status = response.getStatus();
 		this._react_getAllApplications(status, data);
@@ -43,7 +40,7 @@ class ApplicationsComp extends HTMLElement {
 	_react_getAllApplications(status, data) {
 		switch (status) {
 			case 401:
-				this._router.pageStart();
+				this._router.go();
 				break;
 			case 200:
 				this._applications = jsonToObjects(data, User);
@@ -84,7 +81,7 @@ class ApplicationsComp extends HTMLElement {
 
 	async _async_acceptApplications() {
 		let jsonApplications = this._getAcceptInfo();
-		let response = await async_acceptApplications(jsonApplications);
+		let response = await this._requestManager.async_acceptApplications(jsonApplications);
 		let status = response.getStatus();
 		this._react_requestInfo(status);
 	}
@@ -104,7 +101,7 @@ class ApplicationsComp extends HTMLElement {
 
 	async _async_deleteApplications() {
 		let jsonApplications_id = this._getDeleteInfo();
-		let response = await async_deleteApplications(jsonApplications_id);
+		let response = await this._requestManager.async_deleteApplications(jsonApplications_id);
 		let status = response.getStatus();
 		this._react_requestInfo(status);
 	}
@@ -112,7 +109,7 @@ class ApplicationsComp extends HTMLElement {
 	_react_requestInfo(status) {
 		switch (status) {
 			case 401:
-				this._router.pageStart();
+				this._router.go();
 				break;
 			case 204:
 			case 202:

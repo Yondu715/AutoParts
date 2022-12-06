@@ -1,11 +1,4 @@
 /* PRODUCTS BEGIN */
-#products {
-	height: 100%;
-	width: 100%;
-	overflow: scroll;
-	opacity: 0;
-}
-
 #products table .item {
 	display: flex;
 	height: 100%;
@@ -56,12 +49,8 @@
 /* PRODUCT-INFO BEGIN*/
 
 #product_info {
-	height: 100%;
-	width: 100%;
 	display: flex;
 	padding: 20px;
-	overflow: scroll;
-	opacity: 0;
 }
 
 #product_info .left-part {
@@ -112,7 +101,6 @@
 	height: 100%;
 	width: 100%;
 	display: flex;
-	opacity: 0;
 }
 
 #sale .highlight {
@@ -134,6 +122,7 @@
 	flex-direction: column;
 	width: 30%;
 	height: 100%;
+	padding-right: 15px;
 }
 
 #sale .product-info div:first-child {
@@ -151,7 +140,8 @@
 }
 
 #sale .dropArea {
-	margin: auto 15px 10px 0px;
+	margin-top: auto;
+	margin-bottom: 10px;
 	padding: 5px;
 	border: 3px dashed rgb(0, 0, 0);
 }
@@ -162,10 +152,9 @@
 }
 
 #sale .input-file {
-	width: 50%;
+	width: 60%;
 	margin: 0px auto;
 	margin-bottom: auto;
-	position: relative;
 	display: inline-block;
 }
 
@@ -179,6 +168,7 @@
 	cursor: pointer;
 	padding: 5px 5px;
 	font-size: 15px;
+	transition: background-color 0.5s;
 }
 
 #sale #input_image {
@@ -193,7 +183,7 @@
 	background-color: rgb(121, 218, 248);
 }
 
-#sale-status {
+#sale_status {
 	width: 250px;
 	color: rgb(255, 116, 116);
 	margin: auto;

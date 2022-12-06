@@ -1,4 +1,9 @@
+import { AnimationHandlerFactory } from "../../../viewTools/AnimationHandler.js";
+import { images } from "../../../viewTools/images.js";
+import { dragAndDrop, showImage } from "../../../viewTools/viewFuncs.js";
+
 export function template(obj) {
+	let animationHandler = AnimationHandlerFactory.createInstance();
 	let componentWrap = document.createElement("div");
 	componentWrap.classList.add("component-wrap");
 	componentWrap.innerHTML = `
@@ -7,11 +12,11 @@ export function template(obj) {
 			@import "public/style/mainPage.css";
 			@import "public/style/animations.css";
 			</style>	
-		<div id='sale'>
+		<div id='sale' class='component-content'>
 			<div class='product-info'></div>
 			<div class='product-image'></div>
 		</div>
-		<div id='btn-place'>
+		<div id='btn_place'>
 			<button id='accept' class='btn-submit'>Выставить на продажу</button>
 		</div>
 	`;
@@ -42,7 +47,7 @@ export function template(obj) {
 
 		product_info.appendChild(container);
 	}
-	
+
 	let sale_status = document.createElement("span");
 	sale_status.id = "sale_status";
 
@@ -61,10 +66,17 @@ export function template(obj) {
 	dropArea.classList.add("dropArea");
 	let image = document.createElement("img");
 	image.id = "image";
+	image.src = images["dragAndDrop"];
+
 	dropArea.appendChild(image);
 	product_image.appendChild(dropArea);
 	product_image.appendChild(label_input_dropArea);
 
 	product_info.appendChild(sale_status);
+
+	let div_sale = componentWrap.querySelector("#sale");
+	dragAndDrop(dropArea, input_image, image);
+	input_image.addEventListener("change", () => showImage(input_image, image));
+	animationHandler.fade(div_sale, 0.8, 0);
 	return componentWrap;
 }

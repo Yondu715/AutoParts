@@ -1,18 +1,19 @@
-import { fade, highlightRow } from "../../../viewTools/AnimationHandler.js";
 import { RouterFactory } from "../../../router/router.js";
 import { jsonToObjects } from "../../../../model/DataAction.js";
-import { async_deleteProducts, async_getUserProducts } from "../../../../model/Request.js";
+import { RequestManagerFactory } from "../../../../model/Request.js";
 import { Product } from "../../../../model/transport/Product.js";
 import { template } from "./template.js";
 
 class UserProductsComp extends HTMLElement {
 	_products;
 	_router;
+	_requestManager;
 	_root;
 
 	constructor() {
 		super();
 		this._router = RouterFactory.createInstance();
+		this._requestManager = RequestManagerFactory.createInstance();
 		this._root = this.attachShadow({ mode: "closed" });
 	}
 
@@ -21,7 +22,7 @@ class UserProductsComp extends HTMLElement {
 	}
 
 	async _async_getUserProducts() {
-		let response = await async_getUserProducts();
+		let response = await this._requestManager.async_getUserProducts();
 		let data = response.getBody();
 		let status = response.getStatus();
 		this._react_getUserProducts(status, data);
@@ -30,7 +31,7 @@ class UserProductsComp extends HTMLElement {
 	_react_getUserProducts(status, data) {
 		switch (status) {
 			case 401:
-				this._router.pageStart();
+				this._router.go();
 				break;
 			case 200:
 				this._products = jsonToObjects(data, Product);
@@ -42,12 +43,8 @@ class UserProductsComp extends HTMLElement {
 	_render() {
 		this._root.innerHTML = "";
 		this._root.appendChild(template(this));
-		let div_products = this._root.querySelector("#products");
-		let rows = this._root.querySelectorAll("tr");
 		let button = this._root.querySelector("#remove");
 		button.addEventListener("click", this._async_sendDeleteInfo.bind(this));
-		fade(div_products, 1.2, 0);
-		highlightRow(rows);
 	}
 
 	/* DELETE PRODUCT */
@@ -69,7 +66,7 @@ class UserProductsComp extends HTMLElement {
 
 	async _async_sendDeleteInfo() {
 		let jsonProductsID = this._getDeleteInfo();
-		let response = await async_deleteProducts(jsonProductsID);
+		let response = await this._requestManager.async_deleteProducts(jsonProductsID);
 		let status = response.getStatus();
 		this._react_deleteInfo(status);
 	}
@@ -77,7 +74,7 @@ class UserProductsComp extends HTMLElement {
 	_react_deleteInfo(status) {
 		switch (status) {
 			case 401:
-				this._router.pageStart();
+				this._router.go();
 				break;
 			case 204:
 				this._async_getUserProducts();

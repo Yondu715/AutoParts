@@ -1,13 +1,15 @@
 import { checkValid } from "../../model/DataAction.js";
 import { RouterFactory } from "../../view/router/router.js";
-import { fade } from "../viewTools/AnimationHandler.js";
+import { AnimationHandlerFactory } from "../viewTools/AnimationHandler.js";
 import { User } from "../../model/transport/User.js";
-import { async_reg } from "../../model/Request.js";
+import { RequestManagerFactory } from "../../model/Request.js";
 
 
 let root = undefined;
 let error_span = undefined;
 let router = undefined;
+let requestManager = undefined;
+let animationHandler = undefined;
 
 function _render() {
 	root.innerHTML = `<div class='log-page'>
@@ -39,9 +41,9 @@ function _render() {
 	let btnAuth = root.querySelector("#auth");
 	let btnReg = root.querySelector("#btnRegInfo");
 	error_span = root.querySelector("#log-status");
-	btnAuth.addEventListener("click", router.pageAuth);
+	btnAuth.addEventListener("click", () => router.go("auth"));
 	btnReg.addEventListener("click", _async_sendRegInfo);
-	fade(fadeBlock, 1, 0);
+	animationHandler.fade(fadeBlock, 1, 0);
 }
 
 function _getRegInfo() {
@@ -70,7 +72,7 @@ async function _async_sendRegInfo() {
 		error_span.textContent = "Пароли не совпадают";
 		return;
 	}
-	let response = await async_reg(user);
+	let response = await requestManager.async_reg(user);
 	let status = response.getStatus();
 	_react_regInfo(status);
 }
@@ -78,7 +80,7 @@ async function _async_sendRegInfo() {
 function _react_regInfo(status) {
 	switch (status) {
 		case 200:
-			router.pageAuth();
+			router.go("auth");
 			break;
 		case 409:
 			error_span.textContent = "Нельзя использовать данный логин";
@@ -89,5 +91,7 @@ function _react_regInfo(status) {
 export function renderPageReg(_root) {
 	root = _root;
 	router = RouterFactory.createInstance();
+	requestManager = RequestManagerFactory.createInstance();
+	animationHandler = AnimationHandlerFactory.createInstance();
 	_render();
 }

@@ -1,7 +1,6 @@
 import { RouterFactory } from "../../../router/router.js";
-import { async_getAllProducts } from "../../../../model/Request.js";
+import { RequestManagerFactory } from "../../../../model/Request.js";
 import { jsonToObjects } from "../../../../model/DataAction.js";
-import { fade } from "../../../viewTools/AnimationHandler.js";
 import { Product } from "../../../../model/transport/Product.js";
 import { template } from "./template.js";
 
@@ -9,11 +8,13 @@ import { template } from "./template.js";
 class ProductsComp extends HTMLElement {
 	_products;
 	_router;
+	_requestManager
 	_root;
 
 	constructor() {
 		super();
 		this._router = RouterFactory.createInstance();
+		this._requestManager = RequestManagerFactory.createInstance();
 		this._root = this.attachShadow({ mode: "closed" });
 	}
 
@@ -22,7 +23,7 @@ class ProductsComp extends HTMLElement {
 	}
 
 	async _async_getAllProducts() {
-		let response = await async_getAllProducts();
+		let response = await this._requestManager.async_getAllProducts();
 		let data = response.getBody();
 		let status = response.getStatus();
 		this._react_getAllProducts(status, data);
@@ -31,7 +32,7 @@ class ProductsComp extends HTMLElement {
 	_react_getAllProducts(status, data) {
 		switch (status) {
 			case 401:
-				this._router.pageStart();
+				this._router.go();
 				break;
 			case 200:
 				this._products = jsonToObjects(data, Product);
@@ -43,9 +44,7 @@ class ProductsComp extends HTMLElement {
 	_render() {
 		this._root.innerHTML = "";
 		this._root.appendChild(template(this));
-		let div_products = this._root.querySelector("#products");
 		let table = this._root.querySelector("table");
-		fade(div_products, 1.2, 0);
 
 		table.addEventListener("click", (event) => {
 			let row = event.target.closest("tr");

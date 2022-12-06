@@ -1,21 +1,24 @@
 import { RouterFactory } from "../../../router/router.js";
 import { jsonToObjects } from "../../../../model/DataAction.js";
-import { fade, highlightRow } from "../../../viewTools/AnimationHandler.js";
 import { User } from "../../../../model/transport/User.js";
-import { async_deleteUsers, async_getAllUsers } from "../../../../model/Request.js";
 import { template } from "./template.js"
+import { RequestManagerFactory } from "../../../../model/Request.js";
 
 class UsersComp extends HTMLElement {
+	_users;
+	_router;
+	_requestManager;
+	_root;
 
 	constructor() {
 		super();
-		this._users = undefined;
 		this._router = RouterFactory.createInstance();
+		this._requestManager = RequestManagerFactory.createInstance();
 		this._root = this.attachShadow({ mode: "closed" });
 	}
 
 	async _async_getUsers() {
-		let response = await async_getAllUsers();
+		let response = await this._requestManager.async_getAllUsers();
 		let data = response.getBody();
 		let status = response.getStatus();
 		this._react_getUsers(status, data);
@@ -24,7 +27,7 @@ class UsersComp extends HTMLElement {
 	_react_getUsers(status, data) {
 		switch (status) {
 			case 401:
-				this._router.pageStart();
+				this._router.go();
 				break;
 			case 200:
 				this._users = jsonToObjects(data, User);
@@ -36,14 +39,9 @@ class UsersComp extends HTMLElement {
 	_render() {
 		this._root.innerHTML = "";
 		this._root.appendChild(template(this));
-		let div_users = this._root.getElementById("users");
-		let rows = this._root.querySelectorAll("tr");
 
 		let button_delete = this._root.getElementById("remove");
 		button_delete.addEventListener("click", this._async_sendDeleteInfo.bind(this));
-
-		fade(div_users, 1.2, 0);
-		highlightRow(rows);
 	}
 
 	_getDeleteInfo() {
@@ -63,7 +61,7 @@ class UsersComp extends HTMLElement {
 
 	async _async_sendDeleteInfo() {
 		let jsonUsersID = this._getDeleteInfo();
-		let response = await async_deleteUsers(jsonUsersID);
+		let response = await this._requestManager.async_deleteUsers(jsonUsersID);
 		let status = response.getStatus();
 		this._react_deleteInfo(status);
 	}
@@ -71,7 +69,7 @@ class UsersComp extends HTMLElement {
 	_react_deleteInfo(status) {
 		switch (status) {
 			case 401:
-				this._router.pageStart();
+				this._router.go();
 				break;
 			case 204:
 				this._async_getUsers();

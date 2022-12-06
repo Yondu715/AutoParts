@@ -1,4 +1,7 @@
+import { AnimationHandlerFactory } from "../../../viewTools/AnimationHandler.js";
+
 export function template(obj) {
+	let animationHandler = AnimationHandlerFactory.createInstance();
 	let componentWrap = document.createElement("div");
 	componentWrap.classList.add("component-wrap");
 	componentWrap.innerHTML = `
@@ -7,8 +10,8 @@ export function template(obj) {
 		@import "public/style/adminPage.css";
 		@import "public/style/animations.css";
 		</style>
-		<div id='users'></div>
-		<div id='btn-place'>
+		<div id='users' class='component-content'></div>
+		<div id='btn_place'>
 			<button id='remove' class='btn-submit btn-red'>Удалить</button>
 		</div>
 	`;
@@ -39,6 +42,8 @@ export function template(obj) {
 		}
 	}
 	div_users.appendChild(table);
+	animationHandler.fade(div_users, 1.2, 0);
+	animationHandler.highlightRows(rows);
 	return componentWrap;
 }
 

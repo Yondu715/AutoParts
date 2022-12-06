@@ -48,22 +48,22 @@ button {
 	flex-direction: column;
 }
 
-#btn-place {
+#btn_place {
 	width: 100%;
 	display: flex;
 	margin-top: auto;
 }
 
-#btn-place button {
+#btn_place button {
 	width: 40%;
 	margin: 10px auto;
 }
 
-#btn-place .btn-red {
+#btn_place .btn-red {
 	background: rgb(181, 44, 44);
 }
 
-#btn-place .btn-red:hover {
+#btn_place .btn-red:hover {
 	box-shadow: 0px 2px 25px -3px rgb(181, 44, 44);
 }
 
@@ -251,6 +251,11 @@ button {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+}
+
+.component-content {
+	overflow: scroll;
+	opacity: 0;
 }
 
 .header-wrap {

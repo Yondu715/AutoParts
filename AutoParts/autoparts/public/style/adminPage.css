@@ -1,11 +1,4 @@
 /* APPLICATIONS BEGIN */
-#applications {
-	height: 100%;
-	width: 100%;
-	overflow: scroll;
-	opacity: 0;
-}
-
 #applications table tr {
 	height: 80px;
 }
@@ -29,6 +22,14 @@
 	width: 70%;
 }
 
+#applications table .item-info .login{
+	width: 40%;
+}
+
+#applications table .item-info .password {
+	width: 60%;
+}
+
 #applications table span {
 	margin: auto;
 }
@@ -41,19 +42,17 @@
 #applications table .item-role select {
 	margin: auto;
 	font-size: 18px;
-	z-index: 10;
+	border: none;
+	border-radius: 10px;
+	background-color: rgb(20, 140, 177);
+	width: 80px;
+	text-align: center;
+	color: rgb(255, 255, 255);
 }
 
 /* APPLICATIONS END */
 
 /* USERS BEGIN */
-#users {
-	height: 100%;
-	width: 100%;
-	overflow: scroll;
-	opacity: 0;
-}
-
 #users table tr {
 	height: 80px;
 }

@@ -1,8 +1,8 @@
 export function checkValid(object) {
 	let keys = Object.keys(object.get());
-	for (let i = 0; i < keys.length; i++) {
-		if (object.get()[keys[i]] == "") return false;
-	}
+	keys.forEach(key => {
+		if (object.get()[key] === "") return false;
+	});
 	return true;
 }
 
@@ -13,9 +13,9 @@ export function jsonToObjects(json, classConvert) {
 	}
 
 	let res = [];
-	for (let i = 0; i < json.length; i++) {
-		let object = new classConvert(json[i]);
+	json.forEach(obj => {
+		let object = new classConvert(obj);
 		res.push(object);
-	}
+	});
 	return res;
 }

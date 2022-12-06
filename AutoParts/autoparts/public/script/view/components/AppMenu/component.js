@@ -1,4 +1,3 @@
-import { highlightMenu } from "../../viewTools/AnimationHandler.js";
 import { template } from "./template.js";
 
 
@@ -25,7 +24,6 @@ class AppMenu extends HTMLElement {
 		for (let i = 0; i < this.menu_actions.length; i++) {
 			buttons[i].addEventListener("click", this.menu_actions[i]);
 		}
-		highlightMenu(buttons);
 	}
 
 	connectedCallback() {

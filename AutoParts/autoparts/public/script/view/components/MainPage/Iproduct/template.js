@@ -1,4 +1,7 @@
+import { AnimationHandlerFactory } from "../../../viewTools/AnimationHandler.js";
+
 export function template(obj) {
+	let animationHandler = AnimationHandlerFactory.createInstance();
 	let componentWrap = document.createElement("div");
 	componentWrap.classList.add("component-wrap");
 	componentWrap.innerHTML = `
@@ -12,6 +15,7 @@ export function template(obj) {
 	let fields_ru = ["Название", "Продавец", "Дата публикации", "Марка", "Модель", "Цена"]
 
 	let div_productInfo = createProductInfo();
+	div_productInfo.classList.add("component-content");
 
 	let div_info = div_productInfo.querySelector(".info");
 	for (let i = 0; i < fields.length; i++) {
@@ -24,16 +28,19 @@ export function template(obj) {
 	}
 	componentWrap.appendChild(div_productInfo);
 
+	let image = componentWrap.querySelector(".image");
+	image.src = obj._product.get()["image"];
 
 	if (obj._product.get()["sellerName"] != localStorage.getItem("login")) {
 		let btnPlace = document.createElement("div");
-		btnPlace.id = "btn-place";
+		btnPlace.id = "btn_place";
 		let button = document.createElement("button");
 		button.textContent = "Добавить в корзину";
 		button.classList.add("btn-submit");
 		btnPlace.appendChild(button);
 		componentWrap.appendChild(btnPlace);
 	}
+	animationHandler.fade(div_productInfo, 1.2, 0);
 	return componentWrap;
 }
 

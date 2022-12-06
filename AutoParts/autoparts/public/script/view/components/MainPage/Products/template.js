@@ -1,4 +1,7 @@
+import { AnimationHandlerFactory } from "../../../viewTools/AnimationHandler.js";
+
 export function template(obj) {
+	let animationHandler = AnimationHandlerFactory.createInstance();
 	let componentWrap = document.createElement("div");
 	componentWrap.classList.add("component-wrap");
 	componentWrap.innerHTML = `
@@ -7,7 +10,7 @@ export function template(obj) {
 			@import "public/style/mainPage.css";
 			@import "public/style/animations.css";
 			</style>	
-		<div id='products'></div>
+		<div id='products' class='component-content'></div>
 	`;
 	let div_products = componentWrap.querySelector("#products");
 	let table = createTableProducts(obj._products.length);
@@ -36,6 +39,7 @@ export function template(obj) {
 		}
 	}
 	div_products.appendChild(table);
+	animationHandler.fade(div_products, 1.2, 0);
 	return componentWrap;
 }
 

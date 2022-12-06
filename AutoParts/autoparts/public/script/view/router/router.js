@@ -4,19 +4,32 @@ class Router {
 	_root;
 
 	constructor() {
-		this.pageStart = () => renderPageAuth(this._root);
-		this.pageAuth = () => renderPageAuth(this._root);
-		this.pageMain = () => renderPageMain(this._root);
-		this.pageReg = () => renderPageReg(this._root);
-		this.pageAdmin = () => renderPageAdmin(this._root);
+		this._pageAuth = () => renderPageAuth(this._root);
+		this._pageMain = () => renderPageMain(this._root);
+		this._pageReg = () => renderPageReg(this._root);
+		this._pageAdmin = () => renderPageAdmin(this._root);
+		this._paths = {
+			"auth": this._pageAuth,
+			"reg": this._pageReg,
+			"main": this._pageMain,
+			"admin": this._pageAdmin,
+		}
 	}
 
 	setRoot(root) {
 		this._root = root;
 	}
 
-	go(url){
-		
+	setDefaultPath(start){
+		this._default = start;
+	}
+
+	go(url=""){
+		if (url === ""){
+			url = this._default;
+		}
+		this._paths[url]();
+		history.pushState(null, null, url);
 	}
 }
 

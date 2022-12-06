@@ -1,10 +1,11 @@
-import { cover } from "../viewTools/AnimationHandler.js";
+import { AnimationHandlerFactory } from "../viewTools/AnimationHandler.js";
 import { RouterFactory } from "../../view/router/router.js";
 
 
 let root = undefined;
 let componentRoot = undefined;
 let router = undefined;
+let animationHandler = undefined;
 
 function _render() {
 	root.innerHTML = `<span class='overPage'></span>
@@ -22,8 +23,8 @@ function _render() {
 function _logout() {
 	let animationBlock = root.querySelector(".overPage");
 	localStorage.clear();
-	cover(animationBlock, 0.5, 0);
-	setTimeout(router.pageStart, 800);
+	animationHandler.cover(animationBlock, 0.5, 0);
+	setTimeout(() => router.go(), 800);
 }
 
 async function _renderHeader(headerRoot) {
@@ -71,5 +72,6 @@ async function _renderComponent(component) {
 export function renderPageMain(_root) {
 	root = _root;
 	router = RouterFactory.createInstance();
+	animationHandler = AnimationHandlerFactory.createInstance();
 	_render();
 }

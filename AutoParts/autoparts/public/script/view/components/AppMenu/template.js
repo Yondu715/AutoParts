@@ -1,4 +1,7 @@
+import { AnimationHandlerFactory } from "../../viewTools/AnimationHandler.js";
+
 export function template(obj) {
+	let animationHandler = AnimationHandlerFactory.createInstance();
 	let componentWrap = document.createElement("div");
 	componentWrap.classList.add("component-wrap");
 	componentWrap.innerHTML = `
@@ -21,5 +24,7 @@ export function template(obj) {
 	}
 	menu.appendChild(list);
 	componentWrap.appendChild(menu);
+	let buttons = componentWrap.querySelectorAll("button");
+	animationHandler.highlightMenu(buttons);
 	return componentWrap;
 }

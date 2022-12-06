@@ -1,21 +1,21 @@
 import { RouterFactory } from "../../../router/router.js";
 import { Product } from "../../../../model/transport/Product.js";
-import { async_saleProduct } from "../../../../model/Request.js";
+import { RequestManagerFactory } from "../../../../model/Request.js";
 import { checkValid } from "../../../../model/DataAction.js";
-import { dragAndDrop, showImage } from "../../../viewTools/viewFuncs.js";
 import { images } from "../../../viewTools/images.js";
-import { fade } from "../../../viewTools/AnimationHandler.js";
 import { template } from "./template.js";
 
 
 class SaleComp extends HTMLElement {
 	_error_span;
 	_router;
+	_requestManager;
 	_root;
 
 	constructor() {
 		super();
 		this._router = RouterFactory.createInstance();
+		this._requestManager = RequestManagerFactory.createInstance();
 		this._root = this.attachShadow({ mode: "closed" });
 	}
 
@@ -26,20 +26,9 @@ class SaleComp extends HTMLElement {
 	_render() {
 		this._root.innerHTML = "";
 		this._root.appendChild(template(this));
-		let div_sale = this._root.querySelector("#sale");
 		this._error_span = this._root.querySelector("#sale_status");
 		let button = this._root.querySelector("#accept");
 		button.addEventListener("click", this._async_sendSaleInfo.bind(this));
-
-		let input_image = this._root.querySelector("#input_image");
-		let dropArea = this._root.querySelector(".dropArea");
-		let image = this._root.querySelector("#image");
-		image.src = images["dragAndDrop"];
-		dragAndDrop(dropArea, input_image, image);
-		input_image.addEventListener("change", () => {
-			showImage(input_image, image);
-		});
-		fade(div_sale, 0.8, 0);
 	}
 
 	_getSaleInfo() {
@@ -68,7 +57,7 @@ class SaleComp extends HTMLElement {
 			this._error_span.textContent = "Не все поля были заполнены";
 			return;
 		}
-		let response = await async_saleProduct(product);
+		let response = await this._requestManager.async_saleProduct(product);
 		let status = response.getStatus();
 		this._react_saleInfo(status);
 	}
@@ -76,14 +65,14 @@ class SaleComp extends HTMLElement {
 	_react_saleInfo(status) {
 		switch (status) {
 			case 401:
-				this._router.pageStart();
+				this._router.go();
 				break;
 			default:
 				this._error_span.textContent = "";
 				let fields = this._root.querySelectorAll("input");
-				for (let i = 0; i < fields.length; i++) {
-					fields[i].value = "";
-				}
+				fields.forEach(field => {
+					field.value = "";
+				});
 				let image = this._root.querySelector("#image");
 				image.src = images["dragAndDrop"];
 				break;

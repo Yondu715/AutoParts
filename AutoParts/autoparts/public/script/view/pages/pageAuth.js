@@ -1,12 +1,14 @@
 import { checkValid } from "../../model/DataAction.js";
 import { RouterFactory } from "../../view/router/router.js";
-import { fade } from "../viewTools/AnimationHandler.js";
+import { AnimationHandlerFactory } from "../viewTools/AnimationHandler.js";
 import { User } from "../../model/transport/User.js";
-import { async_auth } from "../../model/Request.js";
+import { RequestManagerFactory } from "../../model/Request.js";
 
 let root = undefined;
 let error_span = undefined;
 let router = undefined;
+let requestManager = undefined;
+let animationHandler = undefined;
 
 function _render() {
 	root.innerHTML = `<div class='log-page'>
@@ -33,9 +35,9 @@ function _render() {
 	let btnReg = root.querySelector("#reg");
 	let btnSendAuthInfo = root.querySelector("#btnAuthInfo");
 	error_span = root.querySelector("#log_status");
-	btnReg.addEventListener("click", router.pageReg);
+	btnReg.addEventListener("click", () => router.go("reg"));
 	btnSendAuthInfo.addEventListener("click", _async_sendAuthInfo);
-	fade(fadeBlock, 1, 0);
+	animationHandler.fade(fadeBlock, 1, 0);
 }
 
 /*function _renderAuth(){
@@ -122,7 +124,7 @@ async function _async_sendAuthInfo() {
 		error_span.textContent = "Не все поля были заполнены";
 		return;
 	}
-	let response = await async_auth(user);
+	let response = await requestManager.async_auth(user);
 	let data = response.getBody();
 	let status = response.getStatus();
 	_react_authInfo(status, data);
@@ -144,10 +146,10 @@ function _react_authInfo(status, data) {
 
 			switch (user_role) {
 				case "client":
-					router.pageMain();
+					router.go("main");
 					break;
 				case "admin":
-					router.pageAdmin();
+					router.go("admin");
 					break;
 			}
 			break;
@@ -157,5 +159,7 @@ function _react_authInfo(status, data) {
 export function renderPageAuth(_root) {
 	root = _root;
 	router = RouterFactory.createInstance();
+	requestManager = RequestManagerFactory.createInstance();
+	animationHandler = AnimationHandlerFactory.createInstance();
 	_render();
 }
