@@ -1,4 +1,5 @@
 import { AnimationHandlerFactory } from "../../../viewTools/AnimationHandler.js";
+import { createTableUsers } from "../../../viewTools/viewFuncs.js";
 
 export function template(obj) {
 	let animationHandler = AnimationHandlerFactory.createInstance();
@@ -45,31 +46,4 @@ export function template(obj) {
 	animationHandler.fade(div_users, 1.2, 0);
 	animationHandler.highlightRows(rows);
 	return componentWrap;
-}
-
-function createTableUsers(length) {
-	let table = document.createElement("table");
-	for (let i = 0; i < length; i++) {
-		let row = document.createElement("tr");
-		let cell = document.createElement("td");
-		let content_div = document.createElement("div");
-		content_div.classList.add("item");
-
-		let id_div = document.createElement("div");
-		id_div.classList.add("item-id");
-
-		let main_info = document.createElement("div");
-		main_info.classList.add("item-info");
-
-		let role_div = document.createElement("div");
-		role_div.classList.add("item-role");
-
-		content_div.appendChild(id_div);
-		content_div.appendChild(main_info);
-		content_div.appendChild(role_div);
-		cell.appendChild(content_div);
-		row.appendChild(cell);
-		table.appendChild(row);
-	}
-	return table;
 }

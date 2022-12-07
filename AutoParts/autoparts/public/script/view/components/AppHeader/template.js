@@ -5,8 +5,7 @@ export function template(obj) {
 		<style>
 			@import "public/style/general.css";
 			@import "public/style/animations.css";
-		</style>
-	`;
+		</style>`;
 
 	let header = document.createElement("div");
 	header.classList.add("header");

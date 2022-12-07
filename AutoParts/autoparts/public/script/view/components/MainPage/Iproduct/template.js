@@ -1,16 +1,16 @@
 import { AnimationHandlerFactory } from "../../../viewTools/AnimationHandler.js";
+import { createProductInfo } from "../../../viewTools/viewFuncs.js";
 
 export function template(obj) {
 	let animationHandler = AnimationHandlerFactory.createInstance();
 	let componentWrap = document.createElement("div");
 	componentWrap.classList.add("component-wrap");
 	componentWrap.innerHTML = `
-			<style>
+		<style>
 			@import "public/style/general.css";
 			@import "public/style/mainPage.css";
 			@import "public/style/animations.css";
-			</style>	
-	`;
+		</style>`;
 	let fields = ["name", "sellerName", "date", "brand", "model", "price"];
 	let fields_ru = ["Название", "Продавец", "Дата публикации", "Марка", "Модель", "Цена"]
 
@@ -42,31 +42,4 @@ export function template(obj) {
 	}
 	animationHandler.fade(div_productInfo, 1.2, 0);
 	return componentWrap;
-}
-
-function createProductInfo() {
-
-	let div_productInfo = document.createElement("div");
-	div_productInfo.id = "product_info";
-
-	let left_part = document.createElement("div");
-	left_part.classList.add("left-part");
-	let right_part = document.createElement("div");
-	right_part.classList.add("right-part");
-
-	let div_info = document.createElement("div");
-	div_info.classList.add("info");
-
-	let div_image = document.createElement("div");
-	div_image.classList.add("product-image");
-	let image = document.createElement("img");
-	image.classList.add("image");
-	div_image.appendChild(image);
-
-	left_part.appendChild(div_info);
-	right_part.appendChild(div_image);
-
-	div_productInfo.appendChild(left_part);
-	div_productInfo.appendChild(right_part);
-	return div_productInfo;
 }

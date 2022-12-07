@@ -7,19 +7,18 @@ export function template(obj) {
 	let componentWrap = document.createElement("div");
 	componentWrap.classList.add("component-wrap");
 	componentWrap.innerHTML = `
-			<style>
+		<style>
 			@import "public/style/general.css";
 			@import "public/style/mainPage.css";
 			@import "public/style/animations.css";
-			</style>	
+		</style>	
 		<div id='sale' class='component-content'>
 			<div class='product-info'></div>
 			<div class='product-image'></div>
 		</div>
 		<div id='btn_place'>
 			<button id='accept' class='btn-submit'>Выставить на продажу</button>
-		</div>
-	`;
+		</div>`;
 
 	let product_info = componentWrap.querySelector(".product-info");
 	let product_image = componentWrap.querySelector(".product-image");

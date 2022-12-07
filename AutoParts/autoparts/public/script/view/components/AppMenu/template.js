@@ -5,12 +5,12 @@ export function template(obj) {
 	let componentWrap = document.createElement("div");
 	componentWrap.classList.add("component-wrap");
 	componentWrap.innerHTML = `
-			<style>
-				@import "public/style/general.css";
-				:host {
-					width: 25%;
-				}
-			</style>`;
+		<style>
+			@import "public/style/general.css";
+			:host {
+				width: 25%;
+			}
+		</style>`;
 
 	let menu = document.createElement("div");
 	menu.classList.add("menu");

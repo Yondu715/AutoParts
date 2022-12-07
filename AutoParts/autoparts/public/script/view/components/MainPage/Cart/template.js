@@ -1,4 +1,5 @@
 import { AnimationHandlerFactory } from "../../../viewTools/AnimationHandler.js";
+import { createTableProducts } from "../../../viewTools/viewFuncs.js";
 
 export function template(obj) {
 	let animationHandler = AnimationHandlerFactory.createInstance();
@@ -45,31 +46,4 @@ export function template(obj) {
 	div_products.appendChild(table);
 	animationHandler.fade(div_products, 1.2, 0);
 	return componentWrap;
-}
-
-function createTableProducts(length) {
-	let table = document.createElement("table");
-	for (let i = 0; i < length; i++) {
-		let row = document.createElement("tr");
-		let cell = document.createElement("td");
-		let content_div = document.createElement("div");
-		content_div.classList.add("item");
-
-		let image_div = document.createElement("div");
-		image_div.classList.add("item-image");
-
-		let main_info = document.createElement("div");
-		main_info.classList.add("item-info");
-
-		let price_info = document.createElement("div");
-		price_info.classList.add("item-price");
-
-		content_div.appendChild(image_div);
-		content_div.appendChild(main_info);
-		content_div.appendChild(price_info);
-		cell.appendChild(content_div);
-		row.appendChild(cell);
-		table.appendChild(row);
-	}
-	return table;
 }
