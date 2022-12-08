@@ -33,4 +33,4 @@ class AppMenu extends HTMLElement {
 	
 }
 
-customElements.define("app-menu", AppMenu);
+customElements.define("ap-menu", AppMenu);

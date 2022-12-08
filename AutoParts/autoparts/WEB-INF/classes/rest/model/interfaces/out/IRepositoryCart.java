@@ -9,4 +9,6 @@ public interface IRepositoryCart {
 	public ArrayList<Product> findByUser(String login);
 
 	public boolean add(String login, Product product);
+
+	public void delete(Integer productID);
 }

@@ -1,6 +1,6 @@
 import { RouterFactory } from "../../../router/router.js";
 import { jsonToObjects } from "../../../../model/DataAction.js";
-import { RequestManagerFactory } from "../../../../model/Request.js";
+import { RequestManagerFactory } from "../../../../model/RequestManager.js";
 import { Product } from "../../../../model/transport/Product.js";
 import { template } from "./template.js";
 

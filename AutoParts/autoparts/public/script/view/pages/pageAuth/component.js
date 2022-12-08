@@ -1,5 +1,5 @@
 import { checkValid } from "../../../model/DataAction.js";
-import { RequestManagerFactory } from "../../../model/Request.js";
+import { RequestManagerFactory } from "../../../model/RequestManager.js";
 import { User } from "../../../model/transport/User.js";
 import { RouterFactory } from "../../router/router.js";
 import { template } from "./template.js";

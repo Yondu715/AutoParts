@@ -16,6 +16,9 @@ export function template(obj) {
 			}
 			</style>	
 		<div id='products' class='component-content'></div>
+		<div id='btn_place'>
+			<button id='remove' class='btn-submit btn-red'>Удалить</button>
+		</div>
 	`;
 	let div_products = componentWrap.querySelector("#products");
 	let table = createTableProducts(obj._products.length);
@@ -45,5 +48,6 @@ export function template(obj) {
 	}
 	div_products.appendChild(table);
 	animationHandler.fade(div_products, 1.2, 0);
+	animationHandler.highlightRows(rows);
 	return componentWrap;
 }

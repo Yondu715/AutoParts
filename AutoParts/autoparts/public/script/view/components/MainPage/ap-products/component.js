@@ -1,5 +1,5 @@
 import { RouterFactory } from "../../../router/router.js";
-import { RequestManagerFactory } from "../../../../model/Request.js";
+import { RequestManagerFactory } from "../../../../model/RequestManager.js";
 import { jsonToObjects } from "../../../../model/DataAction.js";
 import { Product } from "../../../../model/transport/Product.js";
 import { template } from "./template.js";
@@ -55,7 +55,7 @@ class ProductsComp extends HTMLElement {
 	}
 
 	async _renderProductInfo(id) {
-		await import("../Iproduct/component.js");
+		await import("../ap-iproduct/component.js");
 		let comp = document.createElement("ap-iproduct");
 		comp.setProductId(id);
 		this._root.replaceChildren();

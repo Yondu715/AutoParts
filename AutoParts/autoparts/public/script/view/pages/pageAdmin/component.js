@@ -1,4 +1,3 @@
-import { RequestManagerFactory } from "../../../model/Request.js";
 import { RouterFactory } from "../../router/router.js";
 import { AnimationHandlerFactory } from "../../viewTools/AnimationHandler.js";
 import { template } from "./template.js";
@@ -8,7 +7,6 @@ class PageAdmin extends HTMLElement {
 	_root;
 	_error_span;
 	_router;
-	_requestManager;
 	_animationHandler;
 	_componentRoot;
 
@@ -16,7 +14,6 @@ class PageAdmin extends HTMLElement {
 		super();
 		this._root = this.attachShadow({ mode: "closed" });
 		this._router = RouterFactory.createInstance();
-		this._requestManager = RequestManagerFactory.createInstance();
 		this._animationHandler = AnimationHandlerFactory.createInstance();
 	}
 
@@ -36,8 +33,8 @@ class PageAdmin extends HTMLElement {
 	}
 
 	async _renderHeader(headerRoot) {
-		await import("../../components/AppHeader/component.js")
-		let header = document.createElement("app-header");
+		await import("../../components/Common/ap-header/component.js")
+		let header = document.createElement("ap-header");
 		header.setTitle("AutoParts");
 		header.setUsername(localStorage.getItem("login"));
 		header.setLogout(this._logout.bind(this));
@@ -45,13 +42,13 @@ class PageAdmin extends HTMLElement {
 	}
 
 	async _renderAdminMenu(menuRoot) {
-		await import("../../components/AppMenu/component.js")
+		await import("../../components/Common/ap-menu/component.js")
 		let menu_items = ["Заявки", "Пользователи"];
 		let menu_funcs = [
 			() => this._renderComponent("ap-applications"),
 			() => this._renderComponent("ap-users"),
 		];
-		let menu = document.createElement("app-menu");
+		let menu = document.createElement("ap-menu");
 		menu.setMenuItems(menu_items);
 		menu.setMenuActions(menu_funcs);
 		menuRoot.prepend(menu);
@@ -66,9 +63,7 @@ class PageAdmin extends HTMLElement {
 	}
 
 	async _renderComponent(component) {
-		let component_name = component.split("-")[1];
-		component_name = component_name.charAt(0).toUpperCase() + component_name.slice(1);
-		await import(`../../components/AdminPage/${component_name}/component.js`);
+		await import(`../../components/AdminPage/${component}/component.js`);
 		this._componentRoot.replaceChildren();
 		let comp = document.createElement(component);
 		comp.classList.add("component");

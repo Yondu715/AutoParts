@@ -43,7 +43,7 @@ public class RepositoryCart implements IRepositoryCart {
 				}
 				Product product = new Product();
 				EProduct eProduct = eCart.getProduct();
-				product.setId(eProduct.getId());
+				product.setId(eCart.getId());
 				product.setName(eProduct.getName());
 				product.setSellerName(eProduct.getUser().getLogin());
 				product.setModel(eProduct.getModel());
@@ -84,6 +84,21 @@ public class RepositoryCart implements IRepositoryCart {
 			Logger.getLogger(RepositoryCart.class.getName()).log(Level.INFO, null, e);
 		}
 		return add_status;
+	}
+
+	@Override
+	public void delete(Integer productID) {
+		String query = "delete from ECart c where c.id=:id";
+		try {
+			entityManager = entityManagerFactory.createEntityManager();
+			userTransaction.begin();
+			entityManager.joinTransaction();
+			entityManager.createQuery(query).setParameter("id", productID).executeUpdate();
+			userTransaction.commit();
+			entityManager.close();
+		} catch (Exception e) {
+			Logger.getLogger(RepositoryProducts.class.getName()).log(Level.INFO, null, e);
+		}
 	}
 
 }

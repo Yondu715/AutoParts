@@ -1,11 +1,12 @@
 import { RouterFactory } from "./view/router/router.js";
-import { RequestManagerFactory } from "./model/Request.js";
+import { RequestManagerFactory } from "./model/RequestManager.js";
 
 
 let root = document.body;
 let router = RouterFactory.createInstance();
 router.setRoot(root);
 router.setDefaultPath("auth");
+
 let requestManager = RequestManagerFactory.createInstance();
 let response = await requestManager.async_auth();
 let status = response.getStatus();

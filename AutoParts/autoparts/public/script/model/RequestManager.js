@@ -75,6 +75,10 @@ class RequestManager {
 	async async_getCart() {
 		return await this._sendRequest("GET", "api/users/cart");
 	}
+
+	async async_deleteFromCart(products_id){
+		return await this._sendRequest("DELETE", "api/users/cart", null, products_id);
+	}
 	
 	async async_getAllApplications(){
 		return await this._sendRequest("GET", "api/admin/applications");

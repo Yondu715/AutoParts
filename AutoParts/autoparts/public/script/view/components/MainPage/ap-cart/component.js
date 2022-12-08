@@ -1,5 +1,5 @@
 import { RouterFactory } from "../../../router/router.js";
-import { RequestManagerFactory } from "../../../../model/Request.js";
+import { RequestManagerFactory } from "../../../../model/RequestManager.js";
 import { jsonToObjects } from "../../../../model/DataAction.js";
 import { Product } from "../../../../model/transport/Product.js";
 import { template } from "./template.js";
@@ -41,9 +41,44 @@ class CartComp extends HTMLElement {
 		}
 	}
 
+	_getDeleteInfo() {
+		let rows = this._root.querySelectorAll("tr");
+		let products_id = [];
+		rows.forEach(row => {
+			if (row.style.background != "") {
+				let cell = row.querySelector(".id");
+				let product = {
+					id: Number(cell.innerText)
+				}
+				products_id.push(product);
+			}
+		});
+		return products_id;
+	}
+
+	async _async_sendDeleteInfo() {
+		let jsonProductsID = this._getDeleteInfo();
+		let response = await this._requestManager.async_deleteFromCart(jsonProductsID);
+		let status = response.getStatus();
+		this._react_deleteInfo(status);
+	}
+
+	_react_deleteInfo(status) {
+		switch (status) {
+			case 401:
+				this._router.go();
+				break;
+			case 204:
+				this._async_getCart();
+				break;
+		}
+	}
+
 	_render() {
 		this._root.replaceChildren();
 		this._root.appendChild(template(this));
+		let button = this._root.querySelector("#remove");
+		button.addEventListener("click", this._async_sendDeleteInfo.bind(this));
 	}
 
 }

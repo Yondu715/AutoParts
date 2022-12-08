@@ -1,4 +1,4 @@
-import { AnimationHandlerFactory } from "../../viewTools/AnimationHandler.js";
+import { AnimationHandlerFactory } from "../../../viewTools/AnimationHandler.js";
 
 export function template(obj) {
 	let animationHandler = AnimationHandlerFactory.createInstance();
@@ -11,7 +11,6 @@ export function template(obj) {
 				width: 25%;
 			}
 		</style>`;
-
 	let menu = document.createElement("div");
 	menu.classList.add("menu");
 	let list = document.createElement("ul");

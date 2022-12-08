@@ -2,10 +2,12 @@ package rest.controller.components;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.inject.Inject;
 
@@ -125,5 +127,28 @@ public class serverUser {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		}
 		return Response.status(Response.Status.CONFLICT).build();
+	}
+
+	@DELETE
+	@AuthRequired
+	@Path("/cart")
+	public Response removal(@Context HttpHeaders httpHeaders) {
+		String jsonDeleteID = httpHeaders.getHeaderString("Data");
+		List<Product> productsID;
+		try {
+
+			try {
+				productsID = jsonb.fromJson(jsonDeleteID, new ArrayList<Product>() {
+				}.getClass().getGenericSuperclass());
+			} catch (Exception e) {
+				throw new Exception("Error JSON transforming");
+			}
+			modelCart.deleteProduct(productsID);
+		} catch (JsonbException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+		}
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 }

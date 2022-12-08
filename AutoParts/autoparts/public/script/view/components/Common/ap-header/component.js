@@ -35,4 +35,4 @@ class AppHeader extends HTMLElement {
 
 }
 
-customElements.define("app-header", AppHeader);
+customElements.define("ap-header", AppHeader);
