@@ -43,7 +43,17 @@ class AnimationHandler {
 }
 
 export class AnimationHandlerFactory {
-	static createInstance(){
+
+	static _ah = null;
+
+	static _createInstance(){
 		return new AnimationHandler();
+	}
+
+	static createInstance(){
+		if (this._ah === null){
+			AnimationHandlerFactory._ah = AnimationHandlerFactory._createInstance();
+		}
+		return AnimationHandlerFactory._ah;
 	}
 }

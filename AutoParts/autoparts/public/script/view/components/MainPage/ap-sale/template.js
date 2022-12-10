@@ -1,6 +1,6 @@
-import { AnimationHandlerFactory } from "../../../viewTools/AnimationHandler.js";
-import { images } from "../../../viewTools/images.js";
-import { dragAndDrop, showImage } from "../../../viewTools/viewFuncs.js";
+import { AnimationHandlerFactory } from "../../../viewUtils/AnimationHandler.js";
+import { images } from "../../../viewUtils/images.js";
+import { dragAndDrop, showImage } from "../../../viewUtils/viewFuncs.js";
 
 export function template(obj) {
 	let animationHandler = AnimationHandlerFactory.createInstance();

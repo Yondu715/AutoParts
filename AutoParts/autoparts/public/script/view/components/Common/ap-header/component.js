@@ -28,7 +28,7 @@ class AppHeader extends HTMLElement {
 
 	_render() {
 		this._root.replaceChildren();
-		this._root.appendChild(template(this));
+		this._root.innerHTML = template(this);
 		let btnLogout = this._root.querySelector(".btn-logout");
 		btnLogout.addEventListener("click", this.onlogout);
 	}

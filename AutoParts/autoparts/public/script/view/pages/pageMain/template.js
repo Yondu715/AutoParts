@@ -1,4 +1,3 @@
-
 export function template() {
 	let componentWrap = document.createElement("div");
 	componentWrap.classList.add("component-wrap");

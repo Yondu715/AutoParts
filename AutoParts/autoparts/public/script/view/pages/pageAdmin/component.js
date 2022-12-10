@@ -1,5 +1,5 @@
 import { RouterFactory } from "../../router/router.js";
-import { AnimationHandlerFactory } from "../../viewTools/AnimationHandler.js";
+import { AnimationHandlerFactory } from "../../viewUtils/AnimationHandler.js";
 import { template } from "./template.js";
 
 

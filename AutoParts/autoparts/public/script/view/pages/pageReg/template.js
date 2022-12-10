@@ -1,4 +1,4 @@
-import { AnimationHandlerFactory } from "../../viewTools/AnimationHandler.js";
+import { AnimationHandlerFactory } from "../../viewUtils/AnimationHandler.js";
 
 export function template() {
 	let animationHandler = AnimationHandlerFactory.createInstance();

@@ -2,7 +2,7 @@ import { RouterFactory } from "../../../router/router.js";
 import { Product } from "../../../../model/transport/Product.js";
 import { RequestManagerFactory } from "../../../../model/RequestManager.js";
 import { checkValid } from "../../../../model/DataAction.js";
-import { images } from "../../../viewTools/images.js";
+import { images } from "../../../viewUtils/images.js";
 import { template } from "./template.js";
 
 

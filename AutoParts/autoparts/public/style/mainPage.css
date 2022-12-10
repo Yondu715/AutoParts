@@ -51,6 +51,7 @@
 #product_info {
 	display: flex;
 	padding: 20px;
+	margin: auto 0px;
 }
 
 #product_info .left-part {

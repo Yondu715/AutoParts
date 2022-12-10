@@ -1,5 +1,5 @@
-import { AnimationHandlerFactory } from "../../../viewTools/AnimationHandler.js";
-import { createProductInfo } from "../../../viewTools/viewFuncs.js";
+import { AnimationHandlerFactory } from "../../../viewUtils/AnimationHandler.js";
+import { createProductInfo } from "../../../viewUtils/viewFuncs.js";
 
 export function template(obj) {
 	let animationHandler = AnimationHandlerFactory.createInstance();
