@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
 	entry: {
-		app: "./src/start.js"
+		app: "./src/script/start.js"
 	},
 	output: {
 		filename: "[name].js",
@@ -10,12 +10,14 @@ module.exports = {
 		publicPath: "/dist"
 	},
 	devServer: {
-		port: 1337,
+		port: 8081,
 		static: {
-			directory: path.join(__dirname)
+			directory: path.join(__dirname, "src")
 		},
 		client: {
-			overlay: true
+			overlay: true,
+			progress: true,
+			reconnect: 5
 		}
 	},
 	module: {

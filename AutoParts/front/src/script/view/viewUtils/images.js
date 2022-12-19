@@ -1,4 +1,4 @@
-let path = "src/resources/img/";
+let path = "resources/img/";
 
 export const images = {
 	"no_image": path + "no_image.png",

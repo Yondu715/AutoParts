@@ -1,5 +1,5 @@
-import { RouterFactory } from "./script/view/router/router.js";
-import { RequestManagerFactory } from "./script/model/RequestManager.js";
+import { RouterFactory } from "./view/router/router.js";
+import { RequestManagerFactory } from "./model/RequestManager.js";
 
 
 let root = document.body;

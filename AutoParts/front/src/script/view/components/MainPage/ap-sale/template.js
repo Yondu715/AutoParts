@@ -15,9 +15,9 @@ export function template(obj) {
 
 	return `
 		<style>
-			@import "src/style/general.css";
-			@import "src/style/mainPage.css";
-			@import "src/style/animations.css";
+			@import "style/general.css";
+			@import "style/mainPage.css";
+			@import "style/animations.css";
 		</style>
 		<div class='component-wrap'>
 			<div id='sale' class='component-content fade'>

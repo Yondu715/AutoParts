@@ -22,9 +22,9 @@ export function template(obj) {
 	return `
 		<div class='component-wrap'>
 			<style>
-				@import "src/style/general.css";
-				@import "src/style/adminPage.css";
-				@import "src/style/animations.css";
+				@import "style/general.css";
+				@import "style/adminPage.css";
+				@import "style/animations.css";
 			</style>
 			<div id='users' class='component-content fade'>
 				<table class='table'>
