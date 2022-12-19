@@ -3,9 +3,9 @@ export function template() {
 	return `
 		<div class='component-wrap'>
 			<style>
-				@import "style/general.css";
-				@import "style/startPage.css";
-				@import "style/animations.css";
+				@import "src/style/general.css";
+				@import "src/style/startPage.css";
+				@import "src/style/animations.css";
 			</style>
 			<div class='log-page'>
 				<div class='log-content'>

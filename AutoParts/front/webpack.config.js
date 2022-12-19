@@ -1,18 +1,23 @@
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
+	plugins: [new MiniCssExtractPlugin({
+		filename: "bundle.css",
+		chunkFilename: "[id].css"
+	})],
 	entry: {
 		app: "./src/script/start.js"
 	},
 	output: {
 		filename: "[name].js",
-		path: path.resolve(__dirname, "./dist"),
+		path: path.resolve(__dirname, "dist"),
 		publicPath: "/dist"
 	},
 	devServer: {
 		port: 8081,
 		static: {
-			directory: path.join(__dirname, "src")
+			directory: path.join(__dirname)
 		},
 		client: {
 			overlay: true,
@@ -24,12 +29,17 @@ module.exports = {
 		rules: [
 		{
 			test: /\.js$/,
-			loader: "babel-loader",
+			use: {
+				loader: 'babel-loader',
+				options: {
+					presets: ['@babel/preset-env']
+				}
+			},
 			exclude: "/node_modules/"
 		},
 		{
 			test: /\.css$/,
-			use: ["style-loader", "css-loader"],
+			use: [MiniCssExtractPlugin.loader, "css-loader"],
 			exclude: "/node_modules/"
 		}
 	]

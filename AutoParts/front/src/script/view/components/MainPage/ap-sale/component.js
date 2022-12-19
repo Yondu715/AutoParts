@@ -1,9 +1,9 @@
-import { RouterFactory } from "../../../router/router.js";
-import { Product } from "../../../../model/transport/Product.js";
-import { RequestManagerFactory } from "../../../../model/RequestManager.js";
-import { checkValid } from "../../../../model/DataAction.js";
-import { images } from "../../../viewUtils/images.js";
-import { template } from "./template.js";
+import { RouterFactory } from "../../../router/router";
+import { Product } from "../../../../model/transport/Product";
+import { RequestManagerFactory } from "../../../../model/RequestManager";
+import { checkValid } from "../../../../model/DataAction";
+import { images } from "../../../viewUtils/images";
+import { template } from "./template";
 
 
 class SaleComp extends HTMLElement {

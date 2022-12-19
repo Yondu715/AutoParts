@@ -1,9 +1,9 @@
-import { RouterFactory } from "../../../router/router.js";
-import { RequestManagerFactory } from "../../../../model/RequestManager.js";
-import { jsonToObjects } from "../../../../model/DataAction.js";
-import { User } from "../../../../model/transport/User.js";
+import { RouterFactory } from "../../../router/router";
+import { RequestManagerFactory } from "../../../../model/RequestManager";
+import { jsonToObjects } from "../../../../model/DataAction";
+import { User } from "../../../../model/transport/User";
 import { template } from "./template.js";
-import { AnimationHandlerFactory } from "../../../viewUtils/AnimationHandler.js";
+import { AnimationHandlerFactory } from "../../../viewUtils/AnimationHandler";
 
 
 class ApplicationsComp extends HTMLElement {

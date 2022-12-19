@@ -2,9 +2,9 @@ export function template() {
 	return `
 		<div class='component-wrap'>
 			<style>
-				@import "style/general.css";
-				@import "style/mainPage.css";
-				@import "style/animations.css";
+				@import "src/style/general.css";
+				@import "src/style/mainPage.css";
+				@import "src/style/animations.css";
 			</style>
 			<span class='overPage'></span>
 			<div class='main-page'>

@@ -1,9 +1,9 @@
-import { checkValid } from "../../../model/DataAction.js";
-import { RequestManagerFactory } from "../../../model/RequestManager.js";
-import { User } from "../../../model/transport/User.js";
-import { RouterFactory } from "../../router/router.js";
-import { AnimationHandlerFactory } from "../../viewUtils/AnimationHandler.js";
-import { template } from "./template.js";
+import { checkValid } from "../../../model/DataAction";
+import { RequestManagerFactory } from "../../../model/RequestManager";
+import { User } from "../../../model/transport/User";
+import { RouterFactory } from "../../router/router";
+import { AnimationHandlerFactory } from "../../viewUtils/AnimationHandler";
+import { template } from "./template";
 
 
 class PageReg extends HTMLElement {

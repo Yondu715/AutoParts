@@ -1,4 +1,4 @@
-import { template } from "./template.js";
+import { template } from "./template";
 
 class AppHeader extends HTMLElement {
 	title = undefined;

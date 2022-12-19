@@ -1,9 +1,9 @@
-import { RouterFactory } from "../../../router/router.js";
-import { jsonToObjects } from "../../../../model/DataAction.js";
-import { User } from "../../../../model/transport/User.js";
-import { template } from "./template.js"
-import { RequestManagerFactory } from "../../../../model/RequestManager.js";
-import { AnimationHandlerFactory } from "../../../viewUtils/AnimationHandler.js";
+import { RouterFactory } from "../../../router/router";
+import { jsonToObjects } from "../../../../model/DataAction";
+import { User } from "../../../../model/transport/User";
+import { template } from "./template"
+import { RequestManagerFactory } from "../../../../model/RequestManager";
+import { AnimationHandlerFactory } from "../../../viewUtils/AnimationHandler";
 
 class UsersComp extends HTMLElement {
 	_users = undefined;

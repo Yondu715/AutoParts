@@ -1,8 +1,8 @@
 export function template(obj) {
 	return `
 		<style>
-			@import "style/general.css";
-			@import "style/animations.css";
+			@import "src/style/general.css";
+			@import "src/style/animations.css";
 		</style>
 		<div class='header-wrap'>
 			<div class='header'>

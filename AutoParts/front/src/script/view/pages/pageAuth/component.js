@@ -2,8 +2,8 @@ import { checkValid } from "../../../model/DataAction.js";
 import { RequestManagerFactory } from "../../../model/RequestManager.js";
 import { User } from "../../../model/transport/User.js";
 import { RouterFactory } from "../../router/router.js";
-import { AnimationHandlerFactory } from "../../viewUtils/AnimationHandler.js";
-import { template } from "./template.js";
+import { AnimationHandlerFactory } from "../../viewUtils/AnimationHandler";
+import { template } from "./template";
 
 class PageAuth extends HTMLElement {
 	_root = undefined;

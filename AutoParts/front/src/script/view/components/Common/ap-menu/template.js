@@ -9,7 +9,7 @@ export function template(obj) {
 
 	return `
 		<style>
-			@import "style/general.css";
+			@import "src/style/general.css";
 			:host {
 				width: 25%;
 			}

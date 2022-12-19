@@ -1,9 +1,9 @@
-import { RouterFactory } from "../../../router/router.js";
-import { RequestManagerFactory } from "../../../../model/RequestManager.js";
-import { jsonToObjects } from "../../../../model/DataAction.js";
-import { Product } from "../../../../model/transport/Product.js";
-import { template } from "./template.js";
-import { IdProductFactory } from "../../../../model/domain/productId.js";
+import { RouterFactory } from "../../../router/router";
+import { RequestManagerFactory } from "../../../../model/RequestManager";
+import { jsonToObjects } from "../../../../model/DataAction";
+import { Product } from "../../../../model/transport/Product";
+import { template } from "./template";
+import { IdProductFactory } from "../../../../model/domain/productId";
 
 
 class ProductsComp extends HTMLElement {

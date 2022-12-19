@@ -1,4 +1,4 @@
-import { Response } from "./transport/Response.js";
+import { Response } from "./transport/Response";
 
 class RequestManager {
 	protocol = "http";

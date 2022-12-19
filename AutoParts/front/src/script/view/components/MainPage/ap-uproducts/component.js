@@ -1,9 +1,9 @@
-import { RouterFactory } from "../../../router/router.js";
-import { jsonToObjects } from "../../../../model/DataAction.js";
-import { RequestManagerFactory } from "../../../../model/RequestManager.js";
-import { Product } from "../../../../model/transport/Product.js";
-import { template } from "./template.js";
-import { AnimationHandlerFactory } from "../../../viewUtils/AnimationHandler.js";
+import { RouterFactory } from "../../../router/router";
+import { jsonToObjects } from "../../../../model/DataAction";
+import { RequestManagerFactory } from "../../../../model/RequestManager";
+import { Product } from "../../../../model/transport/Product";
+import { template } from "./template";
+import { AnimationHandlerFactory } from "../../../viewUtils/AnimationHandler";
 
 class UserProductsComp extends HTMLElement {
 	_products = undefined;

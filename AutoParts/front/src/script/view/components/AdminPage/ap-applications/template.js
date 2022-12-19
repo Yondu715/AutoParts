@@ -31,9 +31,9 @@ export function template(obj) {
 	return `
 		<div class='component-wrap'>
 			<style>
-				@import "style/general.css";
-				@import "style/adminPage.css";
-				@import "style/animations.css";
+				@import "src/style/general.css";
+				@import "src/style/adminPage.css";
+				@import "src/style/animations.css";
 			</style>
 			<div id='applications' class='component-content fade'>
 				<table class='table'>

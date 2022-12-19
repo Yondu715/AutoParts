@@ -1,9 +1,9 @@
-import { RouterFactory } from "../../router/router.js";
-import { AnimationHandlerFactory } from "../../viewUtils/AnimationHandler.js";
-import { template } from "./template.js";
-import "../../components/Common/ap-header/component.js";
-import "../../components/Common/ap-menu/component.js";
-import "../../components/AdminPage/ap-applications/component.js";
+import { RouterFactory } from "../../router/router";
+import { AnimationHandlerFactory } from "../../viewUtils/AnimationHandler";
+import { template } from "./template";
+import "../../components/Common/ap-header/component";
+import "../../components/Common/ap-menu/component";
+import "../../components/AdminPage/ap-applications/component";
 
 class PageAdmin extends HTMLElement {
 	_root = undefined;

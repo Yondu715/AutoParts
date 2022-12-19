@@ -1,5 +1,5 @@
-import { template } from "./template.js";
-import { AnimationHandlerFactory } from "../../../viewUtils/AnimationHandler.js";
+import { template } from "./template";
+import { AnimationHandlerFactory } from "../../../viewUtils/AnimationHandler";
 
 
 class AppMenu extends HTMLElement {

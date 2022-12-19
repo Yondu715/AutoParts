@@ -1,12 +1,12 @@
-
+import "../../../../style/general.css";
 export function template(obj) {
 	let componentWrap = document.createElement("div");
 	componentWrap.classList.add("component-wrap");
 	componentWrap.innerHTML = `
 		<style>
-			@import "style/general.css";
-			@import "style/startPage.css";
-			@import "style/animations.css";
+			@import "src/style/general.css";
+			@import "src/style/startPage.css";
+			@import "src/style/animations.css";
 		</style>
 		<div class='log-page'>
 			<div class='log-content'>
