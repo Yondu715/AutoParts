@@ -1,3 +1,6 @@
 *.txt
 *.class
 .vscode
+node_modules/
+package-lock.json
+dist/

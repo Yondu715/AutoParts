@@ -1,0 +1,44 @@
+@keyframes fade {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes cover {
+	0% {
+		width: 0%;
+	}
+
+	100% {
+		width: 100%;
+	}
+}
+
+@keyframes highlightMenu {
+	0% {
+		color: rgb(17, 54, 40);
+	}
+
+	100% {
+		color: rgb(1, 175, 108);
+	}
+}
+
+@keyframes rhighlightMenu {
+	0% {
+		color: rgb(1, 175, 108);
+	}
+
+	100% {
+		color: rgb(17, 54, 40);
+	}
+}
+
+.fade {
+	animation: fade 1.2s 1;
+	animation-fill-mode: forwards;
+}

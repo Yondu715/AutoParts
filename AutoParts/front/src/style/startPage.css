@@ -1,0 +1,58 @@
+.log-page{
+	height: 100%;
+	display: flex;
+	background: rgb(33, 74, 49);
+	font-family: 'Roboto Condensed', sans-serif;
+}
+
+.log-content {
+	margin: auto;
+	width: 350px;
+	height: 460px;
+	display: flex;
+	flex-direction: column;
+	opacity: 0;
+}
+
+.log {
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+}
+
+.log-content span{
+	color: rgb(255, 255, 255);
+	font-size: 17px;
+	text-align: center;
+}
+
+.log span {
+	color: rgb(255, 255, 255);
+	font-size: 40px;
+	text-align: center;
+}
+
+.login,
+.password {
+	margin: 15px 0px;
+}
+
+.login label, .password label {
+	color: rgb(255, 255, 255);
+	padding-left: 10px;
+	text-align: left;
+	font-size: 20px;
+}
+
+.btn-path {
+	background: transparent;
+	font-size: 17px;
+	color: rgb(0, 140, 216);
+}
+
+#log_status{
+	color: rgb(255, 116, 116);
+	text-align: center;
+	font-size: 17px;
+	margin-top: 10px;
+}

@@ -1,0 +1,197 @@
+/* PRODUCTS BEGIN */
+#products table .item {
+	display: flex;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	font-size: 40px;
+}
+
+#products table img {
+	max-width: 150px;
+}
+
+#products table .item .id {
+	display: none;
+}
+
+#products table .item-image {
+	width: 150px;
+	margin: auto 5%;
+}
+
+#products table .item-price {
+	width: 20%;
+	margin: auto;
+}
+
+#products table .item-info {
+	width: 60%;
+	text-align: left;
+}
+
+#products table .item-info .sellerName {
+	display: block;
+}
+
+#products table .item-info .date {
+	display: block;
+	font-size: 28px;
+	margin-bottom: 1%;
+}
+
+#products table .item-info .brand {
+	margin-right: 10px;
+}
+
+/* PRODUCTS END */
+
+/* PRODUCT-INFO BEGIN*/
+
+#product_info {
+	display: flex;
+	padding: 20px;
+	margin: auto 0px;
+}
+
+#product_info .left-part {
+	height: 100%;
+	width: 70%;
+	display: flex;
+}
+
+#product_info .right-part {
+	height: 100%;
+	width: 30%;
+	display: flex;
+}
+
+#product_info .info {
+	display: flex;
+	flex-direction: column;
+}
+
+#product_info .info span {
+	margin: 10px 0px;
+	font-size: 30px;
+}
+
+#product_info .info span:first-child {
+	margin-top: auto;
+}
+
+#product_info .info span:last-child {
+	margin-bottom: auto;
+}
+
+#product_info .product-image {
+	padding-left: 10px;
+	margin: auto;
+}
+
+#product_info img {
+	max-width: 100%;
+}
+
+/* PRODUCT-INFO END */
+
+
+/* SALE BEGIN */
+
+#sale {
+	height: 100%;
+	width: 100%;
+	display: flex;
+}
+
+#sale .highlight {
+	background-color: rgb(132, 206, 255);
+}
+
+#sale .text {
+	font-size: 22px;
+}
+
+#sale .product-info {
+	display: flex;
+	flex-direction: column;
+	width: 70%;
+}
+
+#sale .product-image {
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	height: 100%;
+	padding-right: 15px;
+}
+
+#sale .product-info div:first-child {
+	margin-top: auto;
+}
+
+#sale .product-info div {
+	margin: 10px auto;
+	width: 60%;
+	font-size: 27px;
+}
+
+#sale .product-info div input {
+	color: rgb(0, 0, 0);
+}
+
+#sale .dropArea {
+	margin-top: auto;
+	margin-bottom: 10px;
+	padding: 5px;
+	border: 3px dashed rgb(0, 0, 0);
+}
+
+#sale .dropArea img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#sale .input-file {
+	width: 60%;
+	margin: 0px auto;
+	margin-bottom: auto;
+	display: inline-block;
+}
+
+#sale .input-file span {
+	width: 100%;
+	text-align: center;
+	color: rgb(255, 255, 255);
+	background-color: rgb(20, 140, 177);
+	border-radius: 10px;
+	display: inline-block;
+	cursor: pointer;
+	padding: 5px 5px;
+	font-size: 15px;
+	transition: background-color 0.5s;
+}
+
+#sale #input_image {
+	position: absolute;
+	width: 0;
+	height: 0;
+	opacity: 0;
+	display: block;
+}
+
+#sale .input-file:hover span {
+	background-color: rgb(121, 218, 248);
+}
+
+#sale_status {
+	width: 250px;
+	color: rgb(255, 116, 116);
+	margin: auto;
+	margin-top: 10px;
+	text-align: center;
+	font-size: 18px;
+	height: 20px;
+}
+
+/* SALE END */
