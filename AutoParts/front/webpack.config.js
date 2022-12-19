@@ -2,10 +2,6 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-	plugins: [new MiniCssExtractPlugin({
-		filename: "bundle.css",
-		chunkFilename: "[id].css"
-	})],
 	entry: {
 		app: "./src/script/start.js"
 	},
@@ -27,25 +23,29 @@ module.exports = {
 	},
 	module: {
 		rules: [
-		{
-			test: /\.js$/,
-			use: {
-				loader: 'babel-loader',
-				options: {
-					presets: ['@babel/preset-env']
+			{
+				test: /\.js$/,
+				exclude: "/node_modules/",
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env']
+					}
 				}
 			},
-			exclude: "/node_modules/"
-		},
-		{
-			test: /\.css$/,
-			use: [MiniCssExtractPlugin.loader, "css-loader"],
-			exclude: "/node_modules/"
-		}
-	]
+			{
+				test: /\.css$/,
+				use: [MiniCssExtractPlugin.loader, "css-loader"],
+				exclude: "/node_modules/"
+			}
+		]
 	},
 	experiments: {
 		topLevelAwait: true
-	}
+	},
+	plugins: [new MiniCssExtractPlugin({
+		filename: "bundle.css",
+		chunkFilename: "[id].css"
+	})]
 
 }
