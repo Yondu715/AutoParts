@@ -1,11 +1,11 @@
 export function template(obj) {
-	
+
 	let roles_list = ["client", "admin"];
 	let roles = ``;
 	roles_list.forEach(role => {
-		roles += `<option>${role}</option>`;	
+		roles += `<option>${role}</option>`;
 	});
-	
+
 	let info = ``;
 	obj._applications.forEach(application => {
 		let application_info = `
@@ -31,9 +31,9 @@ export function template(obj) {
 	return `
 		<div class='component-wrap'>
 			<style>
-				@import "src/style/general.css";
-				@import "src/style/adminPage.css";
-				@import "src/style/animations.css";
+				@import "style/general.css";
+				@import "style/adminPage.css";
+				@import "style/animations.css";
 			</style>
 			<div id='applications' class='component-content fade'>
 				<table class='table'>

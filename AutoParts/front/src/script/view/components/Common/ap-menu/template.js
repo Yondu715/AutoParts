@@ -1,6 +1,6 @@
 export function template(obj) {
 	let list = "";
-	for (let i = 0; i <obj.menu_items.length; i++) {
+	for (let i = 0; i < obj.menu_items.length; i++) {
 		list += `
 			<li>
 				<button>${obj.menu_items[i]}</button>
@@ -9,7 +9,7 @@ export function template(obj) {
 
 	return `
 		<style>
-			@import "src/style/general.css";
+			@import "style/general.css";
 			:host {
 				width: 25%;
 			}

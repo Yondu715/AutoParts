@@ -1,26 +1,28 @@
 const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
+	mode: "production",
 	entry: {
-		app: "./src/script/start.js"
+		main: "./src/script/start.js"
 	},
 	output: {
 		filename: "[name].js",
 		path: path.resolve(__dirname, "dist"),
-		publicPath: "/dist"
+		publicPath: "/dist",
+		clean: true
 	},
+
 	devServer: {
 		port: 8081,
 		static: {
-			directory: path.join(__dirname)
+			directory: path.join(__dirname, "src")
 		},
 		client: {
-			overlay: true,
-			progress: true,
-			reconnect: 5
+			overlay: true
 		}
 	},
+
 	module: {
 		rules: [
 			{
@@ -35,17 +37,26 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				use: [MiniCssExtractPlugin.loader, "css-loader"],
+				use: ["css-loader"],
 				exclude: "/node_modules/"
 			}
 		]
 	},
+
 	experiments: {
 		topLevelAwait: true
 	},
-	plugins: [new MiniCssExtractPlugin({
-		filename: "bundle.css",
-		chunkFilename: "[id].css"
-	})]
 
+	optimization: {
+		minimize: true,
+		minimizer: [new TerserPlugin({
+			terserOptions: {
+				format: {
+					comments: false,
+				}
+			},
+			extractComments: false,
+			parallel: true
+		})],
+	},
 }

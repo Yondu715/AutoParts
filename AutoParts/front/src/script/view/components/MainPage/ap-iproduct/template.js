@@ -1,5 +1,5 @@
 
-export function template(obj) { 
+export function template(obj) {
 
 	let info = `
 		<span>Название: ${obj._product.get()["name"]}</span>
@@ -21,9 +21,9 @@ export function template(obj) {
 
 	return `
 		<style>
-			@import "src/style/general.css";
-			@import "src/style/mainPage.css";
-			@import "src/style/animations.css";
+			@import "style/general.css";
+			@import "style/mainPage.css";
+			@import "style/animations.css";
 		</style>
 		<div class='component-wrap'>
 			<div id='product_info' class='component-content fade'>
