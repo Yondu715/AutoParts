@@ -57,7 +57,7 @@ class PageMain extends HTMLElement {
 	}
 
 	async _renderComponent(component) {
-		await import(`../../components/MainPage/${component}/component.js`);
+		await import(`../../components/MainPage/${component}/component`);
 		this._componentRoot.replaceChildren();
 		let comp = document.createElement(component);
 		comp.classList.add("component");

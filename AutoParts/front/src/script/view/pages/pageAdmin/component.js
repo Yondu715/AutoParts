@@ -47,7 +47,7 @@ class PageAdmin extends HTMLElement {
 	}
 
 	async _renderComponent(component) {
-		await import(`../../components/AdminPage/${component}/component.js`);
+		await import(`../../components/AdminPage/${component}/component`);
 		this._componentRoot.replaceChildren();
 		let comp = document.createElement(component);
 		comp.classList.add("component");

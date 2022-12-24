@@ -1,7 +1,7 @@
-import { checkValid } from "../../../model/DataAction.js";
-import { RequestManagerFactory } from "../../../model/RequestManager.js";
-import { User } from "../../../model/transport/User.js";
-import { RouterFactory } from "../../router/router.js";
+import { checkValid } from "../../../model/DataAction";
+import { RequestManagerFactory } from "../../../model/RequestManager";
+import { User } from "../../../model/transport/User";
+import { RouterFactory } from "../../router/router";
 import { AnimationHandlerFactory } from "../../viewUtils/AnimationHandler";
 import { template } from "./template";
 
@@ -11,8 +11,8 @@ class PageAuth extends HTMLElement {
 	_router = RouterFactory.createInstance();
 	_requestManager = RequestManagerFactory.createInstance();
 	_animationHandler = AnimationHandlerFactory.createInstance();
-	_login = undefined;
-	_password = undefined;
+	_login = "";
+	_password = "";
 
 	constructor() {
 		super();

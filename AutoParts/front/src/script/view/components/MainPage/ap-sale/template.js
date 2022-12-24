@@ -1,4 +1,4 @@
-import { images } from "../../../viewUtils/images.js";
+import { images } from "../../../viewUtils/images";
 
 export function template(obj) {
 	let fields = ["name", "brand", "model", "price"];

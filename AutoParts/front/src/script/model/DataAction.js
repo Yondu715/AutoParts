@@ -1,7 +1,7 @@
 export function checkValid(object) {
-	let keys = Object.keys(object.get());
-	for (let i = 0; i < keys.length; i++) {
-		if ((object.get()[keys[i]]) === "") return false;	
+	let fields = object.get();
+	for (const key in fields) {
+		if ((fields[key]) === "") return false;
 	}
 	return true;
 }

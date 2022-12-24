@@ -31,7 +31,7 @@ class Router {
 		let first_part = componentParts[1];
 		let second_part = componentParts[2].charAt(0).toUpperCase() + componentParts[2].slice(1);
 		let component_name = first_part + second_part;
-		await import(`../pages/${component_name}/component.js`);
+		await import(`../pages/${component_name}/component`);
 		this._root.replaceChildren();
 		let comp = document.createElement(component);
 		this._root.appendChild(comp);

@@ -19,7 +19,7 @@ export function template(obj) {
 	html += `
 					${list}
 				</ul>
-			<div>
-		<div>`;
+			</div>
+		</div>`;
 	return html;
 }

@@ -2,7 +2,7 @@ import { RouterFactory } from "../../../router/router";
 import { RequestManagerFactory } from "../../../../model/RequestManager";
 import { jsonToObjects } from "../../../../model/DataAction";
 import { User } from "../../../../model/transport/User";
-import { template } from "./template.js";
+import { template } from "./template";
 import { AnimationHandlerFactory } from "../../../viewUtils/AnimationHandler";
 
 
