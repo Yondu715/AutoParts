@@ -1,25 +1,5 @@
 export function template(obj) {
-	let info = ``;
-	obj._users.forEach(user => {
-		let user_info = `
-			<div class='item'>
-				<div class='item-id'>
-					<span class='id'>${user.get()["id"]}</span>
-				</div>
-				<div class='item-info'>
-					<span class='login'>${user.get()["login"]}</span>
-					<span class='password'>${user.get()["password"]}</span>
-				</div>
-				<div class='item-role'>
-					<span class='password'>${user.get()["role"]}</span>
-				</div>
-			</div>`;
-		info += `
-			<tr>
-				<td>${user_info}</td>
-			</tr>`;
-	});
-	return `
+	let html = `
 		<div class='component-wrap'>
 			<style>
 				@import "style/general.css";
@@ -28,11 +8,35 @@ export function template(obj) {
 			</style>
 			<div id='users' class='component-content fade'>
 				<table class='table'>
-					${info}
+	`;
+	let user_info = ``;
+	obj._users.forEach(user => {
+		user_info += `
+		<tr>
+			<td>
+				<div class='item'>
+					<div class='item-id'>
+						<span class='id'>${user.get()["id"]}</span>
+					</div>
+					<div class='item-info'>
+						<span class='login'>${user.get()["login"]}</span>
+						<span class='password'>${user.get()["password"]}</span>
+					</div>
+					<div class='item-role'>
+						<span class='password'>${user.get()["role"]}</span>
+					</div>
+				</div>
+			</td>
+		</tr>`;
+	});
+	html += `
+		${user_info}
 				</table>
 			</div>
 			<div id='btn_place'>
 				<button id='remove' class='btn-submit btn-red'>Удалить</button>
 			</div>
-		</div>`;
+		</div>
+	`
+	return html;
 }

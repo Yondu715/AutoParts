@@ -12,6 +12,9 @@ class PageReg extends HTMLElement {
 	_router = RouterFactory.createInstance();
 	_requestManager = RequestManagerFactory.createInstance();
 	_animationHandler = AnimationHandlerFactory.createInstance();
+	_login = "";
+	_password = "";
+	_repeat_pass = "";
 
 	constructor() {
 		super();
@@ -22,9 +25,38 @@ class PageReg extends HTMLElement {
 		this._render();
 	}
 
+	setLogin(value){
+		this._login = value;
+	}
+
+	setPassword(value) {
+		this._password = value;
+	}
+
+	setRepeatPass(value) {
+		this._repeat_pass = value;
+	}
+
 	_render() {
 		this._root.innerHTML = template();
-		this._error_span = this._root.querySelector("#log-status");
+		this._error_span = this._root.querySelector("#log_status");
+
+		let login_input = this._root.querySelector("#login");
+		login_input.addEventListener("change", (event) => {
+			let value = event.target.value;
+			this.setLogin(value);
+		});
+		let password_input = this._root.querySelector("#password");
+		password_input.addEventListener("change", (event) => {
+			let value = event.target.value;
+			this.setPassword(value);
+		});
+		let repeat_pass_input = this._root.querySelector("#password_repeat");
+		repeat_pass_input.addEventListener("change", (event) => {
+			let value = event.target.value;
+			this.setRepeatPass(value);
+		});
+
 		let btnAuth = this._root.querySelector("#auth");
 		let btnReg = this._root.querySelector("#btnRegInfo");
 		btnAuth.addEventListener("click", () => this._router.go("auth"));
@@ -34,13 +66,10 @@ class PageReg extends HTMLElement {
 	}
 
 	_getRegInfo() {
-		let login = this._root.querySelector("#login").value
-		let password = this._root.querySelector("#password").value
-		let repeat_password = this._root.querySelector("#password_repeat").value
 		let jsonRegInfo = {
-			"login": login,
-			"password": password,
-			"repeat-password": repeat_password,
+			"login": this._login,
+			"password": this._password,
+			"repeat_password": this._repeat_pass,
 		}
 		let user = new User(jsonRegInfo);
 		return user;
@@ -54,7 +83,7 @@ class PageReg extends HTMLElement {
 		}
 
 		let password = user.get()["password"];
-		let repeat_password = user.get()["repeat-password"];
+		let repeat_password = user.get()["repeat_password"];
 		if (password != repeat_password) {
 			this._error_span.textContent = "Пароли не совпадают";
 			return;

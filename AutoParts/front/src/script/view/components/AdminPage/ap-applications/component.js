@@ -99,7 +99,7 @@ class ApplicationsComp extends HTMLElement {
 
 	async _async_deleteApplications() {
 		let jsonProductsID = [];
-		this._productsSelected.forEach(id => {
+		this._selectedProducts.forEach(id => {
 			jsonProductsID.push({ id: id });
 		});
 		this._selectedProducts = [];

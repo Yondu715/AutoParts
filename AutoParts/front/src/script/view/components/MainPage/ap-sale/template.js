@@ -3,6 +3,16 @@ import { images } from "../../../viewUtils/images.js";
 export function template(obj) {
 	let fields = ["name", "brand", "model", "price"];
 	let fields_ru = ["Название", "Марка", "Модель", "Стоимость"];
+
+	let html = `
+		<style>
+			@import "style/general.css";
+			@import "style/mainPage.css";
+			@import "style/animations.css";
+		</style>
+		<div class='component-wrap'>
+			<div id='sale' class='component-content fade'>
+				<div class='product-info'>`;
 	let info = ``;
 	for (let i = 0; i < fields.length; i++) {
 		info += `
@@ -12,16 +22,7 @@ export function template(obj) {
 				<span class='bar'></span>
 			</div>`;
 	}
-
-	return `
-		<style>
-			@import "style/general.css";
-			@import "style/mainPage.css";
-			@import "style/animations.css";
-		</style>
-		<div class='component-wrap'>
-			<div id='sale' class='component-content fade'>
-				<div class='product-info'>
+	html += `
 					${info}
 					<span id='sale_status'><span>
 				</div>
@@ -39,4 +40,5 @@ export function template(obj) {
 				<button id='accept' class='btn-submit'>Выставить на продажу</button>
 			</div>
 		</div>`;
+	return html;
 }

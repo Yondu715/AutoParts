@@ -31,10 +31,24 @@ class PageAuth extends HTMLElement {
 		this._password = value;
 	}
 
+	setErrorSpan(value){
+		this._error_span = value;
+	}
+
 	_render() {
-		this._root.appendChild(template(this));
+		this._root.innerHTML = template(this);
 		this._error_span = this._root.querySelector("#log_status");
 		
+		let login_input = this._root.querySelector("#login");
+		login_input.addEventListener("change", (event) => {
+			let value = event.target.value;
+			this.setLogin(value);
+		});
+		let password_input = this._root.querySelector("#password");
+		password_input.addEventListener("change", (event) => {
+			let value = event.target.value;
+			this.setPassword(value);
+		});
 		let btnReg = this._root.querySelector("#reg");
 		let btnSendAuthInfo = this._root.querySelector("#btnAuthInfo");
 		btnReg.addEventListener("click", () => this._router.go("reg"));

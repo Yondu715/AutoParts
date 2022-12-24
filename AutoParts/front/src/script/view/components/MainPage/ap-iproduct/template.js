@@ -1,25 +1,6 @@
 
 export function template(obj) {
-
-	let info = `
-		<span>Название: ${obj._product.get()["name"]}</span>
-		<span>Продавец: ${obj._product.get()["sellerName"]}</span>
-		<span>Дата публикации: ${obj._product.get()["date"]}</span>
-		<span>Марка: ${obj._product.get()["brand"]}</span>
-		<span>Модель: ${obj._product.get()["model"]}</span>
-		<span>Цена: ${obj._product.get()["price"]} ₽</span>
-	`;
-
-	let btnPlace = ``;
-	if (obj._product.get()["sellerName"] != localStorage.getItem("login")) {
-		btnPlace = `
-			<div id='btn_place'>
-				<button class='btn-submit'>Добавить в корзину</button>
-			</div>
-		`;
-	}
-
-	return `
+	let html = `
 		<style>
 			@import "style/general.css";
 			@import "style/mainPage.css";
@@ -29,7 +10,12 @@ export function template(obj) {
 			<div id='product_info' class='component-content fade'>
 				<div class='left-part'>
 					<div class='info'>
-						${info}
+						<span>Название: ${obj._product.get()["name"]}</span>
+						<span>Продавец: ${obj._product.get()["sellerName"]}</span>
+						<span>Дата публикации: ${obj._product.get()["date"]}</span>
+						<span>Марка: ${obj._product.get()["brand"]}</span>
+						<span>Модель: ${obj._product.get()["model"]}</span>
+						<span>Цена: ${obj._product.get()["price"]} ₽</span>
 					</div>
 				</div>
 				<div class='right-part'>
@@ -37,8 +23,16 @@ export function template(obj) {
 						<img class='image' src=${obj._product.get()["image"]}>
 					</div>
 				</div>
-			</div>
+			</div>`;
+	let btnPlace = ``;
+	if (obj._product.get()["sellerName"] != localStorage.getItem("login")) {
+		btnPlace = `
+			<div id='btn_place'>
+				<button class='btn-submit'>Добавить в корзину</button>
+			</div>`;
+	}
+	html += `
 			${btnPlace}
-		</div>
-	`;
+		</div>`;
+	return html;
 }

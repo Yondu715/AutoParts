@@ -1,25 +1,25 @@
 export function template(obj) {
-	let list = "";
-	for (let i = 0; i < obj.menu_items.length; i++) {
-		list += `
-			<li>
-				<button>${obj.menu_items[i]}</button>
-			</li>`
-	}
-
-	return `
+	let html = `
 		<style>
 			@import "style/general.css";
 			:host {
-				width: 25%;
+				width: 30%;
 			}
 		</style>
 		<div class='component-wrap'>
 			<div class='menu'>
-				<ul>
+				<ul>`;
+	let list = "";
+	for (let i = 0; i < obj.menu_items.length; i++) {
+		list += `
+				<li>
+					<button>${obj.menu_items[i]}</button>
+				</li>`;
+	}
+	html += `
 					${list}
 				</ul>
 			<div>
-		<div>
-	`;
+		<div>`;
+	return html;
 }

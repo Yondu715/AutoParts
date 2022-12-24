@@ -6,29 +6,7 @@ export function template(obj) {
 		roles += `<option>${role}</option>`;
 	});
 
-	let info = ``;
-	obj._applications.forEach(application => {
-		let application_info = `
-			<div class='item'>
-				<div class='item-id'>
-					<span class='id'>${application.get()["id"]}</span>
-				</div>
-				<div class='item-info'>
-					<span class='login'>${application.get()["login"]}</span>
-					<span class='password'>${application.get()["password"]}</span>
-				</div>
-				<div class='item-role'>
-					<select class='roles'>
-						${roles}
-					</select>
-				</div>
-			</div>`;
-		info += `
-			<tr>
-				<td>${application_info}</td>
-			</tr>`;
-	});
-	return `
+	let html = `
 		<div class='component-wrap'>
 			<style>
 				@import "style/general.css";
@@ -36,7 +14,31 @@ export function template(obj) {
 				@import "style/animations.css";
 			</style>
 			<div id='applications' class='component-content fade'>
-				<table class='table'>
+				<table class='table'>`
+
+	let info = ``;
+	obj._applications.forEach(application => {
+		info += `
+			<tr>
+				<td>
+					<div class='item'>
+						<div class='item-id'>
+							<span class='id'>${application.get()["id"]}</span>
+						</div>
+						<div class='item-info'>
+							<span class='login'>${application.get()["login"]}</span>
+							<span class='password'>${application.get()["password"]}</span>
+						</div>
+						<div class='item-role'>
+							<select class='roles'>
+								${roles}
+							</select>
+						</div>
+					</div>
+				</td>
+			</tr>`;
+	});
+	html += `
 					${info}
 				</table>
 			</div>
@@ -45,4 +47,5 @@ export function template(obj) {
 				<button id='remove' class='btn-submit btn-red'>Удалить</button>
 			</div>
 		</div>`;
+	return html;
 }

@@ -1,8 +1,8 @@
 export function checkValid(object) {
 	let keys = Object.keys(object.get());
-	keys.forEach(key => {
-		if (object.get()[key] === "") return false;
-	});
+	for (let i = 0; i < keys.length; i++) {
+		if ((object.get()[keys[i]]) === "") return false;	
+	}
 	return true;
 }
 

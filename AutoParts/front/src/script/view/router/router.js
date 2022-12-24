@@ -34,7 +34,6 @@ class Router {
 		await import(`../pages/${component_name}/component.js`);
 		this._root.replaceChildren();
 		let comp = document.createElement(component);
-		comp.classList.add("component");
 		this._root.appendChild(comp);
 	}
 }
