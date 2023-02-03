@@ -12,7 +12,6 @@ import rest.model.interfaces.out.IRepositoryProducts;
 import rest.model.interfaces.out.IRepositoryUsers;
 
 public class Builder {
-
 	@Inject @Default
 	private IModelApplications modelApplications;
 
