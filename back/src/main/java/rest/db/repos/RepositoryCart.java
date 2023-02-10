@@ -30,20 +30,17 @@ public class RepositoryCart implements IRepositoryCart {
 	@Override
 	public ArrayList<Product> findByUser(String login) {
 		ArrayList<Product> products = new ArrayList<>();
-		String getCart = "select c from ECart c";
+		String getCart = "select c from ECart c where c.user.login=:login";
 		try {
 			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();
 			entityManager.joinTransaction();
-			List<ECart> carts_list = entityManager.createQuery(getCart, ECart.class).getResultList();
+			List<ECart> carts_list = entityManager.createQuery(getCart, ECart.class).setParameter("login", login).getResultList();
 			userTransaction.commit();
 			for (ECart eCart : carts_list) {
-				if (!eCart.getUser().getLogin().equals(login)) {
-					continue;
-				}
 				Product product = new Product();
 				EProduct eProduct = eCart.getProduct();
-				product.setId(eCart.getId());
+				product.setId(eProduct.getId());
 				product.setName(eProduct.getName());
 				product.setSellerName(eProduct.getUser().getLogin());
 				product.setModel(eProduct.getModel());
@@ -88,7 +85,7 @@ public class RepositoryCart implements IRepositoryCart {
 
 	@Override
 	public void delete(Integer productID) {
-		String query = "delete from ECart c where c.id=:id";
+		String query = "delete from ECart c where c.product.id=:id";
 		try {
 			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();

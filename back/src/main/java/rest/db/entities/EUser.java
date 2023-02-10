@@ -57,5 +57,4 @@ public class EUser implements Serializable {
 	public void setLogin(String login) {
 		this.login = login;
 	}
-
 }

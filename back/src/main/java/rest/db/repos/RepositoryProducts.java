@@ -85,18 +85,15 @@ public class RepositoryProducts implements IRepositoryProducts {
 	@Override
 	public ArrayList<Product> findByUser(String seller_name) {
 		ArrayList<Product> products = new ArrayList<>();
-		String query = "select p from EProduct p";
+		String query = "select p from EProduct p where p.user.login=:seller";
 		try {
 			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();
 			entityManager.joinTransaction();
-			List<EProduct> products_list = entityManager.createQuery(query, EProduct.class).getResultList();
+			List<EProduct> products_list = entityManager.createQuery(query, EProduct.class).setParameter("seller", seller_name).getResultList();
 			userTransaction.commit();
 			entityManager.close();
 			for (EProduct eProduct : products_list) {
-				if (!eProduct.getUser().getLogin().equals(seller_name)) {
-					continue;
-				}
 				Product product = new Product();
 				product.setId(eProduct.getId());
 				product.setName(eProduct.getName());

@@ -2,8 +2,6 @@ package rest.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import rest.model.dto.Product;
 import rest.model.interfaces.in.IModelCart;
@@ -31,7 +29,6 @@ public class ModelCart implements IModelCart {
 	@Override
 	public void deleteProduct(List<Product> productsID) {
 		for (Product product : productsID) {
-			Logger.getLogger(ModelCart.class.getName()).log(Level.INFO, "" + product.getId() + " ");
 			repCart.delete(product.getId());
 		}
 	}

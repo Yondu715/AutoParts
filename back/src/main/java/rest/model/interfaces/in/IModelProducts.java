@@ -17,4 +17,6 @@ public interface IModelProducts {
 	public ArrayList<Product> getProducts(String seller_name);
 
 	public Product getProductInfo(Integer product_id);
+
+	public void buyProduct(List<Product> productsID);
 }

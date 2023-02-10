@@ -35,12 +35,18 @@ public class ModelProducts implements IModelProducts {
 	}
 
 	@Override
-	public Product getProductInfo(Integer product_id){
-		return repProducts.findById(product_id);
+	public Product getProductInfo(Integer productID){
+		return repProducts.findById(productID);
 	}
 
 	@Override
 	public void setRepository(IRepositoryProducts repProducts) {
 		this.repProducts = repProducts;
+	}
+
+	@Override
+	public void buyProduct(List<Product> productsID) {
+		
+		
 	}
 }

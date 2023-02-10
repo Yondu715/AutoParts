@@ -1,7 +1,5 @@
 package rest.db.entities;
 
-
-
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -23,12 +21,12 @@ public class EProduct {
 
 	@Column(name = "name")
 	private String name;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "seller_id")
 	private EUser user;
 
-	@Column(name="model")
+	@Column(name = "model")
 	private String model;
 
 	@Column(name = "brand")
@@ -37,10 +35,10 @@ public class EProduct {
 	@Column(name = "price")
 	private Integer price;
 
-	@Column (name = "date")
-	private Date date = new Date(); 
+	@Column(name = "date")
+	private Date date = new Date();
 
-	@Column (name="image")
+	@Column(name = "image")
 	private String image;
 
 	public EUser getUser() {

@@ -25,6 +25,7 @@ import rest.model.interfaces.in.IModelProducts;
 
 @Path("/products")
 public class serverProduct {
+
 	@Inject
 	@Build
 	private IModelProducts modelProducts;
@@ -47,6 +48,30 @@ public class serverProduct {
 		ArrayList<Product> products = modelProducts.getProducts(login);
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
+	}
+	
+	@DELETE
+	@AuthRequired
+	@Path("/userProducts")
+	public Response removal(@Context HttpHeaders httpHeaders) {
+		String jsonDeleteID = httpHeaders.getHeaderString("Data");
+		List<Product> productsID;
+		try {
+
+			try {
+				productsID = jsonb.fromJson(jsonDeleteID, new ArrayList<Product>() {
+				}.getClass().getGenericSuperclass());
+			} catch (Exception e) {
+				throw new Exception("Error JSON transforming");
+			}
+			modelProducts.deleteProduct(productsID);
+
+		} catch (JsonbException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+		}
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 
 	@GET
@@ -81,21 +106,18 @@ public class serverProduct {
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 
-	@DELETE
+	/*@POST
 	@AuthRequired
-	@Path("/userProducts")
-	public Response removal(@Context HttpHeaders httpHeaders) {
-		String jsonDeleteID = httpHeaders.getHeaderString("Data");
-		List<Product> productsID;
+	@Path("/order")
+	public Response order(String jsonOrder){
+		Product products;
 		try {
 
 			try {
-				productsID = jsonb.fromJson(jsonDeleteID, new ArrayList<Product>() {
-				}.getClass().getGenericSuperclass());
+				products = jsonb.fromJson(jsonOrder, new ArrayList<Product>() {}.getClass().getGenericSuperclass());
 			} catch (Exception e) {
 				throw new Exception("Error JSON transforming");
 			}
-			modelProducts.deleteProduct(productsID);
 
 		} catch (JsonbException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
@@ -103,5 +125,6 @@ public class serverProduct {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		}
 		return Response.status(Response.Status.NO_CONTENT).build();
-	}
+	}*/
+
 }

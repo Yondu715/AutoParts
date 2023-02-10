@@ -4,7 +4,7 @@ class RequestManager {
 	protocol = "http";
 	host = "localhost";
 	port = "8080";
-	domain = `${this.protocol}://${this.host}:${this.port}/autoparts`;
+	domain = `${this.protocol}://${this.host}:${this.port}/autoparts-1`;
 
 	async _sendRequest(type, uri, options, data) {
 		let headers = {
