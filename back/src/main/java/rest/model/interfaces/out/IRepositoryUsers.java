@@ -18,5 +18,5 @@ public interface IRepositoryUsers {
 
 	public ArrayList<User> findWithoutRole();
 
-	public void update(User user);
+	public void setRole(User user);
 }

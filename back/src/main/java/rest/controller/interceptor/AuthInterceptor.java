@@ -1,32 +1,37 @@
 package rest.controller.interceptor;
 
 import java.io.IOException;
-import java.util.Base64;
+import java.security.Key;
 
-import jakarta.json.bind.Jsonb;
-import jakarta.json.bind.JsonbBuilder;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import jakarta.ws.rs.NotAuthorizedException;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.ext.Provider;
-import rest.controller.token.Token;
-import rest.model.dto.User;
+import rest.controller.token.TokenKey;
+import rest.controller.token.TokenValidator;
 
 @Provider
 @AuthRequired
 public class AuthInterceptor implements ContainerRequestFilter {
 	
-	private Jsonb jsonb = JsonbBuilder.create();
-
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		String token = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-		if (Token.checkToken(token)) {
-			String[] tokenParts = token.split("\\.", 3);
-			String body = new String(Base64.getDecoder().decode(tokenParts[1]));
-			User user = jsonb.fromJson(body, User.class);
-			requestContext.setProperty("login", user.getLogin());
+		Boolean valid;
+		try {
+			valid = TokenValidator.validate(token);
+		} catch (Exception e) {
+			valid = false;
+		}
+		if (valid) {
+			TokenKey tokenKey = TokenKey.getInstance();
+			Key key = tokenKey.getKey();
+			Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+			String login = claims.get("sub").toString();
+			requestContext.setProperty("login", login);
 		} else {
 			throw new NotAuthorizedException("Not valid token");
 		}

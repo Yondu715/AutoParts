@@ -47,7 +47,7 @@ public class serverAdmin {
 	@DELETE
 	@AuthRequired
 	@Path("/applications")
-	public Response removal_application(@Context HttpHeaders httpHeaders) {
+	public Response removalApplication(@Context HttpHeaders httpHeaders) {
 		String jsonDeleteID = httpHeaders.getHeaderString("Data");
 		List<User> userApplicationsID;
 		try {
@@ -71,7 +71,7 @@ public class serverAdmin {
 	@PUT
 	@AuthRequired
 	@Path("/applications")
-	public Response accept(String userApplicationsJson) {
+	public Response acceptApplication(String userApplicationsJson) {
 		List<User> userApplications;
 		try {
 
@@ -103,11 +103,10 @@ public class serverAdmin {
 	@DELETE
 	@AuthRequired
 	@Path("/users")
-	public Response removal_user(@Context HttpHeaders httpHeaders) {
+	public Response removalUser(@Context HttpHeaders httpHeaders) {
 		String jsonDeleteID = httpHeaders.getHeaderString("Data");
 		List<User> usersID;
 		try {
-
 			try {
 				usersID = jsonb.fromJson(jsonDeleteID, new ArrayList<User>() {
 				}.getClass().getGenericSuperclass());

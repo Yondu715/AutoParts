@@ -36,7 +36,7 @@ public class ModelApplication implements IModelApplications {
 	@Override
 	public void acceptApplication(List<User> userApplications) {
 		for (User user : userApplications) {
-			repUsers.update(user);
+			repUsers.setRole(user);
 		}
 	}
 }

@@ -6,8 +6,11 @@ import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import jakarta.inject.Inject;
 
@@ -20,6 +23,9 @@ import jakarta.ws.rs.core.Response;
 import rest.builder.Build;
 import rest.controller.interceptor.AuthRequired;
 import rest.controller.token.Token;
+import rest.controller.token.TokenIssuer;
+import rest.controller.token.TokenKey;
+import rest.controller.token.TokenValidator;
 import rest.model.dto.Product;
 import rest.model.dto.User;
 import rest.model.interfaces.in.IModelApplications;
@@ -47,9 +53,14 @@ public class serverUser {
 	@Path("/auth")
 	public Response auth(@Context HttpHeaders httpHeaders, String userJson) {
 		String token = httpHeaders.getHeaderString("Authorization");
-		if (Token.checkToken(token)) {
-			return Response.status(Response.Status.OK).build();
+		try {
+			if (TokenValidator.validate(token)) {
+				return Response.status(Response.Status.OK).build();
+			}
+		} catch (Exception e) {
+			Logger.getLogger(serverUser.class.getName()).log(Level.INFO, null, e);
 		}
+		
 		if (!userJson.equals("")) {
 			User user;								
 			try {
@@ -60,10 +71,13 @@ public class serverUser {
 
 			if (modelUser.authUser(user)) {
 				User user_found = modelUser.getUser(user);
-				String header = "{\"typ\": \"JWT\"}";
-				String body = "{\"login\": \"" + user_found.getLogin() + "\"," +
-						"\"role\": \"" + user_found.getRole() + "\"}";
-				Token new_token = new Token(header, body);
+
+				TokenKey tokenKey = TokenKey.getInstance();
+				Key key = tokenKey.getKey();
+				TokenIssuer ti = new TokenIssuer(key);
+				String jwt = ti.issueToken(user_found.getLogin(), user_found.getRole());
+
+				Token new_token = new Token(jwt);
 				token = jsonb.toJson(new_token);
 				return Response.ok(token).build();
 			}

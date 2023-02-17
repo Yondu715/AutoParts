@@ -90,7 +90,7 @@ class PageAuth extends HTMLElement {
 				let user_info = JSON.parse(decoded_body);
 				let user_role = user_info["role"];
 				localStorage.setItem("token", token);
-				localStorage.setItem("login", user_info["login"]);
+				localStorage.setItem("login", user_info["sub"]);
 	
 				switch (user_role) {
 					case "client":

@@ -153,7 +153,7 @@ public class RepositoryUsers implements IRepositoryUsers {
 	}
 
 	@Override
-	public void update(User user) {
+	public void setRole(User user) {
 		String query = "update EUser u set u.role=:role where u.id=:id";
 		try {
 			entityManager = entityManagerFactory.createEntityManager();
