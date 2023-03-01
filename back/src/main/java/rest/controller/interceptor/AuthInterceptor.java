@@ -30,7 +30,7 @@ public class AuthInterceptor implements ContainerRequestFilter {
 			TokenKey tokenKey = TokenKey.getInstance();
 			Key key = tokenKey.getKey();
 			Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
-			String login = claims.get("sub").toString();
+			String login = claims.get("login").toString();
 			requestContext.setProperty("login", login);
 		} else {
 			throw new NotAuthorizedException("Not valid token");

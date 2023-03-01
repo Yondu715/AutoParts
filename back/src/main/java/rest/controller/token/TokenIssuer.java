@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -15,21 +16,21 @@ public class TokenIssuer {
         this.key = key;
     }
 
-    public String issueToken(String username, String role) {
+    public String issueToken(String login, String role) {
 
         LocalDateTime expiryPeriod = LocalDateTime.now().plusMinutes(600L);
-        Date expirationDateTime = Date.from(
-                expiryPeriod.atZone(ZoneId.systemDefault())
-                        .toInstant());
+        Date expirationDateTime = Date.from(expiryPeriod.atZone(ZoneId.systemDefault()).toInstant());
+        Claims claims = Jwts.claims();
+        claims.setSubject("auth");
+        claims.put("login", login);
+        claims.put("role", role);
 
         String compactJws = Jwts.builder()
-                .setSubject(username)
-                .claim("role", role)
-                .signWith(key, SignatureAlgorithm.HS256)
-                .setIssuedAt(new Date())
-                .setExpiration(expirationDateTime)
-                .compact();
-
+                                .setClaims(claims)
+                                .signWith(key, SignatureAlgorithm.HS256)
+                                .setIssuedAt(new Date())
+                                .setExpiration(expirationDateTime)
+                                .compact();
         return compactJws;
     }
 }

@@ -1,4 +1,4 @@
-package rest.controller;
+package rest.controller.config;
 
 import java.io.IOException;
 

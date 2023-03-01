@@ -49,7 +49,7 @@ public class serverProduct {
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
 	}
-	
+
 	@DELETE
 	@AuthRequired
 	@Path("/userProducts")
@@ -97,7 +97,7 @@ public class serverProduct {
 				throw new Exception("Error JSON transforming");
 			}
 			modelProducts.addProduct(product);
-			
+
 		} catch (JsonbException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
@@ -106,25 +106,30 @@ public class serverProduct {
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 
-	/*@POST
-	@AuthRequired
-	@Path("/order")
-	public Response order(String jsonOrder){
-		Product products;
-		try {
-
-			try {
-				products = jsonb.fromJson(jsonOrder, new ArrayList<Product>() {}.getClass().getGenericSuperclass());
-			} catch (Exception e) {
-				throw new Exception("Error JSON transforming");
-			}
-
-		} catch (JsonbException e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
-		}
-		return Response.status(Response.Status.NO_CONTENT).build();
-	}*/
+	/*
+	 * @POST
+	 * 
+	 * @AuthRequired
+	 * 
+	 * @Path("/order")
+	 * public Response order(String jsonOrder){
+	 * Product products;
+	 * try {
+	 * 
+	 * try {
+	 * products = jsonb.fromJson(jsonOrder, new ArrayList<Product>()
+	 * {}.getClass().getGenericSuperclass());
+	 * } catch (Exception e) {
+	 * throw new Exception("Error JSON transforming");
+	 * }
+	 * 
+	 * } catch (JsonbException e) {
+	 * return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+	 * } catch (Exception e) {
+	 * return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+	 * }
+	 * return Response.status(Response.Status.NO_CONTENT).build();
+	 * }
+	 */
 
 }
