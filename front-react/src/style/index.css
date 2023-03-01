@@ -1,0 +1,16 @@
+html,
+body,
+#root {
+    height: 100%;
+    margin: 0;
+    font-family: "Roboto Condensed";
+}
+
+* {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Roboto Condensed';
+    src: url("../assets/font/RobotoCondensed-Light.ttf");
+}

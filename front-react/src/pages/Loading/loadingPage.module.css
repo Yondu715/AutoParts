@@ -1,0 +1,25 @@
+.container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.spinner {
+    width: 350px;
+    height: 350px;
+    border: 20px solid;
+    border-radius: 100%;
+    border-top-color: #4DB88D;
+    border-right-color: #82CDAF;
+    border-bottom-color: #B8E3D1;
+    border-left-color: #EDF8F4;
+    animation: spin 400ms infinite linear;
+    margin: auto;
+    top: 50%;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}

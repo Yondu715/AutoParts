@@ -1,0 +1,41 @@
+import styles from "./products.module.css";
+import { useMountEffect } from "../../../../hook/useMountEffect";
+import { useProducts } from "./useProducts";
+
+export function Products(props) {
+    const {
+        products, _getAllProducts
+    } = useProducts();
+
+    useMountEffect(_getAllProducts);
+
+    return (
+        <div className={styles.products}>
+            <table>
+                <tbody>
+                    {products.map(({ product: { id, image, name, sellerName, date, brand, model, price } }) =>
+                        <tr key={id} >
+                            <td>
+                                <div className={styles.product}>
+                                    <div className={styles.image}>
+                                        <img alt="" src={image} />
+                                    </div>
+                                    <div className={styles.productInfo}>
+                                        <span className={styles.name}>{name}</span>
+                                        <span className={styles.sellerName}>{sellerName}</span>
+                                        <span className={styles.date}>{date}</span>
+                                        <span className={styles.brand}>{brand}</span>
+                                        <span className={styles.model}>{model}</span>
+                                    </div>
+                                    <div className={styles.price}>
+                                        <span>{price} ₽</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        </div>
+    );
+}

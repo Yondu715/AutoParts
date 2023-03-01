@@ -1,0 +1,84 @@
+.wrapContent {
+    height: 100%;
+    width: 100%;
+}
+
+.applications {
+    width: 100%;
+    height: 90%;
+    overflow: scroll;
+}
+
+.applications table {
+    width: 85%;
+    border-collapse: collapse;
+    margin: 40px auto;
+}
+
+.applications table tr {
+    height: 80px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.applications table td {
+    height: 100%;
+    width: 100%;
+}
+
+.application {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    display: flex;
+}
+
+.application div {
+    display: flex;
+}
+
+.application span {
+    margin: auto;
+}
+
+.id {
+    width: 10%;
+}
+
+.info {
+    width: 70%;
+}
+
+.info span:first-child {
+    width: 40%;
+}
+
+.info span:last-child {
+    width: 60%;
+}
+
+.role {
+    width: 20%;
+}
+
+.active {
+    background: rgb(209, 255, 223);
+}
+
+.notActive {
+    background: transparent;
+}
+
+.notActive:hover {
+    background: rgb(255, 255, 255);
+}
+
+.btnPlace {
+    display: flex;
+}
+
+.btnContainer {
+    width: 50%;
+    margin: 0px 10px;
+}

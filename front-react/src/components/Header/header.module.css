@@ -1,0 +1,47 @@
+.header {
+    height: 75px;
+    width: 100%;
+    background: rgb(33, 74, 49);
+    display: flex;
+    position: fixed;
+    z-index: 7;
+}
+
+.start {
+    display: flex;
+    height: 100%;
+    width: 20%;
+}
+
+.start span {
+    width: 100%;
+    color: rgb(255, 255, 255);
+    font-size: 45px;
+    margin: auto;
+    text-align: center;
+}
+
+.end {
+    display: flex;
+    height: 100%;
+    width: 80%;
+    justify-content: right;
+}
+
+.end span {
+    font-size: 21px;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    margin: auto 5%;
+}
+
+.end button {
+    background-size: cover;
+    background-color: rgb(33, 74, 49);
+    height: 30px;
+    width: 30px;
+    border: none;
+    margin: auto 2%;
+    cursor: pointer;
+    background-image: url("../../assets/img/logout.png");
+}

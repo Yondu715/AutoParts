@@ -1,0 +1,53 @@
+.inputBox {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0px;
+}
+
+.inputBox label {
+    padding-left: 10px;
+    text-align: left;
+    font-size: 20px;
+}
+
+.inputBoxBar {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.inputBoxText{
+    width: 100%;
+    height: 35px;
+    border: none;
+    font-size: 18px;
+    margin-top: 5px;
+    padding: 0px 10px;
+    outline: none;
+    background: transparent;
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+.inputBoxBar:before,
+.inputBoxBar:after {
+    content: "";
+    height: 2px;
+    width: 0;
+    bottom: 0px;
+    position: absolute;
+    background: rgb(40, 167, 69);
+    transition: all 0.3s ease;
+}
+
+.inputBoxBar:before {
+    left: 50%;
+}
+
+.inputBoxBar:after {
+    right: 50%;
+}
+
+.inputBoxText:focus~.inputBoxBar:before,
+.inputBoxText:focus~.inputBoxBar:after {
+    width: 50%;
+}

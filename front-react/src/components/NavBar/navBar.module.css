@@ -1,0 +1,38 @@
+.navBar {
+    height: 100%;
+    width: 20%;
+    display: flex;
+    overflow: scroll;
+}
+
+.navBar ul {
+    width: 100%;
+    height: auto;
+    text-align: center;
+    list-style-type: none;
+    margin: auto;
+    padding: 0;
+}
+
+.navBar ul li {
+    padding-top: 10%;
+}
+
+.navBar ul li:first-child {
+    padding-top: 0%;
+}
+
+.navBar ul li button {
+    font-size: 28px;
+    background: none;
+    border: none;
+    transition: color 0.2s;
+}
+
+.active {
+    color: rgb(1, 175, 108);
+}
+
+.notActive {
+    color: rgb(17, 54, 40);
+}

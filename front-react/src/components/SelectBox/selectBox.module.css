@@ -1,0 +1,10 @@
+.select {
+    margin: auto;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(20, 140, 177);
+    width: 80px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+}

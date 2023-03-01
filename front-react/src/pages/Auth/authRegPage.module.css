@@ -1,0 +1,46 @@
+.authRegPage {
+    height: 100%;
+    background: rgb(33, 74, 49);
+}
+
+.authRegBlock {
+    width: 350px;
+    height: auto;
+    max-height: 420px;
+    margin: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    opacity: 0;
+    transition: all;
+    display: flex;
+    flex-direction: column;
+}
+
+.authRegBlock label {
+    color: rgb(255, 255, 255);
+}
+
+.authRegBlock input {
+    color: rgb(255, 255, 255);
+}
+
+.title {
+    font-size: 40px;
+    text-align: center;
+}
+
+.authRegPage a {
+    color: rgb(0, 140, 216);
+    text-decoration: none;
+}
+
+.text {
+    color: rgb(255, 255, 255);
+}
+
+.inputText {
+    color: rgb(255, 255, 255);
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
