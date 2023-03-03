@@ -5,8 +5,13 @@ import { asyncAuth } from "../../core/api/APIrequest";
 import { checkValid } from "../../core/model/DataAction";
 import { User } from "../../core/model/transport/User";
 
-export function useAuth(initialForm) {
-    
+export function useAuth() {
+
+    const initialForm = {
+        login: "",
+        password: "",
+    }
+
     const [form, setForm] = useState(initialForm);
     const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -64,7 +69,7 @@ export function useAuth(initialForm) {
     };
 
     return {
-        error, handlerForm, 
+        error, handlerForm,
         _asyncSendAuthInfo
     }
 }

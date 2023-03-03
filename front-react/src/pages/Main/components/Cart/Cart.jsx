@@ -1,7 +1,7 @@
+import { useCart } from "./useCart";
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import styles from "./Cart.module.css";
-import { useCart } from "./useCart";
 
 
 export function Cart() {

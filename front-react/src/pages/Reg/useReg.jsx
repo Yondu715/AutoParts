@@ -4,7 +4,13 @@ import { asyncReg } from "../../core/api/APIrequest";
 import { checkValid } from "../../core/model/DataAction";
 import { User } from "../../core/model/transport/User";
 
-export function useReg(initialForm) {
+export function useReg() {
+    const initialForm = {
+        login: "",
+        password: "",
+        repeatPassword: "",
+    }
+
     const [error, setError] = useState();
     const [form, setForm] = useState(initialForm);
     const navigate = useNavigate();

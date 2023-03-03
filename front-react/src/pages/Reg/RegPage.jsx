@@ -6,16 +6,10 @@ import { StatusError } from "../../components/StatusError/StatusError";
 import styles from "./AuthRegPage.module.css";
 
 export function RegPage() {
-    const initialForm = {
-        login: "",
-        password: "",
-        repeatPassword: "",
-    }
-
     const {
-        error, handlerForm, 
+        error, handlerForm,
         _asyncSendRegInfo
-    } = useReg(initialForm);
+    } = useReg();
 
     return (
         <div className={styles.authRegPage}>

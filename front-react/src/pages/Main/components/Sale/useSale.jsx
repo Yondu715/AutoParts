@@ -5,8 +5,14 @@ import { asyncSaleProduct } from "../../../../core/api/APIrequest";
 import { checkValid } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
 
-export function useSale(initialForm) {
+export function useSale() {
 
+    const initialForm = {
+        name: "",
+        brand: "",
+        model: "",
+        price: "",
+    }
     
     const [form, setForm] = useState(initialForm);
     const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });

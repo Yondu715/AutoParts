@@ -6,12 +6,7 @@ import styles from "./Sale.module.css"
 
 export function Sale() {
 
-    const initialForm = {
-        name: "",
-        brand: "",
-        model: "",
-        price: "",
-    }
+    
 
     const fields = [
         {
@@ -35,7 +30,7 @@ export function Sale() {
     const {
         form, handlerForm, error,
         image, _getImage, _asyncSendSaleInfo
-    } = useSale(initialForm);
+    } = useSale();
 
     return (
         <div className={[styles.sale, "fade"].join(" ")}>

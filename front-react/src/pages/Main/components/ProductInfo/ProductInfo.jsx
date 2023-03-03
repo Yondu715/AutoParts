@@ -4,13 +4,12 @@ import { useProductInfo } from "./useProductInfo";
 import styles from "./ProductInfo.module.css";
 
 export function ProductInfo({ id }) {
-    
+
     const {
-        product, _asyncAddToCart, 
+        product, _asyncAddToCart,
         _asyncGetProductInfo
     } = useProductInfo(id);
 
-    
     useMountEffect(_asyncGetProductInfo);
 
     return (
@@ -36,10 +35,11 @@ export function ProductInfo({ id }) {
                     </div>
                 }
             </div>
-            {product && (product.get()["sellerName"] !== localStorage.getItem("login")) ?
+            { product && (product.get()["sellerName"] !== localStorage.getItem("login")) ?
                 <div className={styles.btnPlace}>
                     <SubmitButton content="Добавить в корзину" onClick={_asyncAddToCart} />
-                </div> : undefined }
+                </div> : undefined
+            }
         </div>
     );
 }

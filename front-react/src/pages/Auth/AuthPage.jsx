@@ -7,15 +7,10 @@ import styles from "./AuthRegPage.module.css"
 
 export function AuthPage() {
 
-    const initialForm = {
-        login: "",
-        password: "",
-    }
-    
     const {
         handlerForm, error, 
         _asyncSendAuthInfo
-    } = useAuth(initialForm);
+    } = useAuth();
 
     return (
         <div className={styles.authRegPage}>

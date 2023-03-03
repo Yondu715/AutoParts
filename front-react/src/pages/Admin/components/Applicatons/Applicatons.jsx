@@ -6,11 +6,10 @@ import styles from "./Applications.module.css";
 
 export function Applications() {
 
-    const roles = ["client", "admin"];
     const {
         applications, selectedApp, _asyncGetAllApplications,
         _selectApplication, _selectHandler, _asyncAcceptApplications,
-        _asyncDeleteApplications
+        _asyncDeleteApplications, roles
     } = useApplications();
 
 

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useValidate } from "./hook/useValidate";
+import { useMountEffect } from "./hook/useMountEffect";
 import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./router/AppRouter/AppRouter";
-import { asyncAuth } from "./core/api/APIrequest";
 import { LoadingPage } from "./pages/Loading/LoadingPage";
-import { useMountEffect } from "./hook/useMountEffect";
+import { asyncAuth } from "./core/api/APIrequest";
 
 
 export function App() {

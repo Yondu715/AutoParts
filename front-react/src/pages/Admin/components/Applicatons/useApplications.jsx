@@ -10,6 +10,8 @@ export function useApplications() {
     const navigate = useNavigate();
     const [applications, setApplications] = useState([]);
     const [selectedApp, setSelectedApp] = useState([]);
+    const roles = ["client", "admin"];
+
 
     const _selectApplication = (id) =>
         setSelectedApp((prevState) => {
@@ -109,6 +111,6 @@ export function useApplications() {
     return {
         applications, selectedApp, _selectApplication,
         _asyncGetAllApplications, _asyncAcceptApplications,
-        _asyncDeleteApplications, _selectHandler
+        _asyncDeleteApplications, _selectHandler, roles
     }
 }
