@@ -1,6 +1,7 @@
 package rest.controller.components;
 
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
@@ -14,7 +15,6 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
 import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import rest.builder.Build;
 import rest.controller.interceptor.AuthRequired;
@@ -38,7 +38,11 @@ public class serverAdmin {
 	@GET
 	@AuthRequired
 	@Path("/applications")
-	public Response getApplications() {
+	public Response getApplications(@Context ContainerRequestContext requestContext) {
+		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")){
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
 		ArrayList<User> userApplications = modelApplications.getApplications();
 		String resultJson = jsonb.toJson(userApplications);
 		return Response.ok(resultJson).build();
@@ -47,8 +51,12 @@ public class serverAdmin {
 	@DELETE
 	@AuthRequired
 	@Path("/applications")
-	public Response removalApplication(@Context HttpHeaders httpHeaders) {
-		String jsonDeleteID = httpHeaders.getHeaderString("Data");
+	public Response removalApplication(@Context ContainerRequestContext requestContext) {
+		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+		String jsonDeleteID = requestContext.getProperty("data").toString();
 		List<User> userApplicationsID;
 		try {
 
@@ -71,7 +79,11 @@ public class serverAdmin {
 	@PUT
 	@AuthRequired
 	@Path("/applications")
-	public Response acceptApplication(String userApplicationsJson) {
+	public Response acceptApplication(@Context ContainerRequestContext requestContext, String userApplicationsJson) {
+		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
 		List<User> userApplications;
 		try {
 
@@ -94,7 +106,11 @@ public class serverAdmin {
 	@GET
 	@AuthRequired
 	@Path("/users")
-	public Response getUsers() {
+	public Response getUsers(@Context ContainerRequestContext requestContext) {
+		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
 		ArrayList<User> users = modelUser.getUsers();
 		String resultJson = jsonb.toJson(users);
 		return Response.ok(resultJson).build();
@@ -103,8 +119,12 @@ public class serverAdmin {
 	@DELETE
 	@AuthRequired
 	@Path("/users")
-	public Response removalUser(@Context HttpHeaders httpHeaders) {
-		String jsonDeleteID = httpHeaders.getHeaderString("Data");
+	public Response removalUser(@Context ContainerRequestContext requestContext) {
+		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+		String jsonDeleteID = requestContext.getProperty("data").toString();
 		List<User> usersID;
 		try {
 			try {

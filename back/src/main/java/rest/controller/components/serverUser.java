@@ -9,8 +9,6 @@ import jakarta.ws.rs.POST;
 import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import jakarta.inject.Inject;
 
@@ -18,14 +16,12 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
 import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import rest.builder.Build;
 import rest.controller.interceptor.AuthRequired;
 import rest.controller.token.Token;
 import rest.controller.token.TokenIssuer;
 import rest.controller.token.TokenKey;
-import rest.controller.token.TokenValidator;
 import rest.model.dto.Product;
 import rest.model.dto.User;
 import rest.model.interfaces.in.IModelApplications;
@@ -50,16 +46,12 @@ public class serverUser {
 	private Jsonb jsonb = JsonbBuilder.create();
 
 	@POST
+	@AuthRequired
 	@Path("/auth")
-	public Response auth(@Context HttpHeaders httpHeaders, String userJson) {
-		String token = httpHeaders.getHeaderString("Authorization");
-
-		try {
-			if (TokenValidator.validate(token)) {
-				return Response.status(Response.Status.OK).build();
-			}
-		} catch (Exception e) {
-			Logger.getLogger(serverUser.class.getName()).log(Level.INFO, null, e);
+	public Response auth(@Context ContainerRequestContext requestContext, String userJson) {
+		String login = requestContext.getProperty("login").toString();
+		if (!login.equals("Not valid token")){
+			return Response.status(Response.Status.OK).build();
 		}
 		
 		if (userJson.equals("")){
@@ -79,7 +71,7 @@ public class serverUser {
 			TokenIssuer ti = new TokenIssuer(key);
 			String jwt = ti.issueToken(userFound.getLogin(), userFound.getRole());
 			Token newToken = new Token(jwt);
-			token = jsonb.toJson(newToken);
+			String token = jsonb.toJson(newToken);
 			return Response.ok(token).build();
 		}
 		return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -113,6 +105,9 @@ public class serverUser {
 	@Path("/cart")
 	public Response getCart(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
 		ArrayList<Product> products = modelCart.getCart(login);
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
@@ -123,6 +118,9 @@ public class serverUser {
 	@Path("/cart")
 	public Response addCart(@Context ContainerRequestContext requestContext, String productJson) {
 		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
 		Product product;
 		try {
 
@@ -146,8 +144,12 @@ public class serverUser {
 	@DELETE
 	@AuthRequired
 	@Path("/cart")
-	public Response removal(@Context HttpHeaders httpHeaders) {
-		String jsonDeleteID = httpHeaders.getHeaderString("Data");
+	public Response removal(@Context ContainerRequestContext requestContext) {
+		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+		String jsonDeleteID = requestContext.getProperty("data").toString();
 		List<Product> productsID;
 		try {
 

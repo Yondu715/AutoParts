@@ -15,7 +15,6 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
 import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import rest.builder.Build;
@@ -34,7 +33,11 @@ public class serverProduct {
 	@GET
 	@AuthRequired
 	@Path("/")
-	public Response getProducts() {
+	public Response getProducts(@Context ContainerRequestContext requestContext) {
+		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
 		ArrayList<Product> products = modelProducts.getProducts(null);
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
@@ -45,6 +48,9 @@ public class serverProduct {
 	@Path("/userProducts")
 	public Response getProductsByUser(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
 		ArrayList<Product> products = modelProducts.getProducts(login);
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
@@ -53,11 +59,14 @@ public class serverProduct {
 	@DELETE
 	@AuthRequired
 	@Path("/userProducts")
-	public Response removal(@Context HttpHeaders httpHeaders) {
-		String jsonDeleteID = httpHeaders.getHeaderString("Data");
+	public Response removal(@Context ContainerRequestContext requestContext) {
+		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+		String jsonDeleteID = requestContext.getProperty("data").toString();
 		List<Product> productsID;
 		try {
-
 			try {
 				productsID = jsonb.fromJson(jsonDeleteID, new ArrayList<Product>() {
 				}.getClass().getGenericSuperclass());
@@ -77,7 +86,11 @@ public class serverProduct {
 	@GET
 	@AuthRequired
 	@Path("/{product_id}")
-	public Response getProductInfo(@Context UriInfo info) {
+	public Response getProductInfo(@Context ContainerRequestContext requestContext, @Context UriInfo info) {
+		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
 		String product_id = info.getPathParameters().getFirst("product_id");
 		Product product = modelProducts.getProductInfo(Integer.parseInt(product_id));
 		String resultJson = jsonb.toJson(product);
@@ -87,7 +100,11 @@ public class serverProduct {
 	@POST
 	@AuthRequired
 	@Path("/sale")
-	public Response sale(String jsonSale) {
+	public Response sale(@Context ContainerRequestContext requestContext, String jsonSale) {
+		String login = requestContext.getProperty("login").toString();
+		if (login.equals("Not valid token")) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
 		Product product;
 		try {
 

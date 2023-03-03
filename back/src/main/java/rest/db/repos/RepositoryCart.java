@@ -51,7 +51,7 @@ public class RepositoryCart implements IRepositoryCart {
 				products.add(product);
 			}
 		} catch (Exception e) {
-			Logger.getLogger(RepositoryProducts.class.getName()).log(Level.INFO, null, e);
+			
 		}
 		return products;
 	}

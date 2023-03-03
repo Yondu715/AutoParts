@@ -5,7 +5,6 @@ import java.security.Key;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import jakarta.ws.rs.NotAuthorizedException;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -20,11 +19,12 @@ public class AuthInterceptor implements ContainerRequestFilter {
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		String token = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-		Boolean valid;
+		String data = requestContext.getHeaderString("Data");
+		Boolean valid = false;
 		try {
 			valid = TokenValidator.validate(token);
 		} catch (Exception e) {
-			valid = false;
+			requestContext.setProperty("login", "Not valid token");
 		}
 		if (valid) {
 			TokenKey tokenKey = TokenKey.getInstance();
@@ -32,8 +32,7 @@ public class AuthInterceptor implements ContainerRequestFilter {
 			Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
 			String login = claims.get("login").toString();
 			requestContext.setProperty("login", login);
-		} else {
-			throw new NotAuthorizedException("Not valid token");
+			requestContext.setProperty("data", data);
 		}
 	}
 }
