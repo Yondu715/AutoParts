@@ -51,7 +51,7 @@ public class RepositoryCart implements IRepositoryCart {
 				products.add(product);
 			}
 		} catch (Exception e) {
-			
+			Logger.getLogger(RepositoryCart.class.getName()).log(Level.INFO, null, e);
 		}
 		return products;
 	}
@@ -60,7 +60,7 @@ public class RepositoryCart implements IRepositoryCart {
 	public boolean add(String login, Product product) {
 		String getUser = "select u from EUser u where u.login=:login";
 		String getProduct = "select p from EProduct p where p.id=:id";
-		boolean add_status = true;
+		boolean addStatus = true;
 		try {
 			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();
@@ -77,10 +77,10 @@ public class RepositoryCart implements IRepositoryCart {
 			entityManager.persist(eCart);
 			userTransaction.commit();
 		} catch (Exception e) {
-			add_status = false;
+			addStatus = false;
 			Logger.getLogger(RepositoryCart.class.getName()).log(Level.INFO, null, e);
 		}
-		return add_status;
+		return addStatus;
 	}
 
 	@Override
