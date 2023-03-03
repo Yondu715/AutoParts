@@ -1,4 +1,4 @@
-import styles from "./loadingPage.module.css";
+import styles from "./LoadingPage.module.css";
 
 export function LoadingPage() {
     return (

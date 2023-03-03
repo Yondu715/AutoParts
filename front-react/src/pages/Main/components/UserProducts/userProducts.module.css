@@ -1,11 +1,12 @@
 .userProducts {
     height: 100%;
     width: 100%;
+    opacity: 0;
 }
 
 .products {
     width: 100%;
-    height: 92%;
+    height: calc(100% - 50px);
     overflow: scroll;
 }
 

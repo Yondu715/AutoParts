@@ -1,11 +1,12 @@
 .wrapContent {
     height: 100%;
     width: 100%;
+    opacity: 0;
 }
 
 .applications {
     width: 100%;
-    height: 90%;
+    height: calc(100% - 50px);
     overflow: scroll;
 }
 
@@ -80,5 +81,5 @@
 
 .btnContainer {
     width: 50%;
-    margin: 0px 10px;
+    margin: 0 5px;
 }

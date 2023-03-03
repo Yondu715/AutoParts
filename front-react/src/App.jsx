@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { BrowserRouter } from "react-router-dom";
-import AppRouter from "./router/AppRouter/AppRouter";
-import { asyncAuth } from "./core/api/APIrequest";
 import { useValidate } from "./hook/useValidate";
+import { BrowserRouter } from "react-router-dom";
+import { AppRouter } from "./router/AppRouter/AppRouter";
+import { asyncAuth } from "./core/api/APIrequest";
 import { LoadingPage } from "./pages/Loading/LoadingPage";
 import { useMountEffect } from "./hook/useMountEffect";
 

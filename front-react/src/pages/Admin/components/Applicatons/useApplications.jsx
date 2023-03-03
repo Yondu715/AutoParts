@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useValidate } from "../../../../hook/useValidate";
 import { asyncAcceptApplications, asyncDeleteApplications, asyncGetAllApplications } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
-import { useValidate } from "../../../../hook/useValidate";
-import {User} from "../../../../core/model/transport/User";
+import { User } from "../../../../core/model/transport/User";
 
 export function useApplications() {
     const { signOut } = useValidate();
@@ -20,7 +20,7 @@ export function useApplications() {
             }
         });
 
-    
+
 
     const _asyncGetAllApplications = async () => {
         const response = await asyncGetAllApplications();
@@ -37,7 +37,7 @@ export function useApplications() {
                 break;
             case 200:
                 const applications = jsonToObjects(data, User);
-                applications.forEach(({user}) => {
+                applications.forEach(({ user }) => {
                     user["role"] = "client";
                 })
                 setApplications(applications);

@@ -1,7 +1,7 @@
-import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
-import { useMountEffect } from "../../../../hook/useMountEffect";
-import styles from "./users.module.css";
 import { useUsers } from "./useUsers";
+import { useMountEffect } from "../../../../hook/useMountEffect";
+import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
+import styles from "./Users.module.css";
 
 export function Users() {
     const {
@@ -13,7 +13,7 @@ export function Users() {
     useMountEffect(_asyncGetUsers);
 
     return (
-        <div className={styles.wrapUsers}>
+        <div className={[styles.wrapUsers, "fade"].join(" ")}>
             <div className={styles.users}>
                 <table>
                     <tbody>

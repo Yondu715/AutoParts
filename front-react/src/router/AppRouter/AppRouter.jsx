@@ -1,8 +1,8 @@
-import { Routes, Route, Navigate } from "react-router-dom";
 import { useValidate } from "../../hook/useValidate";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { authRoutes, publicRoutes } from "../routes";
 
-function AppRouter() {
+export function AppRouter() {
     const {user} = useValidate();
     const redirect = <Navigate to="/auth" replace/>
     return (
@@ -17,5 +17,3 @@ function AppRouter() {
         </Routes>
     );
 }
-
-export default AppRouter;

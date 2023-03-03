@@ -1,12 +1,13 @@
 .sale {
     height: 100%;
     width: 100%;
+    opacity: 0;
 }
 
 .saleBlock {
     display: flex;
     width: 100%;
-    height: 90%;
+    height: calc(100% - 50px);
 }
 
 .productInfo {
@@ -39,11 +40,10 @@
 
 .dropArea img {
     max-width: 100%;
-    max-height: 100%;
 }
 
 .inputFile {
-    width: 60%;
+    width: 70%;
     margin: 0px auto;
     margin-bottom: auto;
     display: inline-block;
@@ -86,7 +86,6 @@
 
 .btnPlace {
     width: 40%;
-    height: 10%;
     margin: auto;
 }
 

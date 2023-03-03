@@ -1,6 +1,6 @@
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
 import { useMountEffect } from "../../../../hook/useMountEffect";
-import styles from "./cart.module.css";
+import styles from "./Cart.module.css";
 import { useCart } from "./useCart";
 
 
@@ -13,7 +13,7 @@ export function Cart() {
     useMountEffect(_asyncGetCart);
 
     return (
-        <div className={styles.cart}>
+        <div className={[styles.cart, "fade"].join(" ")}>
             <div className={styles.products}>
                 <table>
                     <tbody>

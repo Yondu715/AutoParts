@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useValidate } from "../../hook/useValidate";
 import { Header } from "../../components/Header/Header";
 import { NavBar } from "../../components/NavBar/NavBar";
 import { Applications } from "./components/Applicatons/Applicatons";
 import { Users } from "./components/Users/Users";
-import styles from "./adminPage.module.css";
-import { useValidate } from "../../hook/useValidate";
+import styles from "./AdminPage.module.css";
 
 export function AdminPage() {
     const [logoutAnimation, setAnimation] = useState(false);
@@ -14,7 +14,6 @@ export function AdminPage() {
     const items = {
         "Заявки": <Applications />,
         "Пользователи": <Users />,
-
     }
     const initialItem = Object.keys(items)[0];
     const [currComp, setCurrComp] = useState(items[initialItem]);
@@ -30,7 +29,7 @@ export function AdminPage() {
 
     return (
         <div className={styles.adminPage}>
-            <span className={`${styles.overPage} ${logoutAnimation ? "cover" : ""}`}></span>
+            <span className={[styles.overPage, logoutAnimation ? "cover" : ""].join(" ")}></span>
             <Header
                 name="Autoparts"
                 username={localStorage.getItem("login")}

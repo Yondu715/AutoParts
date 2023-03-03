@@ -1,4 +1,4 @@
-import styles from "./statusError.module.css";
+import styles from "./StatusError.module.css";
 
 
 export function StatusError({message}) {

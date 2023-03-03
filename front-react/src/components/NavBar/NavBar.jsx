@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "./navBar.module.css";
+import styles from "./NavBar.module.css";
 
 export function NavBar({ items, changeItem, initialItem }) {
     const [currActiveItem, setCurrActiveItem] = useState(initialItem);

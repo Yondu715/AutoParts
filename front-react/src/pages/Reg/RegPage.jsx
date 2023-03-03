@@ -1,9 +1,9 @@
+import { useReg } from "./useReg";
 import { Link } from "react-router-dom";
 import { InputBox } from "../../components/InputBox/InputBox";
 import { SubmitButton } from "../../components/SubmitButton/SubmitButton";
 import { StatusError } from "../../components/StatusError/StatusError";
-import styles from "./authRegPage.module.css";
-import { useReg } from "./useReg";
+import styles from "./AuthRegPage.module.css";
 
 export function RegPage() {
     const initialForm = {

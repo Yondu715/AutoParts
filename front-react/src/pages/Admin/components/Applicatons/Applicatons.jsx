@@ -1,8 +1,8 @@
+import { useApplications } from "./useApplications";
+import { useMountEffect } from "../../../../hook/useMountEffect";
 import { SelectBox } from "../../../../components/SelectBox/SelectBox";
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
-import { useMountEffect } from "../../../../hook/useMountEffect";
-import styles from "./applications.module.css";
-import { useApplications } from "./useApplications";
+import styles from "./Applications.module.css";
 
 export function Applications() {
 
@@ -17,7 +17,7 @@ export function Applications() {
     useMountEffect(_asyncGetAllApplications);
 
     return (
-        <div className={styles.wrapContent}>
+        <div className={[styles.wrapContent, "fade"].join(" ")}>
             <div className={styles.applications}>
                 <table>
                     <tbody>

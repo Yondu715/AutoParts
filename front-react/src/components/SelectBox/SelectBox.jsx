@@ -1,4 +1,4 @@
-import styles from "./selectBox.module.css";
+import styles from "./SelectBox.module.css";
 
 export function SelectBox({items, onChange}){
     return (

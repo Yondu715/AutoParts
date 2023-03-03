@@ -1,7 +1,7 @@
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
 import { useMountEffect } from "../../../../hook/useMountEffect";
-import styles from "./userProducts.module.css";
 import { useUserProducts } from "./useUserProducts";
+import styles from "./UserProducts.module.css";
 
 
 export function UserProducts() {
@@ -13,7 +13,7 @@ export function UserProducts() {
     useMountEffect(_asyncGetUserProducts);
 
     return (
-        <div className={styles.userProducts}>
+        <div className={[styles.userProducts, "fade"].join(" ")}>
             <div className={styles.products}>
                 <table>
                     <tbody>

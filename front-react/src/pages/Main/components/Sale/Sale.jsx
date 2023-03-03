@@ -1,8 +1,8 @@
+import { useSale } from "./useSale";
 import { InputBox } from "../../../../components/InputBox/InputBox";
 import { StatusError } from "../../../../components/StatusError/StatusError";
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
-import styles from "./sale.module.css"
-import { useSale } from "./useSale";
+import styles from "./Sale.module.css"
 
 export function Sale() {
 
@@ -38,7 +38,7 @@ export function Sale() {
     } = useSale(initialForm);
 
     return (
-        <div className={styles.sale}>
+        <div className={[styles.sale, "fade"].join(" ")}>
             <div className={styles.saleBlock}>
                 <div className={styles.wrapProductInfo}>
                     <div className={styles.productInfo}>
