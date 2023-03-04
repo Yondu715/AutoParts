@@ -2,8 +2,11 @@ import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { useProductInfo } from "./useProductInfo";
 import styles from "./ProductInfo.module.css";
+import { useParams } from "react-router-dom";
 
-export function ProductInfo({ id }) {
+export function ProductInfo() {
+
+    const { id } = useParams();
 
     const {
         product, _asyncAddToCart,
@@ -14,7 +17,7 @@ export function ProductInfo({ id }) {
 
     return (
         <div className={styles.productInfo}>
-            <div className={styles.wrapProduct}>
+            <div className={[styles.wrapProduct, "fade"].join(" ")}>
                 {product &&
                     <div className={styles.product}>
                         <div className={styles.leftPart}>

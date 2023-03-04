@@ -53,10 +53,10 @@ export function useAuth() {
                 signIn(true, login, role);
                 switch (role) {
                     case "client":
-                        navigate("/main");
+                        navigate("/main/products");
                         break;
                     case "admin":
-                        navigate("/admin");
+                        navigate("/admin/applications");
                         break;
                     default:
                         break;

@@ -1,14 +1,13 @@
 import { useAdmin } from "./useAdmin";
 import { Header } from "../../components/Header/Header";
 import { NavBar } from "../../components/NavBar/NavBar";
+import { Outlet } from "react-router-dom";
 import styles from "./AdminPage.module.css";
 
 export function AdminPage() {
     const {
-        logoutAnimation, logout, items, 
-        setCurrComp, initialItem, currComp
+        logoutAnimation, logout, menuItems,
     } = useAdmin();
-
     return (
         <div className={styles.adminPage}>
             <span className={[styles.overPage, logoutAnimation ? "cover" : ""].join(" ")}></span>
@@ -19,12 +18,10 @@ export function AdminPage() {
             />
             <div className={styles.wrapContent}>
                 <NavBar
-                    items={items}
-                    changeItem={setCurrComp}
-                    initialItem={initialItem}
+                    items={menuItems}
                 />
                 <div className={styles.content}>
-                    {currComp}
+                    <Outlet/>
                 </div>
             </div>
         </div>

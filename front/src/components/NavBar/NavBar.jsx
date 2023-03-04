@@ -1,25 +1,13 @@
-import { useState } from "react";
+import { CustomLink } from "../CustomLink/CustomLink";
 import styles from "./NavBar.module.css";
 
-export function NavBar({ items, changeItem, initialItem }) {
-    const [currActiveItem, setCurrActiveItem] = useState(initialItem);
+export function NavBar({ items }) {
     const menuItems = Object.keys(items);
-
-    const handlerItem = (e) => {
-        const itemName = e.target.textContent;
-        setCurrActiveItem(itemName);
-        changeItem(items[itemName]);
-    }
     return (
         <div className={styles.navBar}>
             <ul>
-                {menuItems.map((menuItem) =>
-                    <li key={menuItem}>
-                        <button
-                            className={(currActiveItem === menuItem) ? styles.active : styles.notActive}
-                            onClick={handlerItem}
-                        >{menuItem}</button>
-                    </li>
+                {menuItems.map((item) =>
+                    <CustomLink key={item} to={items[item]}>{item}</CustomLink>
                 )}
             </ul>
         </div>

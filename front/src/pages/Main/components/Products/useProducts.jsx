@@ -16,9 +16,6 @@ export function useProducts() {
         _callbackGetProducts(status, data);
     }
 
-    
-
-
     const _callbackGetProducts = (status, data) => {
         switch (status) {
             case 401:
@@ -34,7 +31,10 @@ export function useProducts() {
         }
     }
 
+    const _onProductInfo = (id) => navigate("/main/products/" + id);
+
     return {
         products, _getAllProducts,
+        _onProductInfo
     }
 }

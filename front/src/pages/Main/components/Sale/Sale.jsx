@@ -53,7 +53,7 @@ export function Sale() {
                 </div>
                 <div className={styles.productImage}>
                     <div className={styles.dropArea}>
-                        <img alt="" src={image ? image : "dragAndDrop.png"}></img>
+                        <img alt="" src={image ? image : "/dragAndDrop.png"}></img>
                     </div>
                     <label className={styles.inputFile}>
                         <span>Выберите файл</span>
