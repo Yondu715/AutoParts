@@ -19,6 +19,8 @@ export function useSale() {
 
     const [error, setError] = useState("");
     const [image, setImage] = useState();
+    const [isDndActive, setIsDndActive] = useState(false);
+
     const navigate = useNavigate();
     const { signOut } = useValidate();
 
@@ -65,8 +67,34 @@ export function useSale() {
         }
     }
 
+    const dndEnterOver = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDndActive(true);
+    }
+
+    const dndLeaveDrop = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDndActive(false);
+    }
+
+    const dndDrop = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDndActive(false);
+        const dt = e.dataTransfer;
+        const file = dt.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            setImage(reader.result);
+        }
+        reader.readAsDataURL(file);
+    }
+
     return {
         form, error, image, handlerForm,
-        _getImage, _asyncSendSaleInfo
+        _getImage, _asyncSendSaleInfo,
+        dndEnterOver, dndLeaveDrop, dndDrop, isDndActive
     }
 }

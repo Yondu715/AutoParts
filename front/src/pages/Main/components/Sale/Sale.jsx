@@ -29,7 +29,8 @@ export function Sale() {
 
     const {
         form, handlerForm, error,
-        image, _getImage, _asyncSendSaleInfo
+        image, _getImage, _asyncSendSaleInfo,
+        isDndActive, dndDrop, dndEnterOver, dndLeaveDrop,
     } = useSale();
 
     return (
@@ -53,7 +54,16 @@ export function Sale() {
                 </div>
                 <div className={styles.productImage}>
                     <div className={styles.dropArea}>
-                        <img alt="" src={image ? image : "/dragAndDrop.png"}></img>
+                        <img 
+                            className={isDndActive ? styles.dndActive : ""} 
+                            alt="" 
+                            src={image ? image : "/dragAndDrop.png"} 
+                            draggable 
+                            onDragEnter={dndEnterOver}
+                            onDragOver={dndEnterOver}
+                            onDragLeave={dndLeaveDrop}
+                            onDrop={dndDrop}
+                            />
                     </div>
                     <label className={styles.inputFile}>
                         <span>Выберите файл</span>

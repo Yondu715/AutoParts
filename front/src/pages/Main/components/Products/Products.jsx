@@ -1,6 +1,5 @@
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { useProducts } from "./useProducts";
-import { ProductInfo } from "../ProductInfo/ProductInfo";
 import styles from "./Products.module.css";
 
 export function Products() {

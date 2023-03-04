@@ -95,3 +95,7 @@
     width: 100%;
     overflow: scroll;
 }
+
+.dndActive {
+    background-color: rgb(132, 206, 255);
+}
