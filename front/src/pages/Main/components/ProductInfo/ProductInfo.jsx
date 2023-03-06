@@ -38,10 +38,10 @@ export function ProductInfo() {
                     </div>
                 }
             </div>
-            { product && (product.get()["sellerName"] !== localStorage.getItem("login")) ?
+            { product && (product.get()["sellerName"] !== localStorage.getItem("login")) &&
                 <div className={styles.btnPlace}>
                     <SubmitButton content="Добавить в корзину" onClick={_asyncAddToCart} />
-                </div> : undefined
+                </div>
             }
         </div>
     );

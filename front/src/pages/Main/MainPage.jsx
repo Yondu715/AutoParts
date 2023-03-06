@@ -1,19 +1,20 @@
+import { Route, Routes } from "react-router-dom";
 import { useMain } from "./useMain";
 import { Header } from "../../components/Header/Header";
 import { NavBar } from "../../components/NavBar/NavBar";
 import styles from "./MainPage.module.css";
-import { Outlet } from "react-router-dom";
 
 
 export function MainPage() {
 
     const {
-        menuItems, logout, logoutAnimation
+        menuItems, logout, 
+        logoutAnimation, routes
     } = useMain();
 
     return (
         <div className={styles.mainPage}>
-            <span className={`${styles.overPage} ${logoutAnimation ? "cover" : ""}`}></span>
+            <span className={[styles.overPage, logoutAnimation ? "cover" : ""].join(" ")}></span>
             <Header
                 name="Autoparts"
                 username={localStorage.getItem("login")}
@@ -24,7 +25,11 @@ export function MainPage() {
                     items={menuItems}
                 />
                 <div className={styles.content}>
-                    <Outlet/>
+                    <Routes>
+                        {
+                            routes.map(({ path, element }) => <Route key={path} path={path} element={element} />)
+                        }
+                    </Routes>
                 </div>
             </div>
         </div>

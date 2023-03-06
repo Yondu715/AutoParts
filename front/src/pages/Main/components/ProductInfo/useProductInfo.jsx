@@ -11,6 +11,10 @@ export function useProductInfo(id) {
     const { signOut } = useValidate();
 
     const _asyncGetProductInfo = async () => {
+        if (Number.isNaN(Number(id))) {
+            navigate("/main/products");
+            return;
+        }
         const response = await asyncGetProductInfo(id);
         const data = response.getBody();
         const status = response.getStatus();

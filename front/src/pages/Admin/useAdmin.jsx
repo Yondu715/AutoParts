@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useValidate } from "../../hook/useValidate";
+import { ANY_ROUTE, APPLICATIONS_ROUTE, DEFAULT_PAGE_ROUTE, NOT_FOUND_ROUTE, USERS_ROUTE } from "../../utils/consts";
+import { Applications } from "./components/Applicatons/Applicatons";
+import { Users } from "./components/Users/Users";
 
 
 export function useAdmin() {
@@ -9,9 +12,28 @@ export function useAdmin() {
     const { signOut } = useValidate();
 
     const menuItems = {
-        "Заявки": "applications",
-        "Пользователи": "users",
+        "Заявки": APPLICATIONS_ROUTE,
+        "Пользователи": USERS_ROUTE,
     }
+
+    const routes = [
+        {
+            path: APPLICATIONS_ROUTE,
+            element: <Applications />
+        },
+        {
+            path: USERS_ROUTE,
+            element: <Users />
+        },
+        {
+            path: DEFAULT_PAGE_ROUTE,
+            element: <Navigate to={APPLICATIONS_ROUTE} replace />
+        },
+        {
+            path: ANY_ROUTE,
+            element: <Navigate to={NOT_FOUND_ROUTE} replace />
+        }
+    ]
 
     
 
@@ -26,6 +48,6 @@ export function useAdmin() {
 
     return {
         logoutAnimation, logout,
-        menuItems
+        menuItems, routes
     }
 }

@@ -7,12 +7,8 @@ export function AppRouter() {
     const redirect = <Navigate to="/auth" replace />
     return (
         <Routes>
-            {authRoutes.map(({ path, element, role, sub }) =>
-                <Route key={path} path={path} element={user.isAuth && (user.role === role) ? element : redirect} exact>
-                    {sub && sub.map(({ path, element }) =>
-                        <Route key={path} path={path} element={element} />
-                    )}
-                </Route>
+            {authRoutes.map(({ path, element, role }) =>
+                <Route key={path} path={path} element={user.isAuth && (user.role === role) ? element : redirect} exact />
             )}
 
             {publicRoutes.map(({ path, element }) =>
