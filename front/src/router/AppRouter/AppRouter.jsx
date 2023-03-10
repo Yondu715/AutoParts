@@ -1,10 +1,11 @@
 import { useValidate } from "../../hook/useValidate";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { authRoutes, publicRoutes } from "../routes";
+import { AUTH_ROUTE } from "../../utils/consts";
 
 export function AppRouter() {
     const { user } = useValidate();
-    const redirect = <Navigate to="/auth" replace />
+    const redirect = <Navigate to={AUTH_ROUTE} replace />
     return (
         <Routes>
             {authRoutes.map(({ path, element, role }) =>

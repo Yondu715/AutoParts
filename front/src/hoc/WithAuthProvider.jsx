@@ -3,9 +3,13 @@ import { createContext, useState } from "react";
 export const ValidContext = createContext(null);
 
 export const WithAuthProvider = ({ children }) => {
-    const [user, setUser] = useState({
-        isAuth: false
-    });
+
+    const initialForm = {
+        isAuth: false,
+        login: undefined,
+        password: undefined
+    }
+    const [user, setUser] = useState(initialForm);
 
     const signIn = (isAuth, login, role) => {
         const userInfo = {
@@ -16,19 +20,14 @@ export const WithAuthProvider = ({ children }) => {
         setUser(userInfo);
     }
 
-    const signOut = () => {
-        const userInfo = {
-            isAuth: false,
-            login: undefined,
-            role: undefined,
-        }
-        setUser(userInfo);
-    }
+    const signOut = () => setUser(initialForm);
+    
+    const validateValue = { user, signIn, signOut };
 
-    const value = { user, signIn, signOut };
-
-    return <ValidContext.Provider value={value}>
-        {children}
-    </ValidContext.Provider>
+    return (
+        <ValidContext.Provider value={validateValue}>
+            {children}
+        </ValidContext.Provider>
+    );
 
 }

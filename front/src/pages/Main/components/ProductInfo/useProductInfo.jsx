@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useValidate } from "../../../../hook/useValidate";
+import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncAddToCart, asyncGetProductInfo } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
-import { useMountEffect } from "../../../../hook/useMountEffect";
+import { AUTH_ROUTE, MAIN_ROUTE, PRODUCTS_ROUTE } from "../../../../utils/consts";
 
 export function useProductInfo(id) {
     const [product, setProduct] = useState();
@@ -12,8 +13,8 @@ export function useProductInfo(id) {
     const { signOut } = useValidate();
 
     const _asyncGetProductInfo = async () => {
-        if (Number.isNaN(Number(id))) {
-            navigate("/main/products");
+        if (isNaN(id)) {
+            navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/"));
             return;
         }
         const response = await asyncGetProductInfo(id);
@@ -26,7 +27,7 @@ export function useProductInfo(id) {
         switch (status) {
             case 401:
                 signOut();
-                navigate("/auth");
+                navigate(AUTH_ROUTE);
                 break;
             case 200:
                 const product = jsonToObjects(data, Product);
@@ -47,7 +48,7 @@ export function useProductInfo(id) {
         switch (status) {
             case 401:
                 signOut();
-                navigate("/auth");
+                navigate(AUTH_ROUTE);
                 break;
             default:
                 break;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useValidate } from "../../hook/useValidate";
-import { ANY_ROUTE, APPLICATIONS_ROUTE, DEFAULT_PAGE_ROUTE, NOT_FOUND_ROUTE, USERS_ROUTE } from "../../utils/consts";
+import { ANY_ROUTE, APPLICATIONS_ROUTE, AUTH_ROUTE, DEFAULT_PAGE_ROUTE, NOT_FOUND_ROUTE, USERS_ROUTE } from "../../utils/consts";
 import { Applications } from "./components/Applicatons/Applicatons";
 import { Users } from "./components/Users/Users";
 
@@ -42,7 +42,7 @@ export function useAdmin() {
         setTimeout(() => {
             localStorage.clear();
             signOut();
-            navigate("/auth");
+            navigate(AUTH_ROUTE);
         }, 800);
     }
 

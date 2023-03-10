@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useValidate } from "../../../../hook/useValidate";
+import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncAcceptApplications, asyncDeleteApplications, asyncGetAllApplications } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { User } from "../../../../core/model/transport/User";
-import { useMountEffect } from "../../../../hook/useMountEffect";
+import { AUTH_ROUTE } from "../../../../utils/consts";
 
 export function useApplications() {
     const { signOut } = useValidate();
@@ -36,7 +37,7 @@ export function useApplications() {
         switch (status) {
             case 401:
                 signOut();
-                navigate("/auth");
+                navigate(AUTH_ROUTE);
                 break;
             case 200:
                 const applications = jsonToObjects(data, User);
@@ -97,7 +98,7 @@ export function useApplications() {
         switch (status) {
             case 401:
                 signOut();
-                navigate("/auth");
+                navigate(AUTH_ROUTE);
                 break;
             case 204:
             case 202:

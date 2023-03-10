@@ -4,6 +4,10 @@ import { useValidate } from "../../hook/useValidate";
 import { asyncAuth } from "../../core/api/APIrequest";
 import { checkValid } from "../../core/model/DataAction";
 import { User } from "../../core/model/transport/User";
+import {
+    ADMIN_ROUTE, APPLICATIONS_ROUTE, LS_LOGIN,
+    LS_TOKEN, MAIN_ROUTE, PRODUCTS_ROUTE
+} from "../../utils/consts";
 
 export function useAuth() {
 
@@ -48,15 +52,15 @@ export function useAuth() {
                 const payload = JSON.parse(decodedBody);
                 const login = payload["login"];
                 const role = payload["role"];
-                localStorage.setItem("token", token);
-                localStorage.setItem("login", login);
+                localStorage.setItem(LS_TOKEN, token);
+                localStorage.setItem(LS_LOGIN, login);
                 signIn(true, login, role);
                 switch (role) {
                     case "client":
-                        navigate("/main/products");
+                        navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/"));
                         break;
                     case "admin":
-                        navigate("/admin/applications");
+                        navigate([ADMIN_ROUTE, APPLICATIONS_ROUTE].join("/"));
                         break;
                     default:
                         break;

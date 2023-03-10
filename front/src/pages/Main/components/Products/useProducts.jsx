@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useValidate } from "../../../../hook/useValidate";
+import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncGetAllProducts } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
-import { useMountEffect } from "../../../../hook/useMountEffect";
+import { AUTH_ROUTE, MAIN_ROUTE, PRODUCTS_ROUTE } from "../../../../utils/consts";
 
 export function useProducts() {
     const { signOut } = useValidate();
@@ -21,7 +22,7 @@ export function useProducts() {
         switch (status) {
             case 401:
                 signOut();
-                navigate("/auth");
+                navigate(AUTH_ROUTE);
                 break;
             case 200:
                 const products = jsonToObjects(data, Product);
@@ -32,7 +33,7 @@ export function useProducts() {
         }
     }
 
-    const _onProductInfo = (id) => navigate("/main/products/" + id);
+    const _onProductInfo = (id) => navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/") + `/${id}`);
 
     useMountEffect(_getAllProducts);
 

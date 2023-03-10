@@ -51,7 +51,7 @@ public class serverUser {
 	public Response auth(@Context ContainerRequestContext requestContext, String userJson) {
 		String login = requestContext.getProperty("login").toString();
 		if (!login.equals("Not valid token")){
-			return Response.status(Response.Status.OK).build();
+			return Response.status(Response.Status.NO_CONTENT).build();
 		}
 		
 		if (userJson.equals("")){

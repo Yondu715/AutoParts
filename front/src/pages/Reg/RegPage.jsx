@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { InputBox } from "../../components/InputBox/InputBox";
 import { SubmitButton } from "../../components/SubmitButton/SubmitButton";
 import { StatusError } from "../../components/StatusError/StatusError";
+import { AUTH_ROUTE } from "../../utils/consts";
 import styles from "./AuthRegPage.module.css";
 
 export function RegPage() {
@@ -38,7 +39,7 @@ export function RegPage() {
                     content="Зарегистрироваться"
                     onClick={_asyncSendRegInfo}
                 />
-                <span className={styles.text}>Уже есть аккаунт? <Link to="/auth">Авторизоваться</Link></span>
+                <span className={styles.text}>Уже есть аккаунт? <Link to={AUTH_ROUTE}>Авторизоваться</Link></span>
             </div>
         </div>
     );

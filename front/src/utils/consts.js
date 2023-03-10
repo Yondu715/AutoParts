@@ -22,3 +22,7 @@ export const USERS_ROUTE = "users";
 // ROLES
 export const CLIENT_ROLE = "client";
 export const ADMIN_ROLE = "admin";
+
+// LOCAL STORAGE ITEMS
+export const LS_LOGIN = "login";
+export const LS_TOKEN = "token";

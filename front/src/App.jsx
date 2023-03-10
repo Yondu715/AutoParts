@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./router/AppRouter/AppRouter";
 import { LoadingPage } from "./pages/Loading/LoadingPage";
 import { asyncAuth } from "./core/api/APIrequest";
+import { LS_TOKEN } from "./utils/consts";
 
 
 export function App() {
@@ -29,7 +30,7 @@ export function App() {
             login: null,
             role: null,
         }
-        if (localStorage.getItem("token") === null) {
+        if (localStorage.getItem(LS_TOKEN) === null) {
             return userInfo;
         }
         const response = await asyncAuth();
@@ -38,8 +39,8 @@ export function App() {
         switch (status) {
             case 401:
                 return userInfo;
-            case 200:
-                const tokenBody = localStorage.getItem("token").split(".")[1];
+            case 204:
+                const tokenBody = localStorage.getItem(LS_TOKEN).split(".")[1];
                 const decodedBody = atob(tokenBody);
                 const payload = JSON.parse(decodedBody);
                 const login = payload["login"];
@@ -59,7 +60,9 @@ export function App() {
 
 
     if (loading) {
-        return (<LoadingPage></LoadingPage>);
+        return (
+            <LoadingPage />
+        );
     }
 
     return (

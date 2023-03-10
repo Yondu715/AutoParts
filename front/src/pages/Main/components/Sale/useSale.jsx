@@ -4,6 +4,7 @@ import { useValidate } from "../../../../hook/useValidate";
 import { asyncSaleProduct } from "../../../../core/api/APIrequest";
 import { checkValid } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
+import { AUTH_ROUTE, LS_LOGIN } from "../../../../utils/consts";
 
 export function useSale() {
 
@@ -35,7 +36,7 @@ export function useSale() {
 
     const _getSaleInfo = () => {
         const jsonSale = form;
-        jsonSale["sellerName"] = localStorage.getItem("login");
+        jsonSale["sellerName"] = localStorage.getItem(LS_LOGIN);
         jsonSale["image"] = image;
         if (jsonSale["price"] !== "") Number(jsonSale["price"]);
         const product = new Product(jsonSale);
@@ -57,7 +58,7 @@ export function useSale() {
         switch (status) {
             case 401:
                 signOut();
-                navigate("/auth");
+                navigate(AUTH_ROUTE);
                 break;
             default:
                 setForm(initialForm);

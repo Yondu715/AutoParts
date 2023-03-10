@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { asyncReg } from "../../core/api/APIrequest";
 import { checkValid } from "../../core/model/DataAction";
 import { User } from "../../core/model/transport/User";
+import { AUTH_ROUTE } from "../../utils/consts";
 
 export function useReg() {
     const initialForm = {
@@ -41,7 +42,7 @@ export function useReg() {
     const _callbackRegInfo = (status) => {
         switch (status) {
             case 200:
-                navigate("/auth");
+                navigate(AUTH_ROUTE);
                 break;
             case 409:
                 setError("Нельзя использовать данный логин");

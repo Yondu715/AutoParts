@@ -8,13 +8,12 @@ export function checkValid(object) {
 
 export function jsonToObjects(json, classConvert) {
 	if (!Array.isArray(json)) {
-		let object = new classConvert(json);
-		return object;
+		return new classConvert(json);
 	}
 
-	let res = [];
+	const res = [];
 	json.forEach(obj => {
-		let object = new classConvert(obj);
+		const object = new classConvert(obj);
 		res.push(object);
 	});
 	return res;
