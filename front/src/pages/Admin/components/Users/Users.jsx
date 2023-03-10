@@ -1,16 +1,12 @@
 import { useUsers } from "./useUsers";
-import { useMountEffect } from "../../../../hook/useMountEffect";
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
 import styles from "./Users.module.css";
 
 export function Users() {
     const {
         users, selectedUsers,
-        _asyncGetUsers, _asyncSendDeleteInfo,
-        _selectUser
+        _asyncSendDeleteInfo, _selectUser
     } = useUsers();
-
-    useMountEffect(_asyncGetUsers);
 
     return (
         <div className={[styles.wrapUsers, "fade"].join(" ")}>

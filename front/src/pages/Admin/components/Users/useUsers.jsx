@@ -4,6 +4,7 @@ import { useValidate } from "../../../../hook/useValidate";
 import { asyncDeleteUsers, asyncGetAllUsers } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { User } from "../../../../core/model/transport/User";
+import { useMountEffect } from "../../../../hook/useMountEffect";
 
 export function useUsers() {
 
@@ -68,9 +69,10 @@ export function useUsers() {
         }
     }
 
+    useMountEffect(_asyncGetUsers);
+
     return {
         users, selectedUsers,
-        _asyncGetUsers, _asyncSendDeleteInfo,
-        _selectUser
+        _asyncSendDeleteInfo, _selectUser
     }
 }

@@ -28,9 +28,7 @@ export function AuthPage() {
                     name="password"
                     onChange={handlerForm}
                 />
-                <StatusError
-                    message={error}
-                />
+                <StatusError message={error} />
                 <SubmitButton
                     content="Войти"
                     onClick={_asyncSendAuthInfo}

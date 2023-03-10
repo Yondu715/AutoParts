@@ -14,16 +14,14 @@ export function MainPage() {
 
     return (
         <div className={styles.mainPage}>
-            <span className={[styles.overPage, logoutAnimation ? "cover" : ""].join(" ")}></span>
+            <span className={[styles.overPage, logoutAnimation ? "cover" : ""].join(" ")} />
             <Header
                 name="Autoparts"
                 username={localStorage.getItem("login")}
                 onClick={logout}
             />
             <div className={styles.wrapContent}>
-                <NavBar
-                    items={menuItems}
-                />
+                <NavBar items={menuItems} />
                 <div className={styles.content}>
                     <Routes>
                         {

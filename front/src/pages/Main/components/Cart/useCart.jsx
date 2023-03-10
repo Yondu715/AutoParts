@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { asyncDeleteFromCart, asyncGetCart } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
+import { useMountEffect } from "../../../../hook/useMountEffect";
 import { useValidate } from "../../../../hook/useValidate";
 
 export function useCart() {
@@ -67,8 +68,10 @@ export function useCart() {
         }
     }
 
+    useMountEffect(_asyncGetCart);
+
     return {
-        products, selectedProducts, _selectProduct, 
-        _asyncGetCart, _asyncSendDeleteInfo
+        products, selectedProducts,
+        _selectProduct, _asyncSendDeleteInfo
     }
 }

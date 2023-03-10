@@ -1,14 +1,10 @@
-import { useMountEffect } from "../../../../hook/useMountEffect";
 import { useProducts } from "./useProducts";
 import styles from "./Products.module.css";
 
 export function Products() {
     const {
-        products, _getAllProducts,
-        _onProductInfo
+        products, _onProductInfo
     } = useProducts();
-
-    useMountEffect(_getAllProducts);
 
     return (
         <div className={[styles.products, "fade"].join(" ")}>

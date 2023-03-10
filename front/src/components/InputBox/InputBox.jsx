@@ -6,7 +6,6 @@ export function InputBox({ value, type, name, label, onChange }) {
             <label>{label}</label>
             <input
                 className={styles.inputBoxText}
-                id={type}
                 type={type}
                 name={name}
                 value={value}

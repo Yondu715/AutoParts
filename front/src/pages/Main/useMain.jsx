@@ -6,7 +6,10 @@ import { ProductInfo } from "./components/ProductInfo/ProductInfo";
 import { Products } from "./components/Products/Products";
 import { Sale } from "./components/Sale/Sale";
 import { UserProducts } from "./components/UserProducts/UserProducts";
-import { ANY_ROUTE, CART_ROUTE, DEFAULT_PAGE_ROUTE, NOT_FOUND_ROUTE, PRODUCTS_ROUTE, PRODUCT_INFO_ROUTE, SALE_ROUTE, USER_PRODUCTS_ROUTE } from "../../utils/consts";
+import { 
+    ANY_ROUTE, CART_ROUTE, DEFAULT_PAGE_ROUTE, NOT_FOUND_ROUTE, 
+    PRODUCTS_ROUTE, PRODUCT_INFO_ROUTE, SALE_ROUTE, USER_PRODUCTS_ROUTE 
+} from "../../utils/consts";
 
 export function useMain() {
     const [logoutAnimation, setAnimation] = useState(false);

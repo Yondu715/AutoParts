@@ -33,9 +33,7 @@ export function RegPage() {
                     name="repeatPassword"
                     onChange={handlerForm}
                 />
-                <StatusError
-                    message={error}
-                />
+                <StatusError message={error} />
                 <SubmitButton
                     content="Зарегистрироваться"
                     onClick={_asyncSendRegInfo}

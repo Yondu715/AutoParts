@@ -4,6 +4,7 @@ import { useValidate } from "../../../../hook/useValidate";
 import { asyncGetAllProducts } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
+import { useMountEffect } from "../../../../hook/useMountEffect";
 
 export function useProducts() {
     const { signOut } = useValidate();
@@ -33,8 +34,9 @@ export function useProducts() {
 
     const _onProductInfo = (id) => navigate("/main/products/" + id);
 
+    useMountEffect(_getAllProducts);
+
     return {
-        products, _getAllProducts,
-        _onProductInfo
+        products, _onProductInfo
     }
 }

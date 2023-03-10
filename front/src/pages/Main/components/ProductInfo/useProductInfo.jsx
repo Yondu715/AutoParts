@@ -4,6 +4,7 @@ import { useValidate } from "../../../../hook/useValidate";
 import { asyncAddToCart, asyncGetProductInfo } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
+import { useMountEffect } from "../../../../hook/useMountEffect";
 
 export function useProductInfo(id) {
     const [product, setProduct] = useState();
@@ -53,8 +54,9 @@ export function useProductInfo(id) {
         }
     }
 
+    useMountEffect(_asyncGetProductInfo);
+
     return {
-        product, _asyncAddToCart, 
-        _asyncGetProductInfo
+        product, _asyncAddToCart,
     }
 }

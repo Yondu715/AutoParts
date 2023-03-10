@@ -6,8 +6,6 @@ import styles from "./Sale.module.css"
 
 export function Sale() {
 
-    
-
     const fields = [
         {
             name: "name",
@@ -41,8 +39,6 @@ export function Sale() {
                         {fields.map(({ name, nameRu }) =>
                             <InputBox
                                 key={name}
-                                labelClass={styles.text}
-                                inputClass={styles.inputText}
                                 type="text"
                                 value={form[name]}
                                 name={name}
@@ -54,16 +50,16 @@ export function Sale() {
                 </div>
                 <div className={styles.productImage}>
                     <div className={styles.dropArea}>
-                        <img 
-                            className={isDndActive ? styles.dndActive : ""} 
-                            alt="" 
-                            src={image ? image : "/dragAndDrop.png"} 
-                            draggable 
+                        <img
+                            className={isDndActive ? styles.dndActive : ""}
+                            alt=""
+                            src={image ? image : "/dragAndDrop.png"}
+                            draggable
                             onDragEnter={dndEnterOver}
                             onDragOver={dndEnterOver}
                             onDragLeave={dndLeaveDrop}
                             onDrop={dndDrop}
-                            />
+                        />
                     </div>
                     <label className={styles.inputFile}>
                         <span>Выберите файл</span>

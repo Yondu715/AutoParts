@@ -8,7 +8,7 @@ export function Header({name, username, onClick}) {
             </div>
             <div className={styles.end}>
                 <span>{username}</span>
-                <button onClick={onClick}></button>
+                <button onClick={onClick} />
             </div>
         </div>
     );

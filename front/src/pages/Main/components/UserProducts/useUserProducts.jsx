@@ -4,6 +4,7 @@ import { useValidate } from "../../../../hook/useValidate";
 import { asyncDeleteProducts, asyncGetUserProducts } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
+import { useMountEffect } from "../../../../hook/useMountEffect";
 
 export function useUserProducts() {
     const { signOut } = useValidate();
@@ -68,8 +69,10 @@ export function useUserProducts() {
         }
     }
 
+    useMountEffect(_asyncGetUserProducts);
+
     return {
-        products, selectedProducts, _selectProduct,
-        _asyncGetUserProducts, _asyncSendDeleteInfo
+        products, selectedProducts, 
+        _selectProduct, _asyncSendDeleteInfo
     }
 }

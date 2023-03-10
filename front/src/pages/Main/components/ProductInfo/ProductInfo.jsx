@@ -1,8 +1,7 @@
+import { useParams } from "react-router-dom";
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
-import { useMountEffect } from "../../../../hook/useMountEffect";
 import { useProductInfo } from "./useProductInfo";
 import styles from "./ProductInfo.module.css";
-import { useParams } from "react-router-dom";
 
 export function ProductInfo() {
 
@@ -10,10 +9,8 @@ export function ProductInfo() {
 
     const {
         product, _asyncAddToCart,
-        _asyncGetProductInfo
     } = useProductInfo(id);
 
-    useMountEffect(_asyncGetProductInfo);
 
     return (
         <div className={styles.productInfo}>

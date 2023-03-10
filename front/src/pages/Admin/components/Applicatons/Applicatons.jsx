@@ -1,5 +1,4 @@
 import { useApplications } from "./useApplications";
-import { useMountEffect } from "../../../../hook/useMountEffect";
 import { SelectBox } from "../../../../components/SelectBox/SelectBox";
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
 import styles from "./Applications.module.css";
@@ -7,13 +6,10 @@ import styles from "./Applications.module.css";
 export function Applications() {
 
     const {
-        applications, selectedApp, _asyncGetAllApplications,
-        _selectApplication, _selectHandler, _asyncAcceptApplications,
+        applications, selectedApp, _selectApplication, 
+        _selectHandler, _asyncAcceptApplications,
         _asyncDeleteApplications, roles
     } = useApplications();
-
-
-    useMountEffect(_asyncGetAllApplications);
 
     return (
         <div className={[styles.wrapContent, "fade"].join(" ")}>
@@ -51,7 +47,6 @@ export function Applications() {
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }

@@ -4,6 +4,7 @@ import { useValidate } from "../../../../hook/useValidate";
 import { asyncAcceptApplications, asyncDeleteApplications, asyncGetAllApplications } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { User } from "../../../../core/model/transport/User";
+import { useMountEffect } from "../../../../hook/useMountEffect";
 
 export function useApplications() {
     const { signOut } = useValidate();
@@ -108,9 +109,11 @@ export function useApplications() {
         }
     }
 
+    useMountEffect(_asyncGetAllApplications);
+
     return {
         applications, selectedApp, _selectApplication,
-        _asyncGetAllApplications, _asyncAcceptApplications,
-        _asyncDeleteApplications, _selectHandler, roles
+        _asyncAcceptApplications, _asyncDeleteApplications, 
+        _selectHandler, roles
     }
 }

@@ -1,16 +1,14 @@
 import { useCart } from "./useCart";
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
-import { useMountEffect } from "../../../../hook/useMountEffect";
 import styles from "./Cart.module.css";
 
 
 export function Cart() {
     const {
-        products, selectedProducts, _asyncGetCart,
+        products, selectedProducts,
         _asyncSendDeleteInfo, _selectProduct
     } = useCart();
 
-    useMountEffect(_asyncGetCart);
 
     return (
         <div className={[styles.cart, "fade"].join(" ")}>

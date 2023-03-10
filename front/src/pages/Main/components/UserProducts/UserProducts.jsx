@@ -1,16 +1,14 @@
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
-import { useMountEffect } from "../../../../hook/useMountEffect";
 import { useUserProducts } from "./useUserProducts";
 import styles from "./UserProducts.module.css";
 
 
 export function UserProducts() {
     const {
-        products, selectedProducts, _selectProduct,
-        _asyncGetUserProducts, _asyncSendDeleteInfo
+        products, selectedProducts, 
+        _selectProduct, _asyncSendDeleteInfo
     } = useUserProducts();
 
-    useMountEffect(_asyncGetUserProducts);
 
     return (
         <div className={[styles.userProducts, "fade"].join(" ")}>

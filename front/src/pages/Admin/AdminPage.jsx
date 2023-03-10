@@ -1,8 +1,8 @@
 import { useAdmin } from "./useAdmin";
+import { Route, Routes } from "react-router-dom";
 import { Header } from "../../components/Header/Header";
 import { NavBar } from "../../components/NavBar/NavBar";
 import styles from "./AdminPage.module.css";
-import { Route, Routes } from "react-router-dom";
 
 export function AdminPage() {
     const {
