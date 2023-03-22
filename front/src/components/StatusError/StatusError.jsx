@@ -1,8 +1,8 @@
 import styles from "./StatusError.module.css";
 
 
-export function StatusError({message}) {
+export function StatusError({message, ...props}) {
     return (
-        <span className={styles.status}>{message}</span>
+        <span className={styles.status} {...props}>{message}</span>
     );
 }
