@@ -42,7 +42,7 @@ export function UserProducts() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <SubmitButton type="delete" content="Удалить" onClick={_asyncSendDeleteInfo} />
+                    <SubmitButton type="delete" onClick={_asyncSendDeleteInfo}>Удалить</SubmitButton>
                 </div>
             </div>
         </div>

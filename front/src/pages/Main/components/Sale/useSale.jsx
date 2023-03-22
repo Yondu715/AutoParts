@@ -1,43 +1,66 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useValidate } from "../../../../hook/useValidate";
 import { asyncSaleProduct } from "../../../../core/api/APIrequest";
 import { checkValid } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
-import { AUTH_ROUTE, LS_LOGIN } from "../../../../utils/consts";
+import { useUserInfo } from "../../../../hook/useUserInfo";
 
 export function useSale() {
 
-    const initialForm = {
+    const initialState = {
         name: "",
         brand: "",
         model: "",
         price: "",
+        image: "",
     }
+
+    const fields = [
+        {
+            name: "name",
+            nameRu: "Название",
+        },
+        {
+            name: "brand",
+            nameRu: "Марка",
+        },
+        {
+            name: "model",
+            nameRu: "Модель",
+        },
+        {
+            name: "price",
+            nameRu: "Стоимость",
+        },
+    ];
     
-    const [form, setForm] = useState(initialForm);
-    const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
+    const [form, setForm] = useState(initialState);
+    
     const [error, setError] = useState("");
-    const [image, setImage] = useState();
     const [isDndActive, setIsDndActive] = useState(false);
-
-    const navigate = useNavigate();
+    
     const { signOut } = useValidate();
-
-    const _getImage = (e) => {
-        const file = e.target.files[0];
+    const user = useUserInfo();
+    const userLogin = user.login;
+    
+    const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+    
+    const handlerImage = (e) => {
+        let source = e.target;
+        if (e.type === "drop"){
+            source = e.dataTransfer;
+        }
+        const file = source.files[0];
         const reader = new FileReader();
         reader.onload = () => {
-            setImage(reader.result);
+            setForm({ ...form, image: reader.result })
         }
         reader.readAsDataURL(file);
     }
-
+ 
     const _getSaleInfo = () => {
         const jsonSale = form;
-        jsonSale["sellerName"] = localStorage.getItem(LS_LOGIN);
-        jsonSale["image"] = image;
+        jsonSale["sellerName"] = userLogin;
         if (jsonSale["price"] !== "") Number(jsonSale["price"]);
         const product = new Product(jsonSale);
         return product;
@@ -58,12 +81,10 @@ export function useSale() {
         switch (status) {
             case 401:
                 signOut();
-                navigate(AUTH_ROUTE);
                 break;
             default:
-                setForm(initialForm);
+                setForm(initialState);
                 setError("");
-                setImage();
                 break;
         }
     }
@@ -84,18 +105,14 @@ export function useSale() {
         e.preventDefault();
         e.stopPropagation();
         setIsDndActive(false);
-        const dt = e.dataTransfer;
-        const file = dt.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-            setImage(reader.result);
-        }
-        reader.readAsDataURL(file);
+        handlerImage(e);
     }
 
+
     return {
-        form, error, image, handlerForm,
-        _getImage, _asyncSendSaleInfo,
-        dndEnterOver, dndLeaveDrop, dndDrop, isDndActive
+        form, error, handlerForm,
+        _asyncSendSaleInfo, handlerImage,
+        dndEnterOver, dndLeaveDrop, dndDrop, isDndActive,
+        fields
     }
 }

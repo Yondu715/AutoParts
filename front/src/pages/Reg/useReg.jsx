@@ -6,14 +6,15 @@ import { User } from "../../core/model/transport/User";
 import { AUTH_ROUTE } from "../../utils/consts";
 
 export function useReg() {
-    const initialForm = {
+
+    const initialState = {
         login: "",
         password: "",
         repeatPassword: "",
     }
 
     const [error, setError] = useState();
-    const [form, setForm] = useState(initialForm);
+    const [form, setForm] = useState(initialState);
     const navigate = useNavigate();
 
     const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,6 +22,7 @@ export function useReg() {
     const _getRegInfo = () => {
         return new User(form);
     }
+    
     const _asyncSendRegInfo = async () => {
         const user = _getRegInfo();
         if (!checkValid(user)) {

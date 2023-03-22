@@ -1,16 +1,13 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useValidate } from "../../../../hook/useValidate";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncDeleteUsers, asyncGetAllUsers } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { User } from "../../../../core/model/transport/User";
-import { AUTH_ROUTE } from "../../../../utils/consts";
 
 export function useUsers() {
 
     const { signOut } = useValidate();
-    const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
 
@@ -34,7 +31,6 @@ export function useUsers() {
         switch (status) {
             case 401:
                 signOut();
-                navigate(AUTH_ROUTE);
                 break;
             case 200:
                 const users = jsonToObjects(data, User);
@@ -59,7 +55,6 @@ export function useUsers() {
         switch (status) {
             case 401:
                 signOut();
-                navigate(AUTH_ROUTE)
                 break;
             case 204:
                 setSelectedUsers([]);

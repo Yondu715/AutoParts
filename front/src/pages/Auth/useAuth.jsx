@@ -5,18 +5,18 @@ import { asyncAuth } from "../../core/api/APIrequest";
 import { checkValid } from "../../core/model/DataAction";
 import { User } from "../../core/model/transport/User";
 import {
-    ADMIN_ROUTE, APPLICATIONS_ROUTE, LS_LOGIN,
+    ADMIN_ROUTE, APPLICATIONS_ROUTE,
     LS_TOKEN, MAIN_ROUTE, PRODUCTS_ROUTE
 } from "../../utils/consts";
 
 export function useAuth() {
 
-    const initialForm = {
+    const initialState = {
         login: "",
         password: "",
     }
 
-    const [form, setForm] = useState(initialForm);
+    const [form, setForm] = useState(initialState);
     const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     const [error, setError] = useState("");
@@ -53,7 +53,6 @@ export function useAuth() {
                 const login = payload["login"];
                 const role = payload["role"];
                 localStorage.setItem(LS_TOKEN, token);
-                localStorage.setItem(LS_LOGIN, login);
                 signIn(true, login, role);
                 switch (role) {
                     case "client":

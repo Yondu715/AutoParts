@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useValidate } from "../../hook/useValidate";
 import { Cart } from "./components/Cart/Cart";
 import { ProductInfo } from "./components/ProductInfo/ProductInfo";
@@ -7,14 +7,15 @@ import { Products } from "./components/Products/Products";
 import { Sale } from "./components/Sale/Sale";
 import { UserProducts } from "./components/UserProducts/UserProducts";
 import { 
-    ANY_ROUTE, AUTH_ROUTE, CART_ROUTE, DEFAULT_PAGE_ROUTE, NOT_FOUND_ROUTE, 
+    ANY_ROUTE, CART_ROUTE, DEFAULT_PAGE_ROUTE, NOT_FOUND_ROUTE, 
     PRODUCTS_ROUTE, PRODUCT_INFO_ROUTE, SALE_ROUTE, USER_PRODUCTS_ROUTE 
 } from "../../utils/consts";
+import { useUserInfo } from "../../hook/useUserInfo";
 
 export function useMain() {
     const [logoutAnimation, setAnimation] = useState(false);
-    const navigate = useNavigate();
     const { signOut } = useValidate();
+    const user = useUserInfo();
 
     const menuItems = {
         "Купить": PRODUCTS_ROUTE,
@@ -52,19 +53,20 @@ export function useMain() {
             path: ANY_ROUTE,
             element: <Navigate to={NOT_FOUND_ROUTE} replace />
         }
-    ]
+    ];
+
+    const userLogin = user.login;
 
     const logout = () => {
         setAnimation(true);
         setTimeout(() => {
             localStorage.clear();
             signOut();
-            navigate(AUTH_ROUTE);
         }, 800);
     }
 
     return {
         logoutAnimation, menuItems,
-        logout, routes
+        logout, routes, userLogin
     }
 }

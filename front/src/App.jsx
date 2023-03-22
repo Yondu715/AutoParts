@@ -13,6 +13,10 @@ export function App() {
     const { signIn } = useValidate();
 
     const check = () => {
+        if (localStorage.getItem(LS_TOKEN) === null) {
+            setLoading(false);
+            return;
+        }
         checkLogin().then(
             data => {
                 const { isAuth, login, role } = data;
@@ -30,9 +34,7 @@ export function App() {
             login: null,
             role: null,
         }
-        if (localStorage.getItem(LS_TOKEN) === null) {
-            return userInfo;
-        }
+
         const response = await asyncAuth();
         const status = response.getStatus();
 

@@ -35,10 +35,7 @@ export function RegPage() {
                     onChange={handlerForm}
                 />
                 <StatusError message={error} />
-                <SubmitButton
-                    content="Зарегистрироваться"
-                    onClick={_asyncSendRegInfo}
-                />
+                <SubmitButton onClick={_asyncSendRegInfo}>Зарегистрироваться</SubmitButton>
                 <span className={styles.text}>Уже есть аккаунт? <Link to={AUTH_ROUTE}>Авторизоваться</Link></span>
             </div>
         </div>

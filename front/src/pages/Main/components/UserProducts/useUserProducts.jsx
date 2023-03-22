@@ -1,15 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useValidate } from "../../../../hook/useValidate";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncDeleteProducts, asyncGetUserProducts } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
-import { AUTH_ROUTE } from "../../../../utils/consts";
 
 export function useUserProducts() {
     const { signOut } = useValidate();
-    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
 
@@ -34,7 +31,6 @@ export function useUserProducts() {
         switch (status) {
             case 401:
                 signOut();
-                navigate(AUTH_ROUTE);
                 break;
             case 200:
                 const products = jsonToObjects(data, Product);
@@ -59,7 +55,6 @@ export function useUserProducts() {
         switch (status) {
             case 401:
                 signOut();
-                navigate(AUTH_ROUTE);
                 break;
             case 204:
                 setSelectedProducts([]);

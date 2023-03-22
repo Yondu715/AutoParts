@@ -5,12 +5,16 @@ import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncAddToCart, asyncGetProductInfo } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
-import { AUTH_ROUTE, MAIN_ROUTE, PRODUCTS_ROUTE } from "../../../../utils/consts";
+import { MAIN_ROUTE, PRODUCTS_ROUTE } from "../../../../utils/consts";
+import { useUserInfo } from "../../../../hook/useUserInfo";
 
 export function useProductInfo(id) {
     const [product, setProduct] = useState();
     const navigate = useNavigate();
     const { signOut } = useValidate();
+    const user = useUserInfo();
+
+    const userLogin = user.login;
 
     const _asyncGetProductInfo = async () => {
         if (isNaN(id)) {
@@ -27,7 +31,6 @@ export function useProductInfo(id) {
         switch (status) {
             case 401:
                 signOut();
-                navigate(AUTH_ROUTE);
                 break;
             case 200:
                 const product = jsonToObjects(data, Product);
@@ -48,7 +51,6 @@ export function useProductInfo(id) {
         switch (status) {
             case 401:
                 signOut();
-                navigate(AUTH_ROUTE);
                 break;
             default:
                 break;
@@ -59,5 +61,6 @@ export function useProductInfo(id) {
 
     return {
         product, _asyncAddToCart,
+        userLogin
     }
 }

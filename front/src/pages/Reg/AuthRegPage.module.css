@@ -1,3 +1,7 @@
+body {
+    background-color: rgb(33, 74, 49);
+}
+
 .authRegPage {
     height: 100%;
     background: rgb(33, 74, 49);

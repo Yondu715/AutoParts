@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
-import { WithAuthProvider } from "./hoc/WithAuthProvider";
+import { Provider } from "react-redux";
+import { store } from "./core/store/UserStore/UserStore";
 import "./style/index.css";
 import "./style/animations.css";
 
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <WithAuthProvider>
+    <Provider store={store}>
         <App />
-    </WithAuthProvider>
+    </Provider>
 );
 

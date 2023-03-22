@@ -6,29 +6,10 @@ import styles from "./Sale.module.css"
 
 export function Sale() {
 
-    const fields = [
-        {
-            name: "name",
-            nameRu: "Название",
-        },
-        {
-            name: "brand",
-            nameRu: "Марка",
-        },
-        {
-            name: "model",
-            nameRu: "Модель",
-        },
-        {
-            name: "price",
-            nameRu: "Стоимость",
-        },
-    ];
-
     const {
-        form, handlerForm, error,
-        image, _getImage, _asyncSendSaleInfo,
-        isDndActive, dndDrop, dndEnterOver, dndLeaveDrop,
+        form, handlerForm, error, fields,
+        handlerImage, _asyncSendSaleInfo, isDndActive, 
+        dndDrop, dndEnterOver, dndLeaveDrop,
     } = useSale();
 
     return (
@@ -53,7 +34,7 @@ export function Sale() {
                         <img
                             className={isDndActive ? styles.dndActive : ""}
                             alt=""
-                            src={image ? image : "/dragAndDrop.png"}
+                            src={form["image"] ? form["image"] : "/dragAndDrop.png"}
                             draggable
                             onDragEnter={dndEnterOver}
                             onDragOver={dndEnterOver}
@@ -63,13 +44,13 @@ export function Sale() {
                     </div>
                     <label className={styles.inputFile}>
                         <span>Выберите файл</span>
-                        <input type="file" accept="image\*" onChange={_getImage} />
+                        <input type="file" accept="image\*" onChange={handlerImage} />
                     </label>
                 </div>
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <SubmitButton content="Выставить на продажу" onClick={_asyncSendSaleInfo} />
+                    <SubmitButton onClick={_asyncSendSaleInfo}>Выставить на продажу</SubmitButton>
                 </div>
             </div>
         </div>

@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
 import { useProductInfo } from "./useProductInfo";
 import styles from "./ProductInfo.module.css";
-import { LS_LOGIN } from "../../../../utils/consts";
 
 export function ProductInfo() {
 
@@ -10,6 +9,7 @@ export function ProductInfo() {
 
     const {
         product, _asyncAddToCart,
+        userLogin
     } = useProductInfo(id);
 
 
@@ -36,9 +36,9 @@ export function ProductInfo() {
                     </div>
                 }
             </div>
-            { product && (product.get()["sellerName"] !== localStorage.getItem(LS_LOGIN)) &&
+            { product && (product.get()["sellerName"] !== userLogin) &&
                 <div className={styles.btnPlace}>
-                    <SubmitButton content="Добавить в корзину" onClick={_asyncAddToCart} />
+                    <SubmitButton onClick={_asyncAddToCart}>Добавить в корзину</SubmitButton>
                 </div>
             }
         </div>

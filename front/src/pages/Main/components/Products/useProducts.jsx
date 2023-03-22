@@ -5,7 +5,7 @@ import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncGetAllProducts } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/DataAction";
 import { Product } from "../../../../core/model/transport/Product";
-import { AUTH_ROUTE, MAIN_ROUTE, PRODUCTS_ROUTE } from "../../../../utils/consts";
+import { MAIN_ROUTE, PRODUCTS_ROUTE } from "../../../../utils/consts";
 
 export function useProducts() {
     const { signOut } = useValidate();
@@ -22,7 +22,6 @@ export function useProducts() {
         switch (status) {
             case 401:
                 signOut();
-                navigate(AUTH_ROUTE);
                 break;
             case 200:
                 const products = jsonToObjects(data, Product);

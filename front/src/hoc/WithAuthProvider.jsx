@@ -4,12 +4,13 @@ export const ValidContext = createContext(null);
 
 export const WithAuthProvider = ({ children }) => {
 
-    const initialForm = {
+    const initialState = {
         isAuth: false,
         login: undefined,
         password: undefined
     }
-    const [user, setUser] = useState(initialForm);
+    
+    const [user, setUser] = useState(initialState);
 
     const signIn = (isAuth, login, role) => {
         const userInfo = {
@@ -20,7 +21,7 @@ export const WithAuthProvider = ({ children }) => {
         setUser(userInfo);
     }
 
-    const signOut = () => setUser(initialForm);
+    const signOut = () => setUser(initialState);
     
     const validateValue = { user, signIn, signOut };
 

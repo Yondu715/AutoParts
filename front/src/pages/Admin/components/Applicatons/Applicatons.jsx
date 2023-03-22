@@ -40,10 +40,10 @@ export function Applications() {
             <div>
                 <div className={styles.btnPlace}>
                     <div className={styles.btnContainer}>
-                        <SubmitButton content="Принять" onClick={_asyncAcceptApplications} />
+                        <SubmitButton onClick={_asyncAcceptApplications}>Принять</SubmitButton>
                     </div>
                     <div className={styles.btnContainer}>
-                        <SubmitButton type="delete" content="Удалить" onClick={_asyncDeleteApplications} />
+                        <SubmitButton type="delete" onClick={_asyncDeleteApplications}>Удалить</SubmitButton>
                     </div>
                 </div>
             </div>

@@ -2,14 +2,13 @@ import { Route, Routes } from "react-router-dom";
 import { useMain } from "./useMain";
 import { Header } from "../../components/Header/Header";
 import { NavBar } from "../../components/NavBar/NavBar";
-import { LS_LOGIN } from "../../utils/consts";
 import styles from "./MainPage.module.css";
 
 
 export function MainPage() {
 
     const {
-        menuItems, logout, 
+        menuItems, logout, userLogin,
         logoutAnimation, routes
     } = useMain();
 
@@ -18,7 +17,7 @@ export function MainPage() {
             <span className={[styles.overPage, logoutAnimation ? "cover" : ""].join(" ")} />
             <Header
                 name="Autoparts"
-                username={localStorage.getItem(LS_LOGIN)}
+                username={userLogin}
                 onClick={logout}
             />
             <div className={styles.wrapContent}>
