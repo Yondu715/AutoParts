@@ -82,7 +82,6 @@ public class serverUser {
 	public Response registration(String userJson) {
 		User application;
 		try {
-
 			try {
 				application = jsonb.fromJson(userJson, User.class);
 			} catch (Exception e) {
@@ -123,7 +122,6 @@ public class serverUser {
 		}
 		Product product;
 		try {
-
 			try {
 				product = jsonb.fromJson(productJson, Product.class);
 			} catch (Exception e) {
