@@ -7,7 +7,7 @@ import styles from "./AdminPage.module.css";
 export function AdminPage() {
     const {
         logoutAnimation, logout, 
-        menuItems, routes
+        menuItems, routes, userLogin
     } = useAdmin();
 
     return (
@@ -15,7 +15,7 @@ export function AdminPage() {
             <span className={[styles.overPage, logoutAnimation ? "cover" : ""].join(" ")}></span>
             <Header
                 name="Autoparts"
-                username={localStorage.getItem("login")}
+                username={userLogin}
                 onClick={logout}
             />
             <div className={styles.wrapContent}>

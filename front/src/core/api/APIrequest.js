@@ -2,11 +2,14 @@ import { LS_TOKEN } from "../../utils/consts";
 import { Response } from "../model/transport/Response";
 
 
-const protocol = "http";
+const protocolHttp = "http";
+const protocolWs = "ws";
 const host = "localhost";
 const port = "8080";
 const name = "autoparts-1";
-const domain = `${protocol}://${host}:${port}/${name}`;
+const path = `${host}:${port}/${name}`;
+const domainHttp = `${protocolHttp}://${path}`;
+const domainWs = `${protocolWs}://${path}`;
 
 const _sendRequest = async (type, uri, data, options) => {
 	const headers = Object.assign({
@@ -34,15 +37,15 @@ const _sendRequest = async (type, uri, data, options) => {
 }
 
 export const asyncGetAllProducts = async () => {
-	return await _sendRequest("GET", `${domain}/api/products`);
+	return await _sendRequest("GET", `${domainHttp}/api/products`);
 }
 
 export const asyncGetUserProducts = async () => {
-	return await _sendRequest("GET", `${domain}/api/products/userProducts`);
+	return await _sendRequest("GET", `${domainHttp}/api/products/userProducts`);
 }
 
 export const asyncGetProductInfo = async (product_id) => {
-	return await _sendRequest("GET", `${domain}/api/products/${product_id}`);
+	return await _sendRequest("GET", `${domainHttp}/api/products/${product_id}`);
 }
 
 export const asyncAuth = async (user) => {
@@ -52,50 +55,55 @@ export const asyncAuth = async (user) => {
 	} catch (error) {
 		data = null;
 	}
-	return await _sendRequest("POST", `${domain}/api/users/auth`, data);
+	return await _sendRequest("POST", `${domainHttp}/api/users/auth`, data);
 }
 
 export const asyncReg = async (user) => {
-	return await _sendRequest("POST", `${domain}/api/users/registration`, user.get());
+	return await _sendRequest("POST", `${domainHttp}/api/users/registration`, user.get());
 }
 
 
 export const asyncSaleProduct = async (product) => {
-	return await _sendRequest("POST", `${domain}/api/products/sale`, product.get());
+	return await _sendRequest("POST", `${domainHttp}/api/products/sale`, product.get());
 }
 
 export const asyncDeleteProducts = async (products_id) => {
-	return await _sendRequest("DELETE", `${domain}/api/products/userProducts`, products_id);
+	return await _sendRequest("DELETE", `${domainHttp}/api/products/userProducts`, products_id);
 }
 
 export const asyncAddToCart = async (product) => {
-	return await _sendRequest("POST", `${domain}/api/users/cart`, product.get());
+	return await _sendRequest("POST", `${domainHttp}/api/users/cart`, product.get());
 }
 
 export const asyncGetCart = async () => {
-	return await _sendRequest("GET", `${domain}/api/users/cart`);
+	return await _sendRequest("GET", `${domainHttp}/api/users/cart`);
 }
 
 export const asyncDeleteFromCart = async (products_id) => {
-	return await _sendRequest("DELETE", `${domain}/api/users/cart`, products_id);
+	return await _sendRequest("DELETE", `${domainHttp}/api/users/cart`, products_id);
 }
 
 export const asyncGetAllApplications = async () => {
-	return await _sendRequest("GET", `${domain}/api/admin/applications`);
+	return await _sendRequest("GET", `${domainHttp}/api/admin/applications`);
 }
 
 export const asyncDeleteApplications = async (applications_id) => {
-	return await _sendRequest("DELETE", `${domain}/api/admin/applications`, applications_id);
+	return await _sendRequest("DELETE", `${domainHttp}/api/admin/applications`, applications_id);
 }
 
 export const asyncAcceptApplications = async (applications) => {
-	return await _sendRequest("PUT", `${domain}/api/admin/applications`, applications);
+	return await _sendRequest("PUT", `${domainHttp}/api/admin/applications`, applications);
 }
 
 export const asyncGetAllUsers = async () => {
-	return await _sendRequest("GET", `${domain}/api/admin/users`);
+	return await _sendRequest("GET", `${domainHttp}/api/admin/users`);
 }
 
 export const asyncDeleteUsers = async (users_id) => {
-	return await _sendRequest("DELETE", `${domain}/api/admin/users`, users_id);
+	return await _sendRequest("DELETE", `${domainHttp}/api/admin/users`, users_id);
+}
+
+export const connectToChat = (id) => {
+	let ws = new WebSocket(`${domainWs}/chat/${id}`);
+	return ws;
 }

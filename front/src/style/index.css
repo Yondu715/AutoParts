@@ -6,6 +6,10 @@ body,
     font-family: "Roboto Condensed";
 }
 
+body {
+    background-color: rgb(33, 74, 49);
+}
+
 * {
     box-sizing: border-box;
 }

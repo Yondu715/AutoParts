@@ -1,3 +1,8 @@
+:root {
+    --active-color: rgb(209, 255, 223);
+    --notActive-color: rgb(255, 255, 255);
+}
+
 .cart {
     height: 100%;
     width: 100%;
@@ -73,7 +78,7 @@
 }
 
 .active {
-    background: rgb(209, 255, 223);
+    background: var(--active-color);
 }
 
 .notActive {
@@ -81,7 +86,7 @@
 }
 
 .notActive:hover {
-    background: rgb(255, 255, 255);
+    background: var(--notActive-color);
 }
 
 .btnPlace {

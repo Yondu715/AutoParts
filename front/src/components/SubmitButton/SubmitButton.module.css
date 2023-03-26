@@ -6,7 +6,6 @@
     border: none;
     border-radius: 10px;
     color: rgb(255, 255, 255);
-    background: rgb(40, 167, 69);
     text-transform: uppercase;
     font-weight: bold;
     transition: all 0.5s ease-in-out;
@@ -30,4 +29,12 @@
 
 .deleteButton:hover {
     box-shadow: 0px 2px 25px -3px rgb(181, 44, 44);
+}
+
+.infoButton {
+    background: rgb(20, 140, 177);
+}
+
+.infoButton:hover {
+    box-shadow: 0px 2px 25px -3px rgb(20, 140, 177);
 }

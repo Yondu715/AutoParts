@@ -1,3 +1,11 @@
+:root {
+    --text-color: rgb(0, 0, 0);
+    --border-color: rgb(0, 0, 0);
+    --text-color2: rgb(255, 255, 255);
+    --color-bg1: rgb(20, 140, 177);
+    --color-bg1-hover: rgb(121, 218, 248);
+}
+
 .sale {
     height: 100%;
     width: 100%;
@@ -16,11 +24,11 @@
 }
 
 .productInfo label {
-    color:rgb(0, 0, 0);
+    color:var(--text-color);
 }
 
 .productInfo input {
-    color:rgb(0, 0, 0);
+    color:var(--text-color);
 }
 
 .productImage {
@@ -35,7 +43,7 @@
     margin-top: auto;
     margin-bottom: 10px;
     padding: 5px;
-    border: 3px dashed rgb(0, 0, 0);
+    border: 3px dashed var(--border-color);
 }
 
 .dropArea img {
@@ -52,8 +60,8 @@
 .inputFile span {
     width: 100%;
     text-align: center;
-    color: rgb(255, 255, 255);
-    background-color: rgb(20, 140, 177);
+    color: var(--text-color2);
+    background-color: var(--color-bg1);
     border-radius: 10px;
     display: inline-block;
     cursor: pointer;
@@ -63,7 +71,7 @@
 }
 
 .inputFile span:hover {
-    background-color: rgb(121, 218, 248);
+    background-color: var(--color-bg1-hover);
 }
 
 .inputFile input {
@@ -75,12 +83,12 @@
 }
 
 .text {
-    color: rgb(0, 0, 0);
+    color: var(--text-color);
 }
 
 .inputText {
     font-size: 22px;
-    color: rgb(0, 0, 0);
+    color: var(--text-color);
     border-bottom: 1px solid rgb(255, 255, 255);
 }
 

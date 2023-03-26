@@ -10,6 +10,7 @@ import { useUserInfo } from "../../../../hook/useUserInfo";
 
 export function useProductInfo(id) {
     const [product, setProduct] = useState();
+    const [chatIsOpen, setChatIsOpen] = useState(false);
     const navigate = useNavigate();
     const { signOut } = useValidate();
     const user = useUserInfo();
@@ -57,10 +58,14 @@ export function useProductInfo(id) {
         }
     }
 
+    const openChat = () => {
+        setChatIsOpen(true);
+    }
+
     useMountEffect(_asyncGetProductInfo);
 
     return {
         product, _asyncAddToCart,
-        userLogin
+        userLogin, openChat, chatIsOpen
     }
 }

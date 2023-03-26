@@ -8,7 +8,7 @@ export function Sale() {
 
     const {
         form, handlerForm, error, fields,
-        handlerImage, _asyncSendSaleInfo, isDndActive, 
+        handlerImage, _asyncSendSaleInfo, isDndActive,
         dndDrop, dndEnterOver, dndLeaveDrop,
     } = useSale();
 
@@ -25,7 +25,8 @@ export function Sale() {
                                 name={name}
                                 label={nameRu}
                                 onChange={handlerForm}
-                            />)}
+                            />
+                        )}
                         <StatusError message={error} />
                     </div>
                 </div>

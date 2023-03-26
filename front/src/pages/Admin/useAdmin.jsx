@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useUserInfo } from "../../hook/useUserInfo";
 import { Navigate } from "react-router-dom";
 import { useValidate } from "../../hook/useValidate";
 import { Applications } from "./components/Applicatons/Applicatons";
@@ -12,6 +13,8 @@ import {
 export function useAdmin() {
     const [logoutAnimation, setAnimation] = useState(false);
     const { signOut } = useValidate();
+    const user = useUserInfo();
+    const userLogin = user.login;
 
     const menuItems = {
         "Заявки": APPLICATIONS_ROUTE,
@@ -47,6 +50,6 @@ export function useAdmin() {
 
     return {
         logoutAnimation, logout,
-        menuItems, routes
+        menuItems, routes, userLogin
     }
 }

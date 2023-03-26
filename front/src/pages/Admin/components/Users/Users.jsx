@@ -13,23 +13,13 @@ export function Users() {
             <div className={styles.users}>
                 <table>
                     <tbody>
-                        {users.map(({ user: { id, login, password, role } }) =>
-                            <tr key={id} onClick={() => _selectUser(id)} className={selectedUsers.includes(id) ? styles.active : styles.notActive}>
-                                <td>
-                                    <div className={styles.user}>
-                                        <div className={styles.id}>
-                                            <span>{id}</span>
-                                        </div>
-                                        <div className={styles.info}>
-                                            <span>{login}</span>
-                                            <span>{password}</span>
-                                        </div>
-                                        <div className={styles.role}>
-                                            <span>{role}</span>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                        {users.map(({ user }) =>
+                            <RowElement
+                                key={user.id}
+                                user={user}
+                                onClick={() => _selectUser(user.id)}
+                                className={selectedUsers.includes(user.id) ? styles.active : styles.notActive}
+                            />
                         )}
                     </tbody>
                 </table>
@@ -40,5 +30,28 @@ export function Users() {
                 </div>
             </div>
         </div>
+    );
+}
+
+
+function RowElement({ user, ...props }) {
+    const { id, login, password, role } = user;
+    return (
+        <tr {...props} >
+            <td>
+                <div className={styles.user}>
+                    <div className={styles.id}>
+                        <span>{id}</span>
+                    </div>
+                    <div className={styles.info}>
+                        <span>{login}</span>
+                        <span>{password}</span>
+                    </div>
+                    <div className={styles.role}>
+                        <span>{role}</span>
+                    </div>
+                </div>
+            </td>
+        </tr>
     );
 }
