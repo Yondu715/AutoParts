@@ -3,7 +3,7 @@ import { useValidate } from "./hook/useValidate";
 import { useMountEffect } from "./hook/useMountEffect";
 import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./router/AppRouter/AppRouter";
-import { LoadingPage } from "./pages/Loading/LoadingPage";
+import { LoaderSpinner } from "./components/LoaderSpinner/LoaderSpinner";
 import { asyncAuth } from "./core/api/APIrequest";
 import { LS_TOKEN } from "./utils/consts";
 
@@ -63,7 +63,7 @@ export function App() {
 
     if (loading) {
         return (
-            <LoadingPage />
+            <LoaderSpinner />
         );
     }
 

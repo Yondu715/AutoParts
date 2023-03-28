@@ -1,6 +1,6 @@
-import styles from "./LoadingPage.module.css";
+import styles from "./LoaderSpinner.module.css";
 
-export function LoadingPage() {
+export function LoaderSpinner() {
     return (
         <div className={styles.container}>
             <div className={styles.spinner}/>

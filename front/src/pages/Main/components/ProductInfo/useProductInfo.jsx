@@ -11,6 +11,7 @@ import { useUserInfo } from "../../../../hook/useUserInfo";
 export function useProductInfo(id) {
     const [product, setProduct] = useState();
     const [chatIsOpen, setChatIsOpen] = useState(false);
+    const [buttonText, setButtonText] = useState("Добавить в корзину");
     const navigate = useNavigate();
     const { signOut } = useValidate();
     const user = useUserInfo();
@@ -53,6 +54,9 @@ export function useProductInfo(id) {
             case 401:
                 signOut();
                 break;
+            case 200:
+                setButtonText("Товар был успешно добавлен");
+                break;
             default:
                 break;
         }
@@ -65,7 +69,7 @@ export function useProductInfo(id) {
     useMountEffect(_asyncGetProductInfo);
 
     return {
-        product, _asyncAddToCart,
+        product, _asyncAddToCart, buttonText,
         userLogin, openChat, chatIsOpen
     }
 }

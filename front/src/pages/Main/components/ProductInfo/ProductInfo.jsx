@@ -2,20 +2,20 @@ import { useParams } from "react-router-dom";
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
 import { useProductInfo } from "./useProductInfo";
 import styles from "./ProductInfo.module.css";
-import { Chat } from "../../../Chat/Chat";
+import { Chat } from "../../../../components/Chat/Chat";
 
 export function ProductInfo() {
 
     const { id } = useParams();
 
     const {
-        product, _asyncAddToCart,
+        product, _asyncAddToCart, buttonText,
         userLogin, openChat, chatIsOpen
     } = useProductInfo(id);
 
     if (chatIsOpen) {
         return (
-            <Chat roomId={id}/>
+            <Chat roomId={id} />
         );
     }
 
@@ -40,7 +40,7 @@ export function ProductInfo() {
             </div>
             {product && (product.get()["sellerName"] !== userLogin) &&
                 <div className={styles.btnPlace}>
-                    <SubmitButton onClick={_asyncAddToCart}>Добавить в корзину</SubmitButton>
+                    <SubmitButton onClick={_asyncAddToCart}>{buttonText}</SubmitButton>
                 </div>
             }
         </div>
@@ -49,7 +49,7 @@ export function ProductInfo() {
 
 
 function InfoBlock({ product }) {
-    const {name, sellerName, date, brand, model, price} = product.get();
+    const { name, sellerName, date, brand, model, price } = product.get();
     return (
         <div className={styles.info}>
             <span>Название: {name}</span>

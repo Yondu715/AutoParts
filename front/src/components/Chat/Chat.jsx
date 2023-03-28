@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SubmitButton } from "../../components/SubmitButton/SubmitButton";
+import { SubmitButton } from "../SubmitButton/SubmitButton";
 import { connectToChat } from "../../core/api/APIrequest";
 import { useUserInfo } from "../../hook/useUserInfo";
 import styles from "./Chat.module.css";
@@ -19,7 +19,7 @@ export function Chat({ roomId }) {
     }, [])
 
     return (
-        <div className={styles.chat}>
+        <div className={[styles.chat, "fade"].join(" ")}>
             <Messages wsChannel={wsChannel} userLogin={userLogin} />
             <AddMessageForm wsChannel={wsChannel} userLogin={userLogin} />
         </div>
@@ -36,20 +36,26 @@ function AddMessageForm({ wsChannel, userLogin }) {
 
     const sendMessage = () => {
         if (!message) return;
-        if (wsChannel) {
-            const msg = {
-                content: message,
-                from: userLogin,
-                date: new Date(),
-            }
-            wsChannel.send(JSON.stringify(msg));
+        if (!wsChannel) return;
+        const msg = {
+            id: Date.now(),
+            content: message,
+            from: userLogin,
+            date: new Date(),
         }
+        wsChannel.send(JSON.stringify(msg));
         setMessage("");
+    }
+
+    const onEnter = (e) => {
+        if (e.keyCode === 13){
+            sendMessage();
+        }
     }
 
     return (
         <div className={styles.form}>
-            <input value={message} className={styles.inputMessage} onChange={handlerMessage} />
+            <input value={message} className={styles.inputMessage} onChange={handlerMessage} onKeyDown={onEnter} />
             <div className={styles.btnPlace}>
                 <SubmitButton type="info" onClick={sendMessage}>Отправить</SubmitButton>
             </div>
@@ -71,24 +77,25 @@ function Messages({ wsChannel, userLogin }) {
     }
 
     useEffect(() => {
-        if (wsChannel) {
-            wsChannel.onmessage = messageHandler;
-        }
+        if (!wsChannel) return;
+        wsChannel.onmessage = messageHandler;
     }, [wsChannel]);
 
     return (
         <div className={styles.messages}>
-            {messages.map((message) => <Message data={message} userLogin={userLogin} />)}
+            {messages.map((message) => <Message key={message.id} message={message} userLogin={userLogin} />)}
         </div>
     );
 }
 
-function Message({ data, userLogin }) {
-    const msgStyle = (data.from === userLogin) ? styles.sendMessage : styles.receiveMessage;
+function Message({ message, userLogin }) {
+    const msgStyle = (message.from === userLogin) ? styles.sendMessage : styles.receiveMessage;
+    const messageDate = new Date(message.date);
+    const sendTime = `${messageDate.getHours()}:${messageDate.getMinutes()}`
     return (
         <div className={[styles.message, msgStyle].join(" ")}>
-            <div className={styles.messageInfo}>{data.from}</div>
-            <div>{data.content}</div>
+            <div className={styles.messageInfo}>{message.from} {sendTime}</div>
+            <div>{message.content}</div>
         </div>
     );
 }
