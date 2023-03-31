@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { asyncReg } from "../../core/api/APIrequest";
-import { checkValid } from "../../core/model/DataAction";
+import { checkValid } from "../../core/model/dataAction";
 import { User } from "../../core/model/transport/User";
 import { AUTH_ROUTE } from "../../utils/consts";
 

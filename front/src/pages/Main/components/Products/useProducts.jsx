@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useValidate } from "../../../../hook/useValidate";
+import { useValidate } from "../../../../hook/useStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncGetAllProducts } from "../../../../core/api/APIrequest";
-import { jsonToObjects } from "../../../../core/model/DataAction";
+import { jsonToObjects } from "../../../../core/model/dataAction";
 import { Product } from "../../../../core/model/transport/Product";
 import { MAIN_ROUTE, PRODUCTS_ROUTE } from "../../../../utils/consts";
 

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useValidate } from "../../../../hook/useValidate";
+import { useValidate } from "../../../../hook/useStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncDeleteUsers, asyncGetAllUsers } from "../../../../core/api/APIrequest";
-import { jsonToObjects } from "../../../../core/model/DataAction";
+import { jsonToObjects } from "../../../../core/model/dataAction";
 import { User } from "../../../../core/model/transport/User";
 
 export function useUsers() {

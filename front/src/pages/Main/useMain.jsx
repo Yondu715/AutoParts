@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import { useValidate } from "../../hook/useValidate";
+import { useUserLogin, useValidate } from "../../hook/useStore";
 import { Cart } from "./components/Cart/Cart";
 import { ProductInfo } from "./components/ProductInfo/ProductInfo";
 import { Products } from "./components/Products/Products";
@@ -10,12 +10,11 @@ import {
     ANY_ROUTE, CART_ROUTE, DEFAULT_PAGE_ROUTE, NOT_FOUND_ROUTE, 
     PRODUCTS_ROUTE, PRODUCT_INFO_ROUTE, SALE_ROUTE, USER_PRODUCTS_ROUTE 
 } from "../../utils/consts";
-import { useUserInfo } from "../../hook/useUserInfo";
 
 export function useMain() {
     const [logoutAnimation, setAnimation] = useState(false);
     const { signOut } = useValidate();
-    const user = useUserInfo();
+    const userLogin = useUserLogin();
 
     const menuItems = {
         "Купить": PRODUCTS_ROUTE,
@@ -23,7 +22,7 @@ export function useMain() {
         "Мои товары": USER_PRODUCTS_ROUTE,
         "Корзина": CART_ROUTE
     }
-
+    
     const routes = [
         {
             path: PRODUCTS_ROUTE,
@@ -55,7 +54,6 @@ export function useMain() {
         }
     ];
 
-    const userLogin = user.login;
 
     const logout = () => {
         setAnimation(true);

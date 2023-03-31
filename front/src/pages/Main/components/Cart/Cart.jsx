@@ -9,7 +9,6 @@ export function Cart() {
         _asyncSendDeleteInfo, _selectProduct
     } = useCart();
 
-
     return (
         <div className={[styles.cart, "fade"].join(" ")}>
             <div className={styles.products}>

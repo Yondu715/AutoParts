@@ -1,57 +1,28 @@
-import { useEffect, useState } from "react";
+import { useChat, useMessageForm, useMessages } from "./useChat";
 import { SubmitButton } from "../SubmitButton/SubmitButton";
-import { connectToChat } from "../../core/api/APIrequest";
-import { useUserInfo } from "../../hook/useUserInfo";
 import styles from "./Chat.module.css";
 
 
 export function Chat({ roomId }) {
-    const [wsChannel, setWsChannel] = useState(null);
-    const user = useUserInfo();
-    const userLogin = user.login;
 
-    useEffect(() => {
-        let ws = connectToChat(roomId);
-        setWsChannel(ws);
-        return () => {
-            ws.close();
-        }
-    }, [])
+    const {
+        userLogin
+    } = useChat(roomId);
 
     return (
         <div className={[styles.chat, "fade"].join(" ")}>
-            <Messages wsChannel={wsChannel} userLogin={userLogin} />
-            <AddMessageForm wsChannel={wsChannel} userLogin={userLogin} />
+            <Messages userLogin={userLogin} />
+            <AddMessageForm userLogin={userLogin} />
         </div>
     );
 }
 
 
-function AddMessageForm({ wsChannel, userLogin }) {
-    const [message, setMessage] = useState("");
-
-    const handlerMessage = (e) => {
-        setMessage(e.target.value);
-    }
-
-    const sendMessage = () => {
-        if (!message) return;
-        if (!wsChannel) return;
-        const msg = {
-            id: Date.now(),
-            content: message,
-            from: userLogin,
-            date: new Date(),
-        }
-        wsChannel.send(JSON.stringify(msg));
-        setMessage("");
-    }
-
-    const onEnter = (e) => {
-        if (e.keyCode === 13){
-            sendMessage();
-        }
-    }
+function AddMessageForm({userLogin }) {
+    const {
+        message, handlerMessage,
+        onEnter, sendMessage
+    } = useMessageForm(userLogin);
 
     return (
         <div className={styles.form}>
@@ -64,22 +35,10 @@ function AddMessageForm({ wsChannel, userLogin }) {
 }
 
 
-function Messages({ wsChannel, userLogin }) {
-    const [messages, setMessages] = useState([]);
-
-    const messageHandler = (e) => {
-        const newMessages = JSON.parse(e.data);
-        if (Array.isArray(newMessages)) {
-            setMessages(prevMessages => [...prevMessages, ...newMessages]);
-        } else {
-            setMessages(prevMessages => [...prevMessages, newMessages]);
-        }
-    }
-
-    useEffect(() => {
-        if (!wsChannel) return;
-        wsChannel.onmessage = messageHandler;
-    }, [wsChannel]);
+function Messages({userLogin }) {
+    const {
+        messages
+    } = useMessages(userLogin);
 
     return (
         <div className={styles.messages}>
@@ -91,7 +50,11 @@ function Messages({ wsChannel, userLogin }) {
 function Message({ message, userLogin }) {
     const msgStyle = (message.from === userLogin) ? styles.sendMessage : styles.receiveMessage;
     const messageDate = new Date(message.date);
-    const sendTime = `${messageDate.getHours()}:${messageDate.getMinutes()}`
+    let hours = messageDate.getHours();
+    let minutes = messageDate.getMinutes();
+    if (hours < 10) hours = '0' + hours;
+    if (minutes < 10) minutes = '0' + minutes;
+    const sendTime = `${hours}:${minutes}`
     return (
         <div className={[styles.message, msgStyle].join(" ")}>
             <div className={styles.messageInfo}>{message.from} {sendTime}</div>

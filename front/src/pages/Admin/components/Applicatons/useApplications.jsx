@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useValidate } from "../../../../hook/useValidate";
+import { useValidate } from "../../../../hook/useStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncAcceptApplications, asyncDeleteApplications, asyncGetAllApplications } from "../../../../core/api/APIrequest";
-import { jsonToObjects } from "../../../../core/model/DataAction";
+import { jsonToObjects } from "../../../../core/model/dataAction";
 import { User } from "../../../../core/model/transport/User";
 
 export function useApplications() {
@@ -48,7 +48,7 @@ export function useApplications() {
     }
 
     const _selectHandler = (e, id) => {
-        const appCopy = applications;
+        const appCopy = applications.slice(0);
         appCopy.forEach(({ user }) => {
             if (user["id"] === id) {
                 user["role"] = e.target.value;

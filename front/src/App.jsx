@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useValidate } from "./hook/useValidate";
-import { useMountEffect } from "./hook/useMountEffect";
 import { BrowserRouter } from "react-router-dom";
+import { useValidate } from "./hook/useStore";
+import { useMountEffect } from "./hook/useMountEffect";
 import { AppRouter } from "./router/AppRouter/AppRouter";
 import { LoaderSpinner } from "./components/LoaderSpinner/LoaderSpinner";
 import { asyncAuth } from "./core/api/APIrequest";
@@ -12,17 +12,19 @@ export function App() {
     const [loading, setLoading] = useState(true);
     const { signIn } = useValidate();
 
-    const check = () => {
+    const check = async () => {
         if (localStorage.getItem(LS_TOKEN) === null) {
             setLoading(false);
             return;
         }
-        checkLogin().then(
-            data => {
-                const { isAuth, login, role } = data;
-                signIn(isAuth, login, role);
-            }
-        ).finally(() => setLoading(false));
+        try {
+            const data = await checkLogin();
+            const { isAuth, login, role } = data;
+            signIn(isAuth, login, role);
+        }
+        finally {
+            setLoading(false);
+        }
     };
 
     useMountEffect(check);

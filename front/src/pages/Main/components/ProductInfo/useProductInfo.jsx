@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useValidate } from "../../../../hook/useValidate";
+import { useNavigate, useParams } from "react-router-dom";
+import { useUserLogin, useValidate } from "../../../../hook/useStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncAddToCart, asyncGetProductInfo } from "../../../../core/api/APIrequest";
-import { jsonToObjects } from "../../../../core/model/DataAction";
+import { jsonToObjects } from "../../../../core/model/dataAction";
 import { Product } from "../../../../core/model/transport/Product";
 import { MAIN_ROUTE, PRODUCTS_ROUTE } from "../../../../utils/consts";
-import { useUserInfo } from "../../../../hook/useUserInfo";
 
-export function useProductInfo(id) {
+export function useProductInfo() {
     const [product, setProduct] = useState();
     const [chatIsOpen, setChatIsOpen] = useState(false);
-    const [buttonText, setButtonText] = useState("Добавить в корзину");
+    const [productAdded, setProductAdded] = useState(false);
+    const [error, setError] = useState("");
+    const { id } = useParams();
     const navigate = useNavigate();
     const { signOut } = useValidate();
-    const user = useUserInfo();
+    const userLogin = useUserLogin();
 
-    const userLogin = user.login;
 
     const _asyncGetProductInfo = async () => {
         if (isNaN(id)) {
@@ -54,8 +54,11 @@ export function useProductInfo(id) {
             case 401:
                 signOut();
                 break;
+            case 409:
+                setError("Данный товар уже добавлен в корзину");
+                break;
             case 200:
-                setButtonText("Товар был успешно добавлен");
+                setProductAdded(true);
                 break;
             default:
                 break;
@@ -69,7 +72,8 @@ export function useProductInfo(id) {
     useMountEffect(_asyncGetProductInfo);
 
     return {
-        product, _asyncAddToCart, buttonText,
-        userLogin, openChat, chatIsOpen
+        product, _asyncAddToCart, productAdded,
+        userLogin, openChat, chatIsOpen, error,
+        id
     }
 }

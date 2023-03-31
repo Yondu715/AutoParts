@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useValidate } from "../../../../hook/useValidate";
+import { useUserLogin, useValidate } from "../../../../hook/useStore";
 import { asyncSaleProduct } from "../../../../core/api/APIrequest";
-import { checkValid } from "../../../../core/model/DataAction";
+import { checkValid } from "../../../../core/model/dataAction";
 import { Product } from "../../../../core/model/transport/Product";
-import { useUserInfo } from "../../../../hook/useUserInfo";
 
 export function useSale() {
 
@@ -40,8 +39,7 @@ export function useSale() {
     const [isDndActive, setIsDndActive] = useState(false);
     
     const { signOut } = useValidate();
-    const user = useUserInfo();
-    const userLogin = user.login;
+    const userLogin = useUserLogin();
     
     const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
     

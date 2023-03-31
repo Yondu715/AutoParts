@@ -1,17 +1,16 @@
-import { useParams } from "react-router-dom";
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
 import { useProductInfo } from "./useProductInfo";
-import styles from "./ProductInfo.module.css";
 import { Chat } from "../../../../components/Chat/Chat";
+import { StatusError } from "../../../../components/StatusError/StatusError";
+import styles from "./ProductInfo.module.css";
 
 export function ProductInfo() {
 
-    const { id } = useParams();
-
     const {
-        product, _asyncAddToCart, buttonText,
-        userLogin, openChat, chatIsOpen
-    } = useProductInfo(id);
+        product, _asyncAddToCart, productAdded,
+        userLogin, openChat, chatIsOpen, error,
+        id
+    } = useProductInfo();
 
     if (chatIsOpen) {
         return (
@@ -40,7 +39,8 @@ export function ProductInfo() {
             </div>
             {product && (product.get()["sellerName"] !== userLogin) &&
                 <div className={styles.btnPlace}>
-                    <SubmitButton onClick={_asyncAddToCart}>{buttonText}</SubmitButton>
+                    <StatusError message={error} />
+                    <SubmitButton disabled={productAdded} onClick={_asyncAddToCart}>{productAdded ? "Товар был успешно добавлен" : "Добавить товар в корзину"}</SubmitButton>
                 </div>
             }
         </div>

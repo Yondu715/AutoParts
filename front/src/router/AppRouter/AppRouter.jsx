@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useUserInfo } from "../../hook/useStore";
 import { authRoutes, publicRoutes } from "../routes";
 import { AUTH_ROUTE } from "../../utils/consts";
-import { useUserInfo } from "../../hook/useUserInfo";
 
 export function AppRouter() {
     const user = useUserInfo();
