@@ -13,6 +13,7 @@ import jakarta.transaction.UserTransaction;
 import rest.db.entities.EUser;
 import rest.model.dto.User;
 import rest.model.interfaces.out.IRepositoryUsers;
+import rest.utils.mapStruct;
 
 public class RepositoryUsers implements IRepositoryUsers {
 
@@ -50,10 +51,7 @@ public class RepositoryUsers implements IRepositoryUsers {
 			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();
 			entityManager.joinTransaction();
-			EUser eUser = new EUser();
-			eUser.setLogin(user.getLogin());
-			eUser.setPassword(user.getPassword());
-			eUser.setRole(user.getRole());
+			EUser eUser = mapStruct.toEUser(user);
 			entityManager.persist(eUser);
 			userTransaction.commit();
 			entityManager.close();
@@ -76,11 +74,7 @@ public class RepositoryUsers implements IRepositoryUsers {
 					.setParameter("login", login).getResultList();
 			userTransaction.commit();
 			entityManager.close();
-			EUser eUser = users_list.get(0);
-			user.setId(eUser.getId());
-			user.setLogin(eUser.getLogin());
-			user.setPassword(eUser.getPassword());
-			user.setRole(eUser.getRole());
+			user = mapStruct.toUser(users_list.get(0));
 		} catch (Exception e) {
 			Logger.getLogger(RepositoryUsers.class.getName()).log(Level.INFO, null, e);
 		}
@@ -98,14 +92,7 @@ public class RepositoryUsers implements IRepositoryUsers {
 			List<EUser> users_list = entityManager.createQuery(query, EUser.class).getResultList();
 			userTransaction.commit();
 			entityManager.close();
-			for (EUser eUser : users_list) {
-				User user = new User();
-				user.setId(eUser.getId());
-				user.setLogin(eUser.getLogin());
-				user.setPassword(eUser.getPassword());
-				user.setRole(eUser.getRole());
-				users.add(user);
-			}
+			users = mapStruct.toUser(users_list);
 		} catch (Exception e) {
 			Logger.getLogger(RepositoryUsers.class.getName()).log(Level.INFO, null, e);
 		}
@@ -123,14 +110,7 @@ public class RepositoryUsers implements IRepositoryUsers {
 			List<EUser> users_list = entityManager.createQuery(query, EUser.class).getResultList();
 			userTransaction.commit();
 			entityManager.close();
-			for (EUser eUser : users_list) {
-				User user = new User();
-				user.setId(eUser.getId());
-				user.setLogin(eUser.getLogin());
-				user.setPassword(eUser.getPassword());
-				user.setRole(eUser.getRole());
-				users.add(user);
-			}
+			users = mapStruct.toUser(users_list);
 		} catch (Exception e) {
 			Logger.getLogger(RepositoryUsers.class.getName()).log(Level.INFO, null, e);
 		}

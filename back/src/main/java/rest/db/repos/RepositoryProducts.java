@@ -1,6 +1,5 @@
 package rest.db.repos;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,6 +15,7 @@ import rest.db.entities.EProduct;
 import rest.db.entities.EUser;
 import rest.model.dto.Product;
 import rest.model.interfaces.out.IRepositoryProducts;
+import rest.utils.mapStruct;
 
 public class RepositoryProducts implements IRepositoryProducts {
 
@@ -38,18 +38,7 @@ public class RepositoryProducts implements IRepositoryProducts {
 			List<EProduct> products_list = entityManager.createQuery(query, EProduct.class).getResultList();
 			userTransaction.commit();
 			entityManager.close();
-			for (EProduct eProduct : products_list) {
-				Product product = new Product();
-				product.setId(eProduct.getId());
-				product.setName(eProduct.getName());
-				product.setSellerName(eProduct.getUser().getLogin());
-				product.setModel(eProduct.getModel());
-				product.setBrand(eProduct.getBrand());
-				product.setPrice(eProduct.getPrice());
-				product.setDate(new SimpleDateFormat("dd.MM.YYYY").format(eProduct.getDate()));
-				product.setImage(eProduct.getImage());
-				products.add(product);
-			}
+			products = mapStruct.toProduct(products_list);
 		} catch (Exception e) {
 			Logger.getLogger(RepositoryProducts.class.getName()).log(Level.INFO, null, e);
 		}
@@ -68,14 +57,7 @@ public class RepositoryProducts implements IRepositoryProducts {
 					.getResultList().get(0);
 			userTransaction.commit();
 			entityManager.close();
-			product.setId(eProduct.getId());
-			product.setName(eProduct.getName());
-			product.setSellerName(eProduct.getUser().getLogin());
-			product.setBrand(eProduct.getBrand());
-			product.setDate(new SimpleDateFormat("dd.MM.YYYY").format(eProduct.getDate()));
-			product.setImage(eProduct.getImage());
-			product.setModel(eProduct.getModel());
-			product.setPrice(eProduct.getPrice());
+			product = mapStruct.toProduct(eProduct);
 		} catch (Exception e) {
 			Logger.getLogger(RepositoryProducts.class.getName()).log(Level.INFO, null, e);
 		}
@@ -93,18 +75,7 @@ public class RepositoryProducts implements IRepositoryProducts {
 			List<EProduct> products_list = entityManager.createQuery(query, EProduct.class).setParameter("seller_name", seller_name).getResultList();
 			userTransaction.commit();
 			entityManager.close();
-			for (EProduct eProduct : products_list) {
-				Product product = new Product();
-				product.setId(eProduct.getId());
-				product.setName(eProduct.getName());
-				product.setSellerName(eProduct.getUser().getLogin());
-				product.setModel(eProduct.getModel());
-				product.setBrand(eProduct.getBrand());
-				product.setPrice(eProduct.getPrice());
-				product.setDate(new SimpleDateFormat("dd.MM.YYYY").format(eProduct.getDate()));
-				product.setImage(eProduct.getImage());
-				products.add(product);
-			}
+			products = mapStruct.toProduct(products_list);
 		} catch (Exception e) {
 			Logger.getLogger(RepositoryProducts.class.getName()).log(Level.INFO, null, e);
 		}

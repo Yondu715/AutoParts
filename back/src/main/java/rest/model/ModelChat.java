@@ -18,27 +18,31 @@ public class ModelChat implements IModelChat {
     @Override
     public void addUser(String roomId, Session session) {
         ArrayList<Session> usersList = roomUsers.getOrDefault(roomId, new ArrayList<>());
-        roomMessages.putIfAbsent(roomId, new ArrayList<>());
-        usersList.add(session);
-        roomUsers.put(roomId, usersList);
+        synchronized (usersList) {
+            roomMessages.putIfAbsent(roomId, new ArrayList<>());
+            usersList.add(session);
+            roomUsers.put(roomId, usersList);
+        }
     }
 
     @Override
     public void removeUser(String roomId, Session session) {
         ArrayList<Session> usersList = roomUsers.get(roomId);
-        usersList.remove(session);
-        roomUsers.put(roomId, usersList);
+        synchronized (usersList) {
+            usersList.remove(session);
+        }
     }
 
     @Override
     public void sendMessage(String roomId, Message message) {
         ArrayList<Session> usersList = roomUsers.get(roomId);
         ArrayList<Message> messages = roomMessages.get(roomId);
-        messages.add(message);
-        roomMessages.put(roomId, messages);
-        for (Session session : usersList) {
-            if (session.isOpen()){
-                session.getAsyncRemote().sendText(jsonb.toJson(message));
+        synchronized (usersList) {
+            messages.add(message);
+            for (Session session : usersList) {
+                if (session.isOpen()) {
+                    session.getAsyncRemote().sendText(jsonb.toJson(message));
+                }
             }
         }
     }
@@ -46,9 +50,11 @@ public class ModelChat implements IModelChat {
     @Override
     public void sendPrevMessages(String roomId, Session session) {
         ArrayList<Message> messages = roomMessages.get(roomId);
-        if (messages.size() > 0){
-            session.getAsyncRemote().sendText(jsonb.toJson(messages));
+        synchronized (messages) {
+            if (messages.size() > 0) {
+                session.getAsyncRemote().sendText(jsonb.toJson(messages));
+            }
         }
     }
-    
+
 }

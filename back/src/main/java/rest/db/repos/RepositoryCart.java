@@ -1,6 +1,5 @@
 package rest.db.repos;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,6 +15,7 @@ import rest.db.entities.EProduct;
 import rest.db.entities.EUser;
 import rest.model.dto.Product;
 import rest.model.interfaces.out.IRepositoryCart;
+import rest.utils.mapStruct;
 
 public class RepositoryCart implements IRepositoryCart {
 
@@ -38,16 +38,7 @@ public class RepositoryCart implements IRepositoryCart {
 			List<ECart> carts_list = entityManager.createQuery(getCart, ECart.class).setParameter("login", login).getResultList();
 			userTransaction.commit();
 			for (ECart eCart : carts_list) {
-				Product product = new Product();
-				EProduct eProduct = eCart.getProduct();
-				product.setId(eProduct.getId());
-				product.setName(eProduct.getName());
-				product.setSellerName(eProduct.getUser().getLogin());
-				product.setModel(eProduct.getModel());
-				product.setBrand(eProduct.getBrand());
-				product.setPrice(eProduct.getPrice());
-				product.setDate(new SimpleDateFormat("dd.MM.YYYY").format(eProduct.getDate()));
-				product.setImage(eProduct.getImage());
+				Product product = mapStruct.toProduct(eCart.getProduct());
 				products.add(product);
 			}
 		} catch (Exception e) {
