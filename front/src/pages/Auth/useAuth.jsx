@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useValidate } from "../../hook/useStore";
+import { useValidate } from "../../hook/useUserStore";
 import { asyncAuth } from "../../core/api/APIrequest";
 import { checkValid } from "../../core/model/dataAction";
 import { User } from "../../core/model/transport/User";
@@ -27,7 +27,7 @@ export function useAuth() {
         return new User(form);
     };
 
-    const _asyncSendAuthInfo = async () => {
+    const asyncSendAuthInfo = async () => {
         localStorage.clear();
         const user = _getAuthInfo();
         if (!checkValid(user)) {
@@ -73,6 +73,6 @@ export function useAuth() {
 
     return {
         error, handlerForm,
-        _asyncSendAuthInfo
+        asyncSendAuthInfo
     }
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMountEffect } from "../../../../hook/useMountEffect";
-import { useValidate } from "../../../../hook/useStore";
+import { useValidate } from "../../../../hook/useUserStore";
 import { asyncDeleteFromCart, asyncGetCart } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/dataAction";
 import { Product } from "../../../../core/model/transport/Product";
@@ -10,7 +10,7 @@ export function useCart() {
     const [products, setProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
 
-    const _selectProduct = (id) =>
+    const selectProduct = (id) =>
         setSelectedProducts((prevState) => {
             if (prevState.includes(id)) {
                 return prevState.filter(itemId => itemId !== id);
@@ -40,7 +40,7 @@ export function useCart() {
         }
     }
 
-    const _asyncSendDeleteInfo = async () => {
+    const asyncSendDeleteInfo = async () => {
         const jsonProductsId = [];
         selectedProducts.forEach(id => {
             jsonProductsId.push({ id: id });
@@ -68,6 +68,6 @@ export function useCart() {
 
     return {
         products, selectedProducts,
-        _selectProduct, _asyncSendDeleteInfo
+        selectProduct, asyncSendDeleteInfo
     }
 }

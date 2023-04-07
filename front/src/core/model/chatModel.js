@@ -2,31 +2,37 @@ import { connectToChat } from "../api/APIrequest";
 
 class ChatModel {
 
+    _subscribers = [];
     _wsChannel = null;
+
+    subscribe(callback) {
+        this._subscribers.push(callback);
+        return () => {
+            this._subscribers = this._subscribers.filter(s => s !== callback);
+        }
+    }
+
+    unsubscribe(callback) {
+        this._subscribers = this._subscribers.filter(s => s !== callback);
+    }
 
     connect(roomId) {
         this._wsChannel = connectToChat(roomId);
+        this._wsChannel.onmessage = this.messageHandler;
     }
 
     closeConnection() {
-        if (this._wsChannel) this._wsChannel.close();
-    }
-
-    setOnMessage(callback) {
-        const timer = setInterval(() => {
-            if (!this._wsChannel) return;
-            this._wsChannel.onmessage = callback;
-            clearInterval(timer);
-        });
+        this._subscribers = [];
+        this._wsChannel?.close();
     }
 
     sendMessage(message) {
-        if (!this._wsChannel) return;
-        this._wsChannel.send(message);
+        this._wsChannel?.send(JSON.stringify(message));
     }
 
-    getWsChannel() {
-        return this._wsChannel;
+    messageHandler = (e) => {
+        const newMessages = JSON.parse(e.data);
+        this._subscribers.forEach(s => s(newMessages));
     }
 
 }

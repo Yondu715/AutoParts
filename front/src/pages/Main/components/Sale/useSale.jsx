@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUserLogin, useValidate } from "../../../../hook/useStore";
+import { useUserLogin, useValidate } from "../../../../hook/useUserStore";
 import { asyncSaleProduct } from "../../../../core/api/APIrequest";
 import { checkValid } from "../../../../core/model/dataAction";
 import { Product } from "../../../../core/model/transport/Product";
@@ -64,7 +64,7 @@ export function useSale() {
         return product;
     }
 
-    const _asyncSendSaleInfo = async () => {
+    const asyncSendSaleInfo = async () => {
         const product = _getSaleInfo();
         if (!checkValid(product)) {
             setError("Не все поля были заполнены");
@@ -109,7 +109,7 @@ export function useSale() {
 
     return {
         form, error, handlerForm,
-        _asyncSendSaleInfo, handlerImage,
+        asyncSendSaleInfo, handlerImage,
         dndEnterOver, dndLeaveDrop, dndDrop, isDndActive,
         fields
     }

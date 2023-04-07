@@ -7,7 +7,7 @@ import styles from "./ProductInfo.module.css";
 export function ProductInfo() {
 
     const {
-        product, _asyncAddToCart, productAdded,
+        product, asyncAddProduct, productAdded,
         userLogin, openChat, chatIsOpen, error,
         id
     } = useProductInfo();
@@ -40,7 +40,7 @@ export function ProductInfo() {
             {product && (product.get()["sellerName"] !== userLogin) &&
                 <div className={styles.btnPlace}>
                     <StatusError message={error} />
-                    <SubmitButton disabled={productAdded} onClick={_asyncAddToCart}>{productAdded ? "Товар был успешно добавлен" : "Добавить товар в корзину"}</SubmitButton>
+                    <SubmitButton disabled={productAdded} onClick={asyncAddProduct}>{productAdded ? "Товар был успешно добавлен" : "Добавить товар в корзину"}</SubmitButton>
                 </div>
             }
         </div>

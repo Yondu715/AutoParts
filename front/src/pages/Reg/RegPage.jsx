@@ -9,7 +9,7 @@ import styles from "./AuthRegPage.module.css";
 export function RegPage() {
     const {
         error, handlerForm,
-        _asyncSendRegInfo
+        asyncSendRegInfo
     } = useReg();
 
     return (
@@ -35,7 +35,7 @@ export function RegPage() {
                     onChange={handlerForm}
                 />
                 <StatusError message={error} />
-                <SubmitButton onClick={_asyncSendRegInfo}>Зарегистрироваться</SubmitButton>
+                <SubmitButton onClick={asyncSendRegInfo}>Зарегистрироваться</SubmitButton>
                 <span className={styles.text}>Уже есть аккаунт? <Link to={AUTH_ROUTE}>Авторизоваться</Link></span>
             </div>
         </div>

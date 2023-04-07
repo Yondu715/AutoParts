@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useUserInfo } from "../../hook/useStore";
+import { useUserInfo } from "../../hook/useUserStore";
 import { authRoutes, publicRoutes } from "../routes";
 import { AUTH_ROUTE } from "../../utils/consts";
 

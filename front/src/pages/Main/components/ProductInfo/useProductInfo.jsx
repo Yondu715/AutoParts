@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useUserLogin, useValidate } from "../../../../hook/useStore";
+import { useUserLogin, useValidate } from "../../../../hook/useUserStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncAddToCart, asyncGetProductInfo } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/dataAction";
@@ -43,13 +43,13 @@ export function useProductInfo() {
         }
     }
 
-    const _asyncAddToCart = async () => {
+    const asyncAddProduct = async () => {
         const response = await asyncAddToCart(product);
         const status = response.getStatus();
-        _callbackAddCart(status);
+        _callbackAddProduct(status);
     }
 
-    const _callbackAddCart = (status) => {
+    const _callbackAddProduct = (status) => {
         switch (status) {
             case 401:
                 signOut();
@@ -72,7 +72,7 @@ export function useProductInfo() {
     useMountEffect(_asyncGetProductInfo);
 
     return {
-        product, _asyncAddToCart, productAdded,
+        product, asyncAddProduct, productAdded,
         userLogin, openChat, chatIsOpen, error,
         id
     }

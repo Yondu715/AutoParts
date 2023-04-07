@@ -5,7 +5,7 @@ import styles from "./Users.module.css";
 export function Users() {
     const {
         users, selectedUsers,
-        _asyncSendDeleteInfo, _selectUser
+        asyncSendDeleteInfo, usersHandler
     } = useUsers();
 
     return (
@@ -17,7 +17,7 @@ export function Users() {
                             <RowElement
                                 key={user.id}
                                 user={user}
-                                onClick={() => _selectUser(user.id)}
+                                onClick={() => usersHandler(user.id)}
                                 className={selectedUsers.includes(user.id) ? styles.active : styles.notActive}
                             />
                         )}
@@ -26,7 +26,7 @@ export function Users() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <SubmitButton type="delete" onClick={_asyncSendDeleteInfo}>Удалить</SubmitButton>
+                    <SubmitButton type="delete" onClick={asyncSendDeleteInfo}>Удалить</SubmitButton>
                 </div>
             </div>
         </div>

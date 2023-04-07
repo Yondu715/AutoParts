@@ -3,7 +3,7 @@ import styles from "./Products.module.css";
 
 export function Products() {
     const {
-        products, _onProductInfo
+        products, onProductInfo
     } = useProducts();
 
     return (
@@ -14,7 +14,7 @@ export function Products() {
                         <RowElement
                             key={product.id}
                             product={product}
-                            onClick={() => _onProductInfo(product.id)}
+                            onClick={() => onProductInfo(product.id)}
                         />
                     )}
                 </tbody>

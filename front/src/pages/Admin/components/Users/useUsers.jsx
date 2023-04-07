@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useValidate } from "../../../../hook/useStore";
+import { useValidate } from "../../../../hook/useUserStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncDeleteUsers, asyncGetAllUsers } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/dataAction";
@@ -11,7 +11,7 @@ export function useUsers() {
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
 
-    const _selectUser = (id) =>
+    const usersHandler = (id) =>
         setSelectedUsers((prevState) => {
             if (prevState.includes(id)) {
                 return prevState.filter(itemId => itemId !== id);
@@ -41,7 +41,7 @@ export function useUsers() {
         }
     }
 
-    const _asyncSendDeleteInfo = async () => {
+    const asyncSendDeleteInfo = async () => {
         const jsonUsersId = [];
         selectedUsers.forEach(id => {
             jsonUsersId.push({ id: id });
@@ -69,6 +69,6 @@ export function useUsers() {
 
     return {
         users, selectedUsers,
-        _asyncSendDeleteInfo, _selectUser
+        asyncSendDeleteInfo, usersHandler
     }
 }

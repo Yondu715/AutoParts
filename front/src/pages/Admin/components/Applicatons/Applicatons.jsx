@@ -6,9 +6,9 @@ import styles from "./Applications.module.css";
 export function Applications() {
 
     const {
-        applications, selectedApp, _selectApplication,
-        _selectHandler, _asyncAcceptApplications,
-        _asyncDeleteApplications, roles
+        applications, selectedApp, selectApplication,
+        selectHandler, asyncAcceptApp,
+        asyncDeleteApp, roles
     } = useApplications();
 
     return (
@@ -21,8 +21,8 @@ export function Applications() {
                                 key={user.id}
                                 user={user}
                                 roles={roles}
-                                onChange={(e) => _selectHandler(e, user.id)}
-                                onClick={() => _selectApplication(user.id)}
+                                onChange={(e) => selectHandler(e, user.id)}
+                                onClick={() => selectApplication(user.id)}
                                 className={selectedApp.includes(user.id) ? styles.active : styles.notActive}
                             />
                         )}
@@ -32,10 +32,10 @@ export function Applications() {
             <div>
                 <div className={styles.btnPlace}>
                     <div className={styles.btnContainer}>
-                        <SubmitButton onClick={_asyncAcceptApplications}>Принять</SubmitButton>
+                        <SubmitButton onClick={asyncAcceptApp}>Принять</SubmitButton>
                     </div>
                     <div className={styles.btnContainer}>
-                        <SubmitButton type="delete" onClick={_asyncDeleteApplications}>Удалить</SubmitButton>
+                        <SubmitButton type="delete" onClick={asyncDeleteApp}>Удалить</SubmitButton>
                     </div>
                 </div>
             </div>

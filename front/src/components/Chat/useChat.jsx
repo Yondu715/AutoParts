@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
-import { ChatModelFactory } from "../../core/model/chatModel";
-import { useUserLogin } from "../../hook/useStore";
+import { useUserLogin } from "../../hook/useUserStore";
+import { useDispatch, useSelector } from "react-redux";
+import { sendMessage, startMessagesListening, stopMessagesListening } from "../../core/store/UserStore/ChatSlice";
+
 
 export function useChat(roomId) {
-    const chatModel = ChatModelFactory.createInstance();
     const userLogin = useUserLogin();
-    
+    const dispatch = useDispatch();
     useEffect(() => {
-        chatModel.connect(roomId);
+        dispatch(startMessagesListening(roomId));
         return () => {
-            chatModel.closeConnection();
+            dispatch(stopMessagesListening());
         }
     }, [roomId])
 
@@ -19,14 +20,14 @@ export function useChat(roomId) {
 }
 
 export function useMessageForm(userLogin) {
-    const chatModel = ChatModelFactory.createInstance();
     const [message, setMessage] = useState("");
+    const dispatch = useDispatch();
 
     const handlerMessage = (e) => {
         setMessage(e.target.value);
     }
 
-    const sendMessage = () => {
+    const sendMessageHandler = () => {
         if (!message) return;
         const msg = {
             id: Date.now(),
@@ -34,38 +35,24 @@ export function useMessageForm(userLogin) {
             from: userLogin,
             date: new Date(),
         }
-        chatModel.sendMessage(JSON.stringify(msg));
+        dispatch(sendMessage(msg));
         setMessage("");
     }
 
     const onEnter = (e) => {
         if (e.keyCode === 13) {
-            sendMessage();
+            sendMessageHandler();
         }
     }
 
     return {
         message, handlerMessage, 
-        sendMessage, onEnter,
+        sendMessageHandler, onEnter,
     }
 }
 
 export function useMessages() {
-    const chatModel = ChatModelFactory.createInstance();
-    const [messages, setMessages] = useState([]);
-
-    const messageHandler = (e) => {
-        const newMessages = JSON.parse(e.data);
-        if (Array.isArray(newMessages)) {
-            setMessages(prevMessages => [...prevMessages, ...newMessages]);
-        } else {
-            setMessages(prevMessages => [...prevMessages, newMessages]);
-        }
-    }
-
-    useEffect(() => {
-        chatModel.setOnMessage(messageHandler);
-    }, []);
+    const messages = useSelector(state => state.chat.messages);
 
     return {
         messages

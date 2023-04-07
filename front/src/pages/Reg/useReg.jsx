@@ -23,7 +23,7 @@ export function useReg() {
         return new User(form);
     }
     
-    const _asyncSendRegInfo = async () => {
+    const asyncSendRegInfo = async () => {
         const user = _getRegInfo();
         if (!checkValid(user)) {
             setError("Не все поля были заполнены");
@@ -56,6 +56,6 @@ export function useReg() {
 
     return {
         form, handlerForm,
-        error, _asyncSendRegInfo
+        error, asyncSendRegInfo
     }
 }

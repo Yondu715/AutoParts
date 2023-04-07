@@ -8,7 +8,7 @@ export function Sale() {
 
     const {
         form, handlerForm, error, fields,
-        handlerImage, _asyncSendSaleInfo, isDndActive,
+        handlerImage, asyncSendSaleInfo, isDndActive,
         dndDrop, dndEnterOver, dndLeaveDrop,
     } = useSale();
 
@@ -51,7 +51,7 @@ export function Sale() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <SubmitButton onClick={_asyncSendSaleInfo}>Выставить на продажу</SubmitButton>
+                    <SubmitButton onClick={asyncSendSaleInfo}>Выставить на продажу</SubmitButton>
                 </div>
             </div>
         </div>

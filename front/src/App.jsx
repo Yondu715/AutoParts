@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-import { useValidate } from "./hook/useStore";
+import { useValidate } from "./hook/useUserStore";
 import { useMountEffect } from "./hook/useMountEffect";
 import { AppRouter } from "./router/AppRouter/AppRouter";
 import { LoaderSpinner } from "./components/LoaderSpinner/LoaderSpinner";

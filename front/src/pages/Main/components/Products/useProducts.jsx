@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useValidate } from "../../../../hook/useStore";
+import { useValidate } from "../../../../hook/useUserStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncGetAllProducts } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/dataAction";
@@ -11,7 +11,8 @@ export function useProducts() {
     const { signOut } = useValidate();
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
-    const _getAllProducts = async () => {
+
+    const _asyncGetProducts = async () => {
         const response = await asyncGetAllProducts();
         const data = response.getBody();
         const status = response.getStatus();
@@ -32,11 +33,11 @@ export function useProducts() {
         }
     }
 
-    const _onProductInfo = (id) => navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/") + `/${id}`);
+    const onProductInfo = (id) => navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/") + `/${id}`);
 
-    useMountEffect(_getAllProducts);
+    useMountEffect(_asyncGetProducts);
 
     return {
-        products, _onProductInfo
+        products, onProductInfo
     }
 }

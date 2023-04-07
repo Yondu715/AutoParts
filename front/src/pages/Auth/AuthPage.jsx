@@ -10,7 +10,7 @@ export function AuthPage() {
 
     const {
         handlerForm, error, 
-        _asyncSendAuthInfo
+        asyncSendAuthInfo
     } = useAuth();
 
     return (
@@ -30,7 +30,7 @@ export function AuthPage() {
                     onChange={handlerForm}
                 />
                 <StatusError message={error} />
-                <SubmitButton onClick={_asyncSendAuthInfo}>Войти</SubmitButton>
+                <SubmitButton onClick={asyncSendAuthInfo}>Войти</SubmitButton>
                 <span className={styles.text}>Еще нет аккаунта? <Link to={REG_ROUTE}>Зарегистрироваться</Link></span>
             </div>
         </div>

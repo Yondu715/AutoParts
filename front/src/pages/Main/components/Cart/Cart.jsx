@@ -6,7 +6,7 @@ import styles from "./Cart.module.css";
 export function Cart() {
     const {
         products, selectedProducts,
-        _asyncSendDeleteInfo, _selectProduct
+        asyncSendDeleteInfo, selectProduct
     } = useCart();
 
     return (
@@ -18,7 +18,7 @@ export function Cart() {
                             <RowElement
                                 key={product.id}
                                 product={product}
-                                onClick={() => _selectProduct(product.id)}
+                                onClick={() => selectProduct(product.id)}
                                 className={selectedProducts.includes(product.id) ? styles.active : styles.notActive}
                             />
                         )}
@@ -27,7 +27,7 @@ export function Cart() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <SubmitButton type="delete" onClick={_asyncSendDeleteInfo}>Удалить</SubmitButton>
+                    <SubmitButton type="delete" onClick={asyncSendDeleteInfo}>Удалить</SubmitButton>
                 </div>
             </div>
         </div>

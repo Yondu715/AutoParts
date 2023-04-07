@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import { useUserLogin, useValidate } from "../../hook/useStore";
+import { useUserLogin, useValidate } from "../../hook/useUserStore";
 import { Cart } from "./components/Cart/Cart";
 import { ProductInfo } from "./components/ProductInfo/ProductInfo";
 import { Products } from "./components/Products/Products";

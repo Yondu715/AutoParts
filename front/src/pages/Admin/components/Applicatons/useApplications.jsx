@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useValidate } from "../../../../hook/useStore";
+import { useValidate } from "../../../../hook/useUserStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { asyncAcceptApplications, asyncDeleteApplications, asyncGetAllApplications } from "../../../../core/api/APIrequest";
 import { jsonToObjects } from "../../../../core/model/dataAction";
@@ -12,7 +12,7 @@ export function useApplications() {
     const roles = ["client", "admin"];
 
 
-    const _selectApplication = (id) =>
+    const selectApplication = (id) =>
         setSelectedApp((prevState) => {
             if (prevState.includes(id)) {
                 return prevState.filter(itemId => itemId !== id);
@@ -21,9 +21,7 @@ export function useApplications() {
             }
         });
 
-
-
-    const _asyncGetAllApplications = async () => {
+    const _asyncGetApplications = async () => {
         const response = await asyncGetAllApplications();
         const data = response.getBody();
         const status = response.getStatus();
@@ -47,7 +45,7 @@ export function useApplications() {
         }
     }
 
-    const _selectHandler = (e, id) => {
+    const selectHandler = (e, id) => {
         const appCopy = applications.slice(0);
         appCopy.forEach(({ user }) => {
             if (user["id"] === id) {
@@ -73,14 +71,14 @@ export function useApplications() {
     }
 
 
-    const _asyncAcceptApplications = async () => {
+    const asyncAcceptApp = async () => {
         const jsonApplications = _getAcceptInfo();
         const response = await asyncAcceptApplications(jsonApplications);
         const status = response.getStatus();
         _callbackRequestInfo(status);
     }
 
-    const _asyncDeleteApplications = async () => {
+    const asyncDeleteApp = async () => {
         const jsonAppId = [];
         selectedApp.forEach(id => {
             jsonAppId.push({ id: id });
@@ -98,18 +96,18 @@ export function useApplications() {
             case 204:
             case 202:
                 setSelectedApp([]);
-                _asyncGetAllApplications();
+                _asyncGetApplications();
                 break;
             default:
                 break;
         }
     }
 
-    useMountEffect(_asyncGetAllApplications);
+    useMountEffect(_asyncGetApplications);
 
     return {
-        applications, selectedApp, _selectApplication,
-        _asyncAcceptApplications, _asyncDeleteApplications, 
-        _selectHandler, roles
+        applications, selectedApp, selectApplication,
+        asyncAcceptApp, asyncDeleteApp, 
+        selectHandler, roles
     }
 }

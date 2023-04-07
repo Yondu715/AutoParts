@@ -6,7 +6,7 @@ import styles from "./UserProducts.module.css";
 export function UserProducts() {
     const {
         products, selectedProducts,
-        _selectProduct, _asyncSendDeleteInfo
+        selectProduct, asyncSendDeleteInfo
     } = useUserProducts();
 
 
@@ -20,7 +20,7 @@ export function UserProducts() {
                                 key={product.id}
                                 product={product}
                                 className={selectedProducts.includes(product.id) ? styles.active : styles.notActive}
-                                onClick={() => _selectProduct(product.id)}
+                                onClick={() => selectProduct(product.id)}
                             />
                         )}
                     </tbody>
@@ -28,7 +28,7 @@ export function UserProducts() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <SubmitButton type="delete" onClick={_asyncSendDeleteInfo}>Удалить</SubmitButton>
+                    <SubmitButton type="delete" onClick={asyncSendDeleteInfo}>Удалить</SubmitButton>
                 </div>
             </div>
         </div>
