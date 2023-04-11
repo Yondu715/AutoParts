@@ -25,7 +25,8 @@ export function Products() {
 
 
 function RowElement({ product, ...props }) {
-    const { image, name, sellerName, date, brand, model, price } = product;
+    const { image, name, date, brand, model, price } = product;
+    console.log(name);
     return (
         <tr {...props}>
             <td>
@@ -35,7 +36,6 @@ function RowElement({ product, ...props }) {
                     </div>
                     <div className={styles.productInfo}>
                         <span className={styles.name}>{name}</span>
-                        <span className={styles.sellerName}>{sellerName}</span>
                         <span className={styles.date}>{date}</span>
                         <span className={styles.brand}>{brand}</span>
                         <span className={styles.model}>{model}</span>

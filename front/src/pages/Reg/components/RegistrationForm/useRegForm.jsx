@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { asyncReg } from "../../core/api/APIrequest";
-import { checkValid } from "../../core/model/dataAction";
-import { User } from "../../core/model/transport/User";
-import { AUTH_ROUTE } from "../../utils/consts";
+import { requestAPI } from "../../../../core/api/request-api";
+import { checkValid } from "../../../../core/model/dataAction";
+import { User } from "../../../../core/model/transport/User";
+import { AUTH_ROUTE } from "../../../../utils/consts";
 
-export function useReg() {
-
+export function useRegForm(){
     const initialState = {
         login: "",
         password: "",
@@ -22,7 +21,7 @@ export function useReg() {
     const _getRegInfo = () => {
         return new User(form);
     }
-    
+
     const asyncSendRegInfo = async () => {
         const user = _getRegInfo();
         if (!checkValid(user)) {
@@ -36,9 +35,7 @@ export function useReg() {
             setError("Пароли не совпадают");
             return;
         }
-        const response = await asyncReg(user);
-        const status = response.getStatus();
-        _callbackRegInfo(status);
+        requestAPI.sendRequest(() => requestAPI.asyncReg(user.get()), _callbackRegInfo);
     }
 
     const _callbackRegInfo = (status) => {

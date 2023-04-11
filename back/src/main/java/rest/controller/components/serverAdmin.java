@@ -1,6 +1,7 @@
 package rest.controller.components;
 
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -38,6 +39,7 @@ public class serverAdmin {
 	@GET
 	@AuthRequired
 	@Path("/applications")
+	@Produces("application/json")
 	public Response getApplications(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")){
@@ -51,6 +53,7 @@ public class serverAdmin {
 	@DELETE
 	@AuthRequired
 	@Path("/applications")
+	@Produces("application/json")
 	public Response removalApplication(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
@@ -79,6 +82,7 @@ public class serverAdmin {
 	@PUT
 	@AuthRequired
 	@Path("/applications")
+	@Produces("application/json")
 	public Response acceptApplication(@Context ContainerRequestContext requestContext, String userApplicationsJson) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
@@ -106,6 +110,7 @@ public class serverAdmin {
 	@GET
 	@AuthRequired
 	@Path("/users")
+	@Produces("application/json")
 	public Response getUsers(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
@@ -119,6 +124,7 @@ public class serverAdmin {
 	@DELETE
 	@AuthRequired
 	@Path("/users")
+	@Produces("application/json")
 	public Response removalUser(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {

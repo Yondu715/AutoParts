@@ -1,9 +1,8 @@
 import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
 import { useProductInfo } from "./useProductInfo";
-import { Chat } from "../../../../components/Chat/Chat";
 import { StatusError } from "../../../../components/StatusError/StatusError";
+import { Chat } from "../Chat/Chat";
 import styles from "./ProductInfo.module.css";
-
 export function ProductInfo() {
 
     const {

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { logIn, logOut } from "../core/store/UserStore/UserSlice";
+import { logIn, logOut } from "../store/userStore/userSlice";
 
 
 export function useValidate() {

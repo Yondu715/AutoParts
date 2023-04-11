@@ -1,19 +1,12 @@
-import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import { useUserLogin, useValidate } from "../../hook/useUserStore";
-import { Applications } from "./components/Applicatons/Applicatons";
-import { Users } from "./components/Users/Users";
+import { Applications } from "../Applicatons/Applicatons";
+import { Users } from "../Users/Users";
 import {
     ANY_ROUTE, APPLICATIONS_ROUTE, DEFAULT_PAGE_ROUTE,
     NOT_FOUND_ROUTE, USERS_ROUTE
-} from "../../utils/consts";
+} from "../../../../utils/consts";
 
-
-export function useAdmin() {
-    const [logoutAnimation, setAnimation] = useState(false);
-    const { signOut } = useValidate();
-    const userLogin = useUserLogin();
-
+export function useWrapContent() {
     const menuItems = {
         "Заявки": APPLICATIONS_ROUTE,
         "Пользователи": USERS_ROUTE,
@@ -38,16 +31,7 @@ export function useAdmin() {
         }
     ]
 
-    const logout = () => {
-        setAnimation(true);
-        setTimeout(() => {
-            localStorage.clear();
-            signOut();
-        }, 800);
-    }
-
     return {
-        logoutAnimation, logout,
-        menuItems, routes, userLogin
+        menuItems, routes
     }
 }

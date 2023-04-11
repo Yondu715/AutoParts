@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMountEffect } from "../../../../hook/useMountEffect";
 import { useValidate } from "../../../../hook/useUserStore";
-import { asyncDeleteFromCart, asyncGetCart } from "../../../../core/api/APIrequest";
+import { requestAPI } from "../../../../core/api/request-api";
 import { jsonToObjects } from "../../../../core/model/dataAction";
 import { Product } from "../../../../core/model/transport/Product";
 
@@ -20,10 +20,7 @@ export function useCart() {
         });
 
     const _asyncGetCart = async () => {
-        const response = await asyncGetCart();
-        const data = response.getBody();
-        const status = response.getStatus();
-        _callbackGetCart(status, data);
+        requestAPI.sendRequest(requestAPI.asyncGetCart, _callbackGetCart);
     }
 
     const _callbackGetCart = (status, data) => {
@@ -45,9 +42,7 @@ export function useCart() {
         selectedProducts.forEach(id => {
             jsonProductsId.push({ id: id });
         });
-        const response = await asyncDeleteFromCart(jsonProductsId);
-        const status = response.getStatus();
-        _callbackDeleteInfo(status);
+        requestAPI.sendRequest(() => requestAPI.asyncDeleteFromCart(jsonProductsId), _callbackDeleteInfo)
     }
 
     const _callbackDeleteInfo = (status) => {

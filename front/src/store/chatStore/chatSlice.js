@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ChatModelFactory } from "../../model/chatModel";
-
-const chatModel = ChatModelFactory.createInstance();
+import { chatModel } from "../../core/model/chatModel";
 
 let _messageHandler = null;
 
@@ -15,17 +13,17 @@ const messageHandler = (dispatch) => {
 }
 
 export const startMessagesListening = (roomId) => async (dispatch) => {
-    chatModel.connect(roomId);
+    chatModel.start(roomId);
     chatModel.subscribe(messageHandler(dispatch));
 }
 
 export const stopMessagesListening = () => async (dispatch) => {
     chatModel.unsubscribe(messageHandler(dispatch));
-    chatModel.closeConnection();
+    chatModel.stop();
     dispatch(messagesCleared());
 }
 
-export const sendMessage = (message) => async (dispatch) => {
+export const sendMessage = (message) => async () => {
     chatModel.sendMessage(message);
 }
 

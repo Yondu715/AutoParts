@@ -1,6 +1,7 @@
 package rest.controller.components;
 
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -47,6 +48,7 @@ public class serverUser {
 
 	@POST
 	@AuthRequired
+	@Produces("application/json")
 	@Path("/auth")
 	public Response auth(@Context ContainerRequestContext requestContext, String userJson) {
 		String login = requestContext.getProperty("login").toString();
@@ -79,6 +81,7 @@ public class serverUser {
 
 	@POST
 	@Path("/registration")
+	@Produces("application/json")
 	public Response registration(String userJson) {
 		User application;
 		try {
@@ -102,6 +105,7 @@ public class serverUser {
 	@GET
 	@AuthRequired
 	@Path("/cart")
+	@Produces("application/json")
 	public Response getCart(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
@@ -115,6 +119,7 @@ public class serverUser {
 	@POST
 	@AuthRequired
 	@Path("/cart")
+	@Produces("application/json")
 	public Response addCart(@Context ContainerRequestContext requestContext, String productJson) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
@@ -142,6 +147,7 @@ public class serverUser {
 	@DELETE
 	@AuthRequired
 	@Path("/cart")
+	@Produces("application/json")
 	public Response removal(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {

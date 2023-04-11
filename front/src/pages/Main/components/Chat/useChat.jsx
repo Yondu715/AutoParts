@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import { useUserLogin } from "../../hook/useUserStore";
-import { useDispatch, useSelector } from "react-redux";
-import { sendMessage, startMessagesListening, stopMessagesListening } from "../../core/store/UserStore/ChatSlice";
-
+import { useUserLogin } from "../../../../hook/useUserStore";
+import { useChatListening, useChatMessages } from "../../../../hook/useChatStore";
 
 export function useChat(roomId) {
     const userLogin = useUserLogin();
-    const dispatch = useDispatch();
+    const { startListening, stopListening } = useChatListening();
     useEffect(() => {
-        dispatch(startMessagesListening(roomId));
+        startListening(roomId);
         return () => {
-            dispatch(stopMessagesListening());
+            stopListening();
         }
-    }, [roomId])
+    }, [])
 
     return {
         userLogin
@@ -21,7 +19,7 @@ export function useChat(roomId) {
 
 export function useMessageForm(userLogin) {
     const [message, setMessage] = useState("");
-    const dispatch = useDispatch();
+    const { sendChatMessage } = useChatListening();
 
     const handlerMessage = (e) => {
         setMessage(e.target.value);
@@ -35,7 +33,7 @@ export function useMessageForm(userLogin) {
             from: userLogin,
             date: new Date(),
         }
-        dispatch(sendMessage(msg));
+        sendChatMessage(msg);
         setMessage("");
     }
 
@@ -46,14 +44,13 @@ export function useMessageForm(userLogin) {
     }
 
     return {
-        message, handlerMessage, 
+        message, handlerMessage,
         sendMessageHandler, onEnter,
     }
 }
 
 export function useMessages() {
-    const messages = useSelector(state => state.chat.messages);
-
+    const messages = useChatMessages();
     return {
         messages
     }

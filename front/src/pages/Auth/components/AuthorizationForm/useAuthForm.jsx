@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useValidate } from "../../hook/useUserStore";
-import { asyncAuth } from "../../core/api/APIrequest";
-import { checkValid } from "../../core/model/dataAction";
-import { User } from "../../core/model/transport/User";
+import { useValidate } from "../../../../hook/useUserStore";
+import { requestAPI } from "../../../../core/api/request-api";
+import { checkValid } from "../../../../core/model/dataAction";
+import { User } from "../../../../core/model/transport/User";
 import {
     ADMIN_ROUTE, APPLICATIONS_ROUTE,
     LS_TOKEN, MAIN_ROUTE, PRODUCTS_ROUTE
-} from "../../utils/consts";
+} from "../../../../utils/consts";
 
-export function useAuth() {
-
+export function useAuthForm() {
     const initialState = {
         login: "",
         password: "",
@@ -34,10 +33,7 @@ export function useAuth() {
             setError("Не все поля были заполнены");
             return;
         }
-        const response = await asyncAuth(user);
-        const data = response.getBody();
-        const status = response.getStatus();
-        _callbackAuth(status, data);
+        requestAPI.sendRequest(() => requestAPI.asyncAuth(user.get()), _callbackAuth);
     };
 
     const _callbackAuth = (status, data) => {

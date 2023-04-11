@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useValidate } from "../../../../hook/useUserStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
-import { asyncAcceptApplications, asyncDeleteApplications, asyncGetAllApplications } from "../../../../core/api/APIrequest";
+import { requestAPI } from "../../../../core/api/request-api";
 import { jsonToObjects } from "../../../../core/model/dataAction";
 import { User } from "../../../../core/model/transport/User";
 
@@ -22,10 +22,7 @@ export function useApplications() {
         });
 
     const _asyncGetApplications = async () => {
-        const response = await asyncGetAllApplications();
-        const data = response.getBody();
-        const status = response.getStatus();
-        _callbackGetAllApplications(status, data);
+        requestAPI.sendRequest(requestAPI.asyncGetAllApplications, _callbackGetAllApplications);
     }
 
     const _callbackGetAllApplications = (status, data) => {
@@ -70,12 +67,9 @@ export function useApplications() {
         return jsonApplications;
     }
 
-
     const asyncAcceptApp = async () => {
         const jsonApplications = _getAcceptInfo();
-        const response = await asyncAcceptApplications(jsonApplications);
-        const status = response.getStatus();
-        _callbackRequestInfo(status);
+        requestAPI.sendRequest(()=> requestAPI.asyncAcceptApplications(jsonApplications), _callbackRequestInfo);
     }
 
     const asyncDeleteApp = async () => {
@@ -83,9 +77,7 @@ export function useApplications() {
         selectedApp.forEach(id => {
             jsonAppId.push({ id: id });
         });
-        const response = await asyncDeleteApplications(jsonAppId);
-        const status = response.getStatus();
-        _callbackRequestInfo(status);
+        requestAPI.sendRequest(()=> requestAPI.asyncDeleteApplications(jsonAppId), _callbackRequestInfo);
     }
 
     const _callbackRequestInfo = (status) => {

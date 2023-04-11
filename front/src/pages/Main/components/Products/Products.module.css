@@ -48,14 +48,6 @@
     text-align: left;
 }
 
-.productInfo span:first-child{
-    display: none;
-}
-
-.productInfo .sellerName {
-    display: block;
-}
-
 .productInfo .date {
     display: block;
     font-size: 28px;

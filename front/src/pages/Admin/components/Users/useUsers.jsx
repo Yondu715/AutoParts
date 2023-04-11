@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useValidate } from "../../../../hook/useUserStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
-import { asyncDeleteUsers, asyncGetAllUsers } from "../../../../core/api/APIrequest";
+import { requestAPI } from "../../../../core/api/request-api";
 import { jsonToObjects } from "../../../../core/model/dataAction";
 import { User } from "../../../../core/model/transport/User";
 
@@ -20,11 +20,8 @@ export function useUsers() {
             }
         });
 
-    const _asyncGetUsers = async () => {
-        const response = await asyncGetAllUsers();
-        const data = response.getBody();
-        const status = response.getStatus();
-        _callbackGetUsers(status, data);
+    const _asyncGetUsers = () => {
+        requestAPI.sendRequest(requestAPI.asyncGetAllUsers, _callbackGetUsers);
     }
 
     const _callbackGetUsers = (status, data) => {
@@ -46,9 +43,7 @@ export function useUsers() {
         selectedUsers.forEach(id => {
             jsonUsersId.push({ id: id });
         });
-        const response = await asyncDeleteUsers(jsonUsersId);
-        const status = response.getStatus();
-        _callbackDeleteInfo(status);
+        requestAPI.sendRequest(() => requestAPI.asyncDeleteUsers(jsonUsersId), _callbackDeleteInfo);
     }
 
     const _callbackDeleteInfo = (status) => {

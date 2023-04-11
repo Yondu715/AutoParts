@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -33,6 +34,7 @@ public class serverProduct {
 	@GET
 	@AuthRequired
 	@Path("/")
+	@Produces("application/json")
 	public Response getProducts(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
@@ -46,6 +48,7 @@ public class serverProduct {
 	@GET
 	@AuthRequired
 	@Path("/userProducts")
+	@Produces("application/json")
 	public Response getProductsByUser(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
@@ -59,6 +62,7 @@ public class serverProduct {
 	@DELETE
 	@AuthRequired
 	@Path("/userProducts")
+	@Produces("application/json")
 	public Response removal(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
@@ -86,6 +90,7 @@ public class serverProduct {
 	@GET
 	@AuthRequired
 	@Path("/{product_id}")
+	@Produces("application/json")
 	public Response getProductInfo(@Context ContainerRequestContext requestContext, @Context UriInfo info) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
@@ -100,6 +105,7 @@ public class serverProduct {
 	@POST
 	@AuthRequired
 	@Path("/sale")
+	@Produces("application/json")
 	public Response sale(@Context ContainerRequestContext requestContext, String jsonSale) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {

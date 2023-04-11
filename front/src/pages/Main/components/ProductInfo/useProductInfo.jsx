@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUserLogin, useValidate } from "../../../../hook/useUserStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
-import { asyncAddToCart, asyncGetProductInfo } from "../../../../core/api/APIrequest";
+import { requestAPI } from "../../../../core/api/request-api";
 import { jsonToObjects } from "../../../../core/model/dataAction";
 import { Product } from "../../../../core/model/transport/Product";
 import { MAIN_ROUTE, PRODUCTS_ROUTE } from "../../../../utils/consts";
@@ -23,10 +23,7 @@ export function useProductInfo() {
             navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/"));
             return;
         }
-        const response = await asyncGetProductInfo(id);
-        const data = response.getBody();
-        const status = response.getStatus();
-        _callbackGetProductInfo(status, data);
+        requestAPI.sendRequest(() => requestAPI.asyncGetProductInfo(id), _callbackGetProductInfo);
     }
 
     const _callbackGetProductInfo = (status, data) => {
@@ -44,9 +41,7 @@ export function useProductInfo() {
     }
 
     const asyncAddProduct = async () => {
-        const response = await asyncAddToCart(product);
-        const status = response.getStatus();
-        _callbackAddProduct(status);
+        requestAPI.sendRequest(() => requestAPI.asyncAddToCart(product.get()), _callbackAddProduct);
     }
 
     const _callbackAddProduct = (status) => {

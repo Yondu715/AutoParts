@@ -1,5 +1,5 @@
 import { useChat, useMessageForm, useMessages } from "./useChat";
-import { SubmitButton } from "../SubmitButton/SubmitButton";
+import { SubmitButton } from "../../../../components/SubmitButton/SubmitButton";
 import styles from "./Chat.module.css";
 
 
@@ -18,7 +18,7 @@ export function Chat({ roomId }) {
 }
 
 
-function AddMessageForm({userLogin }) {
+function AddMessageForm({ userLogin }) {
     const {
         message, handlerMessage,
         onEnter, sendMessage
@@ -35,7 +35,7 @@ function AddMessageForm({userLogin }) {
 }
 
 
-function Messages({userLogin }) {
+function Messages({ userLogin }) {
     const {
         messages
     } = useMessages(userLogin);
@@ -52,8 +52,12 @@ function Message({ message, userLogin }) {
     const messageDate = new Date(message.date);
     let hours = messageDate.getHours();
     let minutes = messageDate.getMinutes();
-    if (hours < 10) hours = '0' + hours;
-    if (minutes < 10) minutes = '0' + minutes;
+    if (hours < 10) {
+        hours = '0' + hours;
+    }
+    if (minutes < 10) {
+        minutes = '0' + minutes; 
+    }
     const sendTime = `${hours}:${minutes}`
     return (
         <div className={[styles.message, msgStyle].join(" ")}>

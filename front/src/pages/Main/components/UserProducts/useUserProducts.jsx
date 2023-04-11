@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useValidate } from "../../../../hook/useUserStore";
 import { useMountEffect } from "../../../../hook/useMountEffect";
-import { asyncDeleteProducts, asyncGetUserProducts } from "../../../../core/api/APIrequest";
+import { requestAPI } from "../../../../core/api/request-api";
 import { jsonToObjects } from "../../../../core/model/dataAction";
 import { Product } from "../../../../core/model/transport/Product";
 
@@ -21,10 +21,7 @@ export function useUserProducts() {
 
 
     const _asyncGetUserProducts = async () => {
-        const response = await asyncGetUserProducts();
-        const data = response.getBody();
-        const status = response.getStatus();
-        _callbackGetUserProducts(status, data);
+        requestAPI.sendRequest(requestAPI.asyncGetUserProducts, _callbackGetUserProducts);
     }
 
     const _callbackGetUserProducts = (status, data) => {
@@ -46,9 +43,7 @@ export function useUserProducts() {
         selectedProducts.forEach(id => {
             jsonProductsId.push({ id: id });
         });
-        const response = await asyncDeleteProducts(jsonProductsId);
-        const status = response.getStatus();
-        _callbackDeleteInfo(status);
+        requestAPI.sendRequest(() => requestAPI.asyncDeleteProducts(jsonProductsId), _callbackDeleteInfo);
     }
 
     const _callbackDeleteInfo = (status) => {

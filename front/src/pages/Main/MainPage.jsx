@@ -1,35 +1,13 @@
-import { Route, Routes } from "react-router-dom";
-import { useMain } from "./useMain";
-import { Header } from "../../components/Header/Header";
-import { NavBar } from "../../components/NavBar/NavBar";
+import { WrapHeader } from "./components/WrapHeader/WrapHeader";
+import { WrapContent } from "./components/WrapContent/WrapContent";
 import styles from "./MainPage.module.css";
-
 
 export function MainPage() {
 
-    const {
-        menuItems, logout, userLogin,
-        logoutAnimation, routes
-    } = useMain();
-
     return (
         <div className={styles.mainPage}>
-            <span className={[styles.overPage, logoutAnimation ? "cover" : ""].join(" ")} />
-            <Header
-                name="Autoparts"
-                username={userLogin}
-                onClick={logout}
-            />
-            <div className={styles.wrapContent}>
-                <NavBar items={menuItems} />
-                <div className={styles.content}>
-                    <Routes>
-                        {
-                            routes.map(({ path, element }) => <Route key={path} path={path} element={element} />)
-                        }
-                    </Routes>
-                </div>
-            </div>
+            <WrapHeader/>
+            <WrapContent/>
         </div>
     );
 }

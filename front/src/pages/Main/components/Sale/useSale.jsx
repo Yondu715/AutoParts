@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useUserLogin, useValidate } from "../../../../hook/useUserStore";
-import { asyncSaleProduct } from "../../../../core/api/APIrequest";
+import { requestAPI } from "../../../../core/api/request-api";
 import { checkValid } from "../../../../core/model/dataAction";
 import { Product } from "../../../../core/model/transport/Product";
 
@@ -70,9 +70,7 @@ export function useSale() {
             setError("Не все поля были заполнены");
             return;
         }
-        const response = await asyncSaleProduct(product);
-        const status = response.getStatus();
-        _callbackSaleInfo(status);
+        requestAPI.sendRequest(() => requestAPI.asyncSaleProduct(product.get()), _callbackSaleInfo)
     }
 
     const _callbackSaleInfo = (status) => {

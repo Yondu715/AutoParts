@@ -4,7 +4,7 @@ import { useValidate } from "./hook/useUserStore";
 import { useMountEffect } from "./hook/useMountEffect";
 import { AppRouter } from "./router/AppRouter/AppRouter";
 import { LoaderSpinner } from "./components/LoaderSpinner/LoaderSpinner";
-import { asyncAuth } from "./core/api/APIrequest";
+import { requestAPI } from "./core/api/request-api";
 import { LS_TOKEN } from "./utils/consts";
 
 
@@ -37,7 +37,7 @@ export function App() {
             role: null,
         }
 
-        const response = await asyncAuth();
+        const response = await requestAPI.asyncAuth();
         const status = response.getStatus();
 
         switch (status) {
