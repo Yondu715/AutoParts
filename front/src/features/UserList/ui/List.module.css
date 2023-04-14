@@ -1,0 +1,45 @@
+.wrapUsers {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+}
+
+.users {
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow: scroll;
+}
+
+.users table {
+    width: 85%;
+    border-collapse: collapse;
+    margin: 40px auto;
+}
+
+.users table tr {
+    height: 80px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.users table td {
+    height: 100%;
+    width: 100%;
+}
+
+.active {
+    background: rgb(209, 255, 223);
+}
+
+.notActive {
+    background: transparent;
+}
+
+.notActive:hover {
+    background: rgb(255, 255, 255);
+}
+
+.btnPlace {
+    width: 40%;
+    margin: auto;
+}

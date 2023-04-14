@@ -1,4 +1,4 @@
-import { RegistrationForm } from "./components/RegistrationForm/RegistrationForm";
+import { RegistrationForm } from "../../features/RegistrationForm";
 import styles from "./AuthRegPage.module.css";
 
 export function RegPage() {

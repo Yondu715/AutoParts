@@ -1,0 +1,37 @@
+.product {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    padding: 5px 0;
+}
+
+.image {
+    width: 150px;
+    margin: auto 5%;
+}
+
+.image img {
+    max-width: 150px;
+}
+
+.productInfo {
+    width: 60%;
+    text-align: left;
+}
+
+.productInfo .date {
+    display: block;
+    font-size: 28px;
+    margin-bottom: 1%;
+}
+
+.productInfo .brand {
+    margin-right: 10px;
+}
+
+.price {
+    width: 20%;
+    margin: auto;
+}

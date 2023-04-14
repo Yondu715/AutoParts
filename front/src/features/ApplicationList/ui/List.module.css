@@ -1,0 +1,49 @@
+.wrapContent {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+}
+
+.applications {
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow: scroll;
+}
+
+.applications table {
+    width: 85%;
+    border-collapse: collapse;
+    margin: 40px auto;
+}
+
+.applications table tr {
+    height: 80px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+}
+
+.applications table td {
+    height: 100%;
+    width: 100%;
+}
+
+.active {
+    background: rgb(209, 255, 223);
+}
+
+.notActive {
+    background: transparent;
+}
+
+.notActive:hover {
+    background: rgb(255, 255, 255);
+}
+
+.btnPlace {
+    display: flex;
+}
+
+.btnContainer {
+    width: 50%;
+    margin: 0 5px;
+}

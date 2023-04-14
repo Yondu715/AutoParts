@@ -1,0 +1,1 @@
+export { buildRouter } from "./AppRouter";

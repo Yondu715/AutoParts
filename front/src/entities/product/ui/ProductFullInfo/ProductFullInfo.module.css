@@ -1,0 +1,17 @@
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.info span {
+    margin: 10px 0px;
+    font-size: 30px;
+}
+
+.info span:first-child {
+    margin-top: auto;
+}
+
+.info span:last-child {
+    margin-bottom: auto;
+}

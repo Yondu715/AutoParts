@@ -1,5 +1,5 @@
-import { WrapHeader } from "./components/WrapHeader/WrapHeader";
-import { WrapContent } from "./components/WrapContent/WrapContent";
+import { WrapHeader } from "../../widgets/WrapHeader";
+import { WrapUserContent } from "../../widgets/WrapUserContent";
 import styles from "./MainPage.module.css";
 
 export function MainPage() {
@@ -7,7 +7,7 @@ export function MainPage() {
     return (
         <div className={styles.mainPage}>
             <WrapHeader/>
-            <WrapContent/>
+            <WrapUserContent/>
         </div>
     );
 }
