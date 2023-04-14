@@ -1,4 +1,5 @@
-import { SubmitButton, StatusError } from "../../../shared/ui";
+import { StatusError } from "../../../shared/ui/StatusError";
+import { SubmitButton } from "../../../shared/ui/SubmitButton";
 import { ProductFullInfo } from "../../../entities/product";
 import { Chat } from "../../Chat";
 import { useProductInfo } from "../model";

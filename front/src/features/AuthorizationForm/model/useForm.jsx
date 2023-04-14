@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { requestAPI } from "../../../shared/api";
 import { dataAction } from "../../../shared/lib";
@@ -16,7 +16,7 @@ export function useForm() {
     }
 
     const [form, setForm] = useState(initialState);
-    const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+    const handlerForm = useCallback((e) => setForm({ ...form, [e.target.name]: e.target.value }), []);
 
     const [error, setError] = useState("");
     const navigate = useNavigate();

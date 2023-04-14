@@ -1,4 +1,4 @@
-import { SubmitButton } from "../../../shared/ui";
+import { SubmitButton } from "../../../shared/ui/SubmitButton";
 import { useCart } from "../model";
 import styles from "./Cart.module.css";
 

@@ -1,4 +1,6 @@
-import { InputBox, StatusError, SubmitButton } from "../../../shared/ui";
+import { InputBox } from "../../../shared/ui/InputBox";
+import { StatusError } from "../../../shared/ui/StatusError";
+import { SubmitButton } from "../../../shared/ui/SubmitButton";
 import { useSale } from "../model";
 import styles from "./Sale.module.css"
 

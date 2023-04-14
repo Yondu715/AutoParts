@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LoaderSpinner } from "../shared/ui";
+import { LoaderSpinner } from "../shared/ui/LoaderSpinner";
 import { useMountEffect } from "../shared/hooks";
 import { LS_TOKEN } from "../shared/config";
 import { viewerModel } from "../entities/viewer";

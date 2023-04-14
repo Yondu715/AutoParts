@@ -1,4 +1,4 @@
-import { SubmitButton } from "../../../shared/ui";
+import { SubmitButton } from "../../../shared/ui/SubmitButton";
 import { UserCard } from "../../../entities/user";
 import { useList } from "../model";
 import styles from "./List.module.css";

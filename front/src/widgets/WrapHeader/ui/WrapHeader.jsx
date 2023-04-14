@@ -1,4 +1,4 @@
-import { Header } from "../../../shared/ui";
+import { Header } from "../../../shared/ui/Header";
 import { useWrapHeader } from "../model";
 import styles from "./WrapHeader.module.css";
 

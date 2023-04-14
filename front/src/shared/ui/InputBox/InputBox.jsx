@@ -2,7 +2,6 @@ import { memo } from "react";
 import styles from "./InputBox.module.css"
 
 export function InputBox({ value, type, name, label, onChange, ...props }) {
-    console.log("Input");
     return (
         <div className={styles.inputBox}>
             {label && <label>{label}</label>}
@@ -20,3 +19,4 @@ export function InputBox({ value, type, name, label, onChange, ...props }) {
     );
 }
 
+export const MemoizedInputBox = memo(InputBox);

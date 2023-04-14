@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import { StatusError, SubmitButton, InputBox } from "../../../shared/ui";
+import { StatusError } from "../../../shared/ui/StatusError";
+import { InputBox } from "../../../shared/ui/InputBox";
+import { SubmitButton } from "../../../shared/ui/SubmitButton";
 import { REG_ROUTE } from "../../../shared/config";
 import { useForm } from "../model";
 import styles from "./Form.module.css";
@@ -10,7 +12,7 @@ export function Form() {
     const {
         asyncSendAuthInfo, error, handlerForm
     } = useForm();
-    console.log(1);
+
     return (
         <div className={[styles.authRegBlock, "fade"].join(" ")}>
             <span className={[styles.text, styles.title].join(" ")}>Авторизация</span>

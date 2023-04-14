@@ -1,4 +1,4 @@
-import { SubmitButton } from "../../../shared/ui";
+import { SubmitButton } from "../../../shared/ui/SubmitButton";
 import { ProductCard } from "../../../entities/product";
 import { useUserProducts } from "../model";
 import styles from "./UserProducts.module.css";
