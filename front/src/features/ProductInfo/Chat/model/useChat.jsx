@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { viewerModel } from "../../../entities/viewer";
-import { chatModel } from "../../../entities/chat";
+import { viewerModel } from "entities/viewer";
+import { chatModel } from "entities/chat";
 
 export function useChat(roomId) {
     const userLogin = viewerModel.useUserLogin();

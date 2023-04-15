@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
-import { ApplicationList } from "../../../features/ApplicationList";
-import { UserList } from "../../../features/UserList";
+import { ApplicationList } from "features/ApplicationList";
+import { UserList } from "features/UserList";
 import {
     ANY_ROUTE, APPLICATIONS_ROUTE, DEFAULT_PAGE_ROUTE,
     NOT_FOUND_ROUTE, USERS_ROUTE
-} from "../../../shared/config";
+} from "shared/config";
 
 export function useWrapContent() {
     const menuItems = {

@@ -1,4 +1,4 @@
-import { ProductCard } from "../../../entities/product";
+import { ProductCard } from "entities/product";
 import { useProducts } from "../model";
 import styles from "./Products.module.css";
 

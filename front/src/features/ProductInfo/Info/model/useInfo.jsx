@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMountEffect } from "../../../shared/hooks";
-import { requestAPI } from "../../../shared/api";
-import { dataAction } from "../../../shared/lib";
-import { Product } from "../../../shared/transport";
-import { MAIN_ROUTE, PRODUCTS_ROUTE } from "../../../shared/config";
-import { viewerModel } from "../../../entities/viewer";
+import { useMountEffect } from "shared/lib/hooks";
+import { requestAPI } from "shared/api";
+import { dataAction } from "shared/lib/actions";
+import { Product } from "shared/lib/transport";
+import { MAIN_ROUTE, PRODUCTS_ROUTE } from "shared/config";
+import { viewerModel } from "entities/viewer";
 
-export function useProductInfo() {
+export function useInfo() {
     const [product, setProduct] = useState();
     const [chatIsOpen, setChatIsOpen] = useState(false);
     const [productAdded, setProductAdded] = useState(false);

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { requestAPI } from "../../../shared/api";
-import { dataAction } from "../../../shared/lib";
-import { User } from "../../../shared/transport";
-import { AUTH_ROUTE } from "../../../shared/config";
+import { requestAPI } from "shared/api";
+import { dataAction } from "shared/lib/actions";
+import { User } from "shared/lib/transport";
+import { AUTH_ROUTE } from "shared/config";
 
 export function useForm(){
     const initialState = {

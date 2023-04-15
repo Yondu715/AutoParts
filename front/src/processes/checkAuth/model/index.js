@@ -1,5 +1,5 @@
-import { requestAPI } from "../../../shared/api";
-import { LS_TOKEN } from "../../../shared/config";
+import { requestAPI } from "shared/api";
+import { LS_TOKEN } from "shared/config";
 
 let userInfo = {
     isAuth: false,

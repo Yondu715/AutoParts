@@ -1,4 +1,4 @@
-import { SelectBox } from "../../../shared/ui/SelectBox";
+import { SelectBox } from "shared/ui/SelectBox";
 import styles from "./ApplicationCard.module.css";
 
 export function ApplicationCard({ user, roles, onChange, ...props }) {

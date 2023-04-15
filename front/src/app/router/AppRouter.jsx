@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
-import { AUTH_ROUTE } from "../../shared/config";
-import { viewerModel } from "../../entities/viewer";
+import { AUTH_ROUTE } from "shared/config";
+import { viewerModel } from "entities/viewer";
 import { authRoutes, publicRoutes } from "./routes";
 
 function AppRouter() {

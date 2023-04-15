@@ -1,5 +1,5 @@
-import { WrapHeader } from "../../widgets/WrapHeader";
-import { WrapUserContent } from "../../widgets/WrapUserContent";
+import { WrapHeader } from "widgets/WrapHeader";
+import { WrapUserContent } from "widgets/WrapUserContent";
 import styles from "./MainPage.module.css";
 
 export function MainPage() {

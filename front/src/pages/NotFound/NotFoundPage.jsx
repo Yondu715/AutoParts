@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { AUTH_ROUTE } from "../../shared/config";
+import { AUTH_ROUTE } from "shared/config";
 import styles from "./NotFoundPage.module.css";
 
 export function NotFoundPage() {

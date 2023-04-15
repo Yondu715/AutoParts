@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { useMountEffect } from "../../../shared/hooks";
-import { requestAPI } from "../../../shared/api";
-import { dataAction } from "../../../shared/lib";
-import { User } from "../../../shared/transport";
-import { viewerModel } from "../../../entities/viewer";
+import { useMountEffect } from "shared/lib/hooks";
+import { requestAPI } from "shared/api";
+import { dataAction } from "shared/lib/actions";
+import { User } from "shared/lib/transport";
+import { viewerModel } from "entities/viewer";
 
 export function useList() {
 

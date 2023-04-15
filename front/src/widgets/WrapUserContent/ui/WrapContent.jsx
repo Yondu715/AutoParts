@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { NavBar } from "../../../shared/ui/NavBar";
+import { NavBar } from "features/NavBar";
 import { useWrapContent } from "../model";
 import styles from "./WrapContent.module.css";
 

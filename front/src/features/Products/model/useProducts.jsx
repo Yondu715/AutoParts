@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMountEffect } from "../../../shared/hooks";
-import { requestAPI } from "../../../shared/api";
-import { dataAction } from "../../../shared/lib";
-import { Product } from "../../../shared/transport";
-import { viewerModel } from "../../../entities/viewer";
-import { MAIN_ROUTE, PRODUCTS_ROUTE } from "../../../shared/config";
+import { useMountEffect } from "shared/lib/hooks";
+import { requestAPI } from "shared/api";
+import { dataAction } from "shared/lib/actions";
+import { Product } from "shared/lib/transport";
+import { viewerModel } from "entities/viewer";
+import { MAIN_ROUTE, PRODUCTS_ROUTE } from "shared/config";
 
 export function useProducts() {
     const { signOut } = viewerModel.useValidate();

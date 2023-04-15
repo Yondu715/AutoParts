@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { LoaderSpinner } from "../shared/ui/LoaderSpinner";
-import { useMountEffect } from "../shared/hooks";
-import { LS_TOKEN } from "../shared/config";
-import { viewerModel } from "../entities/viewer";
-import { checkAuth } from "../processes/checkAuth";
+import { LoaderSpinner } from "shared/ui/LoaderSpinner";
+import { useMountEffect } from "shared/lib/hooks";
+import { LS_TOKEN } from "shared/config";
+import { viewerModel } from "entities/viewer";
+import { checkAuth } from "processes/checkAuth";
 import { buildProvider } from "./store";
 import { buildRouter } from "./router";
 import "./styles/index.css";

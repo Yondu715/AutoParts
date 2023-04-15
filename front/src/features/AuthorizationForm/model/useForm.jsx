@@ -1,13 +1,13 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { requestAPI } from "../../../shared/api";
-import { dataAction } from "../../../shared/lib";
-import { User } from "../../../shared/transport";
-import { viewerModel } from "../../../entities/viewer";
+import { requestAPI } from "shared/api";
+import { dataAction } from "shared/lib/actions";
+import { User } from "shared/lib/transport";
+import { viewerModel } from "entities/viewer";
 import {
     ADMIN_ROUTE, APPLICATIONS_ROUTE,
     LS_TOKEN, MAIN_ROUTE, PRODUCTS_ROUTE
-} from "../../../shared/config";
+} from "shared/config";
 
 export function useForm() {
     const initialState = {
@@ -16,7 +16,7 @@ export function useForm() {
     }
 
     const [form, setForm] = useState(initialState);
-    const handlerForm = useCallback((e) => setForm({ ...form, [e.target.name]: e.target.value }), []);
+    const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     const [error, setError] = useState("");
     const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { chatAPI } from "../../../../../shared/api";
+import { chatAPI } from "shared/api";
 
 let _messageHandler = null;
 

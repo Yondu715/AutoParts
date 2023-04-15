@@ -1,14 +1,14 @@
 import { Navigate } from "react-router-dom";
-import { Cart } from "../../../features/Cart";
-import { ProductInfo } from "../../../features/ProductInfo";
-import { Products } from "../../../features/Products";
-import { Sale } from "../../../features/Sale";
-import { UserProducts } from "../../../features/UserProducts";
+import { Cart } from "features/Cart";
+import { ProductInfo } from "features/ProductInfo";
+import { Products } from "features/Products";
+import { Sale } from "features/Sale";
+import { UserProducts } from "features/UserProducts";
 import {
     ANY_ROUTE, CART_ROUTE, DEFAULT_PAGE_ROUTE,
     NOT_FOUND_ROUTE, PRODUCTS_ROUTE, PRODUCT_INFO_ROUTE,
     SALE_ROUTE, USER_PRODUCTS_ROUTE
-} from "../../../shared/config";
+} from "shared/config";
 
 export function useWrapContent() {
     const menuItems = {

@@ -1,16 +1,16 @@
-import { StatusError } from "../../../shared/ui/StatusError";
-import { SubmitButton } from "../../../shared/ui/SubmitButton";
-import { ProductFullInfo } from "../../../entities/product";
+import { StatusError } from "shared/ui/StatusError";
+import { SubmitButton } from "shared/ui/SubmitButton";
+import { ProductFullInfo } from "entities/product";
 import { Chat } from "../../Chat";
-import { useProductInfo } from "../model";
-import styles from "./ProductInfo.module.css";
+import { useInfo } from "../model";
+import styles from "./Info.module.css";
 
-export function ProductInfo() {
+export function Info() {
     const {
         product, asyncAddProduct, productAdded,
         userLogin, openChat, chatIsOpen, error,
         id
-    } = useProductInfo();
+    } = useInfo();
 
     if (chatIsOpen) {
         return (

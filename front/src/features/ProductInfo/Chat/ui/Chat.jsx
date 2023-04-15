@@ -1,4 +1,4 @@
-import { SubmitButton } from "../../../shared/ui/SubmitButton";
+import { SubmitButton } from "shared/ui/SubmitButton";
 import { useChat, useMessageForm, useMessages } from "../model";
 import styles from "./Chat.module.css";
 

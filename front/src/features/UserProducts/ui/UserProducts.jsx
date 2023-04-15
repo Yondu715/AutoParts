@@ -1,5 +1,5 @@
-import { SubmitButton } from "../../../shared/ui/SubmitButton";
-import { ProductCard } from "../../../entities/product";
+import { SubmitButton } from "shared/ui/SubmitButton";
+import { ProductCard } from "entities/product";
 import { useUserProducts } from "../model";
 import styles from "./UserProducts.module.css";
 

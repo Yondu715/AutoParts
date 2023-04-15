@@ -1,4 +1,4 @@
-import { AuthorizationForm } from "../../features/AuthorizationForm";
+import { AuthorizationForm } from "features/AuthorizationForm";
 import styles from "./AuthRegPage.module.css"
 
 export function AuthPage() {

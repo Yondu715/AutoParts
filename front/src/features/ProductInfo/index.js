@@ -1,1 +1,1 @@
-export * from "./ui";
+export { Info as ProductInfo } from "./Info";

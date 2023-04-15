@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { viewerModel } from "../../../entities/viewer";
+import { viewerModel } from "entities/viewer";
 
 export function useWrapHeader(){
     const [logoutAnimation, setAnimation] = useState(false);

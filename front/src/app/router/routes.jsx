@@ -1,13 +1,13 @@
 import { Navigate } from "react-router-dom";
-import { AuthPage } from "../../pages/Auth";
-import { NotFoundPage } from "../../pages/NotFound";
-import { RegPage } from "../../pages/Reg";
-import { MainPage } from "../../pages/Main";
-import { AdminPage } from "../../pages/Admin";
+import { AuthPage } from "pages/Auth";
+import { NotFoundPage } from "pages/NotFound";
+import { RegPage } from "pages/Reg";
+import { MainPage } from "pages/Main";
+import { AdminPage } from "pages/Admin";
 import {
     ADMIN_ROLE, ADMIN_ROUTE, AUTH_ROUTE, CLIENT_ROLE,
     MAIN_ROUTE, ANY_ROUTE, REG_ROUTE, NOT_FOUND_ROUTE, ROOT_ROUTE,
-} from "../../shared/config";
+} from "shared/config";
 
 export const authRoutes = [
     {

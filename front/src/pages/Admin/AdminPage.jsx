@@ -1,5 +1,5 @@
-import { WrapAdminContent } from "../../widgets/WrapAdminContent";
-import { WrapHeader } from "../../widgets/WrapHeader";
+import { WrapAdminContent } from "widgets/WrapAdminContent";
+import { WrapHeader } from "widgets/WrapHeader";
 import styles from "./AdminPage.module.css";
 
 export function AdminPage() {

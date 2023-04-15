@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { requestAPI } from "../../../shared/api";
-import { dataAction } from "../../../shared/lib";
-import { Product } from "../../../shared/transport";
-import { viewerModel } from "../../../entities/viewer";
+import { requestAPI } from "shared/api";
+import { dataAction } from "shared/lib/actions";
+import { Product } from "shared/lib/transport";
+import { viewerModel } from "entities/viewer";
 
 export function useSale() {
 
