@@ -3,16 +3,16 @@ import { Provider } from "react-redux";
 import { viewerModel } from "entities/viewer";
 import { chatModel } from "entities/chat";
 
-const store = configureStore({
+const globalReduxStore = configureStore({
     reducer: {
-        viewer: viewerModel.reduxStore.viewerReducer,
-        chat: chatModel.reduxStore.chatReducer,
+        viewer: viewerModel.viewerReducer,
+        chat: chatModel.chatReducer,
     }
 });
 
 export function buildProvider() {
     return ({children}) => 
-        <Provider store={store}>
+        <Provider store={globalReduxStore}>
             {children}
         </Provider>
 }

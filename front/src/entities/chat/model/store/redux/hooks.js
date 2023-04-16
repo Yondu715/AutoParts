@@ -1,19 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
-import { reduxStore } from "./store";
+import { startMessagesListening, stopMessagesListening, sendMessage } from "./store";
+
 
 export function useChatListening() {
     const dispatch = useDispatch();
 
     const startListening = (roomId) => {
-        dispatch(reduxStore.startMessagesListening(roomId));
+        dispatch(startMessagesListening(roomId));
     }
 
     const stopListening = () => {
-        dispatch(reduxStore.stopMessagesListening());
+        dispatch(stopMessagesListening());
     }
 
     const sendChatMessage = (message) => {
-        dispatch(reduxStore.sendMessage(message));
+        dispatch(sendMessage(message));
     }
 
     return {

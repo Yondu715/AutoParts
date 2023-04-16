@@ -1,1 +1,2 @@
-export * as reduxStore from "./redux";
+// export * from "./redux";
+export * from "./mobx";

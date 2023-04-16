@@ -3,6 +3,7 @@ package rest.model;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
+import jakarta.ejb.Asynchronous;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.websocket.Session;
@@ -16,6 +17,7 @@ public class ModelChat implements IModelChat {
     private final static ConcurrentHashMap<String, ArrayList<Message>> roomMessages = new ConcurrentHashMap<>();
 
     @Override
+    @Asynchronous
     public void addUser(String roomId, Session session) {
         ArrayList<Session> usersList = roomUsers.getOrDefault(roomId, new ArrayList<>());
         synchronized (usersList) {
@@ -26,6 +28,7 @@ public class ModelChat implements IModelChat {
     }
 
     @Override
+    @Asynchronous
     public void removeUser(String roomId, Session session) {
         ArrayList<Session> usersList = roomUsers.get(roomId);
         synchronized (usersList) {
@@ -34,6 +37,7 @@ public class ModelChat implements IModelChat {
     }
 
     @Override
+    @Asynchronous
     public void sendMessage(String roomId, Message message) {
         ArrayList<Session> usersList = roomUsers.get(roomId);
         ArrayList<Message> messages = roomMessages.get(roomId);
@@ -48,6 +52,7 @@ public class ModelChat implements IModelChat {
     }
 
     @Override
+    @Asynchronous
     public void sendPrevMessages(String roomId, Session session) {
         ArrayList<Message> messages = roomMessages.get(roomId);
         synchronized (messages) {

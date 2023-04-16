@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { reduxStore } from "./store";
+import { logIn, logOut } from "./store";
+
 
 export function useValidate() {
     const dispatch = useDispatch();
@@ -10,10 +11,10 @@ export function useValidate() {
             login: login,
             role: role,
         }
-        dispatch(reduxStore.logIn(vadidateInfo))
+        dispatch(logIn(vadidateInfo))
     }
 
-    const signOut = () => dispatch(reduxStore.logOut());
+    const signOut = () => dispatch(logOut());
 
     return { signIn, signOut };
 }
