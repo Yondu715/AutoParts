@@ -1,6 +1,5 @@
 package rest.model.interfaces.in;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rest.model.dto.Product;
@@ -14,7 +13,7 @@ public interface IModelProducts {
 
 	public void deleteProduct(List<Product> productsID);
 
-	public ArrayList<Product> getProducts(String seller_name);
+	public List<Product> getProducts(String seller_name);
 
 	public Product getProductInfo(Integer product_id);
 

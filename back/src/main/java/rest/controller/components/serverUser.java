@@ -17,6 +17,7 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
 import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import rest.builder.Build;
 import rest.controller.interceptor.AuthRequired;
@@ -48,25 +49,23 @@ public class serverUser {
 
 	@POST
 	@AuthRequired
-	@Produces("application/json")
 	@Path("/auth")
-	public Response auth(@Context ContainerRequestContext requestContext, String userJson) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response authorization(@Context ContainerRequestContext requestContext, String userJson) {
 		String login = requestContext.getProperty("login").toString();
-		if (!login.equals("Not valid token")){
+		if (!login.equals("Not valid token")) {
 			return Response.status(Response.Status.NO_CONTENT).build();
 		}
-		
-		if (userJson.equals("")){
+
+		if (userJson.isEmpty()) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 
-		User user;
 		try {
-			user = jsonb.fromJson(userJson, User.class);
-		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
-		}
-		if (modelUser.authUser(user)) {
+			User user = jsonb.fromJson(userJson, User.class);
+			if (!modelUser.authUser(user)) {
+				return Response.status(Response.Status.UNAUTHORIZED).build();
+			}
 			User userFound = modelUser.getUser(user);
 			TokenKey tokenKey = TokenKey.getInstance();
 			Key key = tokenKey.getKey();
@@ -75,29 +74,26 @@ public class serverUser {
 			Token newToken = new Token(jwt);
 			String token = jsonb.toJson(newToken);
 			return Response.ok(token).build();
+		} catch (JsonbException e) {
+			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
 		}
-		return Response.status(Response.Status.UNAUTHORIZED).build();
 	}
 
 	@POST
 	@Path("/registration")
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response registration(String userJson) {
-		User application;
 		try {
-			try {
-				application = jsonb.fromJson(userJson, User.class);
-			} catch (Exception e) {
-				throw new Exception("Error JSON transforming");
-			}
+			User application = jsonb.fromJson(userJson, User.class);
 			if (modelApplications.addAplication(application)) {
 				return Response.status(Response.Status.OK).build();
 			}
-
-		} catch (JsonbException e) {
+		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
 		}
 		return Response.status(Response.Status.CONFLICT).build();
 	}
@@ -105,13 +101,13 @@ public class serverUser {
 	@GET
 	@AuthRequired
 	@Path("/cart")
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCart(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		ArrayList<Product> products = modelCart.getCart(login);
+		List<Product> products = modelCart.getCart(login);
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
 	}
@@ -119,27 +115,21 @@ public class serverUser {
 	@POST
 	@AuthRequired
 	@Path("/cart")
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCart(@Context ContainerRequestContext requestContext, String productJson) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		Product product;
 		try {
-			try {
-				product = jsonb.fromJson(productJson, Product.class);
-			} catch (Exception e) {
-				throw new Exception("Error JSON transforming");
-			}
+			Product product = jsonb.fromJson(productJson, Product.class);
 			if (modelCart.addToCart(login, product)) {
 				return Response.status(Response.Status.OK).build();
 			}
-
-		} catch (JsonbException e) {
+		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
 		}
 		return Response.status(Response.Status.CONFLICT).build();
 	}
@@ -147,27 +137,21 @@ public class serverUser {
 	@DELETE
 	@AuthRequired
 	@Path("/cart")
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response removal(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		String jsonDeleteID = requestContext.getProperty("data").toString();
-		List<Product> productsID;
+		String jsonDeleteId = requestContext.getProperty("data").toString();
 		try {
-
-			try {
-				productsID = jsonb.fromJson(jsonDeleteID, new ArrayList<Product>() {
-				}.getClass().getGenericSuperclass());
-			} catch (Exception e) {
-				throw new Exception("Error JSON transforming");
-			}
-			modelCart.deleteProduct(productsID);
-		} catch (JsonbException e) {
+			List<Product> productsId = jsonb.fromJson(jsonDeleteId, new ArrayList<Product>() {
+			}.getClass().getGenericSuperclass());
+			modelCart.deleteProduct(productsId);
+		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
 		}
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}

@@ -16,6 +16,7 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
 import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import rest.builder.Build;
 import rest.controller.interceptor.AuthRequired;
@@ -39,13 +40,13 @@ public class serverAdmin {
 	@GET
 	@AuthRequired
 	@Path("/applications")
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getApplications(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")){
+		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		ArrayList<User> userApplications = modelApplications.getApplications();
+		List<User> userApplications = modelApplications.getApplications();
 		String resultJson = jsonb.toJson(userApplications);
 		return Response.ok(resultJson).build();
 	}
@@ -53,28 +54,21 @@ public class serverAdmin {
 	@DELETE
 	@AuthRequired
 	@Path("/applications")
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response removalApplication(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String jsonDeleteID = requestContext.getProperty("data").toString();
-		List<User> userApplicationsID;
 		try {
-
-			try {
-				userApplicationsID = jsonb.fromJson(jsonDeleteID, new ArrayList<User>() {
-				}.getClass().getGenericSuperclass());
-			} catch (Exception e) {
-				throw new Exception("Error JSON transforming");
-			}
-			modelApplications.deleteApplication(userApplicationsID);
-
-		} catch (JsonbException e) {
+			List<User> userApplicationsId = jsonb.fromJson(jsonDeleteID, new ArrayList<User>() {
+			}.getClass().getGenericSuperclass());
+			modelApplications.deleteApplication(userApplicationsId);
+		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
 		}
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
@@ -82,27 +76,21 @@ public class serverAdmin {
 	@PUT
 	@AuthRequired
 	@Path("/applications")
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response acceptApplication(@Context ContainerRequestContext requestContext, String userApplicationsJson) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		List<User> userApplications;
+
 		try {
-
-			try {
-				userApplications = jsonb.fromJson(userApplicationsJson, new ArrayList<User>() {
-				}.getClass().getGenericSuperclass());
-			} catch (Exception e) {
-				throw new Exception("Error JSON transforming");
-			}
+			List<User> userApplications = jsonb.fromJson(userApplicationsJson, new ArrayList<User>() {
+			}.getClass().getGenericSuperclass());
 			modelApplications.acceptApplication(userApplications);
-
-		} catch (JsonbException e) {
+		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
 		}
 		return Response.status(Response.Status.ACCEPTED).build();
 	}
@@ -110,13 +98,13 @@ public class serverAdmin {
 	@GET
 	@AuthRequired
 	@Path("/users")
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUsers(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		ArrayList<User> users = modelUser.getUsers();
+		List<User> users = modelUser.getUsers();
 		String resultJson = jsonb.toJson(users);
 		return Response.ok(resultJson).build();
 	}
@@ -124,27 +112,22 @@ public class serverAdmin {
 	@DELETE
 	@AuthRequired
 	@Path("/users")
-	@Produces("application/json")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response removalUser(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		String jsonDeleteID = requestContext.getProperty("data").toString();
-		List<User> usersID;
-		try {
-			try {
-				usersID = jsonb.fromJson(jsonDeleteID, new ArrayList<User>() {
-				}.getClass().getGenericSuperclass());
-			} catch (Exception e) {
-				throw new Exception("Error JSON transforming");
-			}
-			modelUser.deleteUser(usersID);
+		String jsonDeleteId = requestContext.getProperty("data").toString();
 
-		} catch (JsonbException e) {
+		try {
+			List<User> usersId = jsonb.fromJson(jsonDeleteId, new ArrayList<User>() {
+			}.getClass().getGenericSuperclass());
+			modelUser.deleteUser(usersId);
+		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e).build();
 		}
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}

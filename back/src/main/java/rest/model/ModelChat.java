@@ -19,11 +19,10 @@ public class ModelChat implements IModelChat {
     @Override
     @Asynchronous
     public void addUser(String roomId, Session session) {
-        ArrayList<Session> usersList = roomUsers.getOrDefault(roomId, new ArrayList<>());
+        ArrayList<Session> usersList = roomUsers.computeIfAbsent(roomId, k -> new ArrayList<>());
         synchronized (usersList) {
             roomMessages.putIfAbsent(roomId, new ArrayList<>());
             usersList.add(session);
-            roomUsers.put(roomId, usersList);
         }
     }
 
@@ -31,6 +30,9 @@ public class ModelChat implements IModelChat {
     @Asynchronous
     public void removeUser(String roomId, Session session) {
         ArrayList<Session> usersList = roomUsers.get(roomId);
+        if (usersList == null){
+            return;
+        }
         synchronized (usersList) {
             usersList.remove(session);
         }
@@ -40,7 +42,7 @@ public class ModelChat implements IModelChat {
     @Asynchronous
     public void sendMessage(String roomId, Message message) {
         ArrayList<Session> usersList = roomUsers.get(roomId);
-        ArrayList<Message> messages = roomMessages.get(roomId);
+        ArrayList<Message> messages = roomMessages.computeIfAbsent(roomId, k -> new ArrayList<>());
         synchronized (usersList) {
             messages.add(message);
             for (Session session : usersList) {
@@ -55,8 +57,11 @@ public class ModelChat implements IModelChat {
     @Asynchronous
     public void sendPrevMessages(String roomId, Session session) {
         ArrayList<Message> messages = roomMessages.get(roomId);
+        if (messages == null) {
+            return;
+        }
         synchronized (messages) {
-            if (messages.size() > 0) {
+            if (!messages.isEmpty()) {
                 session.getAsyncRemote().sendText(jsonb.toJson(messages));
             }
         }

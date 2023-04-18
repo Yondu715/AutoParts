@@ -1,6 +1,5 @@
 package rest.model.interfaces.in;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rest.model.dto.User;
@@ -16,7 +15,7 @@ public interface IModelUser {
 
 	public User getUser(User user);
 
-	public ArrayList<User> getUsers();
+	public List<User> getUsers();
 
 	public void deleteUser(List<User> users_id);
 }

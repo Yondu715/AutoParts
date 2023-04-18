@@ -1,6 +1,5 @@
 package rest.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rest.model.dto.User;
@@ -17,7 +16,7 @@ public class ModelApplication implements IModelApplications {
 	}
 
 	@Override
-	public ArrayList<User> getApplications() {
+	public List<User> getApplications() {
 		return repUsers.findWithoutRole();
 	}
 

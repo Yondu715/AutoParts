@@ -2,20 +2,19 @@ package rest.db.repos;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.UserTransaction;
 import rest.db.entities.ECart;
 import rest.db.entities.EProduct;
 import rest.db.entities.EUser;
 import rest.model.dto.Product;
 import rest.model.interfaces.out.IRepositoryCart;
-import rest.utils.mapStruct;
+import rest.utils.cartStruct;
 
 public class RepositoryCart implements IRepositoryCart {
 
@@ -28,40 +27,36 @@ public class RepositoryCart implements IRepositoryCart {
 	UserTransaction userTransaction;
 
 	@Override
-	public ArrayList<Product> findByUser(String login) {
-		ArrayList<Product> products = new ArrayList<>();
-		String getCart = "select c from ECart c where c.user.login=:login";
+	public List<Product> findByLogin(String login) {
+		entityManager = entityManagerFactory.createEntityManager();
+		TypedQuery<ECart> query = entityManager.createQuery("select c from ECart c where c.user.login=:login", ECart.class);
+		query.setParameter("login", login);
+		List<Product> products = new ArrayList<>();
 		try {
-			entityManager = entityManagerFactory.createEntityManager();
-			userTransaction.begin();
-			entityManager.joinTransaction();
-			List<ECart> carts_list = entityManager.createQuery(getCart, ECart.class).setParameter("login", login).getResultList();
-			userTransaction.commit();
-			for (ECart eCart : carts_list) {
-				Product product = mapStruct.toProduct(eCart.getProduct());
-				products.add(product);
-			}
+			List<ECart> cartList = query.getResultList();
+			products = cartStruct.toProduct(cartList);
 		} catch (Exception e) {
-			Logger.getLogger(RepositoryCart.class.getName()).log(Level.INFO, null, e);
+		} finally {
+			entityManager.close();
 		}
 		return products;
 	}
 
 	@Override
-	public boolean add(String login, Product product) {
-		String getUser = "select u from EUser u where u.login=:login";
-		String getProduct = "select p from EProduct p where p.id=:id";
+	public boolean add(String login, Integer productId) {
+		entityManager = entityManagerFactory.createEntityManager();
+		TypedQuery<EUser> getUser = entityManager.createQuery("select u from EUser u where u.login=:login",
+				EUser.class);
+		getUser.setParameter("login", login);
+		TypedQuery<EProduct> getProduct = entityManager.createQuery("select p from EProduct p where p.id=:id",
+				EProduct.class);
+		getProduct.setParameter("id", productId);
 		boolean addStatus = true;
 		try {
-			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();
 			entityManager.joinTransaction();
-			List<EUser> users_list = entityManager.createQuery(getUser, EUser.class).setParameter("login", login)
-					.getResultList();
-			List<EProduct> products_list = entityManager.createQuery(getProduct, EProduct.class)
-					.setParameter("id", product.getId()).getResultList();
-			EProduct eProduct = products_list.get(0);
-			EUser eUser = users_list.get(0);
+			EUser eUser = getUser.getSingleResult();
+			EProduct eProduct = getProduct.getSingleResult();
 			ECart eCart = new ECart();
 			eCart.setProduct(eProduct);
 			eCart.setUser(eUser);
@@ -69,23 +64,25 @@ public class RepositoryCart implements IRepositoryCart {
 			userTransaction.commit();
 		} catch (Exception e) {
 			addStatus = false;
-			Logger.getLogger(RepositoryCart.class.getName()).log(Level.INFO, null, e);
+		} finally {
+			entityManager.close();
 		}
 		return addStatus;
 	}
 
 	@Override
-	public void delete(Integer productID) {
-		String query = "delete from ECart c where c.product.id=:id";
+	public void delete(Integer productId) {
+		entityManager = entityManagerFactory.createEntityManager();
+		TypedQuery<ECart> query = entityManager.createQuery("delete from ECart c where c.product.id=:id", ECart.class);
+		query.setParameter("id", productId);
 		try {
-			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();
 			entityManager.joinTransaction();
-			entityManager.createQuery(query).setParameter("id", productID).executeUpdate();
+			query.executeUpdate();
 			userTransaction.commit();
-			entityManager.close();
 		} catch (Exception e) {
-			Logger.getLogger(RepositoryProducts.class.getName()).log(Level.INFO, null, e);
+		} finally {
+			entityManager.close();
 		}
 	}
 

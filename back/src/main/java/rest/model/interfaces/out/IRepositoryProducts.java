@@ -1,18 +1,18 @@
 package rest.model.interfaces.out;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import rest.model.dto.Product;
 
 public interface IRepositoryProducts {
 	
-	public ArrayList<Product> findAll();
+	public List<Product> findAll();
 
 	public Product findById(Integer id);
 
-	public ArrayList<Product> findByUser(String seller_name);
+	public List<Product> findByUser(String sellerName);
 
 	public void add(Product product);
 
-	public void delete(Integer productID);
+	public void delete(Integer productId);
 }

@@ -2,18 +2,17 @@ package rest.db.repos;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.UserTransaction;
 import rest.db.entities.EUser;
 import rest.model.dto.User;
 import rest.model.interfaces.out.IRepositoryUsers;
-import rest.utils.mapStruct;
+import rest.utils.userStruct;
 
 public class RepositoryUsers implements IRepositoryUsers {
 
@@ -26,124 +25,113 @@ public class RepositoryUsers implements IRepositoryUsers {
 	UserTransaction userTransaction;
 
 	@Override
-	public boolean check(User user) {
-		String query = "select u from EUser u where u.login=:login and u.password=:password and u.role is not null";
-		Integer size = 0;
-		try {
-			entityManager = entityManagerFactory.createEntityManager();
-			userTransaction.begin();
-			entityManager.joinTransaction();
-			List<EUser> users_list = entityManager.createQuery(query, EUser.class)
-					.setParameter("login", user.getLogin()).setParameter("password", user.getPassword()).getResultList();
-			size = users_list.size();
-			userTransaction.commit();
-			entityManager.close();
-		} catch (Exception e) {
-			Logger.getLogger(RepositoryUsers.class.getName()).log(Level.INFO, null, e);
-		}
-		return (size == 1);
-	}
-
-	@Override
 	public boolean add(User user) {
-		boolean reg_status = true;
+		entityManager = entityManagerFactory.createEntityManager();
+		boolean status = true;
 		try {
-			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();
 			entityManager.joinTransaction();
-			EUser eUser = mapStruct.toEUser(user);
+			EUser eUser = userStruct.toEUser(user);
 			entityManager.persist(eUser);
 			userTransaction.commit();
-			entityManager.close();
 		} catch (Exception e) {
-			reg_status = false;
-			Logger.getLogger(RepositoryUsers.class.getName()).log(Level.INFO, null, e);
+			status = false;
+		} finally {
+			entityManager.close();
 		}
-		return reg_status;
+		return status;
 	}
 
 	@Override
-	public User find(String login) {
-		String query = "select u from EUser u where u.login=:login and u.role is not null";
-		User user = new User();
+	public boolean delete(Integer userId) {
+		entityManager = entityManagerFactory.createEntityManager();
+		TypedQuery<EUser> query = entityManager.createQuery("delete from EUser u where u.id=:id", EUser.class);
+		query.setParameter("id", userId);
+		Boolean status = true;
 		try {
-			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();
 			entityManager.joinTransaction();
-			List<EUser> users_list = entityManager.createQuery(query, EUser.class)
-					.setParameter("login", login).getResultList();
+			query.executeUpdate();
 			userTransaction.commit();
-			entityManager.close();
-			user = mapStruct.toUser(users_list.get(0));
 		} catch (Exception e) {
-			Logger.getLogger(RepositoryUsers.class.getName()).log(Level.INFO, null, e);
+			status = false;
+		} finally {
+			entityManager.close();
+		}
+		return status;
+	}
+
+	@Override
+	public User findByLogin(String login) {
+		entityManager = entityManagerFactory.createEntityManager();
+		TypedQuery<EUser> query = entityManager
+				.createQuery("select u from EUser u where u.login=:login and u.role is not null", EUser.class);
+		query.setParameter("login", login);
+		User user = new User();
+		try {
+			userTransaction.begin();
+			entityManager.joinTransaction();
+			EUser eUser = query.getSingleResult();
+			userTransaction.commit();
+			user = userStruct.toUser(eUser);
+		} catch (Exception e) {
+		} finally {
+			entityManager.close();
 		}
 		return user;
 	}
 
 	@Override
-	public ArrayList<User> findAll() {
-		String query = "select u from EUser u where u.role is not null";
-		ArrayList<User> users = new ArrayList<>();
+	public List<User> findAll() {
+		entityManager = entityManagerFactory.createEntityManager();
+		TypedQuery<EUser> query = entityManager.createQuery("select u from EUser u where u.role is not null",
+				EUser.class);
+		List<User> users = new ArrayList<>();
 		try {
-			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();
 			entityManager.joinTransaction();
-			List<EUser> users_list = entityManager.createQuery(query, EUser.class).getResultList();
+			List<EUser> usersList = query.getResultList();
 			userTransaction.commit();
-			entityManager.close();
-			users = mapStruct.toUser(users_list);
+			users = userStruct.toUser(usersList);
 		} catch (Exception e) {
-			Logger.getLogger(RepositoryUsers.class.getName()).log(Level.INFO, null, e);
+		} finally {
+			entityManager.close();
 		}
 		return users;
 	}
 
 	@Override
-	public ArrayList<User> findWithoutRole() {
-		String query = "select u from EUser u where u.role is null";
-		ArrayList<User> users = new ArrayList<>();
+	public List<User> findWithoutRole() {
+		entityManager = entityManagerFactory.createEntityManager();
+		TypedQuery<EUser> query = entityManager.createQuery("select u from EUser u where u.role is null", EUser.class);
+		List<User> users = new ArrayList<>();
 		try {
-			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();
 			entityManager.joinTransaction();
-			List<EUser> users_list = entityManager.createQuery(query, EUser.class).getResultList();
+			List<EUser> usersList = query.getResultList();
 			userTransaction.commit();
-			entityManager.close();
-			users = mapStruct.toUser(users_list);
+			users = userStruct.toUser(usersList);
 		} catch (Exception e) {
-			Logger.getLogger(RepositoryUsers.class.getName()).log(Level.INFO, null, e);
+		} finally {
+			entityManager.close();
 		}
 		return users;
-	}
-
-	@Override
-	public void delete(Integer user_id) {
-		String query = "delete from EUser u where u.id=:id";
-		try {
-			entityManager = entityManagerFactory.createEntityManager();
-			userTransaction.begin();
-			entityManager.joinTransaction();
-			entityManager.createQuery(query).setParameter("id", user_id).executeUpdate();
-			userTransaction.commit();
-			entityManager.close();
-		} catch (Exception e) {
-			Logger.getLogger(RepositoryUsers.class.getName()).log(Level.INFO, null, e);
-		}
 	}
 
 	@Override
 	public void setRole(User user) {
-		String query = "update EUser u set u.role=:role where u.id=:id";
+		entityManager = entityManagerFactory.createEntityManager();
+		TypedQuery<EUser> query = entityManager.createQuery("update EUser u set u.role=:role where u.id=:id",
+				EUser.class);
+		query.setParameter("role", user.getRole()).setParameter("id", user.getId());
 		try {
-			entityManager = entityManagerFactory.createEntityManager();
 			userTransaction.begin();
 			entityManager.joinTransaction();
-			entityManager.createQuery(query).setParameter("role", user.getRole()).setParameter("id", user.getId()).executeUpdate();
+			query.executeUpdate();
 			userTransaction.commit();
-			entityManager.close();
 		} catch (Exception e) {
-			Logger.getLogger(RepositoryUsers.class.getName()).log(Level.INFO, null, e);
+		} finally {
+			entityManager.close();
 		}
 	}
 }

@@ -1,6 +1,5 @@
 package rest.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rest.model.dto.Product;
@@ -13,12 +12,12 @@ public class ModelCart implements IModelCart {
 
 	@Override
 	public boolean addToCart(String login, Product product) {
-		return repCart.add(login, product);
+		return repCart.add(login, product.getId());
 	}
 
 	@Override
-	public ArrayList<Product> getCart(String login) {
-		return repCart.findByUser(login);
+	public List<Product> getCart(String login) {
+		return repCart.findByLogin(login);
 	}
 
 	@Override

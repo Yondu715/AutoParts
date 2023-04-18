@@ -1,6 +1,5 @@
 package rest.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rest.model.dto.Product;
@@ -24,8 +23,8 @@ public class ModelProducts implements IModelProducts {
 	}
 
 	@Override
-	public ArrayList<Product> getProducts(String seller_name) {
-		ArrayList<Product> products = null;
+	public List<Product> getProducts(String seller_name) {
+		List<Product> products = null;
 		if (seller_name == null) {
 			products = repProducts.findAll();
 		} else {

@@ -3,6 +3,7 @@ package rest.db.entities;
 import java.io.Serializable;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -12,15 +13,14 @@ import jakarta.persistence.Table;
 @Table(name = "carts")
 public class ECart implements Serializable {
 
-
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private EUser user;
-
 	@Id
-	@ManyToOne
-	@JoinColumn(name = "product_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "product_id", nullable = false)
 	private EProduct product;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false)
+	private EUser user;
 
 	public EUser getUser() {
 		return user;

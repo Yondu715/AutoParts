@@ -1,12 +1,15 @@
 package rest.db.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +28,12 @@ public class EUser implements Serializable {
 
 	@Column(name = "role")
 	private String role;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<EProduct> eProducts;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<ECart> eCarts;
 
 	public String getRole() {
 		return role;
@@ -56,5 +65,13 @@ public class EUser implements Serializable {
 
 	public void setLogin(String login) {
 		this.login = login;
+	}
+
+	public List<EProduct> getProducts(){
+		return eProducts;
+	}
+
+	public List<ECart> getCarts() {
+		return eCarts;
 	}
 }

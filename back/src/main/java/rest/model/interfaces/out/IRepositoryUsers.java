@@ -1,22 +1,20 @@
 package rest.model.interfaces.out;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import rest.model.dto.User;
 
 public interface IRepositoryUsers {
-	
-	public boolean check(User user);
 
 	public boolean add(User user);
 
-	public void delete(Integer id);
+	public boolean delete(Integer userId);
 
-	public User find(String login);
+	public User findByLogin(String login);
 
-	public ArrayList<User> findAll();
+	public List<User> findAll();
 
-	public ArrayList<User> findWithoutRole();
+	public List<User> findWithoutRole();
 
 	public void setRole(User user);
 }
