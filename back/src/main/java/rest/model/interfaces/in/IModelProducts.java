@@ -11,11 +11,10 @@ public interface IModelProducts {
 
 	public void addProduct(Product product);
 
-	public void deleteProduct(List<Product> productsID);
+	public void deleteProduct(List<Product> productsId);
 
-	public List<Product> getProducts(String seller_name);
+	public List<Product> getProducts(String sellerName);
 
-	public Product getProductInfo(Integer product_id);
+	public Product getProductInfo(Integer productId);
 
-	public void buyProduct(List<Product> productsID);
 }

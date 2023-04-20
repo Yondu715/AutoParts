@@ -19,10 +19,10 @@ public class ModelChat implements IModelChat {
     @Override
     @Asynchronous
     public void addUser(String roomId, Session session) {
-        ArrayList<Session> usersList = roomUsers.computeIfAbsent(roomId, k -> new ArrayList<>());
+        ArrayList<Session> usersList = roomUsers.putIfAbsent(roomId, new ArrayList<>());
         synchronized (usersList) {
-            roomMessages.putIfAbsent(roomId, new ArrayList<>());
             usersList.add(session);
+            roomMessages.putIfAbsent(roomId, new ArrayList<>());
         }
     }
 
@@ -42,7 +42,7 @@ public class ModelChat implements IModelChat {
     @Asynchronous
     public void sendMessage(String roomId, Message message) {
         ArrayList<Session> usersList = roomUsers.get(roomId);
-        ArrayList<Message> messages = roomMessages.computeIfAbsent(roomId, k -> new ArrayList<>());
+        ArrayList<Message> messages = roomMessages.putIfAbsent(roomId, new ArrayList<>());
         synchronized (usersList) {
             messages.add(message);
             for (Session session : usersList) {

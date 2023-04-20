@@ -60,9 +60,9 @@ public class serverAdmin {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		String jsonDeleteID = requestContext.getProperty("data").toString();
+		String jsonDeleteId = requestContext.getProperty("data").toString();
 		try {
-			List<User> userApplicationsId = jsonb.fromJson(jsonDeleteID, new ArrayList<User>() {
+			List<User> userApplicationsId = jsonb.fromJson(jsonDeleteId, new ArrayList<User>() {
 			}.getClass().getGenericSuperclass());
 			modelApplications.deleteApplication(userApplicationsId);
 		} catch (JsonbException | IllegalArgumentException e) {
@@ -82,7 +82,6 @@ public class serverAdmin {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-
 		try {
 			List<User> userApplications = jsonb.fromJson(userApplicationsJson, new ArrayList<User>() {
 			}.getClass().getGenericSuperclass());
@@ -119,7 +118,6 @@ public class serverAdmin {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String jsonDeleteId = requestContext.getProperty("data").toString();
-
 		try {
 			List<User> usersId = jsonb.fromJson(jsonDeleteId, new ArrayList<User>() {
 			}.getClass().getGenericSuperclass());

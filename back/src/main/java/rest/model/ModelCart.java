@@ -26,8 +26,8 @@ public class ModelCart implements IModelCart {
 	}
 
 	@Override
-	public void deleteProduct(List<Product> productsID) {
-		for (Product product : productsID) {
+	public void deleteProduct(List<Product> productsId) {
+		for (Product product : productsId) {
 			repCart.delete(product.getId());
 		}
 	}

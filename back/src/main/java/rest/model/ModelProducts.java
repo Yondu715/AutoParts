@@ -16,8 +16,8 @@ public class ModelProducts implements IModelProducts {
 	}
 
 	@Override
-	public void deleteProduct(List<Product> productsID) {
-		for (Product product : productsID) {
+	public void deleteProduct(List<Product> productsId) {
+		for (Product product : productsId) {
 			repProducts.delete(product.getId());
 		}
 	}
@@ -34,18 +34,12 @@ public class ModelProducts implements IModelProducts {
 	}
 
 	@Override
-	public Product getProductInfo(Integer productID){
-		return repProducts.findById(productID);
+	public Product getProductInfo(Integer productId){
+		return repProducts.findById(productId);
 	}
 
 	@Override
 	public void setRepository(IRepositoryProducts repProducts) {
 		this.repProducts = repProducts;
-	}
-
-	@Override
-	public void buyProduct(List<Product> productsID) {
-		
-		
 	}
 }

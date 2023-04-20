@@ -18,7 +18,6 @@ import jakarta.json.bind.JsonbException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriInfo;
 import rest.builder.Build;
 import rest.controller.interceptor.AuthRequired;
 import rest.model.dto.Product;
@@ -87,13 +86,13 @@ public class serverProduct {
 	@AuthRequired
 	@Path("/{product_id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getProductInfo(@Context ContainerRequestContext requestContext, @Context UriInfo info) {
+	public Response getProductInfo(@Context ContainerRequestContext requestContext) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		String product_id = info.getPathParameters().getFirst("product_id");
-		Product product = modelProducts.getProductInfo(Integer.parseInt(product_id));
+		String productId = requestContext.getUriInfo().getPathParameters().getFirst("product_id");
+		Product product = modelProducts.getProductInfo(Integer.parseInt(productId));
 		String resultJson = jsonb.toJson(product);
 		return Response.ok(resultJson).build();
 	}

@@ -26,8 +26,8 @@ public class ModelApplication implements IModelApplications {
 	}
 
 	@Override
-	public void deleteApplication(List<User> userApplicaionsID) {
-		for (User user : userApplicaionsID) {
+	public void deleteApplication(List<User> userApplicaionsId) {
+		for (User user : userApplicaionsId) {
 			repUsers.delete(user.getId());
 		}
 	}

@@ -40,8 +40,8 @@ public class ModelUser implements IModelUser {
 	}
 
 	@Override
-	public void deleteUser(List<User> users_id) {
-		for (User user : users_id) {
+	public void deleteUser(List<User> usersId) {
+		for (User user : usersId) {
 			repUser.delete(user.getId());
 		}
 	}
