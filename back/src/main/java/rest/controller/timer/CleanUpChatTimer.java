@@ -12,7 +12,6 @@ import jakarta.ejb.TimerConfig;
 import jakarta.ejb.TimerService;
 import jakarta.inject.Inject;
 import rest.model.dto.Product;
-import rest.model.interfaces.in.IModelChat;
 import rest.model.interfaces.in.IModelChatV2;
 import rest.model.interfaces.in.IModelProducts;
 

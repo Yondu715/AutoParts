@@ -1,8 +1,8 @@
 package rest.model;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import jakarta.annotation.Resource;
@@ -17,18 +17,18 @@ public class ModelChatV2 implements IModelChatV2 {
 
     @Resource
     ManagedExecutorService mes;
-    
+
     private Jsonb jsonb = JsonbBuilder.create();
-    private final static ConcurrentHashMap<String, ArrayList<Session>> roomUsers = new ConcurrentHashMap<>();
-    private final static ConcurrentHashMap<String, ArrayList<Message>> roomMessages = new ConcurrentHashMap<>();
+    private final static Map<String, List<Session>> roomUsers = new ConcurrentHashMap<>();
+    private final static Map<String, List<Message>> roomMessages = new ConcurrentHashMap<>();
 
     @Override
     public void addUser(String roomId, Session session) {
         mes.execute(() -> {
-            ArrayList<Session> usersList = roomUsers.computeIfAbsent(roomId, k -> new ArrayList<>());
+            List<Session> usersList = roomUsers.computeIfAbsent(roomId, k -> new ArrayList<>());
+            roomMessages.computeIfAbsent(roomId, k -> new ArrayList<>());
             synchronized (usersList) {
                 usersList.add(session);
-                roomMessages.computeIfAbsent(roomId, k -> new ArrayList<>());
             }
         });
     }
@@ -36,12 +36,11 @@ public class ModelChatV2 implements IModelChatV2 {
     @Override
     public void removeUser(String roomId, Session session) {
         mes.execute(() -> {
-            ArrayList<Session> usersList = roomUsers.get(roomId);
-            if (usersList == null) {
-                return;
-            }
+            List<Session> usersList = roomUsers.get(roomId);
             synchronized (usersList) {
-                usersList.remove(session);
+                if (usersList != null) {
+                    usersList.remove(session);
+                }
             }
         });
     }
@@ -49,8 +48,8 @@ public class ModelChatV2 implements IModelChatV2 {
     @Override
     public void sendMessage(String roomId, Message message) {
         mes.execute(() -> {
-            ArrayList<Session> usersList = roomUsers.get(roomId);
-            ArrayList<Message> messages = roomMessages.get(roomId);
+            List<Session> usersList = roomUsers.get(roomId);
+            List<Message> messages = roomMessages.get(roomId);
             synchronized (usersList) {
                 messages.add(message);
                 for (Session session : usersList) {
@@ -65,12 +64,9 @@ public class ModelChatV2 implements IModelChatV2 {
     @Override
     public void sendPrevMessages(String roomId, Session session) {
         mes.execute(() -> {
-            ArrayList<Message> messages = roomMessages.get(roomId);
-            if (messages == null) {
-                return;
-            }
+            List<Message> messages = roomMessages.get(roomId);
             synchronized (messages) {
-                if (!messages.isEmpty()) {
+                if (messages != null && !messages.isEmpty()) {
                     session.getAsyncRemote().sendText(jsonb.toJson(messages));
                 }
             }
@@ -79,13 +75,7 @@ public class ModelChatV2 implements IModelChatV2 {
 
     @Override
     public List<String> getRooms() {
-        Enumeration<String> rooms = roomUsers.keys();
-        List<String> roomList = new ArrayList<>();
-        while (rooms.hasMoreElements()) {
-            roomList.add(rooms.nextElement());
-            ;
-        }
-        return roomList;
+        return new ArrayList<>(roomUsers.keySet());
     }
 
     @Override
@@ -93,5 +83,5 @@ public class ModelChatV2 implements IModelChatV2 {
         roomUsers.remove(id);
         roomMessages.remove(id);
     }
-    
+
 }
