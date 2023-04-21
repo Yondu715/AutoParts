@@ -8,11 +8,14 @@ export function useValidate() {
             isAuth: isAuth,
             login: login,
             role: role,
-        }
+        };
         mobxStore.logIn(vadidateInfo);
     }
 
-    const signOut = () => mobxStore.logOut();
+    const signOut = () => {
+        localStorage.clear();
+        mobxStore.logOut();
+    };
 
     return { signIn, signOut };
 }
@@ -31,14 +34,6 @@ export function useUserInfo() {
 }
 
 export function useUserLogin() {
-    const [login, setLogin] = useState(mobxStore.viewer.login);
-    useEffect(() => {
-        function handle(login) {
-            setLogin(login);
-        }
-        return autorun(() => {
-            handle(mobxStore.viewer.login);
-        }, [])
-    })
+    const login = useUserInfo().login;
     return login;
 }

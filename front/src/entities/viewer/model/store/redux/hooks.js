@@ -6,15 +6,18 @@ export function useValidate() {
     const dispatch = useDispatch();
 
     const signIn = (isAuth, login, role) => {
-        const vadidateInfo = {
+        const validateInfo = {
             isAuth: isAuth,
             login: login,
             role: role,
-        }
-        dispatch(logIn(vadidateInfo))
+        };
+        dispatch(logIn(validateInfo));
     }
 
-    const signOut = () => dispatch(logOut());
+    const signOut = () => {
+        localStorage.clear();
+        dispatch(logOut());
+    };
 
     return { signIn, signOut };
 }
@@ -24,5 +27,5 @@ export function useUserInfo() {
 }
 
 export function useUserLogin() {
-    return useSelector(state => state.viewer.viewer.login);
+    return useUserInfo().login;
 }

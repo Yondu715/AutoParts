@@ -9,7 +9,6 @@ export function useWrapHeader(){
     const logout = () => {
         setAnimation(true);
         setTimeout(() => {
-            localStorage.clear();
             signOut();
         }, 800);
     }
