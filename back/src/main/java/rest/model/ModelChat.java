@@ -1,6 +1,8 @@
 package rest.model;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import jakarta.ejb.Asynchronous;
@@ -19,10 +21,10 @@ public class ModelChat implements IModelChat {
     @Override
     @Asynchronous
     public void addUser(String roomId, Session session) {
-        ArrayList<Session> usersList = roomUsers.putIfAbsent(roomId, new ArrayList<>());
+        ArrayList<Session> usersList = roomUsers.computeIfAbsent(roomId, k -> new ArrayList<>());
         synchronized (usersList) {
             usersList.add(session);
-            roomMessages.putIfAbsent(roomId, new ArrayList<>());
+            roomMessages.computeIfAbsent(roomId, k-> new ArrayList<>());
         }
     }
 
@@ -42,7 +44,7 @@ public class ModelChat implements IModelChat {
     @Asynchronous
     public void sendMessage(String roomId, Message message) {
         ArrayList<Session> usersList = roomUsers.get(roomId);
-        ArrayList<Message> messages = roomMessages.putIfAbsent(roomId, new ArrayList<>());
+        ArrayList<Message> messages = roomMessages.get(roomId);
         synchronized (usersList) {
             messages.add(message);
             for (Session session : usersList) {
@@ -65,6 +67,22 @@ public class ModelChat implements IModelChat {
                 session.getAsyncRemote().sendText(jsonb.toJson(messages));
             }
         }
+    }
+
+    @Override
+    public List<String> getRooms() {
+        Enumeration<String> rooms = roomUsers.keys();
+        List<String> roomList = new ArrayList<>();
+        while(rooms.hasMoreElements()){
+            roomList.add(rooms.nextElement());
+;        }
+        return roomList;
+    }
+
+    @Override
+    public void cleanRoom(String id) {
+       roomUsers.remove(id);
+       roomMessages.remove(id);
     }
 
 }
