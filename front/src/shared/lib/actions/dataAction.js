@@ -1,4 +1,4 @@
-export function checkValid(object) {
+export const checkValid = (object) => {
 	const fields = object.get();
 	for (const key in fields) {
 		if (!fields[key]) return false;
@@ -6,15 +6,9 @@ export function checkValid(object) {
 	return true;
 }
 
-export function jsonToObjects(json, classConvert) {
+export const jsonToObjects = (json, classConvert) => {
 	if (!Array.isArray(json)) {
 		return new classConvert(json);
 	}
-
-	const res = [];
-	json.forEach(obj => {
-		const object = new classConvert(obj);
-		res.push(object);
-	});
-	return res;
+	return json.map(obj => new classConvert(obj));
 }

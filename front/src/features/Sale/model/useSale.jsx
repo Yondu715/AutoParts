@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { Product } from "shared/lib/transport";
+import { productModel } from "entities/product";
 import { viewerModel } from "entities/viewer";
 
 export function useSale() {
@@ -40,6 +40,7 @@ export function useSale() {
     
     const { signOut } = viewerModel.useValidate();
     const userLogin = viewerModel.useUserLogin();
+    const Product = productModel.Product;
     
     const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
     

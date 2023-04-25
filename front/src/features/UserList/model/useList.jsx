@@ -2,14 +2,15 @@ import { useState } from "react";
 import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { User } from "shared/lib/transport";
 import { viewerModel } from "entities/viewer";
+import { userModel } from "entities/user";
 
 export function useList() {
 
     const { signOut } = viewerModel.useValidate();
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
+    const User = userModel.User;
 
     const usersHandler = (id) =>
         setSelectedUsers((prevState) => {

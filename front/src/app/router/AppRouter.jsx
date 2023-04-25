@@ -19,9 +19,9 @@ function AppRouter() {
     );
 }
 
-export function buildRouter(){
+export function buildRouter() {
     return () =>
         <BrowserRouter>
-            <AppRouter/>
-        </BrowserRouter>   
+            <AppRouter />
+        </BrowserRouter>
 }

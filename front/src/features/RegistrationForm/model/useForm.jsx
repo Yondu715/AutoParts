@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { User } from "shared/lib/transport";
+import { userModel } from "entities/user";
 import { AUTH_ROUTE } from "shared/config";
 
 export function useForm(){
@@ -11,6 +11,7 @@ export function useForm(){
         password: "",
         repeatPassword: "",
     }
+    const User = userModel.User;
 
     const [error, setError] = useState();
     const [form, setForm] = useState(initialState);

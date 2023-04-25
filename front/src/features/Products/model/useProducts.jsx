@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { Product } from "shared/lib/transport";
+import { productModel } from "entities/product";
 import { viewerModel } from "entities/viewer";
 import { MAIN_ROUTE, PRODUCTS_ROUTE } from "shared/config";
 
@@ -11,6 +11,7 @@ export function useProducts() {
     const { signOut } = viewerModel.useValidate();
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
+    const Product = productModel.Product;
 
     const _asyncGetProducts = async () => {
         requestAPI.sendRequest(requestAPI.asyncGetAllProducts, _callbackGetProducts);

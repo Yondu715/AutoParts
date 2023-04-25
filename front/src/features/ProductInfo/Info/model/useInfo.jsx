@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { Product } from "shared/lib/transport";
+import { productModel } from "entities/product";
 import { MAIN_ROUTE, PRODUCTS_ROUTE } from "shared/config";
 import { viewerModel } from "entities/viewer";
 
@@ -16,6 +16,7 @@ export function useInfo() {
     const navigate = useNavigate();
     const { signOut } = viewerModel.useValidate();
     const userLogin = viewerModel.useUserLogin();
+    const Product = productModel.Product;
 
 
     const _asyncGetProductInfo = async () => {
