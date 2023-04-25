@@ -3,11 +3,11 @@ package rest.model.interfaces.in;
 import java.util.List;
 
 import rest.model.dto.Product;
-import rest.model.interfaces.out.IRepositoryCart;
+import rest.model.interfaces.out.ICartsRepository;
 
-public interface IModelCart {
+public interface ICartModel {
 
-	public void setRepository(IRepositoryCart repCart);
+	public void setRepository(ICartsRepository repCart);
 
 	public boolean addToCart(String login, Product product);
 

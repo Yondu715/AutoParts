@@ -3,7 +3,7 @@ package rest.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import rest.db.entities.EUser;
+import rest.database.entities.EUser;
 import rest.model.dto.User;
 
 public class userStruct {

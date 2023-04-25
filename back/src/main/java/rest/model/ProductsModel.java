@@ -3,12 +3,12 @@ package rest.model;
 import java.util.List;
 
 import rest.model.dto.Product;
-import rest.model.interfaces.in.IModelProducts;
-import rest.model.interfaces.out.IRepositoryProducts;
+import rest.model.interfaces.in.IProductsModel;
+import rest.model.interfaces.out.IProductsRepository;
 
-public class ModelProducts implements IModelProducts {
+public class ProductsModel implements IProductsModel {
 
-	private IRepositoryProducts repProducts;
+	private IProductsRepository repProducts;
 
 	@Override
 	public void addProduct(Product product) {
@@ -39,7 +39,7 @@ public class ModelProducts implements IModelProducts {
 	}
 
 	@Override
-	public void setRepository(IRepositoryProducts repProducts) {
+	public void setRepository(IProductsRepository repProducts) {
 		this.repProducts = repProducts;
 	}
 }

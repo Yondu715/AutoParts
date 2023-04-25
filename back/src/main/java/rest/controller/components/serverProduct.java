@@ -21,14 +21,14 @@ import jakarta.ws.rs.core.Response;
 import rest.builder.Build;
 import rest.controller.interceptor.AuthRequired;
 import rest.model.dto.Product;
-import rest.model.interfaces.in.IModelProducts;
+import rest.model.interfaces.in.IProductsModel;
 
 @Path("/products")
 public class serverProduct {
 
 	@Inject
 	@Build
-	private IModelProducts modelProducts;
+	private IProductsModel modelProducts;
 
 	private Jsonb jsonb = JsonbBuilder.create();
 

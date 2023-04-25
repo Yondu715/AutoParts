@@ -8,13 +8,13 @@ import jakarta.websocket.Session;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 import rest.model.dto.Message;
-import rest.model.interfaces.in.IModelChatV2;
+import rest.model.interfaces.in.IChatModelV2;
 
 @ServerEndpoint(value = "/chat/{roomId}", encoders = MessageEncoder.class, decoders = MessageDecoder.class)
 public class ChatEndpoint {
 
     @Inject
-    IModelChatV2 modelChat;
+    IChatModelV2 modelChat;
 
     @OnOpen
     public void connectionOpen(@PathParam("roomId") String roomId, Session session) {

@@ -26,24 +26,24 @@ import rest.controller.token.TokenIssuer;
 import rest.controller.token.TokenKey;
 import rest.model.dto.Product;
 import rest.model.dto.User;
-import rest.model.interfaces.in.IModelApplications;
-import rest.model.interfaces.in.IModelCart;
-import rest.model.interfaces.in.IModelUser;
+import rest.model.interfaces.in.IApplicationModel;
+import rest.model.interfaces.in.ICartModel;
+import rest.model.interfaces.in.IUserModel;
 
 @Path("/users")
 public class serverUser {
 
 	@Inject
 	@Build
-	private IModelUser modelUser;
+	private IUserModel modelUser;
 
 	@Inject
 	@Build
-	private IModelCart modelCart;
+	private ICartModel modelCart;
 
 	@Inject
 	@Build
-	private IModelApplications modelApplications;
+	private IApplicationModel modelApplications;
 
 	private Jsonb jsonb = JsonbBuilder.create();
 

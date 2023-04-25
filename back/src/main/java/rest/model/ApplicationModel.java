@@ -3,15 +3,15 @@ package rest.model;
 import java.util.List;
 
 import rest.model.dto.User;
-import rest.model.interfaces.in.IModelApplications;
-import rest.model.interfaces.out.IRepositoryUsers;
+import rest.model.interfaces.in.IApplicationModel;
+import rest.model.interfaces.out.IUsersRepository;
 
-public class ModelApplication implements IModelApplications {
+public class ApplicationModel implements IApplicationModel {
 
-	private IRepositoryUsers repUsers;
+	private IUsersRepository repUsers;
 
 	@Override
-	public void setRepository(IRepositoryUsers repUsers) {
+	public void setRepository(IUsersRepository repUsers) {
 		this.repUsers = repUsers;
 	}
 

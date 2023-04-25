@@ -12,8 +12,8 @@ import jakarta.ejb.TimerConfig;
 import jakarta.ejb.TimerService;
 import jakarta.inject.Inject;
 import rest.model.dto.Product;
-import rest.model.interfaces.in.IModelChatV2;
-import rest.model.interfaces.in.IModelProducts;
+import rest.model.interfaces.in.IChatModelV2;
+import rest.model.interfaces.in.IProductsModel;
 
 
 @Singleton
@@ -24,10 +24,10 @@ public class CleanUpChatTimer {
     TimerService timerService;
 
     @Inject
-    IModelChatV2 modelChat;
+    IChatModelV2 modelChat;
 
     @Inject
-    IModelProducts modelProducts;
+    IProductsModel modelProducts;
 
     @PostConstruct
     public void init(){

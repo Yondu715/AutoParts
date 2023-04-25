@@ -3,56 +3,56 @@ package rest.builder;
 import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
-import rest.model.interfaces.in.IModelApplications;
-import rest.model.interfaces.in.IModelCart;
-import rest.model.interfaces.in.IModelProducts;
-import rest.model.interfaces.in.IModelUser;
-import rest.model.interfaces.out.IRepositoryCart;
-import rest.model.interfaces.out.IRepositoryProducts;
-import rest.model.interfaces.out.IRepositoryUsers;
+import rest.model.interfaces.in.IApplicationModel;
+import rest.model.interfaces.in.ICartModel;
+import rest.model.interfaces.in.IProductsModel;
+import rest.model.interfaces.in.IUserModel;
+import rest.model.interfaces.out.ICartsRepository;
+import rest.model.interfaces.out.IProductsRepository;
+import rest.model.interfaces.out.IUsersRepository;
 
 public class Builder {
 	@Inject @Default
-	private IModelApplications modelApplications;
+	private IApplicationModel modelApplications;
 
 	@Inject @Default
-	private IModelCart modelCart;
+	private ICartModel modelCart;
 
 	@Inject @Default
-	private IModelProducts modelProducts;
+	private IProductsModel modelProducts;
 
 	@Inject @Default
-	private IModelUser modelUser;
+	private IUserModel modelUser;
 
 	@Inject @Default
-	private IRepositoryCart repCart;
+	private ICartsRepository repCart;
 
 	@Inject @Default
-	private IRepositoryProducts repProducts;
+	private IProductsRepository repProducts;
 
 	@Inject @Default
-	private IRepositoryUsers repUsers;
+	private IUsersRepository repUsers;
 
 	@Produces @Build
-	public IModelCart buildModelCart(){
+	public ICartModel buildModelCart(){
 		modelCart.setRepository(repCart);
 		return modelCart;
 	}
 
 	@Produces @Build
-	public IModelProducts buildModelProducts() {
+	public IProductsModel buildModelProducts() {
 		modelProducts.setRepository(repProducts);
 		return modelProducts;
 	}
 
 	@Produces @Build
-	public IModelUser buildModelUser() {
+	public IUserModel buildModelUser() {
 		modelUser.setRepository(repUsers);
 		return modelUser;
 	}
 
 	@Produces @Build
-	public IModelApplications buildModelAdmin(){
+	public IApplicationModel buildModelAdmin(){
 		modelApplications.setRepository(repUsers);
 		return modelApplications;
 	}

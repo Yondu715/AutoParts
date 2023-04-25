@@ -1,6 +1,5 @@
-package rest.db.repos;
+package rest.database.repositories;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.annotation.Resource;
@@ -9,12 +8,12 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.UserTransaction;
-import rest.db.entities.EUser;
+import rest.database.entities.EUser;
 import rest.model.dto.User;
-import rest.model.interfaces.out.IRepositoryUsers;
+import rest.model.interfaces.out.IUsersRepository;
 import rest.utils.userStruct;
 
-public class RepositoryUsers implements IRepositoryUsers {
+public class UsersRepository implements IUsersRepository {
 
 	@PersistenceUnit(unitName = "autoparts_PersistenceUnit")
 	private EntityManagerFactory entityManagerFactory;
@@ -67,17 +66,9 @@ public class RepositoryUsers implements IRepositoryUsers {
 		TypedQuery<EUser> query = entityManager
 				.createQuery("select u from EUser u where u.login=:login and u.role is not null", EUser.class);
 		query.setParameter("login", login);
-		User user = new User();
-		try {
-			userTransaction.begin();
-			entityManager.joinTransaction();
-			EUser eUser = query.getSingleResult();
-			userTransaction.commit();
-			user = userStruct.toUser(eUser);
-		} catch (Exception e) {
-		} finally {
-			entityManager.close();
-		}
+		EUser eUser = query.getSingleResult();
+		User user = userStruct.toUser(eUser);
+		entityManager.close();
 		return user;
 	}
 
@@ -86,17 +77,9 @@ public class RepositoryUsers implements IRepositoryUsers {
 		entityManager = entityManagerFactory.createEntityManager();
 		TypedQuery<EUser> query = entityManager.createQuery("select u from EUser u where u.role is not null",
 				EUser.class);
-		List<User> users = new ArrayList<>();
-		try {
-			userTransaction.begin();
-			entityManager.joinTransaction();
-			List<EUser> usersList = query.getResultList();
-			userTransaction.commit();
-			users = userStruct.toUser(usersList);
-		} catch (Exception e) {
-		} finally {
-			entityManager.close();
-		}
+		List<EUser> usersList = query.getResultList();
+		List<User> users = userStruct.toUser(usersList);
+		entityManager.close();
 		return users;
 	}
 
@@ -104,17 +87,9 @@ public class RepositoryUsers implements IRepositoryUsers {
 	public List<User> findWithoutRole() {
 		entityManager = entityManagerFactory.createEntityManager();
 		TypedQuery<EUser> query = entityManager.createQuery("select u from EUser u where u.role is null", EUser.class);
-		List<User> users = new ArrayList<>();
-		try {
-			userTransaction.begin();
-			entityManager.joinTransaction();
-			List<EUser> usersList = query.getResultList();
-			userTransaction.commit();
-			users = userStruct.toUser(usersList);
-		} catch (Exception e) {
-		} finally {
-			entityManager.close();
-		}
+		List<EUser> usersList = query.getResultList();
+		List<User> users  = userStruct.toUser(usersList);
+		entityManager.close();
 		return users;
 	}
 

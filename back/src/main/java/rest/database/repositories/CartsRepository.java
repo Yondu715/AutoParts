@@ -1,6 +1,5 @@
-package rest.db.repos;
+package rest.database.repositories;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.annotation.Resource;
@@ -9,14 +8,14 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.UserTransaction;
-import rest.db.entities.ECart;
-import rest.db.entities.EProduct;
-import rest.db.entities.EUser;
+import rest.database.entities.ECart;
+import rest.database.entities.EProduct;
+import rest.database.entities.EUser;
 import rest.model.dto.Product;
-import rest.model.interfaces.out.IRepositoryCart;
+import rest.model.interfaces.out.ICartsRepository;
 import rest.utils.cartStruct;
 
-public class RepositoryCart implements IRepositoryCart {
+public class CartsRepository implements ICartsRepository {
 
 	@PersistenceUnit(unitName = "autoparts_PersistenceUnit")
 	private EntityManagerFactory entityManagerFactory;
@@ -24,21 +23,18 @@ public class RepositoryCart implements IRepositoryCart {
 	private EntityManager entityManager;
 
 	@Resource
-	UserTransaction userTransaction;
+	private UserTransaction userTransaction;
 
 	@Override
 	public List<Product> findByLogin(String login) {
 		entityManager = entityManagerFactory.createEntityManager();
-		TypedQuery<ECart> query = entityManager.createQuery("select c from ECart c where c.user.login=:login", ECart.class);
+		TypedQuery<ECart> query = entityManager.createQuery(
+				"select c from ECart c join fetch c.user u where u.login=:login",
+				ECart.class);
 		query.setParameter("login", login);
-		List<Product> products = new ArrayList<>();
-		try {
-			List<ECart> cartList = query.getResultList();
-			products = cartStruct.toProduct(cartList);
-		} catch (Exception e) {
-		} finally {
-			entityManager.close();
-		}
+		List<ECart> cartList = query.getResultList();
+		List<Product> products = cartStruct.toProduct(cartList);
+		entityManager.close();
 		return products;
 	}
 
@@ -48,24 +44,31 @@ public class RepositoryCart implements IRepositoryCart {
 		TypedQuery<EUser> getUser = entityManager.createQuery("select u from EUser u where u.login=:login",
 				EUser.class);
 		getUser.setParameter("login", login);
+		EUser eUser = getUser.getSingleResult();
+
 		TypedQuery<EProduct> getProduct = entityManager.createQuery("select p from EProduct p where p.id=:id",
 				EProduct.class);
 		getProduct.setParameter("id", productId);
-		boolean addStatus = true;
+		EProduct eProduct = getProduct.getSingleResult();
+
+		TypedQuery<Long> countCarts = entityManager.createQuery(
+				"select count(c) from ECart c join fetch c.user u join fetch c.product p where u.login=:login and p=:product",
+				Long.class);
+		countCarts.setParameter("login", login);
+		countCarts.setParameter("product", eProduct);
+		boolean addStatus = countCarts.getSingleResult() == 0;
 		try {
 			userTransaction.begin();
 			entityManager.joinTransaction();
-			EUser eUser = getUser.getSingleResult();
-			EProduct eProduct = getProduct.getSingleResult();
-			ECart eCart = new ECart();
-			eCart.setProduct(eProduct);
-			eCart.setUser(eUser);
-			entityManager.persist(eCart);
-			userTransaction.commit();
+			if (addStatus) {
+				ECart eCart = new ECart();
+				eCart.setProduct(eProduct);
+				eCart.setUser(eUser);
+				entityManager.persist(eCart);
+				userTransaction.commit();
+			}
 		} catch (Exception e) {
-			addStatus = false;
-		} finally {
-			entityManager.close();
+			return false;
 		}
 		return addStatus;
 	}
@@ -73,7 +76,7 @@ public class RepositoryCart implements IRepositoryCart {
 	@Override
 	public void delete(Integer productId) {
 		entityManager = entityManagerFactory.createEntityManager();
-		TypedQuery<ECart> query = entityManager.createQuery("delete from ECart c where c.product.id=:id", ECart.class);
+		TypedQuery<ECart> query = entityManager.createQuery("delete from ECart c join fetch c.product p where p.id=:id", ECart.class);
 		query.setParameter("id", productId);
 		try {
 			userTransaction.begin();

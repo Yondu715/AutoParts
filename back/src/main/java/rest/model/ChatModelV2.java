@@ -11,9 +11,9 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.websocket.Session;
 import rest.model.dto.Message;
-import rest.model.interfaces.in.IModelChatV2;
+import rest.model.interfaces.in.IChatModelV2;
 
-public class ModelChatV2 implements IModelChatV2 {
+public class ChatModelV2 implements IChatModelV2 {
 
     @Resource
     ManagedExecutorService mes;

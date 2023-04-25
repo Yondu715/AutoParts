@@ -3,11 +3,11 @@ package rest.model.interfaces.in;
 import java.util.List;
 
 import rest.model.dto.User;
-import rest.model.interfaces.out.IRepositoryUsers;
+import rest.model.interfaces.out.IUsersRepository;
 
-public interface IModelUser {
+public interface IUserModel {
 
-	public void setRepository(IRepositoryUsers repUsers);
+	public void setRepository(IUsersRepository repUsers);
 
 	public boolean authUser(User user);
 

@@ -3,10 +3,10 @@ package rest.model.interfaces.in;
 import java.util.List;
 
 import rest.model.dto.User;
-import rest.model.interfaces.out.IRepositoryUsers;
+import rest.model.interfaces.out.IUsersRepository;
 
-public interface IModelApplications {
-	public void setRepository(IRepositoryUsers repUsers);
+public interface IApplicationModel {
+	public void setRepository(IUsersRepository repUsers);
 
 	public List<User> getApplications();
 

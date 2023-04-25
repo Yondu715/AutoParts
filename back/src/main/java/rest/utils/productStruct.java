@@ -4,8 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import rest.db.entities.EProduct;
-import rest.db.entities.EUser;
+import rest.database.entities.EProduct;
+import rest.database.entities.EUser;
 import rest.model.dto.Product;
 
 public class productStruct {

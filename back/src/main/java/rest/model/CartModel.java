@@ -3,12 +3,12 @@ package rest.model;
 import java.util.List;
 
 import rest.model.dto.Product;
-import rest.model.interfaces.in.IModelCart;
-import rest.model.interfaces.out.IRepositoryCart;
+import rest.model.interfaces.in.ICartModel;
+import rest.model.interfaces.out.ICartsRepository;
 
-public class ModelCart implements IModelCart {
+public class CartModel implements ICartModel {
 
-	private IRepositoryCart repCart;
+	private ICartsRepository repCart;
 
 	@Override
 	public boolean addToCart(String login, Product product) {
@@ -21,7 +21,7 @@ public class ModelCart implements IModelCart {
 	}
 
 	@Override
-	public void setRepository(IRepositoryCart repCart) {
+	public void setRepository(ICartsRepository repCart) {
 		this.repCart = repCart;
 	}
 

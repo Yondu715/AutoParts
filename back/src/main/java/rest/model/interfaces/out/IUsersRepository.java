@@ -4,7 +4,7 @@ import java.util.List;
 
 import rest.model.dto.User;
 
-public interface IRepositoryUsers {
+public interface IUsersRepository {
 
 	public boolean add(User user);
 

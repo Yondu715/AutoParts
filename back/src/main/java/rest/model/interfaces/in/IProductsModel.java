@@ -3,11 +3,11 @@ package rest.model.interfaces.in;
 import java.util.List;
 
 import rest.model.dto.Product;
-import rest.model.interfaces.out.IRepositoryProducts;
+import rest.model.interfaces.out.IProductsRepository;
 
-public interface IModelProducts {
+public interface IProductsModel {
 
-	public void setRepository(IRepositoryProducts repProducts);
+	public void setRepository(IProductsRepository repProducts);
 
 	public void addProduct(Product product);
 

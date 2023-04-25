@@ -1,6 +1,5 @@
-package rest.db.repos;
+package rest.database.repositories;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.annotation.Resource;
@@ -9,14 +8,13 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.UserTransaction;
-
-import rest.db.entities.EProduct;
-import rest.db.entities.EUser;
+import rest.database.entities.EProduct;
+import rest.database.entities.EUser;
 import rest.model.dto.Product;
-import rest.model.interfaces.out.IRepositoryProducts;
+import rest.model.interfaces.out.IProductsRepository;
 import rest.utils.productStruct;
 
-public class RepositoryProducts implements IRepositoryProducts {
+public class ProductsRepository implements IProductsRepository {
 
 	@PersistenceUnit(unitName = "autoparts_PersistenceUnit")
 	private EntityManagerFactory entityManagerFactory;
@@ -24,20 +22,15 @@ public class RepositoryProducts implements IRepositoryProducts {
 	private EntityManager entityManager;
 
 	@Resource
-	UserTransaction userTransaction;
+	private UserTransaction userTransaction;
 
 	@Override
 	public List<Product> findAll() {
 		entityManager = entityManagerFactory.createEntityManager();
 		TypedQuery<EProduct> query = entityManager.createQuery("select p from EProduct p", EProduct.class);
-		List<Product> products = new ArrayList<>();
-		try {
-			List<EProduct> productsList = query.getResultList();
-			products = productStruct.toProductList(productsList);
-		} catch (Exception e) {
-		} finally {
-			entityManager.close();
-		}
+		List<EProduct> productsList = query.getResultList();
+		List<Product> products = productStruct.toProductList(productsList);
+		entityManager.close();
 		return products;
 	}
 
@@ -47,15 +40,10 @@ public class RepositoryProducts implements IRepositoryProducts {
 		TypedQuery<EProduct> query = entityManager.createQuery("select p from EProduct p where p.id=:id",
 				EProduct.class);
 		query.setParameter("id", productId);
-		Product product;
-		try {
-			EProduct eProduct = query.getSingleResult();
-			product = productStruct.toProduct(eProduct);
-		} catch (Exception e) {
-			product = null;
-		} finally {
-			entityManager.close();
-		}
+		Product product = null;
+		EProduct eProduct = query.getSingleResult();
+		product = productStruct.toProduct(eProduct);
+		entityManager.close();
 		return product;
 	}
 
@@ -63,16 +51,11 @@ public class RepositoryProducts implements IRepositoryProducts {
 	public List<Product> findByUser(String sellerName) {
 		entityManager = entityManagerFactory.createEntityManager();
 		TypedQuery<EProduct> query = entityManager
-				.createQuery("select p from EProduct p where p.user.login=:seller_name", EProduct.class);
+				.createQuery("select p from EProduct p join fetch p.user u where u.login=:seller_name", EProduct.class);
 		query.setParameter("seller_name", sellerName);
-		List<Product> products = new ArrayList<>();
-		try {
-			List<EProduct> productsList = query.getResultList();
-			products = productStruct.toProductList(productsList);
-		} catch (Exception e) {
-		} finally {
-			entityManager.close();
-		}
+		List<EProduct> productsList = query.getResultList();
+		List<Product> products = productStruct.toProductList(productsList);
+		entityManager.close();
 		return products;
 	}
 

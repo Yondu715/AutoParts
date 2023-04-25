@@ -10,9 +10,9 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.websocket.Session;
 import rest.model.dto.Message;
-import rest.model.interfaces.in.IModelChat;
+import rest.model.interfaces.in.IChatModel;
 
-public class ModelChat implements IModelChat {
+public class ChatModel implements IChatModel {
 
     private Jsonb jsonb = JsonbBuilder.create();
     private final static Map<String, List<Session>> roomUsers = new ConcurrentHashMap<>();

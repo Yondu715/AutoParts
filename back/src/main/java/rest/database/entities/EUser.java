@@ -1,9 +1,8 @@
-package rest.db.entities;
+package rest.database.entities;
 
 import java.io.Serializable;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,11 +28,16 @@ public class EUser implements Serializable {
 	@Column(name = "role")
 	private String role;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<EProduct> eProducts;
+	@OneToMany(mappedBy = "user")
+	private List<EProduct> products;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<ECart> eCarts;
+	public List<EProduct> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<EProduct> products) {
+		this.products = products;
+	}
 
 	public String getRole() {
 		return role;
@@ -67,11 +71,4 @@ public class EUser implements Serializable {
 		this.login = login;
 	}
 
-	public List<EProduct> getProducts(){
-		return eProducts;
-	}
-
-	public List<ECart> getCarts() {
-		return eCarts;
-	}
 }

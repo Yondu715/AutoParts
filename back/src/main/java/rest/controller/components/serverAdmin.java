@@ -21,19 +21,19 @@ import jakarta.ws.rs.core.Response;
 import rest.builder.Build;
 import rest.controller.interceptor.AuthRequired;
 import rest.model.dto.User;
-import rest.model.interfaces.in.IModelApplications;
-import rest.model.interfaces.in.IModelUser;
+import rest.model.interfaces.in.IApplicationModel;
+import rest.model.interfaces.in.IUserModel;
 
 @Path("/admin")
 public class serverAdmin {
 
 	@Inject
 	@Build
-	private IModelApplications modelApplications;
+	private IApplicationModel modelApplications;
 
 	@Inject
 	@Build
-	private IModelUser modelUser;
+	private IUserModel modelUser;
 
 	private Jsonb jsonb = JsonbBuilder.create();
 

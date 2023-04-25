@@ -3,7 +3,7 @@ package rest.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import rest.db.entities.ECart;
+import rest.database.entities.ECart;
 import rest.model.dto.Product;
 
 public class cartStruct {

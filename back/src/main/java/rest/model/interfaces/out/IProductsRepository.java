@@ -4,7 +4,7 @@ import java.util.List;
 
 import rest.model.dto.Product;
 
-public interface IRepositoryProducts {
+public interface IProductsRepository {
 	
 	public List<Product> findAll();
 

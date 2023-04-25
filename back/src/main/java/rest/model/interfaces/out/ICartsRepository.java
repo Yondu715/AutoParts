@@ -4,7 +4,7 @@ import java.util.List;
 
 import rest.model.dto.Product;
 
-public interface IRepositoryCart {
+public interface ICartsRepository {
 	
 	public List<Product> findByLogin(String login);
 
