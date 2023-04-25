@@ -8,16 +8,16 @@ import rest.model.interfaces.out.IUsersRepository;
 
 public class UserModel implements IUserModel {
 
-	private IUsersRepository repUser;
+	private IUsersRepository usersRepository;
 
 	@Override
-	public void setRepository(IUsersRepository repUsers) {
-		this.repUser = repUsers;
+	public void setRepository(IUsersRepository usersRepositorys) {
+		this.usersRepository = usersRepositorys;
 	}
 
 	@Override
 	public boolean authUser(User user) {
-		User foundUser = repUser.findByLogin(user.getLogin());
+		User foundUser = usersRepository.findByLogin(user.getLogin());
 		if (foundUser != null && foundUser.getPassword().equals(user.getPassword())) {
 			return true;
 		}
@@ -26,23 +26,23 @@ public class UserModel implements IUserModel {
 
 	@Override
 	public boolean addUser(User user) {
-		return repUser.add(user);
+		return usersRepository.add(user);
 	}
 
 	@Override
 	public User getUser(User user) {
-		return repUser.findByLogin(user.getLogin());
+		return usersRepository.findByLogin(user.getLogin());
 	}
 
 	@Override
 	public List<User> getUsers() {
-		return repUser.findAll();
+		return usersRepository.findAll();
 	}
 
 	@Override
 	public void deleteUser(List<User> usersId) {
 		for (User user : usersId) {
-			repUser.delete(user.getId());
+			usersRepository.delete(user.getId());
 		}
 	}
 

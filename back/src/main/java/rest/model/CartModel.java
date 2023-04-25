@@ -8,27 +8,27 @@ import rest.model.interfaces.out.ICartsRepository;
 
 public class CartModel implements ICartModel {
 
-	private ICartsRepository repCart;
+	private ICartsRepository cartsRepository;
 
 	@Override
 	public boolean addToCart(String login, Product product) {
-		return repCart.add(login, product.getId());
+		return cartsRepository.add(login, product.getId());
 	}
 
 	@Override
 	public List<Product> getCart(String login) {
-		return repCart.findByLogin(login);
+		return cartsRepository.findByLogin(login);
 	}
 
 	@Override
-	public void setRepository(ICartsRepository repCart) {
-		this.repCart = repCart;
+	public void setRepository(ICartsRepository cartsRepository) {
+		this.cartsRepository = cartsRepository;
 	}
 
 	@Override
 	public void deleteProduct(List<Product> productsId) {
 		for (Product product : productsId) {
-			repCart.delete(product.getId());
+			cartsRepository.delete(product.getId());
 		}
 	}
 	

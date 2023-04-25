@@ -10,25 +10,25 @@ import jakarta.websocket.server.ServerEndpoint;
 import rest.model.dto.Message;
 import rest.model.interfaces.in.IChatModelV2;
 
-@ServerEndpoint(value = "/chat/{roomId}", encoders = MessageEncoder.class, decoders = MessageDecoder.class)
+@ServerEndpoint(value = "/chat/{roomId}", decoders = MessageDecoder.class)
 public class ChatEndpoint {
 
     @Inject
-    IChatModelV2 modelChat;
+    IChatModelV2 chatModel;
 
     @OnOpen
     public void connectionOpen(@PathParam("roomId") String roomId, Session session) {
-        modelChat.addUser(roomId, session);
-        modelChat.sendPrevMessages(roomId, session);
+        chatModel.addUser(roomId, session);
+        chatModel.sendPrevMessages(roomId, session);
     }
 
     @OnClose
     public void connectionClose(@PathParam("roomId") String roomId, Session session) {
-        modelChat.removeUser(roomId, session);
+        chatModel.removeUser(roomId, session);
     }
 
     @OnMessage
     public void processMessage(@PathParam("roomId") String roomId, Session session, Message message) {
-        modelChat.sendMessage(roomId, message);
+        chatModel.sendMessage(roomId, message);
     }
 }

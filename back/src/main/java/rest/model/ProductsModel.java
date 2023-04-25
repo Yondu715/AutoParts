@@ -8,17 +8,17 @@ import rest.model.interfaces.out.IProductsRepository;
 
 public class ProductsModel implements IProductsModel {
 
-	private IProductsRepository repProducts;
+	private IProductsRepository productsRepository;
 
 	@Override
 	public void addProduct(Product product) {
-		repProducts.add(product);
+		productsRepository.add(product);
 	}
 
 	@Override
 	public void deleteProduct(List<Product> productsId) {
 		for (Product product : productsId) {
-			repProducts.delete(product.getId());
+			productsRepository.delete(product.getId());
 		}
 	}
 
@@ -26,20 +26,20 @@ public class ProductsModel implements IProductsModel {
 	public List<Product> getProducts(String seller_name) {
 		List<Product> products = null;
 		if (seller_name == null) {
-			products = repProducts.findAll();
+			products = productsRepository.findAll();
 		} else {
-			products = repProducts.findByUser(seller_name);
+			products = productsRepository.findByUser(seller_name);
 		}
 		return products;
 	}
 
 	@Override
 	public Product getProductInfo(Integer productId){
-		return repProducts.findById(productId);
+		return productsRepository.findById(productId);
 	}
 
 	@Override
-	public void setRepository(IProductsRepository repProducts) {
-		this.repProducts = repProducts;
+	public void setRepository(IProductsRepository productsRepository) {
+		this.productsRepository = productsRepository;
 	}
 }

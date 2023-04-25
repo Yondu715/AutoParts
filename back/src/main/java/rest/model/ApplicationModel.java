@@ -8,34 +8,34 @@ import rest.model.interfaces.out.IUsersRepository;
 
 public class ApplicationModel implements IApplicationModel {
 
-	private IUsersRepository repUsers;
+	private IUsersRepository usersRepository;
 
 	@Override
-	public void setRepository(IUsersRepository repUsers) {
-		this.repUsers = repUsers;
+	public void setRepository(IUsersRepository usersRepository) {
+		this.usersRepository = usersRepository;
 	}
 
 	@Override
 	public List<User> getApplications() {
-		return repUsers.findWithoutRole();
+		return usersRepository.findWithoutRole();
 	}
 
 	@Override
 	public boolean addAplication(User userApplication) {
-		return repUsers.add(userApplication);
+		return usersRepository.add(userApplication);
 	}
 
 	@Override
 	public void deleteApplication(List<User> userApplicaionsId) {
 		for (User user : userApplicaionsId) {
-			repUsers.delete(user.getId());
+			usersRepository.delete(user.getId());
 		}
 	}
 
 	@Override
 	public void acceptApplication(List<User> userApplications) {
 		for (User user : userApplications) {
-			repUsers.setRole(user);
+			usersRepository.setRole(user);
 		}
 	}
 }

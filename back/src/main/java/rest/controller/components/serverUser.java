@@ -35,15 +35,15 @@ public class serverUser {
 
 	@Inject
 	@Build
-	private IUserModel modelUser;
+	private IUserModel userModel;
 
 	@Inject
 	@Build
-	private ICartModel modelCart;
+	private ICartModel cartModel;
 
 	@Inject
 	@Build
-	private IApplicationModel modelApplications;
+	private IApplicationModel applicationModel;
 
 	private Jsonb jsonb = JsonbBuilder.create();
 
@@ -63,10 +63,10 @@ public class serverUser {
 
 		try {
 			User user = jsonb.fromJson(userJson, User.class);
-			if (!modelUser.authUser(user)) {
+			if (!userModel.authUser(user)) {
 				return Response.status(Response.Status.UNAUTHORIZED).build();
 			}
-			User userFound = modelUser.getUser(user);
+			User userFound = userModel.getUser(user);
 			TokenKey tokenKey = TokenKey.getInstance();
 			Key key = tokenKey.getKey();
 			TokenIssuer ti = new TokenIssuer(key);
@@ -87,7 +87,7 @@ public class serverUser {
 	public Response registration(String userJson) {
 		try {
 			User application = jsonb.fromJson(userJson, User.class);
-			if (modelApplications.addAplication(application)) {
+			if (applicationModel.addAplication(application)) {
 				return Response.status(Response.Status.OK).build();
 			}
 		} catch (JsonbException | IllegalArgumentException e) {
@@ -107,7 +107,7 @@ public class serverUser {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		List<Product> products = modelCart.getCart(login);
+		List<Product> products = cartModel.getCart(login);
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
 	}
@@ -123,7 +123,7 @@ public class serverUser {
 		}
 		try {
 			Product product = jsonb.fromJson(productJson, Product.class);
-			if (modelCart.addToCart(login, product)) {
+			if (cartModel.addToCart(login, product)) {
 				return Response.status(Response.Status.OK).build();
 			}
 		} catch (JsonbException | IllegalArgumentException e) {
@@ -147,7 +147,7 @@ public class serverUser {
 		try {
 			List<Product> productsId = jsonb.fromJson(jsonDeleteId, new ArrayList<Product>() {
 			}.getClass().getGenericSuperclass());
-			modelCart.deleteProduct(productsId);
+			cartModel.deleteProduct(productsId);
 		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {

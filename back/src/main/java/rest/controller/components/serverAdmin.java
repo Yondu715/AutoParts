@@ -29,11 +29,11 @@ public class serverAdmin {
 
 	@Inject
 	@Build
-	private IApplicationModel modelApplications;
+	private IApplicationModel applicationModel;
 
 	@Inject
 	@Build
-	private IUserModel modelUser;
+	private IUserModel userModel;
 
 	private Jsonb jsonb = JsonbBuilder.create();
 
@@ -46,7 +46,7 @@ public class serverAdmin {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		List<User> userApplications = modelApplications.getApplications();
+		List<User> userApplications = applicationModel.getApplications();
 		String resultJson = jsonb.toJson(userApplications);
 		return Response.ok(resultJson).build();
 	}
@@ -64,7 +64,7 @@ public class serverAdmin {
 		try {
 			List<User> userApplicationsId = jsonb.fromJson(jsonDeleteId, new ArrayList<User>() {
 			}.getClass().getGenericSuperclass());
-			modelApplications.deleteApplication(userApplicationsId);
+			applicationModel.deleteApplication(userApplicationsId);
 		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
@@ -85,7 +85,7 @@ public class serverAdmin {
 		try {
 			List<User> userApplications = jsonb.fromJson(userApplicationsJson, new ArrayList<User>() {
 			}.getClass().getGenericSuperclass());
-			modelApplications.acceptApplication(userApplications);
+			applicationModel.acceptApplication(userApplications);
 		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
@@ -103,7 +103,7 @@ public class serverAdmin {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		List<User> users = modelUser.getUsers();
+		List<User> users = userModel.getUsers();
 		String resultJson = jsonb.toJson(users);
 		return Response.ok(resultJson).build();
 	}
@@ -121,7 +121,7 @@ public class serverAdmin {
 		try {
 			List<User> usersId = jsonb.fromJson(jsonDeleteId, new ArrayList<User>() {
 			}.getClass().getGenericSuperclass());
-			modelUser.deleteUser(usersId);
+			userModel.deleteUser(usersId);
 		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {

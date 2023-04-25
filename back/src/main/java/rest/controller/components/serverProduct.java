@@ -28,7 +28,7 @@ public class serverProduct {
 
 	@Inject
 	@Build
-	private IProductsModel modelProducts;
+	private IProductsModel productsModel;
 
 	private Jsonb jsonb = JsonbBuilder.create();
 
@@ -41,7 +41,7 @@ public class serverProduct {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		List<Product> products = modelProducts.getProducts(null);
+		List<Product> products = productsModel.getProducts(null);
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
 	}
@@ -55,7 +55,7 @@ public class serverProduct {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		List<Product> products = modelProducts.getProducts(login);
+		List<Product> products = productsModel.getProducts(login);
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
 	}
@@ -73,7 +73,7 @@ public class serverProduct {
 		try {
 			List<Product> productsId = jsonb.fromJson(jsonDeleteId, new ArrayList<Product>() {
 			}.getClass().getGenericSuperclass());
-			modelProducts.deleteProduct(productsId);
+			productsModel.deleteProduct(productsId);
 		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
@@ -92,7 +92,7 @@ public class serverProduct {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String productId = requestContext.getUriInfo().getPathParameters().getFirst("product_id");
-		Product product = modelProducts.getProductInfo(Integer.parseInt(productId));
+		Product product = productsModel.getProductInfo(Integer.parseInt(productId));
 		String resultJson = jsonb.toJson(product);
 		return Response.ok(resultJson).build();
 	}
@@ -108,7 +108,7 @@ public class serverProduct {
 		}
 		try {
 			Product product = jsonb.fromJson(jsonSale, Product.class);
-			modelProducts.addProduct(product);
+			productsModel.addProduct(product);
 		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {

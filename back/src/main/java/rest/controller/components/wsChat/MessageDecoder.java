@@ -11,10 +11,10 @@ public class MessageDecoder implements Decoder.Text<Message> {
     private Jsonb jsonb = JsonbBuilder.create();
 
     @Override
-    public Message decode(String s) throws DecodeException {
+    public Message decode(String str) throws DecodeException {
         Message message;
         try {
-            message = jsonb.fromJson(s, Message.class);
+            message = jsonb.fromJson(str, Message.class);
         } catch (Exception e) {
             message = new Message();
         }
@@ -22,8 +22,8 @@ public class MessageDecoder implements Decoder.Text<Message> {
     }
 
     @Override
-    public boolean willDecode(String s) {
-        return (s != null);
+    public boolean willDecode(String str) {
+        return (str != null);
     }
 
 }
