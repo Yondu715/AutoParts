@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { productModel } from "entities/product";
+import { Product } from "entities/product";
 import { MAIN_ROUTE, PRODUCTS_ROUTE } from "shared/config";
 import { viewerModel } from "entities/viewer";
 
@@ -16,7 +16,7 @@ export function useInfo() {
     const navigate = useNavigate();
     const { signOut } = viewerModel.useValidate();
     const userLogin = viewerModel.useUserLogin();
-    const Product = productModel.Product;
+    const userId = viewerModel.useUserId();
 
 
     const _asyncGetProductInfo = async () => {
@@ -42,7 +42,7 @@ export function useInfo() {
     }
 
     const asyncAddProduct = async () => {
-        requestAPI.sendRequest(() => requestAPI.asyncAddToCart(product.get()), _callbackAddProduct);
+        requestAPI.sendRequest(() => requestAPI.asyncAddToCart(userId, product.get()), _callbackAddProduct);
     }
 
     const _callbackAddProduct = (status) => {

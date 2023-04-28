@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx"
 
 const initialState = {
     isAuth: false,
+    id: null,
     login: null,
     role: null
 }
@@ -10,14 +11,15 @@ export const mobxStore = makeAutoObservable({
     viewer: {
         ...initialState
     },
-    logIn: ({ isAuth, login, role }) => {
+    setSession: ({ isAuth, login, role, id }) => {
         mobxStore.viewer = {
             isAuth: isAuth,
             login: login,
-            role: role
+            role: role,
+            id: id
         }
     },
-    logOut: () => {
+    removeSession: () => {
         mobxStore.viewer = {
             ...initialState
         }

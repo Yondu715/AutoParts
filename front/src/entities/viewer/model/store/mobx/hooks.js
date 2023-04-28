@@ -3,18 +3,19 @@ import { autorun } from "mobx";
 import { mobxStore } from ".";
 
 export function useValidate() {
-    const signIn = (isAuth, login, role) => {
+    const signIn = (isAuth, login, role, id) => {
         const vadidateInfo = {
             isAuth: isAuth,
             login: login,
             role: role,
+            id: id
         };
-        mobxStore.logIn(vadidateInfo);
+        mobxStore.setSession(vadidateInfo);
     }
 
     const signOut = () => {
         localStorage.clear();
-        mobxStore.logOut();
+        mobxStore.removeSession();
     };
 
     return { signIn, signOut };
@@ -34,6 +35,9 @@ export function useUserInfo() {
 }
 
 export function useUserLogin() {
-    const login = useUserInfo().login;
-    return login;
+    return useUserInfo().login;
+}
+
+export function useUserId() {
+    return useUserInfo().id;
 }

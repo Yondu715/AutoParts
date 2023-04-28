@@ -2,15 +2,14 @@ import { useState } from "react";
 import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { productModel } from "entities/product";
+import { Product } from "entities/product";
 import { viewerModel } from "entities/viewer";
 
 export function useCart() {
     const { signOut } = viewerModel.useValidate();
     const [products, setProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
-    const Product = productModel.Product;
-
+    const userId = viewerModel.useUserId();
     const selectProduct = (id) =>
         setSelectedProducts((prevState) => {
             if (prevState.includes(id)) {
@@ -21,7 +20,7 @@ export function useCart() {
         });
 
     const _asyncGetCart = async () => {
-        requestAPI.sendRequest(requestAPI.asyncGetCart, _callbackGetCart);
+        requestAPI.sendRequest(() => requestAPI.asyncGetCart(userId), _callbackGetCart);
     }
 
     const _callbackGetCart = (status, data) => {
@@ -39,11 +38,7 @@ export function useCart() {
     }
 
     const asyncSendDeleteInfo = async () => {
-        const jsonProductsId = [];
-        selectedProducts.forEach(id => {
-            jsonProductsId.push({ id: id });
-        });
-        requestAPI.sendRequest(() => requestAPI.asyncDeleteFromCart(jsonProductsId), _callbackDeleteInfo)
+        requestAPI.sendRequest(() => requestAPI.asyncDeleteFromCart(userId, selectedProducts), _callbackDeleteInfo)
     }
 
     const _callbackDeleteInfo = (status) => {

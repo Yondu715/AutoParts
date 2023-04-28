@@ -18,10 +18,11 @@ export function Cart() {
                         {products.map(({ product }) =>
                             <ProductCard
                                 key={product.id}
-                                product={product}
+                                product={product.product}
                                 onClick={() => selectProduct(product.id)}
                                 className={selectedProducts.includes(product.id) ? styles.active : styles.notActive}
-                            /> 
+                            />
+
                         )}
                     </tbody>
                 </table>

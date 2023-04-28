@@ -2,16 +2,14 @@ import { useState } from "react";
 import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { userModel } from "entities/user";
+import { User } from "entities/user";
 import { viewerModel } from "entities/viewer";
 
 export function useList() {
     const { signOut } = viewerModel.useValidate();
     const [applications, setApplications] = useState([]);
     const [selectedApp, setSelectedApp] = useState([]);
-    const User = userModel.User;
     const roles = ["client", "admin"];
-
 
     const selectApplication = (id) =>
         setSelectedApp((prevState) => {
@@ -74,11 +72,7 @@ export function useList() {
     }
 
     const asyncDeleteApp = async () => {
-        const jsonAppId = [];
-        selectedApp.forEach(id => {
-            jsonAppId.push({ id: id });
-        });
-        requestAPI.sendRequest(()=> requestAPI.asyncDeleteApplications(jsonAppId), _callbackRequestInfo);
+        requestAPI.sendRequest(()=> requestAPI.asyncDeleteApplications(selectedApp), _callbackRequestInfo);
     }
 
     const _callbackRequestInfo = (status) => {

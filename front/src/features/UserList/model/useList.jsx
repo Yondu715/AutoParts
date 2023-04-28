@@ -3,14 +3,13 @@ import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
 import { viewerModel } from "entities/viewer";
-import { userModel } from "entities/user";
+import { User } from "entities/user";
 
 export function useList() {
 
     const { signOut } = viewerModel.useValidate();
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
-    const User = userModel.User;
 
     const usersHandler = (id) =>
         setSelectedUsers((prevState) => {
@@ -40,11 +39,7 @@ export function useList() {
     }
 
     const asyncSendDeleteInfo = async () => {
-        const jsonUsersId = [];
-        selectedUsers.forEach(id => {
-            jsonUsersId.push({ id: id });
-        });
-        requestAPI.sendRequest(() => requestAPI.asyncDeleteUsers(jsonUsersId), _callbackDeleteInfo);
+        requestAPI.sendRequest(() => requestAPI.asyncDeleteUsers(selectedUsers), _callbackDeleteInfo);
     }
 
     const _callbackDeleteInfo = (status) => {

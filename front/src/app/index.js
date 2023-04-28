@@ -3,15 +3,47 @@ import { LoaderSpinner } from "shared/ui/LoaderSpinner";
 import { useMountEffect } from "shared/lib/hooks";
 import { LS_TOKEN } from "shared/config";
 import { viewerModel } from "entities/viewer";
-import { checkAuth } from "processes/checkAuth";
+import { requestAPI } from "shared/api";
 import { buildProvider } from "./store/redux";
 // import { buildProvider } from "./store/mobx";
 import { buildRouter } from "./router";
 import "./styles/index.css";
 import "./styles/animations.css";
 
+let userInfo = {
+    isAuth: false,
+    login: null,
+    role: null,
+}
 
-export function Routing() {
+const checkAuth = async () => {
+    await requestAPI.sendRequest(requestAPI.asyncAuth, _callbackCheckAuth);
+    return userInfo;
+};
+
+function _callbackCheckAuth(status) {
+    switch (status) {
+        case 204:
+            const tokenBody = localStorage.getItem(LS_TOKEN).split(".")[1];
+            const decodedBody = atob(tokenBody);
+            const payload = JSON.parse(decodedBody);
+            const login = payload["login"];
+            const role = payload["role"];
+            const id = payload["id"];
+            userInfo = {
+                isAuth: true,
+                login: login,
+                role: role,
+                id: id
+            }
+            break;
+        case 401:
+        default:
+            break;
+    }
+}
+
+function Routing() {
     const Router = buildRouter();
     const [loading, setLoading] = useState(true);
     const { signIn } = viewerModel.useValidate();
@@ -22,8 +54,8 @@ export function Routing() {
         }
         try {
             const data = await checkAuth();
-            const { isAuth, login, role } = data;
-            signIn(isAuth, login, role);
+            const { isAuth, login, role, id } = data;
+            signIn(isAuth, login, role, id);
         }
         finally {
             setLoading(false);
@@ -42,6 +74,9 @@ export function Routing() {
         <Router />
     );
 }
+
+
+
 
 export function App() {
     const Provider = buildProvider();

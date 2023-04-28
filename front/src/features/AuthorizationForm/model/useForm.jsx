@@ -49,8 +49,9 @@ export function useForm() {
                 const payload = JSON.parse(decodedBody);
                 const login = payload["login"];
                 const role = payload["role"];
+                const id = payload["id"];
                 localStorage.setItem(LS_TOKEN, token);
-                signIn(true, login, role);
+                signIn(true, login, role, id);
                 switch (role) {
                     case "client":
                         navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/"));

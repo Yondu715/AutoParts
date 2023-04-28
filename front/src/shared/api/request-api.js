@@ -5,8 +5,9 @@ const protocolWs = "ws";
 const host = "localhost";
 const port = "8080";
 const name = "autoparts-1";
+const version = "v1";
 const path = `${host}:${port}/${name}`;
-const domainHttp = `${protocolHttp}://${path}`;
+const domainHttp = `${protocolHttp}://${path}/api/${version}`;
 const domainWs = `${protocolWs}://${path}`;
 
 export const requestAPI = {
@@ -26,64 +27,64 @@ export const requestAPI = {
     },
 
     async asyncGetAllProducts() {
-        return await sendRequest("GET", `${domainHttp}/api/products`);
+        return await sendRequest("GET", `${domainHttp}/products`);
     },
 
-    async asyncGetUserProducts() {
-        return await sendRequest("GET", `${domainHttp}/api/products/userProducts`);
+    async asyncGetUserProducts(userId) {
+        return await sendRequest("GET", `${domainHttp}/users/${userId}/products`);
     },
 
     async asyncGetProductInfo(product_id) {
-        return await sendRequest("GET", `${domainHttp}/api/products/${product_id}`);
+        return await sendRequest("GET", `${domainHttp}/products/${product_id}`);
     },
 
     async asyncAuth(user) {
-        return await sendRequest("POST", `${domainHttp}/api/users/auth`, user);
+        return await sendRequest("POST", `${domainHttp}/users/auth`, user);
     },
 
     async asyncReg(user) {
-        return await sendRequest("POST", `${domainHttp}/api/users/registration`, user);
+        return await sendRequest("POST", `${domainHttp}/users/registration`, user);
     },
 
 
     async asyncSaleProduct(product) {
-        return await sendRequest("POST", `${domainHttp}/api/products/sale`, product);
+        return await sendRequest("POST", `${domainHttp}/products/`, product);
     },
 
-    async asyncDeleteProducts(products_id) {
-        return await sendRequest("DELETE", `${domainHttp}/api/products/userProducts`, products_id);
+    async asyncDeleteProducts(userId, products_id) {
+        return await sendRequest("DELETE", `${domainHttp}/users/${userId}/products`, products_id);
     },
 
-    async asyncAddToCart(product) {
-        return await sendRequest("POST", `${domainHttp}/api/users/cart`, product);
+    async asyncAddToCart(userId, product) {
+        return await sendRequest("POST", `${domainHttp}/users/${userId}/cart`, product);
     },
 
-    async asyncGetCart() {
-        return await sendRequest("GET", `${domainHttp}/api/users/cart`);
+    async asyncGetCart(userId) {
+        return await sendRequest("GET", `${domainHttp}/users/${userId}/cart`);
     },
 
-    async asyncDeleteFromCart(products_id) {
-        return await sendRequest("DELETE", `${domainHttp}/api/users/cart`, products_id);
+    async asyncDeleteFromCart(userId, productsId) {
+        return await sendRequest("DELETE", `${domainHttp}/users/${userId}/cart`, productsId);
     },
 
     async asyncGetAllApplications() {
-        return await sendRequest("GET", `${domainHttp}/api/admin/applications`);
+        return await sendRequest("GET", `${domainHttp}/admin/applications`);
     },
 
     async asyncDeleteApplications(applications_id) {
-        return await sendRequest("DELETE", `${domainHttp}/api/admin/applications`, applications_id);
+        return await sendRequest("DELETE", `${domainHttp}/admin/applications`, applications_id);
     },
 
     async asyncAcceptApplications(applications) {
-        return await sendRequest("PUT", `${domainHttp}/api/admin/applications`, applications);
+        return await sendRequest("PUT", `${domainHttp}/admin/applications`, applications);
     },
 
     async asyncGetAllUsers() {
-        return await sendRequest("GET", `${domainHttp}/api/admin/users`);
+        return await sendRequest("GET", `${domainHttp}/admin/users`);
     },
 
     async asyncDeleteUsers(users_id) {
-        return await sendRequest("DELETE", `${domainHttp}/api/admin/users`, users_id);
+        return await sendRequest("DELETE", `${domainHttp}/admin/users`, users_id);
     },
 
     connectToChat(id) {
