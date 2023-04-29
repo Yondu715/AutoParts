@@ -1,10 +1,10 @@
-package infrastructure.database.repositories;
+package infrastructure.database.repository;
 
 import java.util.List;
 
 import application.dto.User;
 import application.interfaces.out.IUsersRepository;
-import infrastructure.database.entities.EUser;
+import infrastructure.database.entity.EUser;
 import infrastructure.utils.userStruct;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
@@ -108,5 +108,17 @@ public class UsersRepository implements IUsersRepository {
 		} finally {
 			entityManager.close();
 		}
+	}
+
+	@Override
+	public User findById(Integer userId) {
+		entityManager = entityManagerFactory.createEntityManager();
+		TypedQuery<EUser> query = entityManager
+				.createQuery("select u from EUser u where u.id=:id and u.role is not null", EUser.class);
+		query.setParameter("id", userId);
+		EUser eUser = query.getSingleResult();
+		User user = userStruct.toUser(eUser);
+		entityManager.close();
+		return user;
 	}
 }

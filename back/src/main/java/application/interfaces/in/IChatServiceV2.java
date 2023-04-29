@@ -5,7 +5,7 @@ import java.util.List;
 import application.dto.Message;
 import jakarta.websocket.Session;
 
-public interface IChatModelV2 {
+public interface IChatServiceV2 {
     public void addUser(String roomId, Session session);
 
     public void removeUser(String roomId, Session session);

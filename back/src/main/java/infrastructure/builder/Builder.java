@@ -1,9 +1,9 @@
 package infrastructure.builder;
 
-import application.interfaces.in.IApplicationModel;
-import application.interfaces.in.ICartModel;
-import application.interfaces.in.IProductsModel;
-import application.interfaces.in.IUserModel;
+import application.interfaces.in.IApplicationService;
+import application.interfaces.in.ICartService;
+import application.interfaces.in.IProductsService;
+import application.interfaces.in.IUserService;
 import application.interfaces.out.ICartsRepository;
 import application.interfaces.out.IProductsRepository;
 import application.interfaces.out.IUsersRepository;
@@ -13,47 +13,47 @@ import jakarta.inject.Inject;
 
 public class Builder {
 	@Inject @Default
-	private IApplicationModel modelApplications;
+	private IApplicationService applicationService;
 
 	@Inject @Default
-	private ICartModel modelCart;
+	private ICartService cartService;
 
 	@Inject @Default
-	private IProductsModel modelProducts;
+	private IProductsService productsService;
 
 	@Inject @Default
-	private IUserModel modelUser;
+	private IUserService userService;
 
 	@Inject @Default
-	private ICartsRepository repCart;
+	private ICartsRepository cartsRepository;
 
 	@Inject @Default
-	private IProductsRepository repProducts;
+	private IProductsRepository productsRepository;
 
 	@Inject @Default
-	private IUsersRepository repUsers;
+	private IUsersRepository usersRepository;
 
 	@Produces @Build
-	public ICartModel buildModelCart(){
-		modelCart.setRepository(repCart);
-		return modelCart;
+	public ICartService buildCartService(){
+		cartService.setRepository(cartsRepository);
+		return cartService;
 	}
 
 	@Produces @Build
-	public IProductsModel buildModelProducts() {
-		modelProducts.setRepository(repProducts);
-		return modelProducts;
+	public IProductsService buildProductsService() {
+		productsService.setRepository(productsRepository);
+		return productsService;
 	}
 
 	@Produces @Build
-	public IUserModel buildModelUser() {
-		modelUser.setRepository(repUsers);
-		return modelUser;
+	public IUserService buildUserService() {
+		userService.setRepository(usersRepository);
+		return userService;
 	}
 
 	@Produces @Build
-	public IApplicationModel buildModelAdmin(){
-		modelApplications.setRepository(repUsers);
-		return modelApplications;
+	public IApplicationService buildAdminService(){
+		applicationService.setRepository(usersRepository);
+		return applicationService;
 	}
 }

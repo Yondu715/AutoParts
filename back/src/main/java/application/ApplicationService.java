@@ -3,10 +3,10 @@ package application;
 import java.util.List;
 
 import application.dto.User;
-import application.interfaces.in.IApplicationModel;
+import application.interfaces.in.IApplicationService;
 import application.interfaces.out.IUsersRepository;
 
-public class ApplicationModel implements IApplicationModel {
+public class ApplicationService implements IApplicationService {
 
 	private IUsersRepository usersRepository;
 

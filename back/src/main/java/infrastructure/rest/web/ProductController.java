@@ -1,9 +1,9 @@
-package infrastructure.rest.resource;
+package infrastructure.rest.web;
 
 import java.util.List;
 
 import application.dto.Product;
-import application.interfaces.in.IProductsModel;
+import application.interfaces.in.IProductsService;
 import infrastructure.builder.Build;
 import infrastructure.rest.interceptor.AuthRequired;
 import jakarta.ws.rs.Path;
@@ -22,11 +22,11 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/products")
-public class ProductPaths {
+public class ProductController {
 
 	@Inject
 	@Build
-	private IProductsModel productsModel;
+	private IProductsService productsService;
 
 	private Jsonb jsonb = JsonbBuilder.create();
 
@@ -39,7 +39,7 @@ public class ProductPaths {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		List<Product> products = productsModel.getProducts(null);
+		List<Product> products = productsService.getProducts();
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
 	}
@@ -55,7 +55,7 @@ public class ProductPaths {
 		}
 		try {
 			Product product = jsonb.fromJson(jsonSale, Product.class);
-			productsModel.addProduct(product);
+			productsService.addProduct(product);
 		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
@@ -74,7 +74,7 @@ public class ProductPaths {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String productId = requestContext.getUriInfo().getPathParameters().getFirst("product_id");
-		Product product = productsModel.getProductInfo(Integer.parseInt(productId));
+		Product product = productsService.getProduct(Integer.parseInt(productId));
 		String resultJson = jsonb.toJson(product);
 		return Response.ok(resultJson).build();
 	}

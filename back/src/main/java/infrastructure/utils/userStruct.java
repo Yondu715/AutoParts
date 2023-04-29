@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import application.dto.User;
-import infrastructure.database.entities.EUser;
+import infrastructure.database.entity.EUser;
 
 public class userStruct {
     public static List<User> toUser(List<EUser> eUsers) {

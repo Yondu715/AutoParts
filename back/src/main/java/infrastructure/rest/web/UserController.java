@@ -1,4 +1,4 @@
-package infrastructure.rest.resource;
+package infrastructure.rest.web;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -14,10 +14,10 @@ import java.util.List;
 import application.dto.Cart;
 import application.dto.Product;
 import application.dto.User;
-import application.interfaces.in.IApplicationModel;
-import application.interfaces.in.ICartModel;
-import application.interfaces.in.IProductsModel;
-import application.interfaces.in.IUserModel;
+import application.interfaces.in.IApplicationService;
+import application.interfaces.in.ICartService;
+import application.interfaces.in.IProductsService;
+import application.interfaces.in.IUserService;
 import infrastructure.builder.Build;
 import infrastructure.rest.interceptor.AuthRequired;
 import infrastructure.rest.token.Token;
@@ -33,23 +33,23 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/users")
-public class UserPaths {
+public class UserController {
 
 	@Inject
 	@Build
-	private IUserModel userModel;
+	private IUserService userService;
 
 	@Inject
 	@Build
-	private IProductsModel productsModel;
+	private IProductsService productsService;
 
 	@Inject
 	@Build
-	private ICartModel cartModel;
+	private ICartService cartService;
 
 	@Inject
 	@Build
-	private IApplicationModel applicationModel;
+	private IApplicationService applicationService;
 
 	private Jsonb jsonb = JsonbBuilder.create();
 
@@ -69,10 +69,10 @@ public class UserPaths {
 
 		try {
 			User user = jsonb.fromJson(userJson, User.class);
-			if (!userModel.authUser(user)) {
+			if (!userService.authUser(user)) {
 				return Response.status(Response.Status.UNAUTHORIZED).build();
 			}
-			User userFound = userModel.getUser(user);
+			User userFound = userService.getUser(user);
 			TokenKey tokenKey = TokenKey.getInstance();
 			Key key = tokenKey.getKey();
 			TokenIssuer ti = new TokenIssuer(key);
@@ -93,7 +93,7 @@ public class UserPaths {
 	public Response registration(String userJson) {
 		try {
 			User application = jsonb.fromJson(userJson, User.class);
-			if (applicationModel.addAplication(application)) {
+			if (applicationService.addAplication(application)) {
 				return Response.status(Response.Status.OK).build();
 			}
 		} catch (JsonbException | IllegalArgumentException e) {
@@ -113,7 +113,7 @@ public class UserPaths {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		List<Product> products = productsModel.getProducts(login);
+		List<Product> products = productsService.getProductsBySeller(login);
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
 	}
@@ -131,7 +131,7 @@ public class UserPaths {
 		try {
 			List<Integer> productsId = jsonb.fromJson(jsonDeleteId, new ArrayList<Integer>() {
 			}.getClass().getGenericSuperclass());
-			productsModel.deleteProduct(productsId);
+			productsService.deleteProduct(productsId);
 		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
@@ -149,7 +149,7 @@ public class UserPaths {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		List<Cart> products = cartModel.getCart(login);
+		List<Cart> products = cartService.getCart(login);
 		String resultJson = jsonb.toJson(products);
 		return Response.ok(resultJson).build();
 	}
@@ -165,7 +165,7 @@ public class UserPaths {
 		}
 		try {
 			Product product = jsonb.fromJson(productJson, Product.class);
-			if (cartModel.addToCart(login, product)) {
+			if (cartService.addToCart(login, product)) {
 				return Response.status(Response.Status.OK).build();
 			}
 		} catch (JsonbException | IllegalArgumentException e) {
@@ -189,7 +189,7 @@ public class UserPaths {
 		try {
 			List<Integer> productsId = jsonb.fromJson(jsonDeleteId, new ArrayList<Integer>() {
 			}.getClass().getGenericSuperclass());
-			cartModel.deleteProduct(productsId);
+			cartService.deleteProduct(productsId);
 		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {

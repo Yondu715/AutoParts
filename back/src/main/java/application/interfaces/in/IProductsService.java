@@ -5,7 +5,7 @@ import java.util.List;
 import application.dto.Product;
 import application.interfaces.out.IProductsRepository;
 
-public interface IProductsModel {
+public interface IProductsService {
 
 	public void setRepository(IProductsRepository repProducts);
 
@@ -13,8 +13,10 @@ public interface IProductsModel {
 
 	public void deleteProduct(List<Integer> productsId);
 
-	public List<Product> getProducts(String sellerName);
+	public List<Product> getProducts();
 
-	public Product getProductInfo(Integer productId);
+	public List<Product> getProductsBySeller(String sellerName);
+
+	public Product getProduct(Integer productId);
 
 }

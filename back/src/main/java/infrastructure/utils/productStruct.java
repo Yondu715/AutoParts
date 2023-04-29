@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import application.dto.Product;
-import infrastructure.database.entities.EProduct;
-import infrastructure.database.entities.EUser;
+import infrastructure.database.entity.EProduct;
+import infrastructure.database.entity.EUser;
 
 public class productStruct {
 

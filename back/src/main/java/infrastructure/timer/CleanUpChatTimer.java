@@ -3,8 +3,8 @@ package infrastructure.timer;
 import java.util.List;
 
 import application.dto.Product;
-import application.interfaces.in.IChatModelV2;
-import application.interfaces.in.IProductsModel;
+import application.interfaces.in.IChatServiceV2;
+import application.interfaces.in.IProductsService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import jakarta.ejb.ScheduleExpression;
@@ -24,10 +24,10 @@ public class CleanUpChatTimer {
     TimerService timerService;
 
     @Inject
-    IChatModelV2 modelChat;
+    IChatServiceV2 chatService;
 
     @Inject
-    IProductsModel modelProducts;
+    IProductsService productsService;
 
     @PostConstruct
     public void init(){
@@ -40,12 +40,12 @@ public class CleanUpChatTimer {
 
     @Timeout
     public void checkChat(){
-        List<String> rooms = modelChat.getRooms();
+        List<String> rooms = chatService.getRooms();
         for (String room : rooms) {
             Integer id = Integer.parseInt(room);
-            Product product = modelProducts.getProductInfo(id);
+            Product product = productsService.getProduct(id);
             if (product == null){
-                modelChat.cleanRoom(room);
+                chatService.cleanRoom(room);
             }
         }
 

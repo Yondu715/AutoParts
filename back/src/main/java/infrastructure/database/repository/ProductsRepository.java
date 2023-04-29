@@ -1,11 +1,11 @@
-package infrastructure.database.repositories;
+package infrastructure.database.repository;
 
 import java.util.List;
 
 import application.dto.Product;
 import application.interfaces.out.IProductsRepository;
-import infrastructure.database.entities.EProduct;
-import infrastructure.database.entities.EUser;
+import infrastructure.database.entity.EProduct;
+import infrastructure.database.entity.EUser;
 import infrastructure.utils.productStruct;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;

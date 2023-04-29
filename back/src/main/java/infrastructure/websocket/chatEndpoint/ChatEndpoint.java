@@ -1,7 +1,7 @@
 package infrastructure.websocket.chatEndpoint;
 
 import application.dto.Message;
-import application.interfaces.in.IChatModelV2;
+import application.interfaces.in.IChatServiceV2;
 import jakarta.inject.Inject;
 import jakarta.websocket.OnClose;
 import jakarta.websocket.OnMessage;
@@ -14,21 +14,21 @@ import jakarta.websocket.server.ServerEndpoint;
 public class ChatEndpoint {
 
     @Inject
-    IChatModelV2 chatModel;
+    IChatServiceV2 chatService;
 
     @OnOpen
     public void connectionOpen(@PathParam("roomId") String roomId, Session session) {
-        chatModel.addUser(roomId, session);
-        chatModel.sendPrevMessages(roomId, session);
+        chatService.addUser(roomId, session);
+        chatService.sendPrevMessages(roomId, session);
     }
 
     @OnClose
     public void connectionClose(@PathParam("roomId") String roomId, Session session) {
-        chatModel.removeUser(roomId, session);
+        chatService.removeUser(roomId, session);
     }
 
     @OnMessage
     public void processMessage(@PathParam("roomId") String roomId, Session session, Message message) {
-        chatModel.sendMessage(roomId, message);
+        chatService.sendMessage(roomId, message);
     }
 }

@@ -3,10 +3,10 @@ package application;
 import java.util.List;
 
 import application.dto.User;
-import application.interfaces.in.IUserModel;
+import application.interfaces.in.IUserService;
 import application.interfaces.out.IUsersRepository;
 
-public class UserModel implements IUserModel {
+public class UserService implements IUserService {
 
 	private IUsersRepository usersRepository;
 
@@ -35,7 +35,7 @@ public class UserModel implements IUserModel {
 	}
 
 	@Override
-	public List<User> getUsers() {
+	public List<User> getAllUsers() {
 		return usersRepository.findAll();
 	}
 
@@ -44,6 +44,11 @@ public class UserModel implements IUserModel {
 		for (Integer id : usersId) {
 			usersRepository.delete(id);
 		}
+	}
+
+	@Override
+	public User getUserById(Integer id) {
+		return usersRepository.findById(id);
 	}
 
 }

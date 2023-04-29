@@ -1,4 +1,4 @@
-package infrastructure.rest.resource;
+package infrastructure.rest.web;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import application.dto.User;
-import application.interfaces.in.IApplicationModel;
-import application.interfaces.in.IUserModel;
+import application.interfaces.in.IApplicationService;
+import application.interfaces.in.IUserService;
 import infrastructure.builder.Build;
 import infrastructure.rest.interceptor.AuthRequired;
 import jakarta.inject.Inject;
@@ -25,15 +25,15 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/admin")
-public class AdminPaths {
+public class AdminController {
 
 	@Inject
 	@Build
-	private IApplicationModel applicationModel;
+	private IApplicationService applicationService;
 
 	@Inject
 	@Build
-	private IUserModel userModel;
+	private IUserService userModel;
 
 	private Jsonb jsonb = JsonbBuilder.create();
 
@@ -46,7 +46,7 @@ public class AdminPaths {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		List<User> userApplications = applicationModel.getApplications();
+		List<User> userApplications = applicationService.getApplications();
 		String resultJson = jsonb.toJson(userApplications);
 		return Response.ok(resultJson).build();
 	}
@@ -64,7 +64,7 @@ public class AdminPaths {
 		try {
 			List<Integer> userApplicationsId = jsonb.fromJson(jsonDeleteId, new ArrayList<Integer>() {
 			}.getClass().getGenericSuperclass());
-			applicationModel.deleteApplication(userApplicationsId);
+			applicationService.deleteApplication(userApplicationsId);
 		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
@@ -85,7 +85,7 @@ public class AdminPaths {
 		try {
 			List<User> userApplications = jsonb.fromJson(userApplicationsJson, new ArrayList<User>() {
 			}.getClass().getGenericSuperclass());
-			applicationModel.acceptApplication(userApplications);
+			applicationService.acceptApplication(userApplications);
 		} catch (JsonbException | IllegalArgumentException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
 		} catch (Exception e) {
@@ -103,7 +103,7 @@ public class AdminPaths {
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
-		List<User> users = userModel.getUsers();
+		List<User> users = userModel.getAllUsers();
 		String resultJson = jsonb.toJson(users);
 		return Response.ok(resultJson).build();
 	}

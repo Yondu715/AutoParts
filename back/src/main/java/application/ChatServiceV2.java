@@ -6,14 +6,14 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import application.dto.Message;
-import application.interfaces.in.IChatModelV2;
+import application.interfaces.in.IChatServiceV2;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.concurrent.ManagedExecutorService;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.websocket.Session;
 
-public class ChatModelV2 implements IChatModelV2 {
+public class ChatServiceV2 implements IChatServiceV2 {
 
     @Resource
     ManagedExecutorService mes;

@@ -6,7 +6,7 @@ import application.dto.Cart;
 import application.dto.Product;
 import application.interfaces.out.ICartsRepository;
 
-public interface ICartModel {
+public interface ICartService {
 
 	public void setRepository(ICartsRepository repCart);
 

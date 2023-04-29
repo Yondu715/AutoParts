@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import application.dto.Cart;
-import infrastructure.database.entities.ECart;
+import infrastructure.database.entity.ECart;
 
 public class cartStruct {
     public static List<Cart> toCart(List<ECart> cartList) {

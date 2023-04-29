@@ -5,7 +5,7 @@ import java.util.List;
 import application.dto.User;
 import application.interfaces.out.IUsersRepository;
 
-public interface IApplicationModel {
+public interface IApplicationService {
 	public void setRepository(IUsersRepository repUsers);
 
 	public List<User> getApplications();

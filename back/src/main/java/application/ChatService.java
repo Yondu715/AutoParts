@@ -6,13 +6,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import application.dto.Message;
-import application.interfaces.in.IChatModel;
+import application.interfaces.in.IChatService;
 import jakarta.ejb.Asynchronous;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.websocket.Session;
 
-public class ChatModel implements IChatModel {
+public class ChatService implements IChatService {
 
     private Jsonb jsonb = JsonbBuilder.create();
     private final static Map<String, List<Session>> roomUsers = new ConcurrentHashMap<>();

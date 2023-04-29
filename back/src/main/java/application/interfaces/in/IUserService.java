@@ -5,7 +5,7 @@ import java.util.List;
 import application.dto.User;
 import application.interfaces.out.IUsersRepository;
 
-public interface IUserModel {
+public interface IUserService {
 
 	public void setRepository(IUsersRepository repUsers);
 
@@ -15,7 +15,9 @@ public interface IUserModel {
 
 	public User getUser(User user);
 
-	public List<User> getUsers();
+	public User getUserById(Integer id);
+
+	public List<User> getAllUsers();
 
 	public void deleteUser(List<Integer> usersId);
 }

@@ -4,10 +4,10 @@ import java.util.List;
 
 import application.dto.Cart;
 import application.dto.Product;
-import application.interfaces.in.ICartModel;
+import application.interfaces.in.ICartService;
 import application.interfaces.out.ICartsRepository;
 
-public class CartModel implements ICartModel {
+public class CartService implements ICartService {
 
 	private ICartsRepository cartsRepository;
 

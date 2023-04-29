@@ -10,6 +10,8 @@ public interface IUsersRepository {
 
 	public boolean delete(Integer userId);
 
+	public User findById(Integer userId);
+
 	public User findByLogin(String login);
 
 	public List<User> findAll();

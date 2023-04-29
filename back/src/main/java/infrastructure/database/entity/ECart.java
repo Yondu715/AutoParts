@@ -1,4 +1,4 @@
-package infrastructure.database.entities;
+package infrastructure.database.entity;
 
 import java.io.Serializable;
 

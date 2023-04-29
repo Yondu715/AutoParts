@@ -3,10 +3,10 @@ package application;
 import java.util.List;
 
 import application.dto.Product;
-import application.interfaces.in.IProductsModel;
+import application.interfaces.in.IProductsService;
 import application.interfaces.out.IProductsRepository;
 
-public class ProductsModel implements IProductsModel {
+public class ProductsService implements IProductsService {
 
 	private IProductsRepository productsRepository;
 
@@ -23,18 +23,17 @@ public class ProductsModel implements IProductsModel {
 	}
 
 	@Override
-	public List<Product> getProducts(String seller_name) {
-		List<Product> products = null;
-		if (seller_name == null) {
-			products = productsRepository.findAll();
-		} else {
-			products = productsRepository.findByUser(seller_name);
-		}
-		return products;
+	public List<Product> getProducts() {
+		return	productsRepository.findAll();
 	}
 
 	@Override
-	public Product getProductInfo(Integer productId){
+	public List<Product> getProductsBySeller(String sellerName) {
+		return productsRepository.findByUser(sellerName);
+	}
+
+	@Override
+	public Product getProduct(Integer productId){
 		return productsRepository.findById(productId);
 	}
 
@@ -42,4 +41,5 @@ public class ProductsModel implements IProductsModel {
 	public void setRepository(IProductsRepository productsRepository) {
 		this.productsRepository = productsRepository;
 	}
+
 }

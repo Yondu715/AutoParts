@@ -1,12 +1,12 @@
-package infrastructure.database.repositories;
+package infrastructure.database.repository;
 
 import java.util.List;
 
 import application.dto.Cart;
 import application.interfaces.out.ICartsRepository;
-import infrastructure.database.entities.ECart;
-import infrastructure.database.entities.EProduct;
-import infrastructure.database.entities.EUser;
+import infrastructure.database.entity.ECart;
+import infrastructure.database.entity.EProduct;
+import infrastructure.database.entity.EUser;
 import infrastructure.utils.cartStruct;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
