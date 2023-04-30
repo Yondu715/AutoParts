@@ -2,11 +2,7 @@ import { Response } from "./response";
 
 
 export const sendRequest = async (method, uri, data, options) => {
-    const headers = new Headers({
-        "Content-Type": "application/json; charset=utf-8",
-        "Authorization": localStorage.getItem("token"),
-        ...options
-    });
+    const headers = buildHeaders(options);
 
     method = method.toLowerCase();
     if (method === "delete") {
@@ -24,6 +20,18 @@ export const sendRequest = async (method, uri, data, options) => {
         : await response.text();
 
     return new Response(response.status, answer);
+}
+
+const buildHeaders = (options) => {
+    const headers = new Headers({
+        "Content-Type": "application/json; charset=utf-8",
+        ...options
+    })
+    const token = localStorage.getItem("token");
+    if (token) {
+        headers.set("Authorization", token);
+    }
+    return headers;
 }
 
 const contentIs = (headers, type) => {
