@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.application.dto.User;
-import core.application.services.User.api.IUserService;
-import core.application.services.application.api.IApplicationService;
+import core.application.service.application.api.IApplicationService;
+import core.application.service.user.api.IUserService;
 import core.infrastructure.builder.Build;
 import core.infrastructure.in.rest.interceptor.AuthRequired;
 import jakarta.inject.Inject;

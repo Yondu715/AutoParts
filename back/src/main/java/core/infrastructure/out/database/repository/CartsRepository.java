@@ -3,8 +3,8 @@ package core.infrastructure.out.database.repository;
 import java.util.List;
 
 import core.application.dto.Cart;
-import core.application.repositories.cart.api.ICartsRepository;
-import core.infrastructure.out.database.entity.ECart;
+import core.application.repository.cart.api.ICartsRepository;
+import core.infrastructure.out.database.entity.ECartItem;
 import core.infrastructure.out.database.entity.EProduct;
 import core.infrastructure.out.database.entity.EUser;
 import jakarta.ejb.Stateless;
@@ -12,7 +12,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 import jakarta.persistence.TypedQuery;
-import utils.cartStruct;
+import utils.mapper.cartStruct;
 
 @Stateless
 public class CartsRepository implements ICartsRepository {
@@ -25,11 +25,11 @@ public class CartsRepository implements ICartsRepository {
 	@Override
 	public List<Cart> findByLogin(String login) {
 		entityManager = entityManagerFactory.createEntityManager();
-		TypedQuery<ECart> query = entityManager.createQuery(
+		TypedQuery<ECartItem> query = entityManager.createQuery(
 				"select c from ECart c join fetch c.user u where u.login=:login",
-				ECart.class);
+				ECartItem.class);
 		query.setParameter("login", login);
-		List<ECart> cartList = query.getResultList();
+		List<ECartItem> cartList = query.getResultList();
 		List<Cart> carts = cartStruct.toCart(cartList);
 		entityManager.close();
 		return carts;
@@ -57,7 +57,7 @@ public class CartsRepository implements ICartsRepository {
 		try {
 			entityManager.joinTransaction();
 			if (addStatus) {
-				ECart eCart = new ECart();
+				ECartItem eCart = new ECartItem();
 				eCart.setProduct(eProduct);
 				eCart.setUser(eUser);
 				entityManager.persist(eCart);
@@ -71,7 +71,7 @@ public class CartsRepository implements ICartsRepository {
 	@Override
 	public void delete(Integer productId) {
 		entityManager = entityManagerFactory.createEntityManager();
-		TypedQuery<ECart> query = entityManager.createQuery("delete from ECart c where c.id=:id", ECart.class);
+		TypedQuery<ECartItem> query = entityManager.createQuery("delete from ECart c where c.id=:id", ECartItem.class);
 		query.setParameter("id", productId);
 		try {
 			entityManager.joinTransaction();

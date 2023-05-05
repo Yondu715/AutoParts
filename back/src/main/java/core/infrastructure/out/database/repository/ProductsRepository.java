@@ -3,7 +3,7 @@ package core.infrastructure.out.database.repository;
 import java.util.List;
 
 import core.application.dto.Product;
-import core.application.repositories.products.api.IProductsRepository;
+import core.application.repository.products.api.IProductsRepository;
 import core.infrastructure.out.database.entity.EProduct;
 import core.infrastructure.out.database.entity.EUser;
 import jakarta.ejb.Stateless;
@@ -11,7 +11,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 import jakarta.persistence.TypedQuery;
-import utils.productStruct;
+import utils.mapper.productStruct;
 
 @Stateless
 public class ProductsRepository implements IProductsRepository {

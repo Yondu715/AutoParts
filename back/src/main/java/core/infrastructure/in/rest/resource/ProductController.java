@@ -3,7 +3,7 @@ package core.infrastructure.in.rest.resource;
 import java.util.List;
 
 import core.application.dto.Product;
-import core.application.services.products.api.IProductsService;
+import core.application.service.products.api.IProductsService;
 import core.infrastructure.builder.Build;
 import core.infrastructure.in.rest.interceptor.AuthRequired;
 import jakarta.ws.rs.Path;

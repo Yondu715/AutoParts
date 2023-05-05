@@ -3,14 +3,14 @@ package core.infrastructure.out.database.repository;
 import java.util.List;
 
 import core.application.dto.User;
-import core.application.repositories.users.api.IUsersRepository;
+import core.application.repository.users.api.IUsersRepository;
 import core.infrastructure.out.database.entity.EUser;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 import jakarta.persistence.TypedQuery;
-import utils.userStruct;
+import utils.mapper.userStruct;
 
 @Stateless
 public class UsersRepository implements IUsersRepository {
