@@ -9,7 +9,9 @@ export function SubmitButton({ type, children, onClick, ...props }) {
         case "info":
             color = styles.infoButton;
             break;
-
+        case "accept":
+            color = styles.acceptButton;
+            break;
         default:
             color = styles.acceptButton;
             break;

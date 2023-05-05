@@ -1,1 +1,1 @@
-export * from "./ui/MainPage"
+export * from "./ui"

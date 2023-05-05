@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
-import { AuthPage } from "pages/Auth";
+import { AuthPage } from "pages/Authorization";
 import { NotFoundPage } from "pages/NotFound";
-import { RegPage } from "pages/Reg";
+import { RegPage } from "pages/Registration";
 import { MainPage } from "pages/Main";
 import { AdminPage } from "pages/Admin";
 import {

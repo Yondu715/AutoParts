@@ -1,17 +1,16 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useResolvedPath } from "react-router-dom";
+import { Product } from "entities/product";
+import { viewerModel } from "entities/viewer";
 import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { Product } from "entities/product";
-import { viewerModel } from "entities/viewer";
-import { MAIN_ROUTE, PRODUCTS_ROUTE } from "shared/config";
 
 export function useProducts() {
     const { signOut } = viewerModel.useValidate();
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
-    console.log(viewerModel.useUserId());
+    const pathname = useResolvedPath().pathname;
     
     const _asyncGetProducts = async () => {
         requestAPI.sendRequest(requestAPI.asyncGetAllProducts, _callbackGetProducts);
@@ -31,7 +30,7 @@ export function useProducts() {
         }
     }
 
-    const onProductInfo = (id) => navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/") + `/${id}`);
+    const onProductInfo = (id) => navigate(pathname + "/" + id);
 
     useMountEffect(_asyncGetProducts);
 

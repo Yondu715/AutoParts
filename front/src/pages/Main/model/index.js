@@ -1,0 +1,1 @@
+export { useMain } from "./useMain";

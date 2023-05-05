@@ -1,0 +1,1 @@
+export { RegPage } from "./RegPage";

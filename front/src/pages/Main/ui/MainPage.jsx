@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { Header } from "widgets/Header";
 import { NavBar } from "widgets/NavBar";
-import { useMain } from "../model/useMain";
+import { useMain } from "../model";
 import styles from "./MainPage.module.css";
 
 export function MainPage() {

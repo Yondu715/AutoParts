@@ -1,3 +1,4 @@
+import { generateUUID } from "shared/lib/actions/dataAction";
 import { requestAPI } from "./request-api";
 
 let _subscribers = [];
@@ -8,8 +9,14 @@ const messageHandler = (e) => {
     _subscribers.forEach(s => s(newMessages));
 }
 
+const openConnectionHandler = () => {
+    const uuid = generateUUID();
+    _wsChannel.send(uuid);
+}
+
 const connectToChat = (roomId) => {
     _wsChannel = requestAPI.connectToChat(roomId);
+    _wsChannel.onopen = openConnectionHandler;
     _wsChannel.onmessage = messageHandler;
 }
 
