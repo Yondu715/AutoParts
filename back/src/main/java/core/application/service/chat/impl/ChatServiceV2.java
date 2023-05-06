@@ -6,8 +6,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import core.application.dto.Message;
-import core.application.executor.api.Executable;
+import core.application.service.chat.api.Executable;
 import core.application.service.chat.api.IChatServiceV2;
+import core.application.service.chat.api.Updatable;
 
 public class ChatServiceV2 implements IChatServiceV2 {
 
@@ -15,16 +16,37 @@ public class ChatServiceV2 implements IChatServiceV2 {
     public final static Map<String, List<Message>> roomMessages = new ConcurrentHashMap<>();
 
     private Executable executor;
-    
+    private Updatable updater;
+
+    @Override
+    public void setExecutor(Executable executor) {
+        this.executor = executor;
+    }
+
+    @Override
+    public void setUpdater(Updatable updater) {
+        this.updater = updater;
+    }
+
     @Override
     public void addUser(String roomId, String userId) {
-        executor.execute(()-> {
+        executor.execute(() -> {
             List<String> usersList = roomUsers.computeIfAbsent(roomId, k -> new ArrayList<>());
             roomMessages.computeIfAbsent(roomId, k -> new ArrayList<>());
             synchronized (usersList) {
                 usersList.add(userId);
+                List<Message> messages = roomMessages.get(roomId);
+                updater.updateUser(userId, messages);
             }
         });
+    }
+
+    @Override
+    public void addMessage(String roomId, Message message) {
+        List<Message> messages = roomMessages.get(roomId);
+        List<String> users = roomUsers.get(roomId);
+        messages.add(message);
+        updater.updateMessage(users, message);
     }
 
     @Override
@@ -39,6 +61,7 @@ public class ChatServiceV2 implements IChatServiceV2 {
         });
     }
 
+
     @Override
     public List<String> getUsers(String roomId) {
         return roomUsers.get(roomId);
@@ -51,7 +74,7 @@ public class ChatServiceV2 implements IChatServiceV2 {
 
     @Override
     public void cleanRoom(String id) {
-        executor.execute(()-> {
+        executor.execute(() -> {
             roomUsers.remove(id);
             roomMessages.remove(id);
         });
@@ -62,15 +85,5 @@ public class ChatServiceV2 implements IChatServiceV2 {
         return roomMessages.get(roomId);
     }
 
-    @Override
-    public void addMessage(String roomId, Message message) {
-        List<Message> messages = roomMessages.get(roomId);
-        messages.add(message);
-    }
-
-    @Override
-    public void setExecutor(Executable executor) {
-        this.executor = executor;
-    }
 
 }

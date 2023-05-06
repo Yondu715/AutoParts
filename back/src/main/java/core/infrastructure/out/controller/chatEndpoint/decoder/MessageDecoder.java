@@ -1,4 +1,4 @@
-package core.infrastructure.out.websocket.chatEndpoint;
+package core.infrastructure.out.controller.chatEndpoint.decoder;
 
 import core.application.dto.Message;
 import jakarta.json.bind.Jsonb;

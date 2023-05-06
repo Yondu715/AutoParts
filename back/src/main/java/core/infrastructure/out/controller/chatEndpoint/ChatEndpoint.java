@@ -1,4 +1,4 @@
-package core.infrastructure.out.websocket.chatEndpoint;
+package core.infrastructure.out.controller.chatEndpoint;
 
 import java.util.List;
 import java.util.Map;
@@ -7,22 +7,21 @@ import java.util.concurrent.ConcurrentHashMap;
 import core.application.dto.Message;
 import core.application.service.chat.api.IChatServiceV2;
 import core.infrastructure.builder.Build;
+import core.infrastructure.out.controller.chatEndpoint.decoder.MessageDecoder;
+import core.infrastructure.out.controller.chatEndpoint.encoder.MessageEncoder;
+import core.infrastructure.out.controller.chatEndpoint.encoder.MessageListEncoder;
 import jakarta.inject.Inject;
-import jakarta.json.bind.Jsonb;
-import jakarta.json.bind.JsonbBuilder;
 import jakarta.websocket.OnClose;
 import jakarta.websocket.OnMessage;
 import jakarta.websocket.Session;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/chat/{roomId}", decoders = MessageDecoder.class)
+@ServerEndpoint(value = "/chat/{roomId}", decoders = MessageDecoder.class, encoders = {MessageEncoder.class, MessageListEncoder.class})
 public class ChatEndpoint {
 
     @Inject @Build
     IChatServiceV2 chatService;
-
-    private Jsonb jsonb = JsonbBuilder.create();
 
     private final static Map<String, Session> mapIdSs = new ConcurrentHashMap<>();
     private final static Map<Session, String> mapSsId = new ConcurrentHashMap<>();
@@ -41,25 +40,23 @@ public class ChatEndpoint {
             mapIdSs.put(id, session);
             mapSsId.put(session, id);
             chatService.addUser(roomId, id);
-            sendPrevMessages(roomId, session);
         } else {
-            sendMessage(roomId, message);
+            chatService.addMessage(roomId, message);
         }
     }
 
-    private void sendPrevMessages(String roomId, Session session) {
-        List<Message> messages = chatService.getMessages(roomId);
-        if (messages != null && !messages.isEmpty()) {
-            session.getAsyncRemote().sendText(jsonb.toJson(messages));
-        }
-    }
-
-    private void sendMessage(String roomId, Message message){
-        List<String> usersList = chatService.getUsers(roomId);
-        chatService.addMessage(roomId, message);
-        for (String userId : usersList) {
+    public static void sendMessage(List<String> usersId, Message message){
+        System.out.println(usersId);
+        for (String userId : usersId) {
             Session userSession = mapIdSs.get(userId);
-            userSession.getAsyncRemote().sendText(jsonb.toJson(message));
+            userSession.getAsyncRemote().sendObject(message);
+        }
+    }
+
+    public static void sendMessagesToUser(String userId, List<Message> messages){
+        Session userSession = mapIdSs.get(userId);
+        if (messages != null && !messages.isEmpty()) {
+            userSession.getAsyncRemote().sendObject(messages);
         }
     }
 }

@@ -3,11 +3,12 @@ package core.application.service.chat.api;
 import java.util.List;
 
 import core.application.dto.Message;
-import core.application.executor.api.Executable;
 
 public interface IChatServiceV2 {
 
-    public void setExecutor(Executable executable);
+    public void setExecutor(Executable executor);
+
+    public void setUpdater(Updatable updater);
 
     public void addUser(String roomId, String userId);
 

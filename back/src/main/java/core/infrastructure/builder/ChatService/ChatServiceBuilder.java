@@ -1,7 +1,8 @@
 package core.infrastructure.builder.ChatService;
 
-import core.application.executor.api.Executable;
+import core.application.service.chat.api.Executable;
 import core.application.service.chat.api.IChatServiceV2;
+import core.application.service.chat.api.Updatable;
 import core.infrastructure.builder.Build;
 import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Produces;
@@ -16,10 +17,15 @@ public class ChatServiceBuilder {
     @Default
     private Executable executor;
 
+    @Inject
+    @Default
+    private Updatable updater;
+
     @Produces
     @Build
-    public IChatServiceV2 buildChatServiceV2(){
+    public IChatServiceV2 buildChatService(){
         chatService.setExecutor(executor);
+        chatService.setUpdater(updater);
         return chatService;
     }
 }
