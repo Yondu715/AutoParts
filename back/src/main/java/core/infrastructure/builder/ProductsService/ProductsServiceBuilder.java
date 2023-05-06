@@ -1,4 +1,4 @@
-package core.infrastructure.builder.ProductsServiceBuilder;
+package core.infrastructure.builder.ProductsService;
 
 import core.application.repository.products.api.IProductsRepository;
 import core.application.service.products.api.IProductsService;

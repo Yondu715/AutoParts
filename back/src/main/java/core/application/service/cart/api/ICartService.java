@@ -10,9 +10,9 @@ public interface ICartService {
 
 	public void setRepository(ICartsRepository repCart);
 
-	public boolean addToCart(String login, Product product);
+	public boolean addToCart(Integer userId, Product product);
 
-	public List<Cart> getCart(String login);
+	public List<Cart> getCart(Integer userId);
 
 	public void deleteProduct(List<Integer> productsId);
 }

@@ -3,6 +3,7 @@ package core.infrastructure.in.rest.resource;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
@@ -35,13 +36,16 @@ public class AdminController {
 	@Build
 	private IUserService userModel;
 
+	@Context
+	ContainerRequestContext requestContext;
+
 	private Jsonb jsonb = JsonbBuilder.create();
 
 	@GET
 	@AuthRequired
 	@Path("/applications")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getApplications(@Context ContainerRequestContext requestContext) {
+	public Response getApplications() {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -54,8 +58,7 @@ public class AdminController {
 	@DELETE
 	@AuthRequired
 	@Path("/applications")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response removalApplication(@Context ContainerRequestContext requestContext) {
+	public Response removalApplication() {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -76,8 +79,8 @@ public class AdminController {
 	@PUT
 	@AuthRequired
 	@Path("/applications")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response acceptApplication(@Context ContainerRequestContext requestContext, String userApplicationsJson) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response acceptApplication(String userApplicationsJson) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -98,7 +101,7 @@ public class AdminController {
 	@AuthRequired
 	@Path("/users")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getUsers(@Context ContainerRequestContext requestContext) {
+	public Response getUsers() {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -111,8 +114,7 @@ public class AdminController {
 	@DELETE
 	@AuthRequired
 	@Path("/users")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response removalUser(@Context ContainerRequestContext requestContext) {
+	public Response removalUser() {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();

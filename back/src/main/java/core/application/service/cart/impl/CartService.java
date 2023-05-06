@@ -17,13 +17,13 @@ public class CartService implements ICartService {
 	}
 
 	@Override
-	public boolean addToCart(String login, Product product) {
-		return cartsRepository.add(login, product.getId());
+	public boolean addToCart(Integer userId, Product product) {
+		return cartsRepository.add(userId, product.getId());
 	}
 
 	@Override
-	public List<Cart> getCart(String login) {
-		return cartsRepository.findByLogin(login);
+	public List<Cart> getCart(Integer userId) {
+		return cartsRepository.findByUser(userId);
 	}
 
 	@Override

@@ -9,38 +9,21 @@ import core.infrastructure.out.database.entity.EProduct;
 import core.infrastructure.out.database.entity.EUser;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.PersistenceUnit;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import utils.mapper.cartStruct;
 
 @Stateless
 public class CartsRepository implements ICartsRepository {
 
-	@PersistenceUnit(unitName = "autoparts_PersistenceUnit")
-	private EntityManagerFactory entityManagerFactory;
-
+	@PersistenceContext(unitName = "autoparts_PersistenceUnit")
 	private EntityManager entityManager;
 
 	@Override
-	public List<Cart> findByLogin(String login) {
-		entityManager = entityManagerFactory.createEntityManager();
-		TypedQuery<ECartItem> query = entityManager.createQuery(
-				"select c from ECart c join fetch c.user u where u.login=:login",
-				ECartItem.class);
-		query.setParameter("login", login);
-		List<ECartItem> cartList = query.getResultList();
-		List<Cart> carts = cartStruct.toCart(cartList);
-		entityManager.close();
-		return carts;
-	}
-
-	@Override
-	public boolean add(String login, Integer productId) {
-		entityManager = entityManagerFactory.createEntityManager();
-		TypedQuery<EUser> getUser = entityManager.createQuery("select u from EUser u where u.login=:login",
+	public boolean add(Integer userId, Integer productId) {
+		TypedQuery<EUser> getUser = entityManager.createQuery("select u from EUser u where u.id=:id",
 				EUser.class);
-		getUser.setParameter("login", login);
+		getUser.setParameter("id", userId);
 		EUser eUser = getUser.getSingleResult();
 
 		TypedQuery<EProduct> getProduct = entityManager.createQuery("select p from EProduct p where p.id=:id",
@@ -49,13 +32,12 @@ public class CartsRepository implements ICartsRepository {
 		EProduct eProduct = getProduct.getSingleResult();
 
 		TypedQuery<Long> countCarts = entityManager.createQuery(
-				"select count(c) from ECart c join fetch c.user u join fetch c.product p where u.login=:login and p=:product",
+				"select count(c) from ECartItem c join fetch c.user u join fetch c.product p where u.id=:id and p=:product",
 				Long.class);
-		countCarts.setParameter("login", login);
+		countCarts.setParameter("id", userId);
 		countCarts.setParameter("product", eProduct);
 		boolean addStatus = countCarts.getSingleResult() == 0;
 		try {
-			entityManager.joinTransaction();
 			if (addStatus) {
 				ECartItem eCart = new ECartItem();
 				eCart.setProduct(eProduct);
@@ -70,16 +52,20 @@ public class CartsRepository implements ICartsRepository {
 
 	@Override
 	public void delete(Integer productId) {
-		entityManager = entityManagerFactory.createEntityManager();
-		TypedQuery<ECartItem> query = entityManager.createQuery("delete from ECart c where c.id=:id", ECartItem.class);
+		TypedQuery<ECartItem> query = entityManager.createQuery("delete from ECartItem c where c.id=:id", ECartItem.class);
 		query.setParameter("id", productId);
-		try {
-			entityManager.joinTransaction();
-			query.executeUpdate();
-		} catch (Exception e) {
-		} finally {
-			entityManager.close();
-		}
+		query.executeUpdate();
+	}
+
+	@Override
+	public List<Cart> findByUser(Integer userId) {
+		TypedQuery<ECartItem> query = entityManager.createQuery(
+				"select c from ECartItem c join fetch c.user u where u.id=:id",
+				ECartItem.class);
+		query.setParameter("id", userId);
+		List<ECartItem> cartList = query.getResultList();
+		List<Cart> carts = cartStruct.toCart(cartList);
+		return carts;
 	}
 
 }

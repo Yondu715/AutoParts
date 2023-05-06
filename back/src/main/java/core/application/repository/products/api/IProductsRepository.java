@@ -10,7 +10,7 @@ public interface IProductsRepository {
 
 	public Product findById(Integer id);
 
-	public List<Product> findByUser(String sellerName);
+	public List<Product> findByUser(Integer userId);
 
 	public void add(Product product);
 

@@ -1,4 +1,4 @@
-package core.infrastructure.builder.CartServiceBuilder;
+package core.infrastructure.builder.CartService;
 
 import core.application.repository.cart.api.ICartsRepository;
 import core.application.service.cart.api.ICartService;

@@ -6,9 +6,9 @@ import core.application.dto.Cart;
 
 public interface ICartsRepository {
 	
-	public List<Cart> findByLogin(String login);
+	public List<Cart> findByUser(Integer userId);
 
-	public boolean add(String login, Integer productId);
+	public boolean add(Integer userId, Integer productId);
 
 	public void delete(Integer productId);
 }

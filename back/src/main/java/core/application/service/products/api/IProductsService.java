@@ -15,8 +15,8 @@ public interface IProductsService {
 
 	public List<Product> getProducts();
 
-	public List<Product> getProductsBySeller(String sellerName);
+	public List<Product> getProductsByUser(Integer userId);
 
-	public Product getProduct(Integer productId);
+	public Product getProductById(Integer productId);
 
 }

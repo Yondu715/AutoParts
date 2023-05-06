@@ -9,6 +9,7 @@ import core.infrastructure.in.rest.interceptor.AuthRequired;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.container.ContainerRequestContext;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 
@@ -28,13 +29,16 @@ public class ProductController {
 	@Build
 	private IProductsService productsService;
 
+	@Context
+	ContainerRequestContext requestContext;
+
 	private Jsonb jsonb = JsonbBuilder.create();
 
 	@GET
 	@AuthRequired
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getProducts(@Context ContainerRequestContext requestContext) {
+	public Response getProducts() {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -47,8 +51,8 @@ public class ProductController {
 	@POST
 	@AuthRequired
 	@Path("/")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response sale(@Context ContainerRequestContext requestContext, String jsonSale) {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response sale(String jsonSale) {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
@@ -68,13 +72,13 @@ public class ProductController {
 	@AuthRequired
 	@Path("/{product_id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getProductInfo(@Context ContainerRequestContext requestContext) {
+	public Response getProductInfo() {
 		String login = requestContext.getProperty("login").toString();
 		if (login.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String productId = requestContext.getUriInfo().getPathParameters().getFirst("product_id");
-		Product product = productsService.getProduct(Integer.parseInt(productId));
+		Product product = productsService.getProductById(Integer.parseInt(productId));
 		String resultJson = jsonb.toJson(product);
 		return Response.ok(resultJson).build();
 	}

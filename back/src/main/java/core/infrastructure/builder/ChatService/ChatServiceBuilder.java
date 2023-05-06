@@ -1,4 +1,4 @@
-package core.infrastructure.builder.ChatServiceBuilder;
+package core.infrastructure.builder.ChatService;
 
 import core.application.executor.api.Executable;
 import core.application.service.chat.api.IChatServiceV2;

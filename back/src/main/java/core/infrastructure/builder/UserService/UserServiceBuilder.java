@@ -1,4 +1,4 @@
-package core.infrastructure.builder.UserServiceBuilder;
+package core.infrastructure.builder.UserService;
 
 import core.application.repository.users.api.IUsersRepository;
 import core.application.service.user.api.IUserService;

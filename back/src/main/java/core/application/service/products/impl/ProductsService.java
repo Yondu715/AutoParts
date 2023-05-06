@@ -11,6 +11,11 @@ public class ProductsService implements IProductsService {
 	private IProductsRepository productsRepository;
 
 	@Override
+	public void setRepository(IProductsRepository productsRepository) {
+		this.productsRepository = productsRepository;
+	}
+
+	@Override
 	public void addProduct(Product product) {
 		productsRepository.add(product);
 	}
@@ -28,18 +33,14 @@ public class ProductsService implements IProductsService {
 	}
 
 	@Override
-	public List<Product> getProductsBySeller(String sellerName) {
-		return productsRepository.findByUser(sellerName);
-	}
-
-	@Override
-	public Product getProduct(Integer productId){
+	public Product getProductById(Integer productId){
 		return productsRepository.findById(productId);
 	}
 
+
 	@Override
-	public void setRepository(IProductsRepository productsRepository) {
-		this.productsRepository = productsRepository;
+	public List<Product> getProductsByUser(Integer userId) {
+		return productsRepository.findByUser(userId);
 	}
 
 }

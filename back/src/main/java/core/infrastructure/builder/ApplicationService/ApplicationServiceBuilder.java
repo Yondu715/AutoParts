@@ -1,4 +1,4 @@
-package core.infrastructure.builder.ApplicationServiceBuilder;
+package core.infrastructure.builder.ApplicationService;
 
 import core.application.repository.users.api.IUsersRepository;
 import core.application.service.application.api.IApplicationService;

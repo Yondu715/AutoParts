@@ -24,6 +24,7 @@ public class CleanUpChatTimer {
     TimerService timerService;
 
     @Inject
+    @Build
     IChatServiceV2 chatService;
 
     @Inject
@@ -32,11 +33,12 @@ public class CleanUpChatTimer {
 
     @PostConstruct
     public void init() {
-        ScheduleExpression scheduleExpression = new ScheduleExpression();
-        scheduleExpression.hour(2);
-        scheduleExpression.minute(0);
-        scheduleExpression.second(0);
-        timerService.createCalendarTimer(scheduleExpression, new TimerConfig());
+        timerService.createCalendarTimer(
+                new ScheduleExpression()
+                        .hour(2)
+                        .minute(0)
+                        .second(0),
+                new TimerConfig());
     }
 
     @Timeout
@@ -44,7 +46,7 @@ public class CleanUpChatTimer {
         List<String> rooms = chatService.getRooms();
         for (String room : rooms) {
             Integer id = Integer.parseInt(room);
-            Product product = productsService.getProduct(id);
+            Product product = productsService.getProductById(id);
             if (product == null) {
                 chatService.cleanRoom(room);
             }
