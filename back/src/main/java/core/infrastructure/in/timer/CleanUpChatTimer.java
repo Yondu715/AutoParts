@@ -51,6 +51,5 @@ public class CleanUpChatTimer {
                 chatService.cleanRoom(room);
             }
         }
-
     }
 }

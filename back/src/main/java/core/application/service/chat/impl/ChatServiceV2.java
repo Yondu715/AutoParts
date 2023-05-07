@@ -1,6 +1,7 @@
 package core.application.service.chat.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,8 +13,8 @@ import core.application.service.chat.api.Updatable;
 
 public class ChatServiceV2 implements IChatServiceV2 {
 
-    public final static Map<String, List<String>> roomUsers = new ConcurrentHashMap<>();
-    public final static Map<String, List<Message>> roomMessages = new ConcurrentHashMap<>();
+    private final static Map<String, List<String>> roomUsers = new ConcurrentHashMap<>();
+    private final static Map<String, List<Message>> roomMessages = new ConcurrentHashMap<>();
 
     private Executable executor;
     private Updatable updater;
@@ -35,36 +36,36 @@ public class ChatServiceV2 implements IChatServiceV2 {
             roomMessages.computeIfAbsent(roomId, k -> new ArrayList<>());
             synchronized (usersList) {
                 usersList.add(userId);
-                List<Message> messages = roomMessages.get(roomId);
-                updater.updateUser(userId, messages);
+                updater.updateUser(userId, roomMessages.get(roomId));
             }
         });
     }
 
     @Override
     public void addMessage(String roomId, Message message) {
-        List<Message> messages = roomMessages.get(roomId);
+        List<Message> messages = roomMessages.computeIfAbsent(roomId, k -> new ArrayList<>());
         List<String> users = roomUsers.get(roomId);
-        messages.add(message);
-        updater.updateMessage(users, message);
+        synchronized (messages) {
+            messages.add(message);
+            updater.updateMessage(users, message);
+        }
     }
 
     @Override
     public void removeUser(String roomId, String userId) {
         executor.execute(() -> {
             List<String> usersList = roomUsers.get(roomId);
-            synchronized (usersList) {
-                if (usersList != null) {
+            if (usersList != null) {
+                synchronized (usersList) {
                     usersList.remove(userId);
                 }
             }
         });
     }
 
-
     @Override
     public List<String> getUsers(String roomId) {
-        return roomUsers.get(roomId);
+        return roomUsers.getOrDefault(roomId, Collections.emptyList());
     }
 
     @Override
@@ -82,8 +83,7 @@ public class ChatServiceV2 implements IChatServiceV2 {
 
     @Override
     public List<Message> getMessages(String roomId) {
-        return roomMessages.get(roomId);
+        return roomMessages.getOrDefault(roomId, Collections.emptyList());
     }
-
 
 }
