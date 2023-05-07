@@ -1,8 +1,9 @@
-*.txt
-*.class
-.vscode
-node_modules/
-dist/
+.vscode/
+
+# Backend
 target/
+
+# Frontend
+build/
+node_modules/
 package-lock.json
-build
