@@ -8,24 +8,19 @@ import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
 import core.application.dto.Cart;
 import core.application.dto.Product;
 import core.application.dto.User;
-import core.application.service.application.api.IApplicationService;
 import core.application.service.cart.api.ICartService;
 import core.application.service.products.api.IProductsService;
 import core.application.service.user.api.IUserService;
 import core.infrastructure.builder.Build;
 import core.infrastructure.in.rest.interceptor.AuthRequired;
-import core.infrastructure.in.rest.token.Token;
-import core.infrastructure.in.rest.token.TokenIssuer;
-import core.infrastructure.in.rest.token.TokenKey;
+import core.infrastructure.in.rest.interconnector.api.Interconnectorable;
 import jakarta.inject.Inject;
-
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
@@ -49,11 +44,10 @@ public class UserController {
 	private ICartService cartService;
 
 	@Inject
-	@Build
-	private IApplicationService applicationService;
+	private Interconnectorable interconnector;
 
 	@Context
-	ContainerRequestContext requestContext;
+	private ContainerRequestContext requestContext;
 
 	private Jsonb jsonb = JsonbBuilder.create();
 
@@ -62,8 +56,8 @@ public class UserController {
 	@Path("/auth")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response authorization(String userJson) {
-		String login = requestContext.getProperty("login").toString();
-		if (!login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (!error.equals("Not valid token")) {
 			return Response.status(Response.Status.NO_CONTENT).build();
 		}
 
@@ -77,12 +71,7 @@ public class UserController {
 				return Response.status(Response.Status.UNAUTHORIZED).build();
 			}
 			User userFound = userService.getUser(user);
-			TokenKey tokenKey = TokenKey.getInstance();
-			Key key = tokenKey.getKey();
-			TokenIssuer ti = new TokenIssuer(key);
-			String jwt = ti.issueToken(userFound.getId(), userFound.getLogin(), userFound.getRole());
-			Token newToken = new Token(jwt);
-			String token = jsonb.toJson(newToken);
+			String token = interconnector.createToken(jsonb.toJson(userFound));
 			return Response.ok(token).build();
 		} catch (JsonbException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();
@@ -96,8 +85,8 @@ public class UserController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response registration(String userJson) {
 		try {
-			User application = jsonb.fromJson(userJson, User.class);
-			if (applicationService.addAplication(application)) {
+			User user = jsonb.fromJson(userJson, User.class);
+			if (userService.addUser(user)) {
 				return Response.status(Response.Status.OK).build();
 			}
 		} catch (JsonbException | IllegalArgumentException e) {
@@ -113,8 +102,8 @@ public class UserController {
 	@Path("/{user_id}/products")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getProductsByUser() {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String userId = requestContext.getUriInfo().getPathParameters().getFirst("user_id").toString();
@@ -127,8 +116,8 @@ public class UserController {
 	@AuthRequired
 	@Path("/{user_id}/products")
 	public Response removalProducts() {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String jsonDeleteId = requestContext.getProperty("data").toString();
@@ -149,8 +138,8 @@ public class UserController {
 	@Path("/{user_id}/cart")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCart() {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String userId = requestContext.getUriInfo().getPathParameters().getFirst("user_id").toString();
@@ -164,8 +153,8 @@ public class UserController {
 	@Path("/{user_id}/cart")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addCart(String productJson) {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String userId = requestContext.getUriInfo().getPathParameters().getFirst("user_id").toString();
@@ -186,8 +175,8 @@ public class UserController {
 	@AuthRequired
 	@Path("/{user_id}/cart")
 	public Response removalCartProduct() {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String jsonDeleteId = requestContext.getProperty("data").toString();

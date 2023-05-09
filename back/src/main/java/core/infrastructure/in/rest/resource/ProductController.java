@@ -39,8 +39,8 @@ public class ProductController {
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getProducts() {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		List<Product> products = productsService.getProducts();
@@ -53,8 +53,8 @@ public class ProductController {
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response sale(String jsonSale) {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		try {
@@ -73,8 +73,8 @@ public class ProductController {
 	@Path("/{product_id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getProductInfo() {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String productId = requestContext.getUriInfo().getPathParameters().getFirst("product_id");

@@ -47,7 +47,12 @@ public class UsersRepository implements IUsersRepository {
 		TypedQuery<EUser> query = entityManager
 				.createQuery("select u from EUser u where u.login=:login and u.role is not null", EUser.class);
 		query.setParameter("login", login);
-		EUser eUser = query.getSingleResult();
+		EUser eUser = null;
+		try {
+			eUser = query.getSingleResult();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		User user = userStruct.toUser(eUser);
 		return user;
 	}
@@ -82,7 +87,12 @@ public class UsersRepository implements IUsersRepository {
 		TypedQuery<EUser> query = entityManager
 				.createQuery("select u from EUser u where u.id=:id and u.role is not null", EUser.class);
 		query.setParameter("id", userId);
-		EUser eUser = query.getSingleResult();
+		EUser eUser = null; 
+		try {
+			eUser = query.getSingleResult();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		User user = userStruct.toUser(eUser);
 		return user;
 	}

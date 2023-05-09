@@ -46,8 +46,8 @@ public class AdminController {
 	@Path("/applications")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getApplications() {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		List<User> userApplications = applicationService.getApplications();
@@ -59,8 +59,8 @@ public class AdminController {
 	@AuthRequired
 	@Path("/applications")
 	public Response removalApplication() {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String jsonDeleteId = requestContext.getProperty("data").toString();
@@ -81,8 +81,8 @@ public class AdminController {
 	@Path("/applications")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response acceptApplication(String userApplicationsJson) {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		try {
@@ -102,8 +102,8 @@ public class AdminController {
 	@Path("/users")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUsers() {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		List<User> users = userModel.getAllUsers();
@@ -115,8 +115,8 @@ public class AdminController {
 	@AuthRequired
 	@Path("/users")
 	public Response removalUser() {
-		String login = requestContext.getProperty("login").toString();
-		if (login.equals("Not valid token")) {
+		String error = requestContext.getProperty("error").toString();
+		if (error.equals("Not valid token")) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
 		String jsonDeleteId = requestContext.getProperty("data").toString();

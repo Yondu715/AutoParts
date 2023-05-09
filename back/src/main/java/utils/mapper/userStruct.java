@@ -17,19 +17,27 @@ public class userStruct {
     }
 
     public static User toUser(EUser eUser) {
-        User user = new User();
-        user.setId(eUser.getId());
-        user.setLogin(eUser.getLogin());
-        user.setPassword(eUser.getPassword());
-        user.setRole(eUser.getRole());
-        return user;
+        try {
+            User user = new User();
+            user.setId(eUser.getId());
+            user.setLogin(eUser.getLogin());
+            user.setPassword(eUser.getPassword());
+            user.setRole(eUser.getRole());
+            return user;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public static EUser toEUser(User user) {
-        EUser eUser = new EUser();
-        eUser.setLogin(user.getLogin());
-        eUser.setPassword(user.getPassword());
-        eUser.setRole(user.getRole());
-        return eUser;
+        try {
+            EUser eUser = new EUser();
+            eUser.setLogin(user.getLogin());
+            eUser.setPassword(user.getPassword());
+            eUser.setRole(user.getRole());
+            return eUser;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
