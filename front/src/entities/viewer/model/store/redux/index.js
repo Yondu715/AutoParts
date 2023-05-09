@@ -1,2 +1,2 @@
-export * from "./store";
+export { viewerReducer } from "./store";
 export * from "./hooks";
