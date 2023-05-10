@@ -38,7 +38,6 @@ export function useSale() {
     const [error, setError] = useState("");
     const [isDndActive, setIsDndActive] = useState(false);
     
-    const { signOut } = viewerModel.useValidate();
     const userLogin = viewerModel.useUserLogin();
     
     const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -75,9 +74,6 @@ export function useSale() {
 
     const _callbackSaleInfo = (status) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             default:
                 setForm(initialState);
                 setError("");

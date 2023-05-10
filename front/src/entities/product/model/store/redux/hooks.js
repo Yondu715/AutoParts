@@ -1,26 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsAsync, getUserProductsAsync, setSelectedProduct } from "./store";
+import { deleteProductsAsyncFx, getProductsAsyncFx, getUserProductsAsyncFx, selectProductFx } from "./store";
 
-export function useProduct() {
+export function useModel() {
     const dispatch = useDispatch();
 
+    const getProductsAsync = () => {
+        dispatch(getProductsAsyncFx());
+    }
+
+    const getUserProductsAsync = (userId) => {
+        dispatch(getUserProductsAsyncFx(userId));
+    }
+
+    const deleteProductsAsync = (userId, productsId) => {
+        dispatch(deleteProductsAsyncFx(userId, productsId));
+    }
+
     const selectProduct = (id) => {
-        dispatch(setSelectedProduct(id));
+        dispatch(selectProductFx(id));
     }
-
-    const getProducts = (errorHandler) => {
-        dispatch(getProductsAsync(errorHandler));
-    }
-
-    const getUserProducts = (userId, errorHandler) => {
-        dispatch(getUserProductsAsync(userId, errorHandler));
-    }
-
-    const deleteUserProducts = (userId, productsId, errorHandler) => {
-        dispatch(deleteUserProducts(userId, productsId, errorHandler));
-    }
-
-    return { selectProduct, getProducts, getUserProducts, deleteUserProducts }
+    return { getProductsAsync, getUserProductsAsync, deleteProductsAsync, selectProduct };
 }
 
 export function useProducts() {

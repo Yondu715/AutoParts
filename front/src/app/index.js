@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { LoaderSpinner } from "shared/ui/LoaderSpinner";
 import { useMountEffect } from "shared/lib/hooks";
+import { requestAPI } from "shared/api";
 import { LS_TOKEN } from "shared/config";
 import { viewerModel } from "entities/viewer";
-import { requestAPI } from "shared/api";
 import { buildProvider } from "./store/redux";
 // import { buildProvider } from "./store/mobx";
 import { buildRouter } from "./router";
@@ -37,7 +37,6 @@ function _callbackCheckAuth(status) {
                 id: id
             }
             break;
-        case 401:
         default:
             break;
     }
@@ -46,7 +45,7 @@ function _callbackCheckAuth(status) {
 function Routing() {
     const Router = buildRouter();
     const [loading, setLoading] = useState(true);
-    const { signIn } = viewerModel.useValidate();
+    const { signIn, signOut } = viewerModel.useValidate();
     const check = async () => {
         if (localStorage.getItem(LS_TOKEN) === null) {
             setLoading(false);
@@ -69,6 +68,8 @@ function Routing() {
             <LoaderSpinner />
         );
     }
+
+    requestAPI.addInterceptor(401, () => signOut());
 
     return (
         <Router />

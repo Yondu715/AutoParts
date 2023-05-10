@@ -2,12 +2,10 @@ import { useState } from "react";
 import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { viewerModel } from "entities/viewer";
 import { User } from "entities/user";
 
 export function useList() {
 
-    const { signOut } = viewerModel.useValidate();
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
 
@@ -26,9 +24,6 @@ export function useList() {
 
     const _callbackGetUsers = (status, data) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             case 200:
                 const users = dataAction.jsonToObjects(data, User);
                 setUsers(users);
@@ -44,9 +39,6 @@ export function useList() {
 
     const _callbackDeleteInfo = (status) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             case 204:
                 setSelectedUsers([]);
                 _asyncGetUsers();

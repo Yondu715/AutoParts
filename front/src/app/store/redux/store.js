@@ -9,8 +9,9 @@ const globalReduxStore = configureStore({
         viewer: viewerModel.viewerReducer,
         chat: chatModel.chatReducer,
         product: productModel.productReducer,
-    }
+    },
 });
+
 
 export function buildProvider() {
     return ({children}) => 

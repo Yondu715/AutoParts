@@ -29,9 +29,6 @@ export function useInfo() {
 
     const _callbackGetProductInfo = (status, data) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             case 200:
                 const product = dataAction.jsonToObjects(data, Product);
                 setProduct(product);
@@ -47,9 +44,6 @@ export function useInfo() {
 
     const _callbackAddProduct = (status) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             case 409:
                 setError("Данный товар уже добавлен в корзину");
                 break;

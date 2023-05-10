@@ -18,9 +18,6 @@ export function useProducts() {
 
     const _callbackGetProducts = (status, data) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             case 200:
                 const products = dataAction.jsonToObjects(data, Product);
                 setProducts(products);

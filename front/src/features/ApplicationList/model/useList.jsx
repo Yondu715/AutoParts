@@ -3,10 +3,8 @@ import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
 import { User } from "entities/user";
-import { viewerModel } from "entities/viewer";
 
 export function useList() {
-    const { signOut } = viewerModel.useValidate();
     const [applications, setApplications] = useState([]);
     const [selectedApp, setSelectedApp] = useState([]);
     const roles = ["client", "admin"];
@@ -26,9 +24,6 @@ export function useList() {
 
     const _callbackGetAllApplications = (status, data) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             case 200:
                 const applications = dataAction.jsonToObjects(data, User);
                 applications.forEach(({ user }) => {
@@ -77,9 +72,6 @@ export function useList() {
 
     const _callbackRequestInfo = (status) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             case 204:
             case 202:
                 setSelectedApp([]);

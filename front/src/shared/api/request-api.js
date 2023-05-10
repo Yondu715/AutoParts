@@ -10,6 +10,8 @@ const path = `${host}:${port}/${name}`;
 const domainHttp = `${protocolHttp}://${path}/api/${version}`;
 const domainWs = `${protocolWs}://${path}`;
 
+const interceptors = {};
+
 export const requestAPI = {
 
     async sendRequest(request, callback) {
@@ -19,11 +21,19 @@ export const requestAPI = {
         }
         const data = response.getBody();
         const status = response.getStatus();
+        
+        const interceptor = interceptors[status];
+        interceptor && interceptor();
+
         if (data) {
             callback(status, data);
         } else {
             callback(status);
         }
+    },
+
+    addInterceptor(status, callback) {
+        interceptors[status] = callback;
     },
 
     async asyncGetAllProducts() {

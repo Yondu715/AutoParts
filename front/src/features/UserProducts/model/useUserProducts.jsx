@@ -26,9 +26,6 @@ export function useUserProducts() {
 
     const _callbackGetUserProducts = (status, data) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             case 200:
                 const products = dataAction.jsonToObjects(data, Product);
                 setProducts(products);
@@ -44,9 +41,6 @@ export function useUserProducts() {
 
     const _callbackDeleteInfo = (status) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             case 204:
                 setSelectedProducts([]);
                 _asyncGetUserProducts();

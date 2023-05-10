@@ -6,7 +6,6 @@ import { Product } from "entities/product";
 import { viewerModel } from "entities/viewer";
 
 export function useCart() {
-    const { signOut } = viewerModel.useValidate();
     const [products, setProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
     const userId = viewerModel.useUserId();
@@ -25,9 +24,6 @@ export function useCart() {
 
     const _callbackGetCart = (status, data) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             case 200:
                 const products = dataAction.jsonToObjects(data, Product);
                 setProducts(products);
@@ -43,9 +39,6 @@ export function useCart() {
 
     const _callbackDeleteInfo = (status) => {
         switch (status) {
-            case 401:
-                signOut();
-                break;
             case 204:
                 setSelectedProducts([]);
                 _asyncGetCart();

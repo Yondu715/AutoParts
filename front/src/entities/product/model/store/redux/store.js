@@ -15,48 +15,39 @@ const productSlice = createSlice({
         setProducts(state, action) {
             state.products = action.payload
         },
-        setSelectedProduct(state, action) {
+        addToSelectedProducts(state, action) {
             if (!state.selectedProducts.includes(action.payload)) {
                 state.selectedProducts = [...state.selectedProducts, action.payload];
             } else {
                 state.selectedProducts = state.selectedProducts.filter(id => id !== action.payload);
             }
+        },
+        clearSelectedProducts(state) {
+            state.selectedProducts = [];
         }
     }
 });
 
-export const { setProducts, setSelectedProduct } = productSlice.actions;
-export const productReducer = productSlice.reducer;
+export const selectProductFx = (id) => (dispatch) => {
+    dispatch(productSlice.actions.addToSelectedProducts(id));
+}
 
-export const getProductsAsync = (errorHandler) => async (dispatch) => {
+export const getProductsAsyncFx = () => async (dispatch) => {
     const response = await requestAPI.asyncGetAllProducts();
-    const status = response.getStatus();
-    if (status >= 400) {
-        errorHandler(status);
-        return;
-    }
     const products = response.getBody();
-    dispatch(setProducts(products));
+    dispatch(productSlice.actions.setProducts(products));
 }
 
-export const getUserProductsAsync = (userId, errorHandler) => async (dispatch) => {
+export const getUserProductsAsyncFx = (userId) => async (dispatch) => {
     const response = await requestAPI.asyncGetUserProducts(userId);
-    const status = response.getStatus();
-    if (status >= 400) {
-        errorHandler(status);
-        return;
-    }
     const products = response.getBody();
-    dispatch(setProducts(products));
+    dispatch(productSlice.actions.setProducts(products));
 }
 
-export const deleteUserProducts = (userId, productsId, errorHandler) => async (dispatch) => {
-    const response = await requestAPI.asyncDeleteProducts(userId, productsId);
-    const status = response.getStatus();
-    if (status >= 400) {
-        errorHandler(status);
-        return;
-    }
-    dispatch(getUserProductsAsync(userId));
+export const deleteProductsAsyncFx = (userId, productsId) => async (dispatch) => {
+    await requestAPI.asyncDeleteProducts(userId, productsId);
+    dispatch(productSlice.actions.clearSelectedProducts());
+    dispatch(getUserProductsAsyncFx(userId));
 }
 
+export const productReducer = productSlice.reducer;
