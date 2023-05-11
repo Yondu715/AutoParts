@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProductsAsyncFx, getProductsAsyncFx, getUserProductsAsyncFx, selectProductFx } from "./store";
+import { deleteProductsAsyncFx, getProductsAsyncFx, getUserProductsAsyncFx, saleProductAsyncFx, selectProductFx } from "./store";
 
 export function useModel() {
     const dispatch = useDispatch();
@@ -19,7 +19,12 @@ export function useModel() {
     const selectProduct = (id) => {
         dispatch(selectProductFx(id));
     }
-    return { getProductsAsync, getUserProductsAsync, deleteProductsAsync, selectProduct };
+
+    const saleProduct = (product) => {
+        saleProductAsyncFx(product);
+    }
+    
+    return { getProductsAsync, getUserProductsAsync, deleteProductsAsync, selectProduct, saleProduct };
 }
 
 export function useProducts() {

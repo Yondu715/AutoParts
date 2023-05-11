@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { useNavigate, useResolvedPath } from "react-router-dom";
 import { Product } from "entities/product";
-import { viewerModel } from "entities/viewer";
 import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
 
 export function useProducts() {
-    const { signOut } = viewerModel.useValidate();
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const pathname = useResolvedPath().pathname;

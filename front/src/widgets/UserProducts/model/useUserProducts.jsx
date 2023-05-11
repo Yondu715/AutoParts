@@ -6,7 +6,6 @@ import { Product } from "entities/product";
 import { viewerModel } from "entities/viewer";
 
 export function useUserProducts() {
-    const { signOut } = viewerModel.useValidate();
     const [products, setProducts] = useState([]);
     const [selectedProducts, setSelectedProducts] = useState([]);
     const userId = viewerModel.useUserId();

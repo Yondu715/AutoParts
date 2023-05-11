@@ -50,4 +50,8 @@ export const deleteProductsAsyncFx = (userId, productsId) => async (dispatch) =>
     dispatch(getUserProductsAsyncFx(userId));
 }
 
+export const saleProductAsyncFx = async (product) => {
+    await requestAPI.asyncSaleProduct(product);
+}
+
 export const productReducer = productSlice.reducer;

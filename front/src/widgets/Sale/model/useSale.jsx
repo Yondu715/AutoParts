@@ -60,16 +60,16 @@ export function useSale() {
         jsonSale["sellerName"] = userLogin;
         if (jsonSale["price"] !== "") Number(jsonSale["price"]);
         const product = new Product(jsonSale);
+        if (!dataAction.checkValid(product)) {
+            setError("Не все поля были заполнены");
+            return;
+        }
         return product;
     }
 
     const asyncSendSaleInfo = async () => {
         const product = _getSaleInfo();
-        if (!dataAction.checkValid(product)) {
-            setError("Не все поля были заполнены");
-            return;
-        }
-        requestAPI.sendRequest(() => requestAPI.asyncSaleProduct(product.get()), _callbackSaleInfo)
+        product && requestAPI.sendRequest(() => requestAPI.asyncSaleProduct(product.get()), _callbackSaleInfo);
     }
 
     const _callbackSaleInfo = (status) => {

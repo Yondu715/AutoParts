@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { Cart } from "features/Cart";
-import { ProductInfo } from "features/ProductInfo";
-import { Products } from "features/Products";
-import { Sale } from "features/Sale";
-import { UserProducts } from "features/UserProducts";
+import { Cart } from "widgets/Cart";
+import { ProductInfo } from "widgets/ProductInfo";
+import { Products } from "widgets/Products";
+import { Sale } from "widgets/Sale";
+import { UserProducts } from "widgets/UserProducts";
 import {
     ANY_ROUTE, CART_ROUTE, DEFAULT_PAGE_ROUTE,
     NOT_FOUND_ROUTE, PRODUCTS_ROUTE, PRODUCT_INFO_ROUTE,

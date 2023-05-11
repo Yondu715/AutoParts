@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import { Header } from "widgets/Header";
-import { NavBar } from "widgets/NavBar";
+import { Header } from "widgets/LayoutHeader";
+import { NavBar } from "widgets/LayoutNavBar";
 import { useAdmin } from "../model";
 import styles from "./AdminPage.module.css";
 

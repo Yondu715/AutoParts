@@ -14,7 +14,6 @@ export function useInfo() {
     const [error, setError] = useState("");
     const { id } = useParams();
     const navigate = useNavigate();
-    const { signOut } = viewerModel.useValidate();
     const userLogin = viewerModel.useUserLogin();
     const userId = viewerModel.useUserId();
 

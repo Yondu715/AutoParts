@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { ApplicationList } from "features/ApplicationList";
-import { UserList } from "features/UserList";
+import { ApplicationList } from "widgets/ApplicationList";
+import { UserList } from "widgets/UserList";
 import {
     ANY_ROUTE, APPLICATIONS_ROUTE, DEFAULT_PAGE_ROUTE,
     NOT_FOUND_ROUTE, USERS_ROUTE
