@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
 import { viewerModel } from "entities/viewer";
-import { userModel } from "entities/user";
+import { User, userModel } from "entities/user";
 import {
     ADMIN_ROUTE, APPLICATIONS_ROUTE,
     LS_TOKEN, MAIN_ROUTE, PRODUCTS_ROUTE
@@ -14,27 +13,28 @@ export function useForm() {
         login: "",
         password: "",
     }
-    const User = userModel.User;
 
+    const navigate = useNavigate();
     const [form, setForm] = useState(initialState);
+    const [error, setError] = useState("");
     const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
     const { signIn } = viewerModel.useValidate();
+    const { authUserAsync } = userModel.useModel();
 
     const _getAuthInfo = () => {
-        return new User(form);
+        const user = new User(form);
+        if (!dataAction.checkValid(user)) {
+            setError("Не все поля были заполнены");
+            return;
+        }
+        return user;
     };
 
     const asyncSendAuthInfo = async () => {
         localStorage.clear();
         const user = _getAuthInfo();
-        if (!dataAction.checkValid(user)) {
-            setError("Не все поля были заполнены");
-            return;
-        }
-        requestAPI.sendRequest(() => requestAPI.asyncAuth(user.get()), _callbackAuth);
+        user && authUserAsync(user.get(), _callbackAuth);
     };
 
     const _callbackAuth = (status, data) => {

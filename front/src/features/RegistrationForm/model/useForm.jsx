@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { userModel } from "entities/user";
+import { User, userModel } from "entities/user";
 import { AUTH_ROUTE } from "shared/config";
 
-export function useForm(){
+export function useForm() {
     const initialState = {
         login: "",
         password: "",
         repeatPassword: "",
     }
-    const User = userModel.User;
 
     const [error, setError] = useState();
     const [form, setForm] = useState(initialState);
@@ -19,24 +17,26 @@ export function useForm(){
 
     const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-    const _getRegInfo = () => {
-        return new User(form);
-    }
+    const { regUserAsync } = userModel.useModel();
 
-    const asyncSendRegInfo = async () => {
-        const user = _getRegInfo();
+    const _getRegInfo = () => {
+        const user = new User(form);
         if (!dataAction.checkValid(user)) {
             setError("Не все поля были заполнены");
             return;
         }
-
         const password = user.get()["password"];
         const repeat_password = user.get()["repeatPassword"];
         if (password !== repeat_password) {
             setError("Пароли не совпадают");
             return;
         }
-        requestAPI.sendRequest(() => requestAPI.asyncReg(user.get()), _callbackRegInfo);
+        return user;
+    }
+
+    const asyncSendRegInfo = async () => {
+        const user = _getRegInfo();
+        user && regUserAsync(user.get(), _callbackRegInfo);
     }
 
     const _callbackRegInfo = (status) => {

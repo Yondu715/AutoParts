@@ -46,6 +46,7 @@ function Routing() {
     const Router = buildRouter();
     const [loading, setLoading] = useState(true);
     const { signIn, signOut } = viewerModel.useValidate();
+    const userInfo = viewerModel.useUserInfo();
     const check = async () => {
         if (localStorage.getItem(LS_TOKEN) === null) {
             setLoading(false);
@@ -69,7 +70,9 @@ function Routing() {
         );
     }
 
-    requestAPI.addInterceptor(401, () => signOut());
+    if (userInfo.isAuth) {
+        requestAPI.addInterceptor(401, () => signOut());
+    }
 
     return (
         <Router />

@@ -75,6 +75,20 @@ export const deleteApplicationsAsyncFx = (applicationsId) => async (dispatch) =>
     dispatch(getApplicationsAsyncFx());
 }
 
+export const authUserAsyncFx = async (user, callback) => {
+    const response = await requestAPI.asyncAuth(user);
+    const data = response.getBody();
+    const status = response.getBody();
+    callback(status, data);
+}
+
+export const regUserAsyncFx = async (user, callback) => {
+    const response = await requestAPI.asyncReg(user);
+    const data = response.getBody();
+    const status = response.getBody();
+    callback(status, data);
+}
+
 
 
 export const userReducer = userSlice.reducer;
