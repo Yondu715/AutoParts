@@ -1,12 +1,11 @@
-import { SubmitButton } from "shared/ui/SubmitButton";
 import { UserCard } from "entities/user";
 import { useList } from "../model";
+import { UserDelete } from "features/UserDelete/ui/UserDelete";
 import styles from "./List.module.css";
 
 export function List() {
     const {
-        users, selectedUsers,
-        asyncSendDeleteInfo, usersHandler
+        users, selectedUsers, usersHandler
     } = useList();
 
     return (
@@ -14,7 +13,7 @@ export function List() {
             <div className={styles.users}>
                 <table>
                     <tbody>
-                        {users.map(({ user }) =>
+                        {users.map((user) =>
                             <UserCard
                                 key={user.id}
                                 user={user}
@@ -27,7 +26,7 @@ export function List() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <SubmitButton type="delete" onClick={asyncSendDeleteInfo}>Удалить</SubmitButton>
+                    <UserDelete/>
                 </div>
             </div>
         </div>

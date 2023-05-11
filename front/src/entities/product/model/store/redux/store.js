@@ -54,4 +54,33 @@ export const saleProductAsyncFx = async (product) => {
     await requestAPI.asyncSaleProduct(product);
 }
 
+export const addProductToCartAsyncFx = async (userId, product, callback) => {
+    const response = await requestAPI.asyncAddToCart(userId, product);
+    const status = response.getStatus();
+    callback && callback(status);
+}
+
+export const getProductByIdAsyncFx = (productId) => async (dispatch) => {
+    const response = await requestAPI.asyncGetProductInfo(productId);
+    const product = response.getBody();
+    dispatch(productSlice.actions.setProducts([product]));
+}
+
+export const getCartAsyncFx = (userId) => async (dispatch) => {
+    const response = await requestAPI.asyncGetCart(userId);
+    const products = response.getBody();
+    const mapProducts = [];
+    for (let index = 0; index < products.length; index++) {
+        const product = products[index];
+        mapProducts.push({ ...product.product, id: product.id});
+    }
+    dispatch(productSlice.actions.setProducts(mapProducts));
+}
+
+export const deleteFromCartAsyncFx = (userId, productsId) => async (dispatch) => {
+    await requestAPI.asyncDeleteFromCart(userId, productsId);
+    dispatch(productSlice.actions.clearSelectedProducts());
+    dispatch(getCartAsyncFx(userId));
+}
+
 export const productReducer = productSlice.reducer;

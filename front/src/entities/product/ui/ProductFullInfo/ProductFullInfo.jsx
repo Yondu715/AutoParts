@@ -1,7 +1,7 @@
 import styles from "./ProductFullInfo.module.css";
 
 export function ProductFullInfo({ product }) {
-    const { name, sellerName, date, brand, model, price } = product.get();
+    const { name, sellerName, date, brand, model, price } = product;
     return (
         <div className={styles.info}>
             <span>Название: {name}</span>

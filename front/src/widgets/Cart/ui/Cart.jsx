@@ -1,13 +1,13 @@
-import { SubmitButton } from "shared/ui/SubmitButton";
 import { useCart } from "../model";
-import styles from "./Cart.module.css";
 import { ProductCard } from "entities/product";
+import { ProductCartDelete } from "features/ProductCartDelete";
+import styles from "./Cart.module.css";
 
 
 export function Cart() {
     const {
-        products, selectedProducts,
-        asyncSendDeleteInfo, selectProduct
+        products, selectedProducts, 
+        userId, selectProduct
     } = useCart();
 
     return (
@@ -15,10 +15,10 @@ export function Cart() {
             <div className={styles.products}>
                 <table>
                     <tbody>
-                        {products.map(({ product }) =>
+                        {products.map((product) =>
                             <ProductCard
                                 key={product.id}
-                                product={product.product}
+                                product={product}
                                 onClick={() => selectProduct(product.id)}
                                 className={selectedProducts.includes(product.id) ? styles.active : styles.notActive}
                             />
@@ -29,7 +29,7 @@ export function Cart() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <SubmitButton type="delete" onClick={asyncSendDeleteInfo}>Удалить</SubmitButton>
+                    <ProductCartDelete userId={userId}/>
                 </div>
             </div>
         </div>

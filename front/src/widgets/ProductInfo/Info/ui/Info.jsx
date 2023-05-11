@@ -1,15 +1,14 @@
-import { StatusError } from "shared/ui/StatusError";
 import { SubmitButton } from "shared/ui/SubmitButton";
 import { ProductFullInfo } from "entities/product";
+import { ProductAddToCart } from "features/ProductAddToCart";
 import { Chat } from "../../Chat";
 import { useInfo } from "../model";
 import styles from "./Info.module.css";
 
 export function Info() {
     const {
-        product, asyncAddProduct, productAdded,
-        userLogin, openChat, chatIsOpen, error,
-        id
+        product, userId, userLogin,
+        openChat, chatIsOpen, id
     } = useInfo();
 
     if (chatIsOpen) {
@@ -28,7 +27,7 @@ export function Info() {
                         </div>
                         <div className={styles.rightPart}>
                             <div className={styles.image}>
-                                <img alt="" src={product.get()["image"]} />
+                                <img alt="" src={product["image"]} />
                             </div>
                             <div className={styles.chatBtn}>
                                 <SubmitButton onClick={openChat} type="info">Открыть чат товара</SubmitButton>
@@ -37,10 +36,9 @@ export function Info() {
                     </div>
                 }
             </div>
-            {product && (product.get()["sellerName"] !== userLogin) &&
+            {product && (product["sellerName"] !== userLogin) &&
                 <div className={styles.btnPlace}>
-                    <StatusError message={error} />
-                    <SubmitButton disabled={productAdded} onClick={asyncAddProduct}>{productAdded ? "Товар был успешно добавлен" : "Добавить товар в корзину"}</SubmitButton>
+                    <ProductAddToCart userId={userId} product={product} />
                 </div>
             }
         </div>

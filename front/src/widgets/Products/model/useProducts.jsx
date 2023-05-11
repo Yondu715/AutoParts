@@ -1,33 +1,16 @@
-import { useState } from "react";
 import { useNavigate, useResolvedPath } from "react-router-dom";
-import { Product } from "entities/product";
+import { productModel } from "entities/product";
 import { useMountEffect } from "shared/lib/hooks";
-import { requestAPI } from "shared/api";
-import { dataAction } from "shared/lib/actions";
 
 export function useProducts() {
     const navigate = useNavigate();
-    const [products, setProducts] = useState([]);
+    const products = productModel.useProducts();
+    const { getProductsAsync } = productModel.useModel();
     const pathname = useResolvedPath().pathname;
-    
-    const _asyncGetProducts = async () => {
-        requestAPI.sendRequest(requestAPI.asyncGetAllProducts, _callbackGetProducts);
-    }
-
-    const _callbackGetProducts = (status, data) => {
-        switch (status) {
-            case 200:
-                const products = dataAction.jsonToObjects(data, Product);
-                setProducts(products);
-                break;
-            default:
-                break;
-        }
-    }
 
     const onProductInfo = (id) => navigate(pathname + "/" + id);
 
-    useMountEffect(_asyncGetProducts);
+    useMountEffect(getProductsAsync);
 
     return {
         products, onProductInfo

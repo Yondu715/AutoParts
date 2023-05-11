@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { requestAPI } from "shared/api";
 import { dataAction } from "shared/lib/actions";
-import { Product } from "entities/product";
+import { Product, productModel } from "entities/product";
 import { viewerModel } from "entities/viewer";
 
 export function useSale() {
@@ -37,6 +36,8 @@ export function useSale() {
     
     const [error, setError] = useState("");
     const [isDndActive, setIsDndActive] = useState(false);
+
+    const { saleProduct } = productModel.useModel();
     
     const userLogin = viewerModel.useUserLogin();
     
@@ -69,16 +70,9 @@ export function useSale() {
 
     const asyncSendSaleInfo = async () => {
         const product = _getSaleInfo();
-        product && requestAPI.sendRequest(() => requestAPI.asyncSaleProduct(product.get()), _callbackSaleInfo);
-    }
-
-    const _callbackSaleInfo = (status) => {
-        switch (status) {
-            default:
-                setForm(initialState);
-                setError("");
-                break;
-        }
+        product && saleProduct(product.get());
+        setForm(initialState);
+        setError("");
     }
 
     const dndEnterOver = (e) => {

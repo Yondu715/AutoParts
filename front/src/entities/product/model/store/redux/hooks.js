@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProductsAsyncFx, getProductsAsyncFx, getUserProductsAsyncFx, saleProductAsyncFx, selectProductFx } from "./store";
+import { addProductToCartAsyncFx, deleteFromCartAsyncFx, deleteProductsAsyncFx, getCartAsyncFx, getProductByIdAsyncFx, getProductsAsyncFx, getUserProductsAsyncFx, saleProductAsyncFx, selectProductFx } from "./store";
 
 export function useModel() {
     const dispatch = useDispatch();
@@ -12,8 +12,16 @@ export function useModel() {
         dispatch(getUserProductsAsyncFx(userId));
     }
 
+    const getCartAsync = (userId) => {
+        dispatch(getCartAsyncFx(userId));
+    }
+
     const deleteProductsAsync = (userId, productsId) => {
         dispatch(deleteProductsAsyncFx(userId, productsId));
+    }
+
+    const deleteProductsFromCartAsync = (userId, productsId) => {
+        dispatch(deleteFromCartAsyncFx(userId, productsId));
     }
 
     const selectProduct = (id) => {
@@ -23,8 +31,20 @@ export function useModel() {
     const saleProduct = (product) => {
         saleProductAsyncFx(product);
     }
-    
-    return { getProductsAsync, getUserProductsAsync, deleteProductsAsync, selectProduct, saleProduct };
+
+    const getProductByIdAsync = async (productId) => {
+        dispatch(getProductByIdAsyncFx(productId));
+    }
+
+    const addProductToCartAsync = async (userId, product, callback) => {
+        addProductToCartAsyncFx(userId, product, callback);
+    }
+
+    return { 
+        getProductsAsync, getUserProductsAsync, deleteProductsAsync, 
+        selectProduct, saleProduct, getProductByIdAsync, 
+        addProductToCartAsync, getCartAsync, deleteProductsFromCartAsync
+    };
 }
 
 export function useProducts() {
@@ -33,4 +53,9 @@ export function useProducts() {
 
 export function useSelectedProducts() {
     return useSelector(state => state.product.selectedProducts);
+}
+
+export function useProduct(id) {
+    const products = useProducts();
+    return products.find((product) => product.id === id);
 }

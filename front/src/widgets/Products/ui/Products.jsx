@@ -11,7 +11,7 @@ export function Products() {
         <div className={[styles.products, "fade"].join(" ")}>
             <table>
                 <tbody>
-                    {products.map(({ product }) =>
+                    {products.map((product) =>
                         <ProductCard
                             key={product.id}
                             product={product}

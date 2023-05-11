@@ -1,14 +1,14 @@
-import { SubmitButton } from "shared/ui/SubmitButton";
-import { ApplicationCard } from "entities/application";
+import { ApplicationCard } from "entities/user";
 import { useList } from "../model";
+import { UserAcceptApplications } from "features/UserAcceptApplication";
+import { UserDeleteApplications } from "features/UserDeleteApplications";
 import styles from "./List.module.css";
 
 export function List() {
 
     const {
-        applications, selectedApp, selectApplication,
-        selectHandler, asyncAcceptApp,
-        asyncDeleteApp, roles
+        applications, selectedApplications, selectApplication,
+        changeRoleHandler, roles
     } = useList();
 
     return (
@@ -16,14 +16,14 @@ export function List() {
             <div className={styles.applications}>
                 <table>
                     <tbody>
-                        {applications.map(({ user }) =>
+                        {applications.map((user) =>
                             <ApplicationCard
                                 key={user.id}
                                 user={user}
                                 roles={roles}
-                                onChange={(e) => selectHandler(e, user.id)}
+                                onChange={(e) => changeRoleHandler(e, user.id)}
                                 onClick={() => selectApplication(user.id)}
-                                className={selectedApp.includes(user.id) ? styles.active : styles.notActive}
+                                className={selectedApplications.includes(user.id) ? styles.active : styles.notActive}
                             />
                         )}
                     </tbody>
@@ -32,10 +32,10 @@ export function List() {
             <div>
                 <div className={styles.btnPlace}>
                     <div className={styles.btnContainer}>
-                        <SubmitButton onClick={asyncAcceptApp}>Принять</SubmitButton>
+                        <UserAcceptApplications/>
                     </div>
                     <div className={styles.btnContainer}>
-                        <SubmitButton type="delete" onClick={asyncDeleteApp}>Удалить</SubmitButton>
+                        <UserDeleteApplications/>
                     </div>
                 </div>
             </div>
