@@ -1,4 +1,4 @@
-package core.listener;
+package core.application.dto;
 
 public class User {
     private Integer id;

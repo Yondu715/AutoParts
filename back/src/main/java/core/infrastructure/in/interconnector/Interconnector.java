@@ -1,4 +1,4 @@
-package core.infrastructure.in.rest.interconnector;
+package core.infrastructure.in.interconnector;
 
 import core.application.out.interconnect.Interconnectorable;
 import jakarta.annotation.Resource;

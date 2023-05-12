@@ -1,4 +1,4 @@
-package core.token;
+package core.infrastructure.in.token;
 
 public class Token {
 
