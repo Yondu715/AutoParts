@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import core.application.dto.Message;
-import core.application.service.chat.api.IChatServiceV2;
+import core.application.in.service.chat.api.IChatService;
 import core.infrastructure.builder.Build;
 import core.infrastructure.out.controller.chatEndpoint.decoder.MessageDecoder;
 import core.infrastructure.out.controller.chatEndpoint.encoder.MessageEncoder;
@@ -23,7 +23,7 @@ public class ChatEndpoint {
 
     @Inject
     @Build
-    private IChatServiceV2 chatService;
+    private IChatService chatService;
 
     private final static Map<String, Session> mapIdSs = new ConcurrentHashMap<>();
     private final static Map<Session, String> mapSsId = new ConcurrentHashMap<>();

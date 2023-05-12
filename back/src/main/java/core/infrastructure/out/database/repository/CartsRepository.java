@@ -3,7 +3,7 @@ package core.infrastructure.out.database.repository;
 import java.util.List;
 
 import core.application.dto.Cart;
-import core.application.repository.cart.api.ICartsRepository;
+import core.application.out.repository.cart.api.ICartsRepository;
 import core.infrastructure.out.database.entity.ECartItem;
 import core.infrastructure.out.database.entity.EProduct;
 import core.infrastructure.out.database.entity.EUser;

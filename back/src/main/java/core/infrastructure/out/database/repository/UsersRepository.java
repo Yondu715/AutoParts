@@ -3,7 +3,7 @@ package core.infrastructure.out.database.repository;
 import java.util.List;
 
 import core.application.dto.User;
-import core.application.repository.users.api.IUsersRepository;
+import core.application.out.repository.users.api.IUsersRepository;
 import core.infrastructure.out.database.entity.EUser;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;

@@ -1,6 +1,6 @@
 package core.infrastructure.out.executor;
 
-import core.application.service.chat.api.Executable;
+import core.application.out.execute.Executable;
 import jakarta.annotation.Resource;
 import jakarta.enterprise.concurrent.ManagedExecutorService;
 

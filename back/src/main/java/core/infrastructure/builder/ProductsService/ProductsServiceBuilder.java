@@ -1,7 +1,7 @@
 package core.infrastructure.builder.ProductsService;
 
-import core.application.repository.products.api.IProductsRepository;
-import core.application.service.products.api.IProductsService;
+import core.application.in.service.products.api.IProductsService;
+import core.application.out.repository.products.api.IProductsRepository;
 import core.infrastructure.builder.Build;
 import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Produces;

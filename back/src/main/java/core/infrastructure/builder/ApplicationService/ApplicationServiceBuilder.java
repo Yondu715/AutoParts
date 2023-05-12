@@ -1,7 +1,7 @@
 package core.infrastructure.builder.ApplicationService;
 
-import core.application.repository.users.api.IUsersRepository;
-import core.application.service.application.api.IApplicationService;
+import core.application.in.service.application.api.IApplicationService;
+import core.application.out.repository.users.api.IUsersRepository;
 import core.infrastructure.builder.Build;
 import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Produces;

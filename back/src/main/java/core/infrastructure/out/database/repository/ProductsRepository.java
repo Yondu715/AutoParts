@@ -3,7 +3,7 @@ package core.infrastructure.out.database.repository;
 import java.util.List;
 
 import core.application.dto.Product;
-import core.application.repository.products.api.IProductsRepository;
+import core.application.out.repository.products.api.IProductsRepository;
 import core.infrastructure.out.database.entity.EProduct;
 import core.infrastructure.out.database.entity.EUser;
 import jakarta.ejb.Stateless;

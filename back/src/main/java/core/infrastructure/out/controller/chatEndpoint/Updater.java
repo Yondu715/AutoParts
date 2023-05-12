@@ -3,7 +3,7 @@ package core.infrastructure.out.controller.chatEndpoint;
 import java.util.List;
 
 import core.application.dto.Message;
-import core.application.service.chat.api.Updatable;
+import core.application.out.update.Updatable;
 
 public class Updater implements Updatable {
 

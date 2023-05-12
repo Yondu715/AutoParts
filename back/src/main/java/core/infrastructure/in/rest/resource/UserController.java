@@ -14,12 +14,12 @@ import java.util.List;
 import core.application.dto.Cart;
 import core.application.dto.Product;
 import core.application.dto.User;
-import core.application.service.cart.api.ICartService;
-import core.application.service.products.api.IProductsService;
-import core.application.service.user.api.IUserService;
+import core.application.in.service.cart.api.ICartService;
+import core.application.in.service.products.api.IProductsService;
+import core.application.in.service.token.api.ITokenService;
+import core.application.in.service.user.api.IUserService;
 import core.infrastructure.builder.Build;
 import core.infrastructure.in.rest.interceptor.AuthRequired;
-import core.infrastructure.in.rest.interconnector.api.Interconnectorable;
 import jakarta.inject.Inject;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
@@ -43,8 +43,8 @@ public class UserController {
 	@Build
 	private ICartService cartService;
 
-	@Inject
-	private Interconnectorable interconnector;
+	@Inject @Build
+	private ITokenService tokenService;
 
 	@Context
 	private ContainerRequestContext requestContext;
@@ -71,7 +71,7 @@ public class UserController {
 				return Response.status(Response.Status.UNAUTHORIZED).build();
 			}
 			User userFound = userService.getUser(user);
-			String token = interconnector.createToken(jsonb.toJson(userFound));
+			String token = tokenService.getToken(jsonb.toJson(userFound));
 			return Response.ok(token).build();
 		} catch (JsonbException e) {
 			return Response.status(Response.Status.BAD_REQUEST).entity(e).build();

@@ -3,8 +3,8 @@ package core.infrastructure.in.timer;
 import java.util.List;
 
 import core.application.dto.Product;
-import core.application.service.chat.api.IChatServiceV2;
-import core.application.service.products.api.IProductsService;
+import core.application.in.service.chat.api.IChatService;
+import core.application.in.service.products.api.IProductsService;
 import core.infrastructure.builder.Build;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
@@ -25,7 +25,7 @@ public class CleanUpChatTimer {
 
     @Inject
     @Build
-    IChatServiceV2 chatService;
+    IChatService chatService;
 
     @Inject
     @Build
