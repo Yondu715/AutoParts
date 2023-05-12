@@ -1,5 +1,10 @@
 import { Response } from "./response";
 
+export const interceptors = {};
+
+export const setInterceptor = (status, interceptor) => {
+    interceptors[status] = interceptor;
+}
 
 export const sendRequest = async (method, uri, data, options) => {
     const headers = buildHeaders(options);
@@ -14,6 +19,9 @@ export const sendRequest = async (method, uri, data, options) => {
         : undefined;
 
     const response = await fetch(uri, { method: method, headers: headers, body: body });
+
+    const interceptor = interceptors[response.status];
+    interceptor && interceptor();
 
     const answer = contentIs(response.headers, "application/json")
         ? await response.json()

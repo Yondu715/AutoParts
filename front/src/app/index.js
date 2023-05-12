@@ -17,7 +17,9 @@ let userInfo = {
 }
 
 const checkAuth = async () => {
-    await requestAPI.sendRequest(requestAPI.asyncAuth, _callbackCheckAuth);
+    const response = await requestAPI.asyncAuth();
+    const status = response.getStatus();
+    _callbackCheckAuth(status);
     return userInfo;
 };
 

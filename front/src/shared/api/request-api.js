@@ -1,4 +1,4 @@
-import { sendRequest } from "./request";
+import { sendRequest, setInterceptor } from "./request";
 
 const protocolHttp = "http";
 const protocolWs = "ws";
@@ -10,30 +10,10 @@ const path = `${host}:${port}/${name}`;
 const domainHttp = `${protocolHttp}://${path}/api/${version}`;
 const domainWs = `${protocolWs}://${path}`;
 
-const interceptors = {};
-
 export const requestAPI = {
 
-    async sendRequest(request, callback) {
-        const response = await request();
-        if (!callback) {
-            return;
-        }
-        const data = response.getBody();
-        const status = response.getStatus();
-        
-        const interceptor = interceptors[status];
-        interceptor && interceptor();
-
-        if (data) {
-            callback(status, data);
-        } else {
-            callback(status);
-        }
-    },
-
     addInterceptor(status, callback) {
-        interceptors[status] = callback;
+        setInterceptor(status, callback);
     },
 
     async asyncGetAllProducts() {

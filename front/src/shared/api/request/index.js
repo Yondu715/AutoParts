@@ -1,1 +1,1 @@
-export { sendRequest } from "./base";
+export { sendRequest, setInterceptor } from "./base";

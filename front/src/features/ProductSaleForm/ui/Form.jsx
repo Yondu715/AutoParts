@@ -3,8 +3,9 @@ import { StatusError } from "shared/ui/StatusError";
 import { SubmitButton } from "shared/ui/SubmitButton";
 import { useSale } from "../model";
 import styles from "./Sale.module.css"
+import dndImage from "shared/assets/img/dragAndDrop.png";
 
-export function SaleForm() {
+export function Form() {
 
     const {
         form, handlerForm, error, fields,
@@ -34,7 +35,7 @@ export function SaleForm() {
                         <img
                             className={isDndActive ? styles.dndActive : ""}
                             alt=""
-                            src={form["image"] ?? "/dragAndDrop.png"}
+                            src={form["image"] ?? dndImage}
                             draggable
                             onDragEnter={dndEnterOver}
                             onDragOver={dndEnterOver}

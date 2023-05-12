@@ -1,2 +1,2 @@
-export { SaleForm as ProductSaleForm } from "./SaleForm";
+export { Form as ProductSaleForm } from "./Form";
 
