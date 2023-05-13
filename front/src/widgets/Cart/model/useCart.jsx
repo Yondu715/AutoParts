@@ -9,10 +9,14 @@ export function useCart() {
     const { selectProduct } = productModel.useModel();
     const { getCartAsync } = productModel.useModel();
 
+    const selectProductHandler = (id) => {
+        selectProduct(id);
+    }
+
     useMountEffect(() => getCartAsync(userId));
 
     return {
         products, selectedProducts,
-        selectProduct, userId
+        selectProductHandler
     }
 }

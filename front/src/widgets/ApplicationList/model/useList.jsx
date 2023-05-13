@@ -11,11 +11,11 @@ export function useList() {
         selectUser(id);
     }
 
-    const _asyncGetApplications = async () => {
+    const asyncGetApplications = async () => {
         getApplicationsAsync();
     }
 
-    useMountEffect(_asyncGetApplications);
+    useMountEffect(asyncGetApplications);
 
     return {
         applications, selectedApplications, selectApplication,

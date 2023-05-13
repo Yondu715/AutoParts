@@ -1,9 +1,12 @@
 import { productModel } from "entities/product";
+import { viewerModel } from "entities/viewer";
 import { useState } from "react";
 
-export function useModel(userId, product) {
+export function useModel(product) {
     const [error, setError] = useState("");
     const [productAdded, setProductAdded] = useState(false);
+
+    const userId = viewerModel.useUserId();
 
     const { addProductToCartAsync } = productModel.useModel();
 

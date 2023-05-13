@@ -7,7 +7,7 @@ import styles from "./Info.module.css";
 
 export function Info() {
     const {
-        product, userId, userLogin,
+        product, userLogin,
         openChat, chatIsOpen, id
     } = useInfo();
 
@@ -38,7 +38,7 @@ export function Info() {
             </div>
             {product && (product["sellerName"] !== userLogin) &&
                 <div className={styles.btnPlace}>
-                    <ProductAddToCart userId={userId} product={product} />
+                    <ProductAddToCart product={product} />
                 </div>
             }
         </div>

@@ -2,11 +2,11 @@ import { StatusError } from "shared/ui/StatusError";
 import { SubmitButton } from "shared/ui/SubmitButton";
 import { useModel } from "../model"
 
-export function AddToCart({ userId, product }) {
+export function AddToCart({ product }) {
 
     const {
         error, productAdded, asyncAddProduct
-    } = useModel(userId, product);
+    } = useModel(product);
 
     return (
         <>

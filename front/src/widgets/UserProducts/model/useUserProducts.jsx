@@ -12,6 +12,6 @@ export function useUserProducts() {
 
     return {
         products, selectedProducts,
-        selectProduct, userId
+        selectProduct
     }
 }

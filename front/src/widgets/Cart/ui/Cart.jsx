@@ -7,7 +7,7 @@ import styles from "./Cart.module.css";
 export function Cart() {
     const {
         products, selectedProducts, 
-        userId, selectProduct
+        selectProductHandler
     } = useCart();
 
     return (
@@ -19,7 +19,7 @@ export function Cart() {
                             <ProductCard
                                 key={product.id}
                                 product={product}
-                                onClick={() => selectProduct(product.id)}
+                                onClick={() => selectProductHandler(product.id)}
                                 className={selectedProducts.includes(product.id) ? styles.active : styles.notActive}
                             />
 
@@ -29,7 +29,7 @@ export function Cart() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <ProductCartDelete userId={userId}/>
+                    <ProductCartDelete/>
                 </div>
             </div>
         </div>

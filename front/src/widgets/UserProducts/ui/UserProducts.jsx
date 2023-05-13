@@ -7,7 +7,7 @@ import styles from "./UserProducts.module.css";
 export function UserProducts() {
     const {
         products, selectedProducts,
-        selectProduct, userId
+        selectProduct
     } = useUserProducts();
 
 
@@ -29,7 +29,7 @@ export function UserProducts() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <ProductDelete userId={userId}/>
+                    <ProductDelete/>
                 </div>
             </div>
         </div>

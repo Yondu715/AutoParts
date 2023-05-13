@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { acceptApplicationsAsyncFx, authUserAsyncFx, changeRoleHandlerFx, deleteApplicationsAsyncFx, deleteUsersAsyncFx, getApplicationsAsyncFx, getUsersAsyncFx, regUserAsyncFx, selectUserFx } from "./store";
+import { acceptApplicationsAsyncFx, authUserAsyncFx, changeRoleHandlerFx, deleteApplicationsAsyncFx, deleteUsersAsyncFx, getApplicationsAsyncFx, getUsersAsyncFx, regUserAsyncFx, selectUserFx } from "./store/redux/store";
 
 export function useModel() {
     const dispatch = useDispatch();

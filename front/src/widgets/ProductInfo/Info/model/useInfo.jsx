@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMountEffect } from "shared/lib/hooks";
-import { requestAPI } from "shared/api";
 import { productModel } from "entities/product";
 import { MAIN_ROUTE, PRODUCTS_ROUTE } from "shared/config";
 import { viewerModel } from "entities/viewer";
@@ -11,18 +10,16 @@ export function useInfo() {
     const { id } = useParams();
     const navigate = useNavigate();
     const userLogin = viewerModel.useUserLogin();
-    const userId = viewerModel.useUserId();
 
     const { getProductByIdAsync } = productModel.useModel();
-    const product = productModel.useProduct(Number(id));
-
+    const product = productModel.useProduct(+id);
 
     const _asyncGetProductInfo = async () => {
         if (isNaN(id)) {
             navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/"));
             return;
         }
-        getProductByIdAsync(Number(id));
+        getProductByIdAsync(+id);
     }
 
     const openChat = () => {
@@ -32,8 +29,7 @@ export function useInfo() {
     useMountEffect(_asyncGetProductInfo);
 
     return {
-        product, userId,
-        userLogin, openChat, chatIsOpen,
-        id
+        product, userLogin, openChat, 
+        chatIsOpen, id
     }
 }

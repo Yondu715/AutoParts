@@ -57,7 +57,7 @@ function Message({ message, userLogin }) {
     if (minutes < 10) {
         minutes = '0' + minutes; 
     }
-    const sendTime = `${hours}:${minutes}`
+    const sendTime = `${hours}:${minutes}`;
     return (
         <div className={[styles.message, msgStyle].join(" ")}>
             <div className={styles.messageInfo}>{message.from} {sendTime}</div>

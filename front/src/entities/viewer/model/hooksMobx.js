@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { autorun } from "mobx";
-import { mobxStore } from ".";
+import { mobxStore } from "./store/mobx";
 
 export function useValidate() {
     const signIn = (isAuth, login, role, id) => {
