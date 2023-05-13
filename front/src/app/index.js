@@ -19,14 +19,15 @@ let userInfo = {
 const checkAuth = async () => {
     const response = await requestAPI.asyncAuth();
     const status = response.getStatus();
-    _callbackCheckAuth(status);
-    return userInfo;
+    const data = _callbackCheckAuth(status);
+    return data;
 };
 
 function _callbackCheckAuth(status) {
     switch (status) {
         case 204:
-            const tokenBody = localStorage.getItem(LS_TOKEN).split(".")[1];
+            const token = localStorage.getItem("token");
+            const tokenBody = token.split(".")[1];
             const decodedBody = atob(tokenBody);
             const payload = JSON.parse(decodedBody);
             const login = payload["login"];
@@ -42,13 +43,24 @@ function _callbackCheckAuth(status) {
         default:
             break;
     }
+    return userInfo;
 }
 
 function Routing() {
     const Router = buildRouter();
     const [loading, setLoading] = useState(true);
     const { signIn, signOut } = viewerModel.useValidate();
-    const userInfo = viewerModel.useUserInfo();
+    
+    requestAPI.setRequestInterceptor((config) => {
+        config.headers = { ...config.headers, Authorization: localStorage.getItem(LS_TOKEN) };
+    });
+
+    requestAPI.setResponseInterceptor((status) => {
+        if (status === 401) {
+            signOut();
+        }
+    })
+
     const check = async () => {
         if (localStorage.getItem(LS_TOKEN) === null) {
             setLoading(false);
@@ -72,9 +84,6 @@ function Routing() {
         );
     }
 
-    if (userInfo.isAuth) {
-        requestAPI.addInterceptor(401, () => signOut());
-    }
 
     return (
         <Router />
