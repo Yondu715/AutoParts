@@ -6,13 +6,14 @@ import core.application.dto.Product;
 import core.application.out.repository.products.api.IProductsRepository;
 import core.infrastructure.out.database.entity.EProduct;
 import core.infrastructure.out.database.entity.EUser;
-import jakarta.ejb.Stateless;
+import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import utils.mapper.productStruct;
 
-@Stateless
+@Named
 public class ProductsRepository implements IProductsRepository {
 
 	@PersistenceContext(unitName = "autoparts_PersistenceUnit")
@@ -37,6 +38,7 @@ public class ProductsRepository implements IProductsRepository {
 	}
 
 	@Override
+	@Transactional
 	public void add(Product product) {
 		TypedQuery<EUser> query = entityManager.createQuery("select u from EUser u where u.login=:seller_name",
 				EUser.class);
@@ -48,6 +50,7 @@ public class ProductsRepository implements IProductsRepository {
 	}
 
 	@Override
+	@Transactional
 	public void delete(Integer productId) {
 		TypedQuery<EProduct> query = entityManager.createQuery("delete from EProduct p where p.id=:id", EProduct.class);
 		query.setParameter("id", productId);

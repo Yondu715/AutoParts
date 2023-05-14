@@ -5,31 +5,35 @@ import java.util.List;
 import core.application.dto.User;
 import core.application.out.repository.users.api.IUsersRepository;
 import core.infrastructure.out.database.entity.EUser;
-import jakarta.ejb.Stateless;
+import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import utils.mapper.userStruct;
 
-@Stateless
+@Named
 public class UsersRepository implements IUsersRepository {
 
 	@PersistenceContext(unitName = "autoparts_PersistenceUnit")
 	private EntityManager entityManager;
 
 	@Override
+	@Transactional
 	public boolean add(User user) {
 		boolean status = true;
 		try {
 			EUser eUser = userStruct.toEUser(user);
 			entityManager.persist(eUser);
 		} catch (Exception e) {
+			System.out.println(e);
 			status = false;
 		}
 		return status;
 	}
 
 	@Override
+	@Transactional
 	public boolean delete(Integer userId) {
 		TypedQuery<EUser> query = entityManager.createQuery("delete from EUser u where u.id=:id", EUser.class);
 		query.setParameter("id", userId);
@@ -75,6 +79,7 @@ public class UsersRepository implements IUsersRepository {
 	}
 
 	@Override
+	@Transactional
 	public void setRole(User user) {
 		TypedQuery<EUser> query = entityManager.createQuery("update EUser u set u.role=:role where u.id=:id",
 				EUser.class);

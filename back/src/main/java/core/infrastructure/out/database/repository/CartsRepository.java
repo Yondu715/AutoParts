@@ -7,19 +7,21 @@ import core.application.out.repository.cart.api.ICartsRepository;
 import core.infrastructure.out.database.entity.ECartItem;
 import core.infrastructure.out.database.entity.EProduct;
 import core.infrastructure.out.database.entity.EUser;
-import jakarta.ejb.Stateless;
+import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import utils.mapper.cartStruct;
 
-@Stateless
+@Named
 public class CartsRepository implements ICartsRepository {
 
 	@PersistenceContext(unitName = "autoparts_PersistenceUnit")
 	private EntityManager entityManager;
 
 	@Override
+	@Transactional
 	public boolean add(Integer userId, Integer productId) {
 		TypedQuery<EUser> getUser = entityManager.createQuery("select u from EUser u where u.id=:id",
 				EUser.class);
@@ -51,6 +53,7 @@ public class CartsRepository implements ICartsRepository {
 	}
 
 	@Override
+	@Transactional
 	public void delete(Integer productId) {
 		TypedQuery<ECartItem> query = entityManager.createQuery("delete from ECartItem c where c.id=:id", ECartItem.class);
 		query.setParameter("id", productId);

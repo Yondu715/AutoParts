@@ -35,15 +35,16 @@ public class CleanUpChatTimer {
     public void init() {
         timerService.createCalendarTimer(
                 new ScheduleExpression()
-                        .hour(2)
-                        .minute(0)
-                        .second(0),
+                        .hour(0)
+                        .minute(29)
+                        .second(10),
                 new TimerConfig());
     }
 
     @Timeout
     public void checkChat() {
         List<String> rooms = chatService.getRooms();
+        System.out.println("2131");
         for (String room : rooms) {
             Integer id = Integer.parseInt(room);
             Product product = productsService.getProductById(id);
