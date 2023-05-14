@@ -1,8 +1,8 @@
-import { SubmitButton } from "shared/ui/SubmitButton";
+import { useInfo } from "../model";
+import { Chat } from "../../Chat";
 import { ProductFullInfo } from "entities/product";
 import { ProductAddToCart } from "features/ProductAddToCart";
-import { Chat } from "../../Chat";
-import { useInfo } from "../model";
+import { SubmitButton } from "shared/ui/SubmitButton";
 import styles from "./Info.module.css";
 
 export function Info() {

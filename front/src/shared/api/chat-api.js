@@ -1,4 +1,4 @@
-import { generateUUID } from "shared/lib/actions/dataAction";
+import { dataAction } from "shared/lib/actions";
 import { requestAPI } from "./request-api";
 
 let _subscribers = [];
@@ -10,7 +10,7 @@ const messageHandler = (e) => {
 }
 
 const openConnectionHandler = () => {
-    const uuid = generateUUID();
+    const uuid = dataAction.generateUUID();
     _wsChannel.send(uuid);
 }
 

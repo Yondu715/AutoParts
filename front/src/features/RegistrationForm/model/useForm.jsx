@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { VieverReg, viewerModel } from "entities/viewer";
 import { dataAction } from "shared/lib/actions";
 import { AUTH_ROUTE } from "shared/config";
-import { VieverReg, viewerModel } from "entities/viewer";
 
 export function useForm() {
     const initialState = {

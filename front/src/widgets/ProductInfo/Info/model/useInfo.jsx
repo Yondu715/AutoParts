@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useMountEffect } from "shared/lib/hooks";
 import { productModel } from "entities/product";
-import { MAIN_ROUTE, PRODUCTS_ROUTE } from "shared/config";
 import { viewerModel } from "entities/viewer";
+import { useMountEffect } from "shared/lib/hooks";
+import { MAIN_ROUTE, PRODUCTS_ROUTE } from "shared/config";
 
 export function useInfo() {
     const [chatIsOpen, setChatIsOpen] = useState(false);

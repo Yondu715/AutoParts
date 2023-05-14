@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
+import { useForm } from "../model";
 import { StatusError } from "shared/ui/StatusError";
 import { SubmitButton } from "shared/ui/SubmitButton";
 import { InputBox } from "shared/ui/InputBox";
 import { AUTH_ROUTE } from "shared/config";
-import { useForm } from "../model";
 import styles from "./Form.module.css";
 
 

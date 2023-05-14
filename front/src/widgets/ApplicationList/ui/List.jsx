@@ -1,5 +1,5 @@
-import { ApplicationCard } from "entities/user";
 import { useList } from "../model";
+import { ApplicationCard } from "entities/user";
 import { UserAcceptApplications } from "features/UserAcceptApplication";
 import { UserDeleteApplications } from "features/UserDeleteApplications";
 import styles from "./List.module.css";

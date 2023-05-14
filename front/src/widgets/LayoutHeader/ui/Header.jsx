@@ -1,4 +1,4 @@
-import { useHeader } from "../model/useHeader";
+import { useHeader } from "../model";
 import styles from "./Header.module.css";
 
 export function Header() {

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { dataAction } from "shared/lib/actions";
 import { Product, productModel } from "entities/product";
 import { viewerModel } from "entities/viewer";
+import { dataAction } from "shared/lib/actions";
 
 export function useSale() {
 

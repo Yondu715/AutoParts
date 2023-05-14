@@ -1,9 +1,9 @@
+import { useSale } from "../model";
 import { InputBox } from "shared/ui/InputBox";
 import { StatusError } from "shared/ui/StatusError";
 import { SubmitButton } from "shared/ui/SubmitButton";
-import { useSale } from "../model";
-import styles from "./Sale.module.css"
 import dndImage from "shared/assets/img/dragAndDrop.png";
+import styles from "./Sale.module.css"
 
 export function Form() {
 

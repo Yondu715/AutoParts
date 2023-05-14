@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { dataAction } from "shared/lib/actions";
 import { viewerModel, VieverAuth } from "entities/viewer";
+import { dataAction } from "shared/lib/actions";
 import {
     ADMIN_ROUTE, APPLICATIONS_ROUTE,
     LS_TOKEN, MAIN_ROUTE, PRODUCTS_ROUTE

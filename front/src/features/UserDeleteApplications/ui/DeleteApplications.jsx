@@ -1,5 +1,5 @@
+import { useModel } from "../model";
 import { SubmitButton } from "shared/ui/SubmitButton";
-import { useModel } from "../model/useModel";
 
 export function DeleteApplications() {
 

@@ -1,4 +1,4 @@
-import { CustomLink } from "../../../shared/ui/CustomLink/CustomLink";
+import { CustomLink } from "shared/ui/CustomLink";
 import styles from "./NavBar.module.css";
 
 export function NavBar({ items, ...props }) {

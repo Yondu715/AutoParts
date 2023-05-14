@@ -1,6 +1,6 @@
-import { useMountEffect } from "shared/lib/hooks";
 import { productModel } from "entities/product";
 import { viewerModel } from "entities/viewer";
+import { useMountEffect } from "shared/lib/hooks";
 
 export function useUserProducts() {
     const products = productModel.useProducts()

@@ -1,5 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addProductToCartAsyncFx, deleteFromCartAsyncFx, deleteProductsAsyncFx, getCartAsyncFx, getProductByIdAsyncFx, getProductsAsyncFx, getUserProductsAsyncFx, saleProductAsyncFx, selectProductFx } from "./store/redux";
+import {
+    addProductToCartAsyncFx, deleteFromCartAsyncFx, deleteProductsAsyncFx,
+    getCartAsyncFx, getProductByIdAsyncFx, getProductsAsyncFx,
+    getUserProductsAsyncFx, saleProductAsyncFx, selectProductFx
+} from "./store/redux";
 
 export function useModel() {
     const dispatch = useDispatch();
@@ -40,9 +44,9 @@ export function useModel() {
         addProductToCartAsyncFx(userId, product, callback);
     }
 
-    return { 
-        getProductsAsync, getUserProductsAsync, deleteProductsAsync, 
-        selectProduct, saleProduct, getProductByIdAsync, 
+    return {
+        getProductsAsync, getUserProductsAsync, deleteProductsAsync,
+        selectProduct, saleProduct, getProductByIdAsync,
         addProductToCartAsync, getCartAsync, deleteProductsFromCartAsync
     };
 }

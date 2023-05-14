@@ -1,6 +1,6 @@
-import { UserCard } from "entities/user";
 import { useList } from "../model";
-import { UserDelete } from "features/UserDelete/ui/UserDelete";
+import { UserCard } from "entities/user";
+import { UserDelete } from "features/UserDelete";
 import styles from "./List.module.css";
 
 export function List() {

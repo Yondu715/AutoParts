@@ -1,6 +1,6 @@
+import { useModel } from "../model"
 import { StatusError } from "shared/ui/StatusError";
 import { SubmitButton } from "shared/ui/SubmitButton";
-import { useModel } from "../model"
 
 export function AddToCart({ product }) {
 

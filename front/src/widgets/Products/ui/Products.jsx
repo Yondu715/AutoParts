@@ -1,5 +1,5 @@
-import { ProductCard } from "entities/product";
 import { useProducts } from "../model";
+import { ProductCard } from "entities/product";
 import styles from "./Products.module.css";
 
 export function Products() {

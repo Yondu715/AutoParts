@@ -1,5 +1,5 @@
-import { useMountEffect } from "shared/lib/hooks";
 import { userModel } from "entities/user";
+import { useMountEffect } from "shared/lib/hooks";
 
 export function useList() {
     const applications = userModel.useUsers();

@@ -1,6 +1,6 @@
+import { useState } from "react";
 import { productModel } from "entities/product";
 import { viewerModel } from "entities/viewer";
-import { useState } from "react";
 
 export function useModel(product) {
     const [error, setError] = useState("");
