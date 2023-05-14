@@ -1,1 +1,1 @@
-export { viewerReducer } from "./store";
+export * from "./store";

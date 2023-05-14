@@ -1,1 +1,1 @@
-export { productReducer } from "./store";
+export * from "./store";

@@ -7,6 +7,7 @@ import { viewerModel } from "entities/viewer";
 import { buildProvider } from "./store/redux";
 // import { buildProvider } from "./store/mobx";
 import { buildRouter } from "./router";
+import { dataAction } from "shared/lib/actions";
 import "./styles/index.css";
 import "./styles/animations.css";
 
@@ -27,17 +28,10 @@ function _callbackCheckAuth(status) {
     switch (status) {
         case 204:
             const token = localStorage.getItem("token");
-            const tokenBody = token.split(".")[1];
-            const decodedBody = atob(tokenBody);
-            const payload = JSON.parse(decodedBody);
-            const login = payload["login"];
-            const role = payload["role"];
-            const id = payload["id"];
+            const payload = dataAction.getPayloadFromToken(token);
             userInfo = {
                 isAuth: true,
-                login: login,
-                role: role,
-                id: id
+                ...payload
             }
             break;
         default:
@@ -49,8 +43,8 @@ function _callbackCheckAuth(status) {
 function Routing() {
     const Router = buildRouter();
     const [loading, setLoading] = useState(true);
-    const { signIn, signOut } = viewerModel.useValidate();
-    
+    const { signIn, signOut } = viewerModel.useModel();
+
     requestAPI.setRequestInterceptor((config) => {
         config.headers = { ...config.headers, Authorization: localStorage.getItem(LS_TOKEN) };
     });
@@ -68,8 +62,7 @@ function Routing() {
         }
         try {
             const data = await checkAuth();
-            const { isAuth, login, role, id } = data;
-            signIn(isAuth, login, role, id);
+            signIn(data);
         }
         finally {
             setLoading(false);

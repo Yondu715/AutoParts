@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { requestAPI } from "shared/api";
 
 const initialState = {
     isAuth: false,
@@ -9,22 +10,35 @@ const initialState = {
 
 const viewerSlice = createSlice({
     name: "viewer",
-    initialState: {
-        viewer: initialState
-    },
+    initialState,
     reducers: {
         setSession(state, action) {
             const { isAuth, login, role, id } = action.payload;
-            state.viewer.isAuth = isAuth;
-            state.viewer.login = login;
-            state.viewer.role = role;
-            state.viewer.id = id;
+            state.isAuth = isAuth;
+            state.login = login;
+            state.role = role;
+            state.id = id;
         },
-        removeSession(state) {
-            state.viewer = initialState;
+        removeSession() {
+            return initialState;
         }
     }
 });
+
+
+export const authUserAsyncFx = async (user, callback) => {
+    const response = await requestAPI.asyncAuth(user);
+    const data = response.getBody();
+    const status = response.getStatus();
+    callback(status, data);
+}
+
+export const regUserAsyncFx = async (user, callback) => {
+    const response = await requestAPI.asyncReg(user);
+    const data = response.getBody();
+    const status = response.getStatus();
+    callback(status, data);
+}
 
 export const { setSession, removeSession } = viewerSlice.actions;
 export const viewerReducer = viewerSlice.reducer;

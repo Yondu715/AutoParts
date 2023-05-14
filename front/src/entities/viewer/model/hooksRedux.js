@@ -1,18 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setSession, removeSession } from "./store/redux/store";
+import { setSession, removeSession, authUserAsyncFx, regUserAsyncFx } from "./store/redux";
 
 
-export function useValidate() {
+export function useModel() {
     const dispatch = useDispatch();
 
-    const signIn = (isAuth, login, role, id) => {
-        const validateInfo = {
-            isAuth: isAuth,
-            login: login,
-            role: role,
-            id: id
-        };
-        dispatch(setSession(validateInfo));
+    const signIn = (userInfo) => {
+        dispatch(setSession(userInfo));
     }
 
     const signOut = () => {
@@ -20,11 +14,19 @@ export function useValidate() {
         dispatch(removeSession());
     };
 
-    return { signIn, signOut };
+    const authUserAsync = (user, callback) => {
+        authUserAsyncFx(user, callback);
+    }
+
+    const regUserAsync = (user, callback) => {
+        regUserAsyncFx(user, callback);
+    }
+
+    return { signIn, signOut, authUserAsync, regUserAsync };
 }
 
 export function useUserInfo() {
-    return useSelector(state => state.viewer.viewer);
+    return useSelector(state => state.viewer);
 }
 
 export function useUserLogin() {

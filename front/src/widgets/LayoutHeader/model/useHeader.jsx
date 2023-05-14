@@ -3,7 +3,7 @@ import { viewerModel } from "entities/viewer";
 
 export function useHeader(){
     const [logoutAnimation, setAnimation] = useState(false);
-    const { signOut } = viewerModel.useValidate();
+    const { signOut } = viewerModel.useModel();
     const userLogin = viewerModel.useUserLogin();
 
     const logout = () => {

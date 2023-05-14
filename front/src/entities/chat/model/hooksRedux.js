@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { startMessagesListening, stopMessagesListening, sendMessage } from "./store/redux/store";
+import { startMessagesListening, stopMessagesListening, sendMessage } from "./store/redux";
 
 
 export function useChatListening() {

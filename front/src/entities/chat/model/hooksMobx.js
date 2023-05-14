@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { startMessagesListening, stopMessagesListening, sendMessage, chatStore } from "./store/mobx/store";
+import { startMessagesListening, stopMessagesListening, sendMessage, chatStore } from "./store/mobx";
 import { autorun } from "mobx";
 
 export function useChatListening() {

@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
 import { autorun } from "mobx";
-import { mobxStore } from "./store/mobx";
+import { authUserAsyncFx, mobxStore, regUserAsyncFx } from "./store/mobx";
 
-export function useValidate() {
-    const signIn = (isAuth, login, role, id) => {
-        const vadidateInfo = {
-            isAuth: isAuth,
-            login: login,
-            role: role,
-            id: id
-        };
-        mobxStore.setSession(vadidateInfo);
+export function useModel() {
+    const signIn = (userInfo) => {
+        mobxStore.setSession(userInfo);
     }
 
     const signOut = () => {
@@ -18,7 +12,16 @@ export function useValidate() {
         mobxStore.removeSession();
     };
 
-    return { signIn, signOut };
+    const authUserAsync = (user, callback) => {
+        authUserAsyncFx(user, callback);
+        
+    }
+
+    const regUserAsync = (user, callback) => {
+        regUserAsyncFx(user, callback);
+    }
+
+    return { signIn, signOut, authUserAsync, regUserAsync };
 }
 
 export function useUserInfo() {

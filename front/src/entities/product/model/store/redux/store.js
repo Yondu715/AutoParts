@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { mapProductList, mapCartList } from "entities/product/lib";
 import { requestAPI } from "shared/api";
 
 const initialState = {
@@ -34,13 +35,15 @@ export const selectProductFx = (id) => (dispatch) => {
 
 export const getProductsAsyncFx = () => async (dispatch) => {
     const response = await requestAPI.asyncGetAllProducts();
-    const products = response.getBody();
+    let products = response.getBody();
+    products = mapProductList(products);
     dispatch(productSlice.actions.setProducts(products));
 }
 
 export const getUserProductsAsyncFx = (userId) => async (dispatch) => {
     const response = await requestAPI.asyncGetUserProducts(userId);
-    const products = response.getBody();
+    let products = response.getBody();
+    products = mapProductList(products);
     dispatch(productSlice.actions.setProducts(products));
 }
 
@@ -68,13 +71,9 @@ export const getProductByIdAsyncFx = (productId) => async (dispatch) => {
 
 export const getCartAsyncFx = (userId) => async (dispatch) => {
     const response = await requestAPI.asyncGetCart(userId);
-    const products = response.getBody();
-    const mapProducts = [];
-    for (let index = 0; index < products.length; index++) {
-        const product = products[index];
-        mapProducts.push({ ...product.product, id: product.id});
-    }
-    dispatch(productSlice.actions.setProducts(mapProducts));
+    let products = response.getBody();
+    products = mapCartList(products);
+    dispatch(productSlice.actions.setProducts(products));
 }
 
 export const deleteFromCartAsyncFx = (userId, productsId) => async (dispatch) => {

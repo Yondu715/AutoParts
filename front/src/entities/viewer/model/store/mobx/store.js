@@ -25,3 +25,17 @@ export const mobxStore = makeAutoObservable({
         }
     }
 });
+
+export const authUserAsyncFx = async (user, callback) => {
+    const response = await requestAPI.asyncAuth(user);
+    const data = response.getBody();
+    const status = response.getStatus();
+    callback(status, data);
+}
+
+export const regUserAsyncFx = async (user, callback) => {
+    const response = await requestAPI.asyncReg(user);
+    const data = response.getBody();
+    const status = response.getStatus();
+    callback(status, data);
+}

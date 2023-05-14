@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { mapApplicationList, mapUserList } from "entities/user/lib";
 import { requestAPI } from "shared/api";
 
 const initialState = {
@@ -39,7 +40,8 @@ export const selectUserFx = (id) => (dispatch) => {
 
 export const getUsersAsyncFx = () => async (dispatch) => {
     const response = await requestAPI.asyncGetAllUsers();
-    const users = response.getBody();
+    let users = response.getBody();
+    users = mapUserList(users);
     dispatch(userSlice.actions.setUsers(users));
 }
 
@@ -51,10 +53,8 @@ export const deleteUsersAsyncFx = (usersId) => async (dispatch) => {
 
 export const getApplicationsAsyncFx = () => async (dispatch) => {
     const response = await requestAPI.asyncGetAllApplications();
-    const applications = response.getBody();
-    applications.forEach((user) => {
-        user["role"] = "client";
-    })
+    let applications = response.getBody();
+    applications = mapApplicationList(applications);
     dispatch(userSlice.actions.setUsers(applications));
 }
 
@@ -74,21 +74,5 @@ export const deleteApplicationsAsyncFx = (applicationsId) => async (dispatch) =>
     dispatch(userSlice.actions.clearSelectedUsers());
     dispatch(getApplicationsAsyncFx());
 }
-
-export const authUserAsyncFx = async (user, callback) => {
-    const response = await requestAPI.asyncAuth(user);
-    const data = response.getBody();
-    const status = response.getStatus();
-    callback(status, data);
-}
-
-export const regUserAsyncFx = async (user, callback) => {
-    const response = await requestAPI.asyncReg(user);
-    const data = response.getBody();
-    const status = response.getStatus();
-    callback(status, data);
-}
-
-
 
 export const userReducer = userSlice.reducer;

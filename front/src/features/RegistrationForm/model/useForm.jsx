@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { dataAction } from "shared/lib/actions";
-import { User, userModel } from "entities/user";
 import { AUTH_ROUTE } from "shared/config";
+import { VieverReg, viewerModel } from "entities/viewer";
 
 export function useForm() {
     const initialState = {
@@ -17,16 +17,16 @@ export function useForm() {
 
     const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-    const { regUserAsync } = userModel.useModel();
+    const { regUserAsync } = viewerModel.useModel();
 
     const _getRegInfo = () => {
-        const user = new User(form);
-        if (!dataAction.checkValid(user)) {
+        const user = new VieverReg(form);
+        if (!dataAction.checkValid(user.get())) {
             setError("Не все поля были заполнены");
             return;
         }
-        const password = user.get()["password"];
-        const repeat_password = user.get()["repeatPassword"];
+        const password = user.getPassword();
+        const repeat_password = user.getRepeatPassword();
         if (password !== repeat_password) {
             setError("Пароли не совпадают");
             return;

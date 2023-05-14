@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addProductToCartAsyncFx, deleteFromCartAsyncFx, deleteProductsAsyncFx, getCartAsyncFx, getProductByIdAsyncFx, getProductsAsyncFx, getUserProductsAsyncFx, saleProductAsyncFx, selectProductFx } from "./store/redux/store";
+import { addProductToCartAsyncFx, deleteFromCartAsyncFx, deleteProductsAsyncFx, getCartAsyncFx, getProductByIdAsyncFx, getProductsAsyncFx, getUserProductsAsyncFx, saleProductAsyncFx, selectProductFx } from "./store/redux";
 
 export function useModel() {
     const dispatch = useDispatch();

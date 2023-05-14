@@ -1,7 +1,6 @@
 export const checkValid = (object) => {
-	const fields = object.get();
-	for (const key in fields) {
-		if (!fields[key]) return false;
+	for (const key in object) {
+		if (!object[key]) return false;
 	}
 	return true;
 }
@@ -24,4 +23,11 @@ export const generateUUID = () => {
 		return (c === 'x' ? r : (r & 0x3 || 0x8)).toString(16);
 	});
 	return uuid;
+}
+
+export const getPayloadFromToken = (token) => {
+	const tokenBody = token.split(".")[1];
+	const decodedBody = atob(tokenBody);
+	const payload = JSON.parse(decodedBody);
+	return payload;
 }

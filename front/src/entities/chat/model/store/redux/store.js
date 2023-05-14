@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { mapMessage, mapMessageList } from "entities/chat/lib";
 import { chatAPI } from "shared/api";
 
 let _messageHandler = null;
@@ -6,7 +7,12 @@ let _messageHandler = null;
 const messageHandler = (dispatch) => {
     if (_messageHandler === null) {
         _messageHandler = (messages) => {
-            dispatch(messagesReceived(messages));
+            if (Array.isArray(messages)) {
+                messages = mapMessageList(messages);
+            } else {
+                messages = mapMessage(messages);
+            }
+            dispatch(chatSlice.actions.messagesReceived(messages));
         }
     }
     return _messageHandler;
@@ -20,7 +26,7 @@ export const startMessagesListening = (roomId) => async (dispatch) => {
 export const stopMessagesListening = () => async (dispatch) => {
     chatAPI.unsubscribe(messageHandler(dispatch));
     chatAPI.stop();
-    dispatch(messagesCleared());
+    dispatch(chatSlice.actions.messagesCleared());
 }
 
 export const sendMessage = (message) => async () => {
@@ -48,5 +54,4 @@ const chatSlice = createSlice({
     }
 });
 
-export const { messagesCleared, messagesReceived } = chatSlice.actions;
 export const chatReducer = chatSlice.reducer;

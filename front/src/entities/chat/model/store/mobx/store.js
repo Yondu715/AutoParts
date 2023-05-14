@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx"
+import { mapMessage, mapMessageList } from "entities/chat/lib";
 import { chatAPI } from "shared/api";
 
 let _messageHandler = null;
@@ -6,6 +7,11 @@ let _messageHandler = null;
 const messageHandler = () => {
     if (_messageHandler === null) {
         _messageHandler = (messages) => {
+            if (Array.isArray(messages)) {
+                messages = mapMessageList(messages);
+            } else {
+                messages = mapMessage(messages);
+            }
             chatStore.messagesReceived(messages);
         }
     }

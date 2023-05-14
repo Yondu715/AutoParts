@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { dataAction } from "shared/lib/actions";
-import { viewerModel } from "entities/viewer";
-import { User, userModel } from "entities/user";
+import { viewerModel, VieverAuth } from "entities/viewer";
 import {
     ADMIN_ROUTE, APPLICATIONS_ROUTE,
     LS_TOKEN, MAIN_ROUTE, PRODUCTS_ROUTE
@@ -19,12 +18,12 @@ export function useForm() {
     const [error, setError] = useState("");
     const handlerForm = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-    const { signIn } = viewerModel.useValidate();
-    const { authUserAsync } = userModel.useModel();
+    const { signIn, authUserAsync } = viewerModel.useModel();
 
     const _getAuthInfo = () => {
-        const user = new User(form);
-        if (!dataAction.checkValid(user)) {
+        const user = new VieverAuth(form);
+        
+        if (!dataAction.checkValid(user.get())) {
             setError("Не все поля были заполнены");
             return;
         }
@@ -32,7 +31,6 @@ export function useForm() {
     };
 
     const asyncSendAuthInfo = async () => {
-        localStorage.clear();
         const user = _getAuthInfo();
         user && authUserAsync(user.get(), _callbackAuth);
     };
@@ -44,15 +42,14 @@ export function useForm() {
                 break;
             case 200:
                 const token = data["token"];
-                const tokenBody = token.split(".")[1];
-                const decodedBody = atob(tokenBody);
-                const payload = JSON.parse(decodedBody);
-                const login = payload["login"];
-                const role = payload["role"];
-                const id = payload["id"];
+                const payload = dataAction.getPayloadFromToken(token);
+                const userInfo = {
+                    isAuth: true,
+                    ...payload
+                }
                 localStorage.setItem(LS_TOKEN, token);
-                signIn(true, login, role, id);
-                switch (role) {
+                signIn(userInfo);
+                switch (payload.role) {
                     case "client":
                         navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/"));
                         break;
