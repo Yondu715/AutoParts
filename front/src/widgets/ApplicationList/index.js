@@ -1,1 +1,1 @@
-export * from "./ui";
+export { List as ApplicationList } from "./ui";

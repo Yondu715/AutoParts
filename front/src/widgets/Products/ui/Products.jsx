@@ -1,11 +1,11 @@
-import { useProducts } from "../model";
+import { useModel } from "../model";
 import { ProductCard } from "entities/product";
 import styles from "./Products.module.css";
 
 export function Products() {
     const {
         products, onProductInfo
-    } = useProducts();
+    } = useModel();
 
     return (
         <div className={[styles.products, "fade"].join(" ")}>

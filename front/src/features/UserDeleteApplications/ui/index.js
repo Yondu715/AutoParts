@@ -1,1 +1,0 @@
-export {DeleteApplications as UserDeleteApplications} from "./DeleteApplications";

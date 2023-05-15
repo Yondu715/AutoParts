@@ -1,0 +1,20 @@
+.form {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: auto;
+    display: flex;
+}
+
+.form input {
+    font-size: 18px;
+    width: 70%;
+    border-radius: 10px;
+    border: none;
+    margin-right: 15px;
+
+}
+
+.btnPlace {
+    width: 170px;
+}

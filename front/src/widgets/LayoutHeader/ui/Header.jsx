@@ -1,11 +1,11 @@
-import { useHeader } from "../model";
+import { useModel } from "../model";
 import styles from "./Header.module.css";
 
 export function Header() {
 
     const {
         logoutAnimation, userLogin, logout
-    } = useHeader();
+    } = useModel();
 
     return (
         <>

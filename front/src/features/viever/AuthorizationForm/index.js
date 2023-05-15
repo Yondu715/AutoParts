@@ -1,0 +1,1 @@
+export {Form as AuthorizationForm } from "./ui";

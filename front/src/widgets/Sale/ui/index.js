@@ -1,2 +1,1 @@
-export { Sale } from "./Sale";
-
+export * from "./Sale";

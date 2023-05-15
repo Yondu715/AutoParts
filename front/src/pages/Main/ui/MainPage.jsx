@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { useMain } from "../model";
+import { useModel } from "../model";
 import { Header } from "widgets/LayoutHeader";
 import { NavBar } from "widgets/LayoutNavBar";
 import styles from "./MainPage.module.css";
@@ -8,7 +8,7 @@ export function MainPage() {
 
     const {
         menuItems, routes
-    } = useMain();
+    } = useModel();
 
     return (
         <div className={styles.mainPage}>

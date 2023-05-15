@@ -1,6 +1,6 @@
-import { useUserProducts } from "../model";
+import { useModel } from "../model";
 import { ProductCard } from "entities/product";
-import { ProductDelete } from "features/ProductDelete";
+import { DeleteProduct } from "features/product/DeleteProduct";
 import styles from "./UserProducts.module.css";
 
 
@@ -8,7 +8,7 @@ export function UserProducts() {
     const {
         products, selectedProducts,
         selectProduct
-    } = useUserProducts();
+    } = useModel();
 
 
     return (
@@ -29,7 +29,7 @@ export function UserProducts() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <ProductDelete/>
+                    <DeleteProduct />
                 </div>
             </div>
         </div>

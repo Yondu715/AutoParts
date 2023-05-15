@@ -1,1 +1,1 @@
-export { List as ApplicationList } from "./List";
+export * from "./List";

@@ -1,7 +1,7 @@
-import { useInfo } from "../model";
+import { useModel } from "../model";
 import { Chat } from "../../Chat";
 import { ProductFullInfo } from "entities/product";
-import { ProductAddToCart } from "features/ProductAddToCart";
+import { AddToCart } from "features/product/AddToCart";
 import { SubmitButton } from "shared/ui/SubmitButton";
 import styles from "./Info.module.css";
 
@@ -9,7 +9,7 @@ export function Info() {
     const {
         product, userLogin,
         openChat, chatIsOpen, id
-    } = useInfo();
+    } = useModel();
 
     if (chatIsOpen) {
         return (
@@ -38,7 +38,7 @@ export function Info() {
             </div>
             {product && (product["sellerName"] !== userLogin) &&
                 <div className={styles.btnPlace}>
-                    <ProductAddToCart product={product} />
+                    <AddToCart product={product} />
                 </div>
             }
         </div>

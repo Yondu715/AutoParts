@@ -1,2 +1,2 @@
-export { VieverAuth } from "./VieverAuth";
-export { VieverReg } from "./VieverReg";
+export * from "./VieverAuth";
+export * from "./VieverReg";

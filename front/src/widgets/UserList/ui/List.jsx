@@ -1,12 +1,12 @@
-import { useList } from "../model";
+import { useModel } from "../model";
 import { UserCard } from "entities/user";
-import { UserDelete } from "features/UserDelete";
+import { DeleteUser } from "features/user/DeleteUser";
 import styles from "./List.module.css";
 
 export function List() {
     const {
         users, selectedUsers, usersHandler
-    } = useList();
+    } = useModel();
 
     return (
         <div className={[styles.wrapUsers, "fade"].join(" ")}>
@@ -26,7 +26,7 @@ export function List() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <UserDelete/>
+                    <DeleteUser />
                 </div>
             </div>
         </div>

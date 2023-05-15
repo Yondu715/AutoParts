@@ -1,1 +1,0 @@
-export {AddToCart as ProductAddToCart} from "./AddToCart";

@@ -4,7 +4,7 @@ import { useMountEffect } from "shared/lib/hooks";
 import { requestAPI } from "shared/api";
 import { LS_TOKEN } from "shared/config";
 import { viewerModel } from "entities/viewer";
-import { buildProvider } from "./store/redux";
+import { buildProvider } from "./store";
 // import { buildProvider } from "./store/mobx";
 import { buildRouter } from "./router";
 import { dataAction } from "shared/lib/actions";

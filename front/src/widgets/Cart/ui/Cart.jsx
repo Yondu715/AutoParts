@@ -1,6 +1,6 @@
-import { useCart } from "../model";
+import { useModel } from "../model";
 import { ProductCard } from "entities/product";
-import { ProductCartDelete } from "features/ProductCartDelete";
+import { DeleteCartItem } from "features/product/DeleteCartItem";
 import styles from "./Cart.module.css";
 
 
@@ -8,7 +8,7 @@ export function Cart() {
     const {
         products, selectedProducts, 
         selectProductHandler
-    } = useCart();
+    } = useModel();
 
     return (
         <div className={[styles.cart, "fade"].join(" ")}>
@@ -29,7 +29,7 @@ export function Cart() {
             </div>
             <div>
                 <div className={styles.btnPlace}>
-                    <ProductCartDelete/>
+                    <DeleteCartItem/>
                 </div>
             </div>
         </div>

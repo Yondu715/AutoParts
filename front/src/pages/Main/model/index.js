@@ -1,1 +1,1 @@
-export { useMain } from "./useMain";
+export * from "./useModel";

@@ -1,1 +1,0 @@
-export {ProductDelete as ProductCartDelete} from "./ProductDelete";

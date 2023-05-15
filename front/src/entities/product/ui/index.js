@@ -1,4 +1,2 @@
-export { ProductFullInfo } from "./ProductFullInfo/ProductFullInfo";
-export { ProductCard } from "./ProductCard/ProductCard";
-
-
+export * from "./ProductFullInfo";
+export * from "./ProductCard";

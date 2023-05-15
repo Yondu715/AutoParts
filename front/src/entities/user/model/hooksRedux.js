@@ -1,5 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { acceptApplicationsAsyncFx, changeRoleHandlerFx, deleteApplicationsAsyncFx, deleteUsersAsyncFx, getApplicationsAsyncFx, getUsersAsyncFx, selectUserFx } from "./store/redux";
+import {
+    acceptApplicationsAsyncFx, changeRoleHandlerFx, deleteApplicationsAsyncFx,
+    deleteUsersAsyncFx, getApplicationsAsyncFx, getUsersAsyncFx,
+    selectUserFx
+} from "./store/redux";
 
 export function useModel() {
     const dispatch = useDispatch();
@@ -32,8 +36,8 @@ export function useModel() {
         dispatch(deleteUsersAsyncFx(usersId));
     }
 
-    return { 
-        getApplicationsAsync, changeRoleHandler, selectUser, 
+    return {
+        getApplicationsAsync, changeRoleHandler, selectUser,
         acceptApplicationsAsync, deleteApplicationsAsync, getUsersAsync,
         deleteUsersAsync
     };

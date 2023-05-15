@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { useAdmin } from "../model";
+import { useModel } from "../model";
 import { Header } from "widgets/LayoutHeader";
 import { NavBar } from "widgets/LayoutNavBar";
 import styles from "./AdminPage.module.css";
@@ -8,7 +8,7 @@ export function AdminPage() {
 
     const {
         menuItems, routes
-    } = useAdmin();
+    } = useModel();
 
     return (
         <div className={styles.adminPage}>

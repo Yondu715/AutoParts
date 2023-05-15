@@ -1,8 +1,8 @@
-import { ProductSaleForm } from "features/ProductSaleForm";
+import { SaleForm } from "features/product/SaleForm";
 
 export function Sale() {
 
     return (
-        <ProductSaleForm/>
+        <SaleForm/>
     );
 }

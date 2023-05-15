@@ -1,7 +1,7 @@
-import { useList } from "../model";
+import { useModel } from "../model";
 import { ApplicationCard } from "entities/user";
-import { UserAcceptApplications } from "features/UserAcceptApplication";
-import { UserDeleteApplications } from "features/UserDeleteApplications";
+import { AcceptApplications } from "features/user/AcceptApplication";
+import { DeleteApplications } from "features/user/DeleteApplications";
 import styles from "./List.module.css";
 
 export function List() {
@@ -9,7 +9,7 @@ export function List() {
     const {
         applications, selectedApplications, selectApplication,
         changeRoleHandler, roles
-    } = useList();
+    } = useModel();
 
     return (
         <div className={[styles.wrapContent, "fade"].join(" ")}>
@@ -32,10 +32,10 @@ export function List() {
             <div>
                 <div className={styles.btnPlace}>
                     <div className={styles.btnContainer}>
-                        <UserAcceptApplications/>
+                        <AcceptApplications/>
                     </div>
                     <div className={styles.btnContainer}>
-                        <UserDeleteApplications/>
+                        <DeleteApplications/>
                     </div>
                 </div>
             </div>

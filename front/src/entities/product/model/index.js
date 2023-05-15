@@ -1,3 +1,3 @@
-export { productReducer } from "./store";
-export * from "./dto/Product";
+export { productReducer } from "./store/redux";
+export * from "./dto";
 export * from "./hooksRedux";

@@ -1,1 +1,1 @@
-export { RegPage } from "./RegPage";
+export * from "./RegPage";

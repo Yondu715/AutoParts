@@ -1,4 +1,4 @@
-export { viewerReducer } from "./store";
 export * from "./dto";
+export { viewerReducer } from "./store/redux";
 export * from "./hooksRedux";
 // export * from "./hooksMobx";

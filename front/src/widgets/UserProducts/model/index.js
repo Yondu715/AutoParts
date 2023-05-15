@@ -1,1 +1,1 @@
-export * from "./useUserProducts";
+export * from "./useModel";
