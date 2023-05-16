@@ -8,23 +8,23 @@ import {
 export function useModel() {
     const dispatch = useDispatch();
 
-    const getProductsAsync = () => {
+    const getProductsAsync = async () => {
         dispatch(getProductsAsyncFx());
     }
 
-    const getUserProductsAsync = (userId) => {
+    const getUserProductsAsync = async (userId) => {
         dispatch(getUserProductsAsyncFx(userId));
     }
 
-    const getCartAsync = (userId) => {
+    const getCartAsync = async (userId) => {
         dispatch(getCartAsyncFx(userId));
     }
 
-    const deleteProductsAsync = (userId, productsId) => {
+    const deleteProductsAsync = async (userId, productsId) => {
         dispatch(deleteProductsAsyncFx(userId, productsId));
     }
 
-    const deleteProductsFromCartAsync = (userId, productsId) => {
+    const deleteProductsFromCartAsync = async (userId, productsId) => {
         dispatch(deleteFromCartAsyncFx(userId, productsId));
     }
 
@@ -32,7 +32,7 @@ export function useModel() {
         dispatch(selectProductFx(id));
     }
 
-    const saleProduct = (product) => {
+    const saleProduct = async (product) => {
         saleProductAsyncFx(product);
     }
 

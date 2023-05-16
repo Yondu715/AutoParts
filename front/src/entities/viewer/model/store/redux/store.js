@@ -5,7 +5,7 @@ const initialState = {
     isAuth: false,
     id: null,
     login: null,
-    role: null
+    role: null,
 }
 
 const viewerSlice = createSlice({

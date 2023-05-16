@@ -1,1 +1,1 @@
-export { AddToCart } from "./AddToCart";
+export * from "./AddToCart";

@@ -1,4 +1,12 @@
 .message {
+    --send-bg: #0B93F6;
+    --send-color: rgb(255, 255, 255);
+    --receive-bg: #e5e5eA;
+    --receive-color: rgb(0, 0, 0);
+    --chat-bg: rgb(240, 239, 237);
+}
+
+.message {
     max-width: 270px;
     word-wrap: break-word;
     margin-bottom: 12px;

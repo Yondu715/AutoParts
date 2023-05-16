@@ -8,7 +8,7 @@ import {
 export function useModel() {
     const dispatch = useDispatch();
 
-    const getApplicationsAsync = () => {
+    const getApplicationsAsync = async () => {
         dispatch(getApplicationsAsyncFx());
     }
 
@@ -20,19 +20,19 @@ export function useModel() {
         dispatch(selectUserFx(id));
     }
 
-    const acceptApplicationsAsync = (applications) => {
+    const acceptApplicationsAsync = async (applications) => {
         dispatch(acceptApplicationsAsyncFx(applications));
     }
 
-    const deleteApplicationsAsync = (applicationsId) => {
+    const deleteApplicationsAsync = async (applicationsId) => {
         dispatch(deleteApplicationsAsyncFx(applicationsId));
     }
 
-    const getUsersAsync = () => {
+    const getUsersAsync = async () => {
         dispatch(getUsersAsyncFx());
     }
 
-    const deleteUsersAsync = (usersId) => {
+    const deleteUsersAsync = async (usersId) => {
         dispatch(deleteUsersAsyncFx(usersId));
     }
 

@@ -12,12 +12,12 @@ export function useModel() {
         mobxStore.removeSession();
     };
 
-    const authUserAsync = (user, callback) => {
+    const authUserAsync = async (user, callback) => {
         authUserAsyncFx(user, callback);
         
     }
 
-    const regUserAsync = (user, callback) => {
+    const regUserAsync = async (user, callback) => {
         regUserAsyncFx(user, callback);
     }
 
