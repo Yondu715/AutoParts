@@ -1,9 +1,9 @@
-import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { viewerModel } from "entities/viewer";
 import { authRoutes, publicRoutes } from "./routes";
 import { AUTH_ROUTE } from "shared/config";
 
-function AppRouter() {
+export function Routing() {
     const viewer = viewerModel.useUserInfo();
     const redirect = <Navigate to={AUTH_ROUTE} replace />
     return (
@@ -17,11 +17,4 @@ function AppRouter() {
             )}
         </Routes>
     );
-}
-
-export function buildRouter() {
-    return () =>
-        <BrowserRouter>
-            <AppRouter />
-        </BrowserRouter>
 }

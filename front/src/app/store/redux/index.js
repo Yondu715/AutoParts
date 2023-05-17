@@ -1,1 +1,1 @@
-export { buildProvider } from "./store";
+export * from "./store";

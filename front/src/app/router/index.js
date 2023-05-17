@@ -1,1 +1,1 @@
-export { buildRouter } from "./AppRouter";
+export * from "./Routing";
