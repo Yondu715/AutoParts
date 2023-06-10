@@ -45,4 +45,4 @@ export const publicRoutes = [
         path: ANY_ROUTE,
         element: <Navigate to={NOT_FOUND_ROUTE} />
     },
-]
+];

@@ -33,12 +33,13 @@ export const sendMessage = (message) => async () => {
     chatAPI.sendMessage(message);
 }
 
+const initialState = {
+    messages: []
+}
 
 const chatSlice = createSlice({
     name: "chat",
-    initialState: {
-        messages: []
-    },
+    initialState,
     reducers: {
         messagesReceived(state, action) {
             const messages = action.payload;

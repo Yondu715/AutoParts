@@ -1,4 +1,5 @@
 .vscode/
+docker/
 
 # Backend
 target/
