@@ -11,8 +11,7 @@ import { ApplicationList } from "widgets/ApplicationList";
 import { UserList } from "widgets/UserList";
 import { AuthPage } from "pages/Authorization";
 import { RegPage } from "pages/Registration";
-import { AdminPage } from "pages/Admin";
-import { MainPage } from "pages/Main";
+import { MainLayout } from "pages/MainLayout";
 
 export function Router() {
     const viewer = viewerModel.useUserInfo();
@@ -41,7 +40,7 @@ export function Router() {
             path: PATH.reg
         },
         {
-            element: viewer.isAuth && viewer.role === ROLE.client ? <MainPage /> : redirect,
+            element: viewer.isAuth && viewer.role === ROLE.client ? <MainLayout role={viewer.role} /> : redirect,
             path: PATH.main,
             children: [
                 {
@@ -71,7 +70,7 @@ export function Router() {
             ]
         },
         {
-            element: viewer.isAuth && viewer.role === ROLE.admin ? <AdminPage /> : redirect,
+            element: viewer.isAuth && viewer.role === ROLE.admin ? <MainLayout role={viewer.role} /> : redirect,
             path: PATH.admin,
             children: [
                 {
