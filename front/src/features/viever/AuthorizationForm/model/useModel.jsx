@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { viewerModel, VieverAuth } from "entities/viewer";
 import { dataAction } from "shared/lib/actions";
 import {
-    ADMIN_ROUTE, APPLICATIONS_ROUTE,
-    LS_TOKEN, MAIN_ROUTE, PRODUCTS_ROUTE
+    PATH,
+    LS_TOKEN
 } from "shared/config";
 
 export function useModel() {
@@ -51,10 +51,10 @@ export function useModel() {
                 signIn(userInfo);
                 switch (payload.role) {
                     case "client":
-                        navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/"));
+                        navigate(PATH.main);
                         break;
                     case "admin":
-                        navigate([ADMIN_ROUTE, APPLICATIONS_ROUTE].join("/"));
+                        navigate(PATH.admin);
                         break;
                     default:
                         break;

@@ -1,14 +1,15 @@
-import { Route, Routes } from "react-router-dom";
-import { useModel } from "../model";
+import { Outlet } from "react-router-dom";
 import { Header } from "widgets/LayoutHeader";
 import { NavBar } from "widgets/LayoutNavBar";
+import { PATH } from "shared/config";
 import styles from "./AdminPage.module.css";
 
 export function AdminPage() {
 
-    const {
-        menuItems, routes
-    } = useModel();
+    const menuItems = {
+        "Заявки": PATH.applications,
+        "Пользователи": PATH.users,
+    }
 
     return (
         <div className={styles.adminPage}>
@@ -16,11 +17,7 @@ export function AdminPage() {
             <div className={styles.wrapContent}>
                 <NavBar items={menuItems} />
                 <div className={styles.content}>
-                    <Routes>
-                        {
-                            routes.map(({ path, element }) => <Route key={path} path={path} element={element} />)
-                        }
-                    </Routes>
+                    <Outlet/>
                 </div>
             </div>
         </div>

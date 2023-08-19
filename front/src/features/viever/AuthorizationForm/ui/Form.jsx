@@ -3,7 +3,7 @@ import { useModel } from "../model";
 import { StatusError } from "shared/ui/StatusError";
 import { InputBox } from "shared/ui/InputBox";
 import { SubmitButton } from "shared/ui/SubmitButton";
-import { REG_ROUTE } from "shared/config";
+import { PATH } from "shared/config";
 import styles from "./Form.module.css";
 
 
@@ -30,7 +30,7 @@ export function Form() {
             />
             <StatusError message={error} />
             <SubmitButton onClick={asyncSendAuthInfo}>Войти</SubmitButton>
-            <span className={styles.text}>Еще нет аккаунта? <Link to={REG_ROUTE}>Зарегистрироваться</Link></span>
+            <span className={styles.text}>Еще нет аккаунта? <Link to={PATH.reg}>Зарегистрироваться</Link></span>
         </div>
     );
 }

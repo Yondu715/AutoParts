@@ -1,14 +1,17 @@
-import { Route, Routes } from "react-router-dom";
-import { useModel } from "../model";
+import { Outlet } from "react-router-dom";
 import { Header } from "widgets/LayoutHeader";
 import { NavBar } from "widgets/LayoutNavBar";
+import { PATH } from "shared/config";
 import styles from "./MainPage.module.css";
 
 export function MainPage() {
 
-    const {
-        menuItems, routes
-    } = useModel();
+    const menuItems = {
+        "Купить": PATH.products,
+        "Продать": PATH.sale,
+        "Мои товары": PATH.userProducts,
+        "Корзина": PATH.cart
+    }
 
     return (
         <div className={styles.mainPage}>
@@ -16,11 +19,7 @@ export function MainPage() {
             <div className={styles.wrapContent}>
                 <NavBar items={menuItems} />
                 <div className={styles.content}>
-                    <Routes>
-                        {
-                            routes.map(({ path, element }) => <Route key={path} path={path} element={element} />)
-                        }
-                    </Routes>
+                    <Outlet/>
                 </div>
             </div>
         </div>

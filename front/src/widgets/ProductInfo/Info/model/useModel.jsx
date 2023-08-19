@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { productModel } from "entities/product";
 import { viewerModel } from "entities/viewer";
 import { useMountEffect } from "shared/lib/hooks";
-import { MAIN_ROUTE, PRODUCTS_ROUTE } from "shared/config";
+import { PATH } from "shared/config";
 
 export function useModel() {
     const [chatIsOpen, setChatIsOpen] = useState(false);
@@ -16,7 +16,7 @@ export function useModel() {
 
     const _asyncGetProductInfo = async () => {
         if (isNaN(id)) {
-            navigate([MAIN_ROUTE, PRODUCTS_ROUTE].join("/"));
+            navigate(PATH.notFound);
             return;
         }
         getProductByIdAsync(+id);

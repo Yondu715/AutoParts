@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { VieverReg, viewerModel } from "entities/viewer";
 import { dataAction } from "shared/lib/actions";
-import { AUTH_ROUTE } from "shared/config";
+import { PATH } from "shared/config";
 
 export function useModel() {
     const initialState = {
@@ -42,7 +42,7 @@ export function useModel() {
     const _callbackRegInfo = (status) => {
         switch (status) {
             case 200:
-                navigate(AUTH_ROUTE);
+                navigate(PATH.auth);
                 break;
             case 409:
                 setError("Нельзя использовать данный логин");

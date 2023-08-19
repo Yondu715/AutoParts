@@ -1,19 +1,11 @@
-.item {
-    padding-top: 10%;
-}
-
-.item:first-child {
-    padding-top: 0%;
-}
-
-.item a {
+.link {
     color: rgb(17, 54, 40);
     font-size: 28px;
     text-decoration: none;
     transition: color 0.2s;
-    font-weight: 700;
+    font-weight: 800;
 }
 
-.active a {
+.active {
     color: rgb(1, 175, 108);
 }

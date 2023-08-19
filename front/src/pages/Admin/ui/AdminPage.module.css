@@ -7,11 +7,9 @@
 
 .wrapContent {
     background: rgb(240, 239, 237);
-    height: calc(100% - 75px);
+    height: 100%;
     width: 100%;
-    position: relative;
     display: flex;
-    margin-top: 75px;
 }
 
 .content {
