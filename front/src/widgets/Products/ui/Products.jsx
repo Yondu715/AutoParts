@@ -9,17 +9,14 @@ export function Products() {
 
     return (
         <div className={[styles.products, "fade"].join(" ")}>
-            <table>
-                <tbody>
-                    {products.map((product) =>
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                            onClick={() => onProductInfo(product.id)}
-                        />
-                    )}
-                </tbody>
-            </table>
+            {products.map((product) =>
+                <ProductCard
+                    className={styles.product}
+                    key={product.id}
+                    product={product}
+                    onClick={() => onProductInfo(product.id)}
+                />
+            )}
         </div>
     );
 }

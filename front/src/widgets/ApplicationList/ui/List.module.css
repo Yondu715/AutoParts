@@ -7,24 +7,8 @@
 .applications {
     width: 100%;
     height: calc(100% - 50px);
+    padding: 0px 15px;
     overflow: scroll;
-}
-
-.applications table {
-    width: 85%;
-    border-collapse: collapse;
-    margin: 40px auto;
-}
-
-.applications table tr {
-    height: 80px;
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-}
-
-.applications table td {
-    height: 100%;
-    width: 100%;
 }
 
 .active {

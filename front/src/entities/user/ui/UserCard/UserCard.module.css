@@ -1,35 +1,21 @@
 .user {
-    height: 100%;
+    height: 80px;
     width: 100%;
     text-align: center;
     font-size: 40px;
     display: flex;
-}
-
-.user div {
-    display: flex;
-}
-
-.user span {
-    margin: auto;
+    border-bottom: 1px solid #000000;
+    align-items: center;
 }
 
 .id {
-    width: 10%;
+    width: 15%;
 }
 
 .info {
-    width: 70%;
-}
-
-.info span:first-child {
-    width: 40%;
-}
-
-.info span:last-child {
-    width: 60%;
+    width: 55%;
 }
 
 .role {
-    width: 20%;
+    width: 30%;
 }

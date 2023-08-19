@@ -16,7 +16,7 @@ import { MainLayout } from "pages/MainLayout";
 export function Router() {
     const viewer = viewerModel.useUserInfo();
     const redirect = <Navigate to={PATH.auth} replace />;
-    let rootRedirect;
+    let rootRedirect = redirect;
     if (viewer.isAuth) {
         switch (viewer.role) {
             case ROLE.client:
@@ -32,17 +32,21 @@ export function Router() {
 
     return useRoutes([
         {
-            element: !viewer.isAuth ? <AuthPage /> : rootRedirect,
+            element: <AuthPage />,
             path: PATH.auth
         },
         {
-            element: !viewer.isAuth ? <RegPage /> : rootRedirect,
+            element: <RegPage />,
             path: PATH.reg
         },
         {
             element: viewer.isAuth && viewer.role === ROLE.client ? <MainLayout role={viewer.role} /> : redirect,
             path: PATH.main,
             children: [
+                {
+                    path: PATH.default,
+                    element: <Navigate to={PATH.products} replace />
+                },
                 {
                     path: PATH.products,
                     element: <Products />
@@ -63,16 +67,16 @@ export function Router() {
                     path: PATH.cart,
                     element: <Cart />
                 },
-                {
-                    path: PATH.default,
-                    element: <Navigate to={PATH.products} replace />
-                }
             ]
         },
         {
             element: viewer.isAuth && viewer.role === ROLE.admin ? <MainLayout role={viewer.role} /> : redirect,
             path: PATH.admin,
             children: [
+                {
+                    path: PATH.default,
+                    element: <Navigate to={PATH.applications} replace />
+                },
                 {
                     path: PATH.applications,
                     element: <ApplicationList />
@@ -81,23 +85,19 @@ export function Router() {
                     path: PATH.users,
                     element: <UserList />
                 },
-                {
-                    path: PATH.default,
-                    element: <Navigate to={PATH.applications} replace />
-                }
             ]
         },
         {
-            path: PATH.any,
-            element: <Navigate to={PATH.notFound} replace />
+            path: PATH.root,
+            element: rootRedirect
         },
         {
             path: PATH.notFound,
             element: <NotFoundPage/>
         },
         {
-            path: PATH.root,
-            element: rootRedirect
-        }
+            path: PATH.any,
+            element: <Navigate to={PATH.notFound} replace />
+        },
     ])
 }

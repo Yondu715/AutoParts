@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setSession, removeSession, authUserAsyncFx, regUserAsyncFx } from "./store/redux";
+import { setSession, removeSession, authUserAsyncFx, regUserAsyncFx } from "./store";
 
 
 export function useModel() {

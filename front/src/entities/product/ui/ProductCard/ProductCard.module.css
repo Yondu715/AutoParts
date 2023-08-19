@@ -1,10 +1,12 @@
 .product {
+    height: 180px;
+    width: 90%;
     display: flex;
-    height: 100%;
-    width: 100%;
+    margin: auto;
     text-align: center;
     font-size: 40px;
-    padding: 5px 0;
+    border-bottom: 1px solid #000;
+    cursor: pointer;
 }
 
 .image {
@@ -19,6 +21,7 @@
 .productInfo {
     width: 60%;
     text-align: left;
+    margin-top: 10px;
 }
 
 .productInfo .date {

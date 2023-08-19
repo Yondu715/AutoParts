@@ -1,17 +1,9 @@
-import { globalReduxStore } from "../store";
+import { store } from "../store";
 import { Provider } from "react-redux";
 
-export const withMobxStore = (component) => () => {
+export const withStore = (component) => () => {
     return (
-        <>
-            {component()}
-        </>
-    );
-}
-
-export const withReduxStore = (component) => () => {
-    return (
-        <Provider store={globalReduxStore}>
+        <Provider store={store}>
             {component()}
         </Provider>
     );

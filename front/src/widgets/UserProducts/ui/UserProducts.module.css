@@ -10,22 +10,6 @@
     overflow: scroll;
 }
 
-.products table {
-    width: 85%;
-    border-collapse: collapse;
-    margin: 40px auto;
-}
-
-.products table tr {
-    border-top: 1px solid;
-    border-bottom: 1px solid;
-}
-
-.products table td {
-    height: 100%;
-    width: 100%;
-}
-
 .active {
     background: rgb(209, 255, 223);
 }

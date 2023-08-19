@@ -1,3 +1,2 @@
-export { chatReducer } from "./store/redux";
+export { chatReducer } from "./store";
 export * from "./hooksRedux";
-// export * from "./hooksMobx";

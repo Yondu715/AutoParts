@@ -15,20 +15,18 @@ export function Form() {
     return (
         <div className={[styles.sale, "fade"].join(" ")}>
             <div className={styles.saleBlock}>
-                <div className={styles.wrapProductInfo}>
-                    <div className={styles.productInfo}>
-                        {fields.map(({ name, nameRu }) =>
-                            <InputBox
-                                key={name}
-                                type="text"
-                                value={form[name]}
-                                name={name}
-                                label={nameRu}
-                                onChange={handlerForm}
-                            />
-                        )}
-                        <StatusError message={error} />
-                    </div>
+                <div className={styles.productInfo}>
+                    {fields.map(({ name, nameRu }) =>
+                        <InputBox
+                            key={name}
+                            type="text"
+                            value={form[name]}
+                            name={name}
+                            label={nameRu}
+                            onChange={handlerForm}
+                        />
+                    )}
+                    <StatusError message={error} />
                 </div>
                 <div className={styles.productImage}>
                     <div className={styles.dropArea}>

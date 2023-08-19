@@ -3,7 +3,7 @@ import {
     addProductToCartAsyncFx, deleteFromCartAsyncFx, deleteProductsAsyncFx,
     getCartAsyncFx, getProductByIdAsyncFx, getProductsAsyncFx,
     getUserProductsAsyncFx, saleProductAsyncFx, selectProductFx
-} from "./store/redux";
+} from "./store";
 
 export function useModel() {
     const dispatch = useDispatch();

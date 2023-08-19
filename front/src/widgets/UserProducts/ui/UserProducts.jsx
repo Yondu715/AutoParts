@@ -14,18 +14,14 @@ export function UserProducts() {
     return (
         <div className={[styles.userProducts, "fade"].join(" ")}>
             <div className={styles.products}>
-                <table>
-                    <tbody>
-                        {products.map((product) =>
-                            <ProductCard
-                                key={product.id}
-                                product={product}
-                                className={selectedProducts.includes(product.id) ? styles.active : styles.notActive}
-                                onClick={() => selectProduct(product.id)}
-                            />
-                        )}
-                    </tbody>
-                </table>
+                {products.map((product) =>
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                        className={selectedProducts.includes(product.id) ? styles.active : styles.notActive}
+                        onClick={() => selectProduct(product.id)}
+                    />
+                )}
             </div>
             <div>
                 <div className={styles.btnPlace}>

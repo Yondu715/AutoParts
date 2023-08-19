@@ -8,12 +8,11 @@
 .wrapContent {
     background: rgb(240, 239, 237);
     width: 100%;
-    height: 100%;
+    height: calc(100% - 75px);
     display: flex;
 }
 
 .content {
     width: 80%;
     height: 100%;
-    overflow: scroll;
 }

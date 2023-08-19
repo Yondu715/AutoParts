@@ -1,2 +1,2 @@
-export { userReducer } from "./store/redux";
+export { userReducer } from "./store";
 export * from "./hooksRedux"

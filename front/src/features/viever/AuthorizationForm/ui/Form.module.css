@@ -2,12 +2,8 @@
     width: 350px;
     max-height: 420px;
     margin: auto;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
     text-align: center;
     opacity: 0;
-    transition: all;
     display: flex;
     flex-direction: column;
 }

@@ -3,7 +3,7 @@ import {
     acceptApplicationsAsyncFx, changeRoleHandlerFx, deleteApplicationsAsyncFx,
     deleteUsersAsyncFx, getApplicationsAsyncFx, getUsersAsyncFx,
     selectUserFx
-} from "./store/redux";
+} from "./store";
 
 export function useModel() {
     const dispatch = useDispatch();

@@ -4,7 +4,7 @@ import { chatModel } from "entities/chat";
 import { productModel } from "entities/product";
 import { userModel } from "entities/user";
 
-export const globalReduxStore = configureStore({
+export const store = configureStore({
     reducer: {
         viewer: viewerModel.viewerReducer,
         chat: chatModel.chatReducer,

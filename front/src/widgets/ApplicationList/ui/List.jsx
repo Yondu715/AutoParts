@@ -14,28 +14,24 @@ export function List() {
     return (
         <div className={[styles.wrapContent, "fade"].join(" ")}>
             <div className={styles.applications}>
-                <table>
-                    <tbody>
-                        {applications.map((user) =>
-                            <ApplicationCard
-                                key={user.id}
-                                user={user}
-                                roles={roles}
-                                onChange={(e) => changeRoleHandler(e, user.id)}
-                                onClick={() => selectApplication(user.id)}
-                                className={selectedApplications.includes(user.id) ? styles.active : styles.notActive}
-                            />
-                        )}
-                    </tbody>
-                </table>
+                {applications.map((user) =>
+                    <ApplicationCard
+                        key={user.id}
+                        user={user}
+                        roles={roles}
+                        onChange={(e) => changeRoleHandler(e, user.id)}
+                        onClick={() => selectApplication(user.id)}
+                        className={selectedApplications.includes(user.id) ? styles.active : styles.notActive}
+                    />
+                )}
             </div>
             <div>
                 <div className={styles.btnPlace}>
                     <div className={styles.btnContainer}>
-                        <AcceptApplications/>
+                        <AcceptApplications />
                     </div>
                     <div className={styles.btnContainer}>
-                        <DeleteApplications/>
+                        <DeleteApplications />
                     </div>
                 </div>
             </div>
