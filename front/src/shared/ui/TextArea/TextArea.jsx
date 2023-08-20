@@ -1,10 +1,15 @@
-import styles from "./InputBox.module.css"
+import { useId } from "react";
+import styles from "./TextArea.module.css"
 
-export function InputBox({ value, type, name, label, onChange, ...props }) {
+export function TextArea({ value, type, name, label, onChange, ...props }) {
+    const textId = useId();
     return (
         <div className={styles.inputBox}>
-            {label && <label>{label}</label>}
+            {
+                label && <label htmlFor={textId}>{label}</label>
+            }
             <input
+                id={textId}
                 className={styles.inputBoxText}
                 type={type}
                 name={name}

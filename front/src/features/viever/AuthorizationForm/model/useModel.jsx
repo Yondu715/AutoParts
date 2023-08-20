@@ -51,10 +51,10 @@ export function useModel() {
                 signIn(userInfo);
                 switch (payload.role) {
                     case "client":
-                        navigate(PATH.main);
+                        navigate(PATH.main.root);
                         break;
                     case "admin":
-                        navigate(PATH.admin);
+                        navigate(PATH.admin.root);
                         break;
                     default:
                         break;

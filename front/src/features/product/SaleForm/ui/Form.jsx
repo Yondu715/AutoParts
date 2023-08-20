@@ -1,5 +1,5 @@
 import { useSale } from "../model";
-import { InputBox } from "shared/ui/InputBox";
+import { TextArea } from "shared/ui/TextArea";
 import { StatusError } from "shared/ui/StatusError";
 import { SubmitButton } from "shared/ui/SubmitButton";
 import dndImage from "shared/assets/img/dragAndDrop.png";
@@ -12,12 +12,13 @@ export function Form() {
         handlerImage, asyncSendSaleInfo, isDndActive,
         dndDrop, dndEnterOver, dndLeaveDrop,
     } = useSale();
+    
     return (
         <div className={[styles.sale, "fade"].join(" ")}>
             <div className={styles.saleBlock}>
                 <div className={styles.productInfo}>
                     {fields.map(({ name, nameRu }) =>
-                        <InputBox
+                        <TextArea
                             key={name}
                             type="text"
                             value={form[name]}

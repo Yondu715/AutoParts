@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useModel } from "../model";
 import { StatusError } from "shared/ui/StatusError";
-import { InputBox } from "shared/ui/InputBox";
+import { TextArea } from "shared/ui/TextArea";
 import { SubmitButton } from "shared/ui/SubmitButton";
 import { PATH } from "shared/config";
 import styles from "./Form.module.css";
@@ -16,13 +16,13 @@ export function Form() {
     return (
         <div className={[styles.authRegBlock, "fade"].join(" ")}>
             <span className={[styles.text, styles.title].join(" ")}>Авторизация</span>
-            <InputBox
+            <TextArea
                 type="text"
                 label="Логин"
                 name="login"
                 onChange={handlerForm}
             />
-            <InputBox
+            <TextArea
                 type="password"
                 label="Пароль"
                 name="password"
